@@ -1,0 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Codes.Service.Models;
+
+namespace Codes.Service.Data
+{
+    public class CodesDbContext : DbContext
+    {
+        public CodesDbContext(DbContextOptions<CodesDbContext> options)
+            : base(options)
+        { }
+
+        public CodesDbContext()
+        {
+
+        }
+
+        public DbSet<CodeModel> Codes { get; set; }
+        public DbSet<CodeActivityModel> CodeActivities { get; set; }
+        public DbSet<BulkCodeAuditModel> BulkCodeAudits { get; set; }
+        public DbSet<BrokerModel> Brokers { get; set; }
+        public DbSet<AdditionalCodeActivityModel> AdditionalCodeActivities { get; set; }
+        public DbSet<CampaignModel> Campaigns { get; set; }
+        public DbSet<AgentModel> Agents { get; set; }
+        public DbSet<ClientModel> Clients { get; set; }
+        public DbSet<CodeRangeModel> CodeRanges { get; set; }
+        public DbSet<CampaignAgentModel> CampaignAgents { get; set; }
+        public DbSet<CampaignCodeRangeModel> CampaignCodeRanges { get; set; }
+        public DbSet<UsedCodeModel> UsedCodes { get; set; }
+        public DbSet<UnusedCodeModel> UnusedCodes { get; set; }
+        public DbSet<PendingCodeModel> PendingCodes { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CodeActivityModel>()
+                .HasIndex(b => b.RSIId);
+            modelBuilder.Entity<CodeModel>()
+                .HasIndex(b => b.Issuer);
+
+            modelBuilder.Entity<CampaignAgentModel>()
+            .HasKey(t => new { t.CampaignId, t.AgentId });
+
+            modelBuilder.Entity<CampaignAgentModel>()
+                .HasOne(pt => pt.Campaign)
+                .WithMany(p => p.CampaignAgents)
+                .HasForeignKey(pt => pt.CampaignId);
+
+            modelBuilder.Entity<CampaignAgentModel>()
+                .HasOne(pt => pt.Agent)
+                .WithMany(t => t.CampaignAgents)
+                .HasForeignKey(pt => pt.AgentId);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Password = @cc3ss124; Persist Security Info = True; User ID = RSGAccess; Initial Catalog = RSICodeGenerators; Data Source = 54.208.246.191; ");
+        }
+    }
+}

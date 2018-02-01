@@ -1,0 +1,28 @@
+﻿@model Codes.Service.ViewModels.CardsTotalViewModel
+
+<table class="table table-responsive table-bordered table-condensed table-hover">
+    <tablehead class="bold-table-text">
+        <tr>
+            <th class="bg-info">&nbsp;</th>
+            <th class="bg-info">Physical</th>
+            <th class="bg-info">Virtual</th>
+        </tr>
+    </tablehead>
+    <tablebody>
+        <tr>
+            <td>Total Cards Assigned</td>
+            <td>@Model.AssignedPhysical</td>
+            <td>@Model.AssignedVirtual</td>
+        </tr>
+        <tr>
+            <td>Cards in Campaigns</td>
+            <td>@Model.InCampaignsPhysical</td>
+            <td>@Model.InCampaignsVirtual</td>
+        </tr>
+        <tr>
+            <td>Available Cards</td>
+            <td>@Model.AvailablePhysical</td>
+            <td>@Model.AvailableVirtual</td>
+        </tr>
+    </tablebody>
+</table>

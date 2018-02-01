@@ -1,0 +1,52 @@
+﻿@model Codes.Service.ViewModels.ClientInfoViewModel
+<table class="table table-responsive table-condensed table-bordered">
+    <tbody>
+        <tr>
+            <td class="col-lg-3 col-md-4 col-sm-6 col-xs-6 bold-table-text larger-table-text">Company:</td>
+            <td class="col-lg-9 col-md-8 col-sm-6 col-xs-6 bold-table-text larger-table-text">@Model.CompanyName</td>
+        </tr>
+        <tr>
+            <td class="col-lg-3 col-md-4 col-sm-6 col-xs-6 bold-table-text larger-table-text">Broker:</td>
+            <td class="col-lg-9 col-md-8 col-sm-6 col-xs-6 bold-table-text larger-table-text">@Model.BrokerName</td>
+        </tr>
+        <tr>
+            <td class="col-lg-3 col-md-4 col-sm-6 col-xs-6">Address:</td>
+            <td class="col-lg-9 col-md-8 col-sm-6 col-xs-6">@Model.FullAddress</td>
+        </tr>
+        <tr>
+            <td class="col-lg-3 col-md-4 col-sm-6 col-xs-6">Date Created:</td>
+            <td class="col-lg-9 col-md-8 col-sm-6 col-xs-6"><a href="#">@Model.CreationDate.ToString("MM/dd/yyyy")</a></td>
+        </tr>
+        <tr>
+            <td class="col-lg-3 col-md-4 col-sm-6 col-xs-6">Contact Name:</td>
+            <td class="col-lg-9 col-md-8 col-sm-6 col-xs-6">@Model.FullName</td>
+        </tr>
+        <tr>
+            <td class="col-lg-3 col-md-4 col-sm-6 col-xs-6">Office Phone:</td>
+            <td class="col-lg-9 col-md-8 col-sm-6 col-xs-6">@Model.OfficePhoneFormatted</td>
+        </tr>
+        <tr>
+            <td class="col-lg-3 col-md-4 col-sm-6 col-xs-6">Mobile Phone:</td>
+            <td class="col-lg-9 col-md-8 col-sm-6 col-xs-6">@Model.MobilePhoneFormatted</td>
+        </tr>
+        <tr>
+            <td class="col-lg-3 col-md-4 col-sm-6 col-xs-6">Contact Email:</td>
+            <td class="col-lg-9 col-md-8 col-sm-6 col-xs-6"><a href="mailto:@Model.Email">@Model.Email</a></td>
+        </tr>
+        <tr>
+            <td class="col-lg-3 col-md-4 col-sm-6 col-xs-6">Agent Assigned:</td>
+            <td class="col-lg-9 col-md-8 col-sm-6 col-xs-6">@Model.AgentsFormatted</td>
+        </tr>
+        <tr>
+            <td class="col-lg-3 col-md-4 col-sm-6 col-xs-6">Campaign Count:</td>
+            <td class="col-lg-9 col-md-8 col-sm-6 col-xs-6"><a href="#">@Model.CampaignCount</a></td>
+        </tr>
+        <tr class="td-tall">
+            <td class="col-lg-3 col-md-4 col-sm-6 col-xs-6">Client Notes:</td>
+            <td class="col-lg-9 col-md-8 col-sm-6 col-xs-6">@Model.ClientNotes</td>
+        </tr>
+        <tr></tr>
+        <tr></tr>
+
+    </tbody>
+</table>

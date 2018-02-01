@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using ClientPortal.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    if (SignInManager.IsSignedIn(User))
+    {
+        ViewData["Title"] = "Dashboard";
+        ViewData["BodyCss"] = "nav-md menu_fixed";
+    }
+    else
+    {
+        ViewData["Title"] = "Login";
+        ViewData["BodyCss"] = "login";
+    }
+}
+
+<vc:home></vc:home>
+@section ScriptLinks{
+    
+    
+    <!-- Switchery -->
+    <script src="~/js/vendors/switchery/dist/switchery.js"></script>
+    <!-- jquery.inputmask -->
+    <script src="~/js/vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="~/js/dadatableajax.js"></script>
+    <script src="~/js/account.js"></script>
+    <script src="~/js/menu.js"></script>
+    <script src="~/js/profile.js"></script>
+    <script src="~/js/pagination.js"></script>
+    <script src="~/js/addUser.js"></script>
+    <script src="~/js/list.js"></script>
+}
+
+@section Scripts{
+    MENU.init();
+}
+

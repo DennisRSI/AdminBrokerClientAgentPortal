@@ -1,0 +1,158 @@
+﻿@model ApplicationUser
+
+@{
+
+    String NameValue = "";
+
+    if ((Model.FirstName != null && Model.FirstName.Length > 0) || (Model.LastName != null && Model.LastName.Length > 0))
+    {
+
+        if (Model.FirstName != null && Model.FirstName.Length > 0)
+        {
+            NameValue += Model.FirstName;
+
+        }
+
+        if (Model.LastName != null && Model.LastName.Length > 0)
+        {
+            if (NameValue.Length > 0)
+            {
+                NameValue += " ";
+
+            }
+            NameValue += Model.LastName;
+
+        }
+    }
+    else
+    {
+        NameValue = Model.CompanyName;
+
+    }
+}
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <br />
+    <div class="x_panel">
+        <div class="x_title">
+            <h2 id="my-account-header">@NameValue Settings</h2>
+            <!--<div class="title-right pull-right">
+                <a href="client-details.html" type="button" class="btn btn-sm btn-default">Cancel</a>
+                <a href="client-details.html" type="button" class="btn btn-sm btn-travnow">Save</a>
+            </div>-->
+            <div class="clearfix"></div>
+        </div> <br />
+        <div class="row">
+            <!-- start Tabs -->
+            <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                    <li asp-authorize role="presentation" class="active">
+                        <a href="#tab1" id="profile-tab" role="tab" data-toggle="tab" aria-expanded="true">Profile</a>
+                    </li>
+                    @if (Model.BrokerId > 0 || User.IsInRole("Administrator") || User.IsInRole("Super Administrator"))
+                    {
+                        <li asp-authorize role="presentation" class="">
+                            <a href="#tab2" role="tab" id="agents-tab" data-id="@Model.BrokerId" data-toggle="tab" aria-expanded="false">Agents</a>
+                        </li>
+                    }
+                    @if (Model.BrokerId > 0 || Model.AgentId > 0)
+                    {
+                        <li asp-authorize role="presentation" class="">
+                            <a href="#tab3" role="tab" id="clients-tab" data-id="@Model.BrokerId" data-toggle="tab" aria-expanded="false">Clients</a>
+                        </li>
+                    }
+                    @if (Model.BrokerId > 0)
+                    {
+                        <li asp-authorize role="presentation" class="">
+                            <a href="#tab5" role="tab" id="purchase-tab" data-id="@Model.BrokerId" data-toggle="tab" aria-expanded="false">Purchases</a>
+                        </li>
+                    }
+
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <!-- Tab1  -->
+                    <div asp-authorize role="tabpanel" class="tab-pane fade active in" id="tab1" aria-labelledby="profile-tab">
+                        <br />
+                        <vc:profile profile-id="@Model.Id"></vc:profile>
+                    </div>
+                    <!--End Tab1 -->
+                    <!-- Tab2  -->
+                    <div role="tabpanel" class="tab-pane fade" id="tab2" aria-labelledby="agent-tab">
+                        <br />
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2 id="agents-header">Agents</h2>
+                                <div class="title-right pull-right">
+                                    <button type="button" class="btn btn-travgreen btn-sm" data-toggle="modal" data-target=".new-agent-modal-lg">
+                                        <i class="fa fa-user-plus icon-white purchase-button-icon"></i>Add New Agent
+                                    </button>
+                                    <div class="modal fade new-agent-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <vc:add-user user-type="Agent"></vc:add-user>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <vc:list broker-id="@Model.BrokerId" client-id="@Model.ClientId" user-type="Agent"></vc:list>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Tab2 -->
+                    <!-- Tab3  -->
+                    <div role="tabpanel" class="tab-pane fade" id="tab3" aria-labelledby="clients-tab">
+                        <br />
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2 id="clients-header">Clients</h2>
+                                <div class="title-right pull-right">
+                                    <button type="button" class="btn btn-travgreen btn-sm" data-toggle="modal" data-target=".new-agent-modal-lg">
+                                        <i class="fa fa-user-plus icon-white purchase-button-icon"></i>Add New Client
+                                    </button>
+                                    <div class="modal fade new-agent-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <vc:add-user user-type="Client"></vc:add-user>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <vc:list broker-id="@Model.BrokerId" client-id="@Model.ClientId" user-type="Client"></vc:list>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="tab4" aria-labelledby="campaign-tab">
+                        <br />
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2 id="campaign-header">Campaigns</h2>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="x_content">
+                            <vc:list broker-id="@Model.BrokerId" client-id="@Model.ClientId" user-type="Campaigns"></vc:list>
+                        </div>
+                    </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tab5" aria-labelledby="purchase-tab">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <p class="h3">Purchase History</p>
+                                <vc:list broker-id="@Model.BrokerId" client-id="@Model.ClientId" user-type="Purchases"></vc:list>
+                            </div>
+                        </div>
+                        <!-- End Tab3  -->
+                    </div>
+            </div>
+            <!-- end Tabs -->
+
+        </div><br /><br />
+        <div class="row">
+
+        </div>
+    </div>
+</div>

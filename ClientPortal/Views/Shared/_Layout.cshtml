@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ClientPortal</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">-->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" integrity="sha256-00w68NO3TLuHjKRHJmjrrgJBDtG/6OhbJEu1gtHcsuo=" crossorigin="anonymous" />
+        <link href="~/js/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+        <link href="~/js/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+        <link href="~/js/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+        <link href="~/js/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+        <link href="~/js/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+        <!-- Ion.RangeSlider -->
+        <link href="~/js/vendors/normalize-css/normalize.css" rel="stylesheet">
+        <link href="~/js/vendors/ion.rangeSlider/css/ion.rangeSlider.css" rel="stylesheet">
+        <link href="~/js/vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+        <!-- Switchery -->
+        <link href="~/js/vendors/switchery/dist/switchery.css" rel="stylesheet">
+        
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" integrity="sha256-00w68NO3TLuHjKRHJmjrrgJBDtG/6OhbJEu1gtHcsuo=" crossorigin="anonymous" />
+        <!--<link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />-->
+        <link href="~/js/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+        <link href="~/js/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+        <link href="~/js/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+        <link href="~/js/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+        <link href="~/js/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+        <!-- Ion.RangeSlider -->
+        <link href="~/js/vendors/normalize-css/normalize.css" rel="stylesheet">
+        <link href="~/js/vendors/ion.rangeSlider/css/ion.rangeSlider.css" rel="stylesheet">
+        <link href="~/js/vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+        <!-- Switchery -->
+        <link href="~/js/vendors/switchery/dist/switchery.css" rel="stylesheet">
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    @RenderSection("Heads", required: false)
+</head>
+<body class="@ViewData["BodyCss"]">
+    <div id="loader-container" style="display:none">
+        <div class="row vertical-center-row">
+            <div class="spinner circles">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            Loading...
+        </div>
+    </div>
+        @RenderBody()
+    <environment include="Development">
+        <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.0.0/pnotify.min.js"></script>-->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        
+        <script src="~/js/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="~/js/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="~/js/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+        <script src="~/js/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="~/js/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+        <script src="~/js/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+        <script src="~/js/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+        <script src="~/js/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+        <script src="~/js/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+        <script src="~/js/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="~/js/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+        <script src="~/js/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+        <script src="~/js/vendors/jszip/dist/jszip.min.js"></script>
+        <script src="~/js/vendors/pdfmake/build/pdfmake.min.js"></script>
+        <script src="~/js/vendors/pdfmake/build/vfs_fonts.js"></script>
+        <script src="~/js/vendors/moment/min/moment.min.js"></script>
+        <script src="~/js/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
+        <script src="~/js/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.0.0/pnotify.min.js"></script>-->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+                integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <script src="~/js/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="~/js/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="~/js/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+        <script src="~/js/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="~/js/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+        <script src="~/js/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+        <script src="~/js/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+        <script src="~/js/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+        <script src="~/js/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+        <script src="~/js/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="~/js/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+        <script src="~/js/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+        <script src="~/js/vendors/jszip/dist/jszip.min.js"></script>
+        <script src="~/js/vendors/pdfmake/build/pdfmake.min.js"></script>
+        <script src="~/js/vendors/pdfmake/build/vfs_fonts.js"></script>
+        <script src="~/js/vendors/moment/min/moment.min.js"></script>
+        <script src="~/js/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script src="~/js/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+        @RenderSection("ScriptLinks", required: false)
+        <script type="text/javascript">
+        $(document).ready(function () {
+            @RenderSection("Scripts", required: false)
+        });
+        </script>
+
+
+</body>
+</html>
