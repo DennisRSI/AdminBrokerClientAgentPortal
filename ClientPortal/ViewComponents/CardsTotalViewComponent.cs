@@ -29,15 +29,6 @@ namespace ClientPortal.ViewComponents
 
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    throw;
-                }
-
                 return View(model);
             }
 
