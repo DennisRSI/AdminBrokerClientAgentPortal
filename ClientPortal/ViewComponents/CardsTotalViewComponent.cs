@@ -23,6 +23,7 @@ namespace ClientPortal.ViewComponents
             _context = context;
         }
 
+#pragma warning disable 1998
         public async Task<IViewComponentResult> InvokeAsync(string accountId)
         {
             CardsTotalViewModel model = new CardsTotalViewModel();
@@ -35,5 +36,7 @@ namespace ClientPortal.ViewComponents
             return null;
 
         }
+#pragma warning restore 1998
+
     }
 }
