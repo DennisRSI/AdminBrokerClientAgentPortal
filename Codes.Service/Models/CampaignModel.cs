@@ -73,6 +73,12 @@ namespace Codes.Service.Models
         [ForeignKey("BrokerId")]
         public BrokerModel Broker { get; set; }
 
+        [ForeignKey("PreLoginVideoId")]
+        public virtual VideoModel PreLoginVideo { get; set; }
+
+        [ForeignKey("PostLoginVideoId")]
+        public virtual VideoModel PostLoginVideo { get; set; }
+
         public ICollection<CampaignAgentModel> CampaignAgents { get; set; }
         public ICollection<UnusedCodeModel> UnusedCodes { get; set; }
         public ICollection<UsedCodeModel> UsedCodes { get; set; }

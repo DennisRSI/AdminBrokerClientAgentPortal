@@ -32,6 +32,7 @@ namespace Codes.Service.Data
         public DbSet<UsedCodeModel> UsedCodes { get; set; }
         public DbSet<UnusedCodeModel> UnusedCodes { get; set; }
         public DbSet<PendingCodeModel> PendingCodes { get; set; }
+        public DbSet<VideoModel> Videos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -52,11 +53,6 @@ namespace Codes.Service.Data
                 .HasOne(pt => pt.Agent)
                 .WithMany(t => t.CampaignAgents)
                 .HasForeignKey(pt => pt.AgentId);
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Password = @cc3ss124; Persist Security Info = True; User ID = RSGAccess; Initial Catalog = RSICodeGenerators; Data Source = 54.208.246.191; ");
         }
     }
 }
