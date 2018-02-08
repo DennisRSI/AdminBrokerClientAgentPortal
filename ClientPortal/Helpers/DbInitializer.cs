@@ -2,6 +2,7 @@
 using ClientPortal.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace ClientPortal.Helpers
         public static async Task Initialize(ApplicationDbContext context, UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole> roleManager, ILogger<DbInitializer> logger)
         {
-            context.Database.EnsureCreated();
+            context.Database.Migrate();
 
             await CreateRoles(context);
             await CreateDefaultUsers(context, userManager, roleManager, logger);
@@ -32,7 +33,13 @@ namespace ClientPortal.Helpers
 
                 if (!context.Roles.Any(r => r.Name == role))
                 {
-                    await roleStore.CreateAsync(new IdentityRole(role));
+                    var identityRole = new IdentityRole
+                    {
+                        Name = role,
+                        NormalizedName = role
+                    };
+
+                    await roleStore.CreateAsync(identityRole);
                 }
             }
         }
