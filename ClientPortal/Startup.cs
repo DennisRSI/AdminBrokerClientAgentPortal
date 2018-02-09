@@ -44,6 +44,7 @@ namespace ClientPortal
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<ICodeService, CodeService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IVideoService, VideoService>();
 
             services.AddMvc();
         }
