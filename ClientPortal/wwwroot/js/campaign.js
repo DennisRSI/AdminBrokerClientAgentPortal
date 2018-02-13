@@ -31,6 +31,12 @@ function Campaign(){
     }
 
     this.processAjaxData = function (data, type) {
+
+        // Convert YouTube link to embedded
+        for (var i = 0; i < data.length; i++) {
+            data[i].url = data[i].url.replace("/watch?v=", "/embed/");
+        }
+
         var template = $.templates('#template');
         var output = template.render(data);
         $('#' + type + 'VidCarousel .carousel-inner').html(output);

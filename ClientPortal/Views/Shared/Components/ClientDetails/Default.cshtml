@@ -275,59 +275,24 @@
                                                                         <br />
                                                                         <label>2. Select a Pre-Activation Video:<br /><span class="disclaimer-text-larger"><em>Optionally, you can insert or upload your own video in the next step:</em></span></label><p></p>
                                                                     </div>
+                                                
+                                                                    <!-- Template for pre and post videos -->
+                                                                    <script id="template" type="text/x-jsrender">
+                                                                        <div class="video col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                                                            <div class="x_panel text-center">
+                                                                                <div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 10px">
+                                                                                    <iframe src="{{:url}}" class="embed-responsive-item" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                                                                </div>
+                                                                                <!-- <button class="btn btn-default btn-sm" type="button">Preview</button> -->
+                                                                                <button class="btn btn-travgreen btn-sm video-select" type="button" data-videoid="{{:videoId}}">Select</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </script>
+
                                                                     <!-- Start Video Carousel -->
+                                                                    <input type="hidden" id="preVideoId">
                                                                     <div id="preVidCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
                                                                         <div class="carousel-inner" role="listbox">
-                                                                            <div class="item active">
-                                                                                <!-- Start Video Slide 1 -->
-                                                                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                                                    <div class="x_panel text-center">
-                                                                                        <image class="img-responsive form-group" src="images/TN-with-PSN---Pre-Activation-Video.jpg">
-                                                                                            <button class="btn btn-default btn-sm" type="button">Preview</button>
-                                                                                            <button class="btn btn-travgreen btn-sm" type="button">Select</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                                                    <div class="x_panel text-center">
-                                                                                        <image class="img-responsive form-group" src="images/TN-Pre-Activation-Video.jpg">
-                                                                                            <button class="btn btn-default btn-sm" type="button">Preview</button>
-                                                                                            <button class="btn btn-travgreen btn-sm" type="button">Select</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                                                    <div class="x_panel text-center">
-                                                                                        <image class="img-responsive form-group" src="images/200-Test-Alt-Enrollment-No-Reg.jpg">
-                                                                                            <button class="btn btn-default btn-sm" type="button">Preview</button>
-                                                                                            <button class="btn btn-travgreen btn-sm" type="button">Select</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <!-- End Video Slide 1 -->
-                                                                            </div>
-                                                                            <div class="item">
-                                                                                <!-- Start Video Slide 2 -->
-                                                                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                                                    <div class="x_panel text-center">
-                                                                                        <image class="img-responsive form-group" src="images/200-Test-Pre-Activation.jpg">
-                                                                                            <button class="btn btn-default btn-sm" type="button">Preview</button>
-                                                                                            <button class="btn btn-travgreen btn-sm" type="button">Select</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                                                    <div class="x_panel text-center">
-                                                                                        <image class="img-responsive form-group" src="images/200-Test-with-PSN-Pre-Activation.jpg">
-                                                                                            <button class="btn btn-default btn-sm" type="button">Preview</button>
-                                                                                            <button class="btn btn-travgreen btn-sm" type="button">Select</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                                                    <div class="x_panel text-center">
-                                                                                        <image class="img-responsive form-group" src="images/video-placeholder.jpg">
-                                                                                            <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                            <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <!-- End Video Slide 2 -->
-                                                                            </div>
                                                                         </div>
                                                                         <!-- Carousel Controls -->
                                                                         <a class="left custom-carousel-control" href="#preVidCarousel" role="button" data-slide="prev">
@@ -498,58 +463,9 @@
                                                                         <label>2. Select a Post-Activation Video:<br /><span class="disclaimer-text-larger"><em>Optionally, you can insert or upload your own video in the next step:</em></span></label><p></p>
                                                                     </div>
                                                                     <!-- Start Video Carousel -->
+                                                                    <input type="hidden" id="postVideoId">
                                                                     <div id="postVidCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
                                                                         <div class="carousel-inner" role="listbox">
-                                                                            <div class="item active">
-                                                                                <!-- Start Video Slide 1 -->
-                                                                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                                                    <div class="x_panel text-center">
-                                                                                        <image class="img-responsive form-group" src="images/video-placeholder.jpg">
-                                                                                            <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                            <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                                                    <div class="x_panel text-center">
-                                                                                        <image class="img-responsive form-group" src="images/video-placeholder.jpg">
-                                                                                            <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                            <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                                                    <div class="x_panel text-center">
-                                                                                        <image class="img-responsive form-group" src="images/video-placeholder.jpg">
-                                                                                            <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                            <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <!-- End Video Slide 1 -->
-                                                                            </div>
-                                                                            <div class="item">
-                                                                                <!-- Start Video Slide 2 -->
-                                                                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                                                    <div class="x_panel text-center">
-                                                                                        <image class="img-responsive form-group" src="images/video-placeholder.jpg">
-                                                                                            <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                            <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                                                    <div class="x_panel text-center">
-                                                                                        <image class="img-responsive form-group" src="images/video-placeholder.jpg">
-                                                                                            <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                            <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                                                    <div class="x_panel text-center">
-                                                                                        <image class="img-responsive form-group" src="images/video-placeholder.jpg">
-                                                                                            <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                            <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <!-- End Video Slide 2 -->
-                                                                            </div>
                                                                         </div>
                                                                         <!-- Carousel Controls -->
                                                                         <a class="left custom-carousel-control" href="#postVidCarousel" role="button" data-slide="prev">
@@ -695,4 +611,6 @@
         </div>
     </div>
 </div>
-			
+<script type="text/javascript">
+    CAMPAIGN.init();
+</script>
