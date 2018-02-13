@@ -110,7 +110,7 @@ namespace Codes.Service.Models
         public int? CampaignId { get; set; } = null;
         [ForeignKey("CampaignId")]
         public CampaignModel Campaign { get; set; } = null;
-        public string TestField { get; set; }
+
         /*public int? ClientId { get; set; } = null;
         [ForeignKey("ClientId")]
         public CampaignModel Client { get; set; } = null;*/

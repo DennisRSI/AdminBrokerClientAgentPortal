@@ -663,6 +663,8 @@ namespace Codes.Service.Services
 
             return client;
         }
+
+#pragma warning disable 1998
         public async Task<(CardsTotalViewModel model, string message, bool isSuccess)> GetCardTotalsForBroker(int brokerId)
         {
             (CardsTotalViewModel model, string message, bool isSuccess) model = (new CardsTotalViewModel(), "", false);
@@ -682,6 +684,8 @@ namespace Codes.Service.Services
 
             return model;
         }
+#pragma warning restore 1998
+
         public async Task<DataTableViewModel<ClientListViewModel>> GetClients(int draw, int brokerId, int startRowIndex = 0, int numberOfRows = 10, string searchValue = null, string sortColumn = "DEFAULT", string sortDirection = "ASC")
         {
             DataTableViewModel<ClientListViewModel> model = new DataTableViewModel<ClientListViewModel>();

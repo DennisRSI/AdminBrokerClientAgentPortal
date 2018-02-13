@@ -23,26 +23,20 @@ namespace ClientPortal.ViewComponents
             _context = context;
         }
 
+#pragma warning disable 1998
         public async Task<IViewComponentResult> InvokeAsync(string accountId)
         {
             CardsTotalViewModel model = new CardsTotalViewModel();
 
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    throw;
-                }
-
                 return View(model);
             }
 
             return null;
 
         }
+#pragma warning restore 1998
+
     }
 }
