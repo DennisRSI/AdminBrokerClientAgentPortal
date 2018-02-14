@@ -15,6 +15,7 @@ using Codes.Service.Interfaces;
 using Codes.Service.Services;
 using Codes.Service.Data;
 using ClientPortal.Services._Interfaces;
+using AutoMapper;
 
 namespace ClientPortal
 {
@@ -45,8 +46,10 @@ namespace ClientPortal
             services.AddTransient<ICodeService, CodeService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IVideoService, VideoService>();
+            services.AddTransient<ICampaignService, CampaignService>();
 
             services.AddMvc();
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
