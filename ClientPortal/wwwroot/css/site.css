@@ -1504,6 +1504,10 @@ h2 {
     border-radius: 5px;
 }
 
+    .x_panel.selected {
+        border: 2px solid gray;
+    }
+
 .x_panel_info {
     position: relative;
     width: 100%;

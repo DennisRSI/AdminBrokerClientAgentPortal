@@ -158,39 +158,39 @@ namespace ClientPortal.Controllers.APIs
 
                         var brokerCommissionPercentageTmp = obj.broker_commission_percentage;
                         if (brokerCommissionPercentageTmp != null)
-                            brokerCommissionPercentage = brokerCommissionPercentageTmp.ToString();
+                            brokerCommissionPercentage = Convert.ToSingle(brokerCommissionPercentageTmp.ToString());
 
                         var agentCommissionPercentageTmp = obj.agent_commission_percentage;
                         if (agentCommissionPercentageTmp != null)
-                            agentCommissionPercentage = agentCommissionPercentageTmp.ToString();
+                            agentCommissionPercentage = Convert.ToSingle(agentCommissionPercentageTmp.ToString());
 
                         var clientCommissionPercentageTmp = obj.client_commission_percentage;
                         if (clientCommissionPercentageTmp != null)
-                            clientCommissionPercentage = clientCommissionPercentageTmp.ToString();
+                            clientCommissionPercentage = Convert.ToSingle(clientCommissionPercentageTmp.ToString());
 
                         var cards1000Tmp = obj.cards_1000;
                         if (cards1000Tmp != null)
-                            cards1000 = cards1000Tmp.ToString();
+                            cards1000 = Convert.ToSingle(cards1000Tmp.ToString());
 
                         var cards5000Tmp = obj.cards_5000;
                         if (cards5000Tmp != null)
-                            cards5000 = cards5000Tmp.ToString();
+                            cards5000 = Convert.ToSingle(cards5000Tmp.ToString());
 
                         var cards10000Tmp = obj.cards_10000;
                         if (cards10000Tmp != null)
-                            cards10000 = cards10000Tmp.ToString();
+                            cards10000 = Convert.ToSingle(cards10000Tmp.ToString());
 
                         var cards25000Tmp = obj.cards_25000;
                         if (cards25000Tmp != null)
-                            cards25000 = cards25000Tmp.ToString();
+                            cards25000 = Convert.ToSingle(cards25000Tmp.ToString());
 
                         var cards50000Tmp = obj.cards_50000;
                         if (cards50000Tmp != null)
-                            cards50000 = cards50000Tmp.ToString();
+                            cards50000 = Convert.ToSingle(cards50000Tmp.ToString());
 
                         var cards100000Tmp = obj.cards_100000;
                         if (cards100000Tmp != null)
-                            cards100000 = cards100000Tmp.ToString();
+                            cards100000 = Convert.ToSingle(cards100000Tmp.ToString());
 
                         var virtualCapTmp = obj.virtual_cap;
                         if (virtualCapTmp != null && virtualCapTmp.ToString().Length > 0)
