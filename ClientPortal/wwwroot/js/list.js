@@ -159,7 +159,13 @@ function List() {
             self.redirectToPage('/api/menu/client-details/' + data);
         });
     }
-    this.generateList = function (tableName, url, columns) {
+
+    this.generateList = function (tableName, url, columns, method) {
+
+        if (typeof method === 'undefined') {
+            method = 'POST';
+        }
+
         var tblParsed = '#' + tableName;
         var $dt;
         if (!$.fn.DataTable.isDataTable(tblParsed)) {
@@ -174,7 +180,7 @@ function List() {
                 "orderMulti": false, // for disable multiple column at once  
                 "ajax": $.fn.dataTable.pipeline({
                     url: url,
-                    method: "POST",
+                    method: method,
                     pages: 5
                 }),
                 "columnDefs":
@@ -191,7 +197,7 @@ function List() {
         }
         return $dt;
     }
-    
+
     this.downloadCodes = function (codeRangeId) {
 
     }

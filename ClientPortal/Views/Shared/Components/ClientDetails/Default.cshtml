@@ -275,7 +275,7 @@
                                                                         <br />
                                                                         <label>2. Select a Pre-Activation Video:<br /><span class="disclaimer-text-larger"><em>Optionally, you can insert or upload your own video in the next step:</em></span></label><p></p>
                                                                     </div>
-                                                
+
                                                                     <!-- Template for pre and post videos -->
                                                                     <script id="template" type="text/x-jsrender">
                                                                         <div class="video col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -556,7 +556,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <table id="datatable-checkbox" class="table table-bordered jambo_table bulk_action table-responsive">
+                <table id="campaign_tbl" class="table-select table table-striped table-bordered jambo_table bulk_action">
                     <thead>
                         <tr>
                             <th class="">Campaign ID</th>
@@ -565,52 +565,15 @@
                             <th class="">Card Type</th>
                             <th class="">Benefits</th>
                             <th class="">Status</th>
-                            <th class="text-center">Clone</th>
+                            <th class="">Deactivated</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-warning bg-warning">3</td>
-                            <td class="text-warning bg-warning">R&amp;D Team Rewards</td>
-                            <td class="text-warning bg-warning">10,000</td>
-                            <td class="text-warning bg-warning">Virtual</td>
-                            <td class="text-warning bg-warning">Hotel, Condo, Shopping</td>
-                            <td class="text-warning bg-warning"><a href="#" data-toggle="tooltip" title="Activation Flow landing page not set up. Click to finish setup." class="text-warning">Pending</a></td>
-                            <td class="text-warning bg-warning text-center"><a href="#" deactivated><i class="fa fa-clone fa-sm"></i></a></td>
-                        </tr>
-                        <tr>
-                            <td class="text-deactivated">4</td>
-                            <td class="text-deactivated">Sales Program Rewards</td>
-                            <td class="text-deactivated">6,000</td>
-                            <td class="text-deactivated">Virtual</td>
-                            <td class="text-deactivated">Condo</td>
-                            <td class="text-deactivated"><a href="#" data-toggle="tooltip" title="This campaign has ended or has been deactivated." class="text-deactivated">Ended</a></td>
-                            <td class="text-deactivated text-center"><i class="fa fa-clone fa-sm text-deactivated" deactivated></i></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>GM Global - Cadillac</td>
-                            <td>20,000</td>
-                            <td>Physical</td>
-                            <td>Hotel, Shopping</td>
-                            <td>Live</td>
-                            <td class="text-center"><a href="#" deactivated><i class="fa fa-clone fa-sm"></i></a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="campaign-edit.html">GM Executive Team</a></td>
-                            <td><a href="card-ranges.html">5,000</a></td>
-                            <td>Physical</td>
-                            <td>Hotel, Condo, Shopping</td>
-                            <td>Live</td>
-                            <td class="text-center"><a href="#" deactivated><i class="fa fa-clone fa-sm"></i></a></td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-    CAMPAIGN.init();
+    var clientId = $('#id-store').data('clientid');
+    CAMPAIGN.init(clientId);
 </script>

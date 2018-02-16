@@ -3,7 +3,9 @@
 function Campaign(){
     var self = this;
 
-    this.init = function () {
+    this.init = function (clientId) {
+
+        self.updateClientCampaigns(clientId);
 
         $.get('/api/video/?isPreLogin=true', function (data) {
             self.processAjaxData(data, 'pre');
@@ -47,5 +49,17 @@ function Campaign(){
         }
 
         $('#' + type + 'VidCarousel .item:first').addClass('active');
+    }
+
+    this.updateClientCampaigns = function (clientId) {
+        var url = "api/campaign/getbyclient/" + clientId;
+
+        var cols = [
+            { "data": "campaignId" },
+            { "data": "campaignName" },
+            { "data": "cardQuantity" }
+        ];
+
+        $dt = LIST.generateList("campaign_tbl", url, cols, "GET");
     }
 }
