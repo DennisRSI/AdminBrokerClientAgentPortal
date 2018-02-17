@@ -60,6 +60,6 @@ function Campaign(){
             { "data": "cardQuantity" }
         ];
 
-        $dt = LIST.generateList("campaign_tbl", url, cols, "GET");
+        $dt = LIST.generateList("campaign_tbl", url, cols, "GET", false);
     }
 }

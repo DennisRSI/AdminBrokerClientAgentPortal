@@ -22,23 +22,21 @@ namespace Codes.Service.Services
             _mapper = mapper;
         }
 
-        public DataTableViewModel<CampaignViewModel> GetByClient(int id, int draw, int startRowIndex, int numberOfRows, string sortColumn, string sortDirection, string searchValue)
+        public DataTableViewModel<CampaignViewModel> GetByClient(int id)
         {
-            var model = new DataTableViewModel<CampaignViewModel>();
-
             var queryResult = _context.Campaigns
-                            .Where(c => c.ClientId == id && c.IsActive)
-                            .OrderByDescending(c => c.CreationDate);
+                                .Where(c => c.ClientId == id && c.IsActive)
+                                .OrderByDescending(c => c.CreationDate);
 
             var data = _mapper.Map<IEnumerable<CampaignModel>, IEnumerable<CampaignViewModel>>(queryResult);
 
-            model.Draw = id;
-            model.NumberOfRows = data.Count();
-            model.RecordsFiltered = model.NumberOfRows;
-            model.Data = data.ToArray();
-            model.Message = "Success";
-
-            return model;
+            return new DataTableViewModel<CampaignViewModel>
+            {
+                NumberOfRows = queryResult.Count(),
+                RecordsFiltered = queryResult.Count(),
+                Data = data.ToArray(),
+                Message = "Success"
+            };
         }
     }
 }

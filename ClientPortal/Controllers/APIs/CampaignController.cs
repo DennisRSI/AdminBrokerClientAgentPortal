@@ -18,11 +18,11 @@ namespace ClientPortal.Controllers.APIs
         }
 
         [HttpGet("getbyclient/{id}")]
-        public DataTableViewModel<CampaignViewModel> Get(int id, int draw, int startRowIndex, int numberOfRows, string sortColumn, string sortDirection, string searchValue)
+        public DataTableViewModel<CampaignViewModel> Get(int id)
         {
             try
             {
-                return _campaignService.GetByClient(id, draw, startRowIndex, numberOfRows, sortColumn, sortDirection, searchValue);
+                return _campaignService.GetByClient(id);
             }
             catch (Exception ex)
             {

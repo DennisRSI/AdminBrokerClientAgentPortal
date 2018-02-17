@@ -160,10 +160,14 @@ function List() {
         });
     }
 
-    this.generateList = function (tableName, url, columns, method) {
+    this.generateList = function (tableName, url, columns, method, serverSide) {
 
         if (typeof method === 'undefined') {
             method = 'POST';
+        }
+
+        if (typeof serverSide === 'undefined') {
+            serverSide = true;
         }
 
         var tblParsed = '#' + tableName;
@@ -175,7 +179,7 @@ function List() {
                     "loadingRecords": "&nbsp;",
                     "processing": "<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i><span> Loading...</span>"
                 },
-                "serverSide": true, // for process server side  
+                "serverSide": serverSide, // for process server side  
                 "filter": true, // this is for disable filter (search box)  
                 "orderMulti": false, // for disable multiple column at once  
                 "ajax": $.fn.dataTable.pipeline({
