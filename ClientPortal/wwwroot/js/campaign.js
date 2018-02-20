@@ -57,7 +57,11 @@ function Campaign(){
         var cols = [
             { "data": "campaignId" },
             { "data": "campaignName" },
-            { "data": "cardQuantity" }
+            { "data": "cardQuantity" },
+            { "data": "campaignType" },
+            { "data": "benefitText" },
+            { "data": "statusText" },
+            { "data": "clone" }
         ];
 
         $dt = LIST.generateList("campaign_tbl", url, cols, "GET", false);

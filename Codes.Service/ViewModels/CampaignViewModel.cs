@@ -27,12 +27,47 @@ namespace Codes.Service.ViewModels
         public string GoogleAnalyticsCode { get; set; } = null;
         [Display(Name = "Custom CSS", Prompt = "Custom CSS")]
         public string CustomCSS { get; set; } = null;
+
         [Display(Name = "Deactivation Reason", Prompt = "Deactivation Reason")]
         public DateTime? DeactivationReason { get; set; } = null;
+
         [Display(Name = "Broker", Prompt = "Broker")]
         public BrokerViewModel Broker { get; set; } = new BrokerViewModel();
         [Display(Name = "Client", Prompt = "Client")]
         public ClientViewModel Client { get; set; } = new ClientViewModel();
+
+        public bool BenefitCondo { get; set; }
+
+        public bool BenefitHotel { get; set; }
+
+        public bool BenefitShopping { get; set; }
+
+        public string BenefitText
+        {
+            get
+            {
+                string result = String.Empty;
+
+                result += BenefitCondo ? "Condo, " : String.Empty;
+                result += BenefitHotel ? "Hotel, " : String.Empty;
+                result += BenefitShopping ? "Shopping, " : String.Empty;
+
+                return result.TrimEnd(',', ' ');
+            }
+        }
+
+        public string StatusText
+        {
+            get
+            {
+                if (DeactivationDate != null)
+                {
+                    return "Inactive";
+                }
+
+                return "Active";
+            }
+        }
     }
 
     public class CampaignCodeRangeViewModel : _BaseViewModel
