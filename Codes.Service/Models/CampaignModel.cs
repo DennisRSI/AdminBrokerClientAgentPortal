@@ -39,14 +39,23 @@ namespace Codes.Service.Models
 
         [Key, Required]
         public int CampaignId { get; set; } = 0;
+
         [Required, StringLength(100)]
         public string CampaignName { get; set; }
+
         [Required, StringLength(50)]
         public string CampaignType { get; set; } = "Virtual";
-        
-      
+
+        [Required]
+        public bool BenefitCondo { get; set; }
+
+        [Required]
+        public bool BenefitHotel { get; set; }
+
+        [Required]
+        public bool BenefitShopping { get; set; }
+
         public DateTime? StartDateTime { get; set; } = null;
-       
         public DateTime? EndDateTime { get; set; } = null;
         public string CampaignDescription { get; set; }
         public string GoogleAnalyticsCode { get; set; } = null;
