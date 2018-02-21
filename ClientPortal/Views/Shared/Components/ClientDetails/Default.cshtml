@@ -50,39 +50,41 @@
                                                     <h4>General Motors Campaign Creation</h4><br />
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                                                <label class="">Create Campaign Name</label>
-                                                <input type="text" class="form-control" id="campaignName" name="campaignName" placeholder="Campaign Name"><br />
-                                                <label class="">Select Quantity</label>
-                                                <input type="number" class="form-control" id="cardQuantity" name="cardQuantity" placeholder="Card Qty" max="20000">
-                                                Physical Cards Available: 20,000<br />
-                                                Virtual Cards Available: 49,500<br />
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                                                    <label class="">Create Campaign Name</label>
+                                                    <input type="text" class="form-control" id="campaignName" name="campaignName" placeholder="Campaign Name"><br />
+                                                    <label class="">Select Quantity</label>
+                                                    <input type="number" class="form-control" id="cardQuantity" name="cardQuantity" placeholder="Card Qty" max="20000">
+                                                    Physical Cards Available: 20,000<br />
+                                                    Virtual Cards Available: 49,500<br />
 
-                                                <em><a href="purchase-cards.html">Purchase More?</a></em>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                                                <label class="">Select Card Type</label>
-                                                <select class="form-control nested-dropdown" id="campaignType" name="campaignType">
-                                                    <option>Physical</option>
-                                                    <option>Virtual</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <span>Select Benefits For This Campaign:</span>
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input id="benefitHotel" name="benefitHotel" value="true" type="checkbox" class="flat"> Hotel Benefit
-                                                    </label>
+                                                    <em><a href="purchase-cards.html">Purchase More?</a></em>
                                                 </div>
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input id="benefitCondo" name="benefitCondo" value="true" type="checkbox" class="flat"> Condo Benefit
-                                                    </label>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                                                    <label class="">Select Card Type</label>
+                                                    <select class="form-control nested-dropdown" id="campaignType" name="campaignType">
+                                                        <option>Physical</option>
+                                                        <option>Virtual</option>
+                                                    </select>
                                                 </div>
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input id="benefitShopping" name="benefitShopping" value="true" type="checkbox" class="flat"> Shopping Benefit
-                                                    </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <span>Select Benefits For This Campaign:</span>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input id="benefitHotel" name="benefitHotel" value="true" type="checkbox" class="flat"> Hotel Benefit
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input id="benefitCondo" name="benefitCondo" value="true" type="checkbox" class="flat"> Condo Benefit
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input id="benefitShopping" name="benefitShopping" value="true" type="checkbox" class="flat"> Shopping Benefit
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </form><br />
@@ -94,7 +96,7 @@
                                                         <div class="control-group">
                                                             <div class="controls">
                                                                 <div class=" form-group text-center">
-                                                                    <input type="date" class="form-control has-feedback-left" placeholder="Start Date">
+                                                                    <input id="startDate" name="startDate" type="date" class="form-control has-feedback-left" placeholder="Start Date">
                                                                     <span class="disclaimer-text">MM/DD/YYYY</span>
                                                                 </div>
                                                             </div>
@@ -109,7 +111,7 @@
                                                         <div class="control-group">
                                                             <div class="controls">
                                                                 <div class=" form-group text-center">
-                                                                    <input type="date" class="form-control has-feedback-left" placeholder="End Date">
+                                                                    <input id="endDate" name="endDate"  type="date" class="form-control has-feedback-left" placeholder="End Date">
                                                                     <span class="disclaimer-text">MM/DD/YYYY</span>
                                                                 </div>
                                                             </div>
@@ -124,7 +126,7 @@
                                                         <div class="control-group">
                                                             <div class="controls">
                                                                 <div class="form-group text-center">
-                                                                    <input type="time" class="form-control has-feedback-left" placeholder="Start Time">
+                                                                    <input id="startTime" name="startTime" type="time" class="form-control has-feedback-left" placeholder="Start Time">
                                                                     <span class="disclaimer-text">HH:MM AM/PM</span>
                                                                 </div>
                                                             </div>
@@ -139,7 +141,7 @@
                                                         <div class="control-group">
                                                             <div class="controls">
                                                                 <div class="form-group text-center">
-                                                                    <input type="time" class="form-control has-feedback-left" placeholder="End Time">
+                                                                    <input id="endTime" name="endTime" type="time" class="form-control has-feedback-left" placeholder="End Time">
                                                                     <span class="disclaimer-text">HH:MM AM/PM</span>
                                                                 </div>
                                                             </div>
