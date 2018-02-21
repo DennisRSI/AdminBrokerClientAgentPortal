@@ -34,8 +34,8 @@ namespace ClientPortal.Controllers.APIs
             }
         }
 
-        [HttpPost("create")]
-        public IActionResult Create( [FromBody] CampaignViewModel model)
+        [HttpPost("create/{id}")]
+        public IActionResult Create(int id, [FromBody] CampaignViewModel model)
         {
             _campaignService.Create(model);
             return Ok();

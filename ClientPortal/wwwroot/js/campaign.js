@@ -27,7 +27,7 @@ function Campaign(){
             var data = self.serializeFormJSON($('#addCampaignForm'));
 
             $.ajax({
-                url: '/api/campaign/create',
+                url: '/api/campaign/create/' + clientId,
                 type: 'POST',
                 dataType: 'json',
                 contentType: 'application/json',
