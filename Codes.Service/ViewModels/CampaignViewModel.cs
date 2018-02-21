@@ -36,9 +36,9 @@ namespace Codes.Service.ViewModels
         [Display(Name = "Campaign Description", Prompt = "Campaign Description")]
         public string CampaignDescription { get; set; }
 
-        public string PreLoginVideoId { get; set; }
+        public int PreLoginVideoId { get; set; }
 
-        public string PostLoginVideoId { get; set; }
+        public int PostLoginVideoId { get; set; }
 
         [Display(Name = "Google Analytics Code", Prompt = "Google Analytics Code")]
         public string GoogleAnalyticsCode { get; set; } = null;
