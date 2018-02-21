@@ -47,6 +47,9 @@ namespace Codes.Service.Models
         public string CampaignType { get; set; } = "Virtual";
 
         [Required]
+        public int CardQuantity { get; set; }
+
+        [Required]
         public bool BenefitCondo { get; set; }
 
         [Required]
