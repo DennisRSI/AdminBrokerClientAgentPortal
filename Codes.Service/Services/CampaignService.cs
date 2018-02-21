@@ -38,5 +38,31 @@ namespace Codes.Service.Services
                 Message = "Success"
             };
         }
+
+        public void Create(int clientId, CampaignViewModel viewModel)
+        {
+           var model = new CampaignModel
+           {
+                BrokerId = 1, // Is the broker needed here because the client already is assigned to a broker?
+                CampaignDescription = viewModel.CampaignDescription,
+                CampaignName = viewModel.CampaignName,
+                CampaignType = viewModel.CampaignType,
+                CustomCSS = viewModel.CustomCSS, // TODO: Need to split this into two
+                EndDateTime = viewModel.EndDateTime,
+                GoogleAnalyticsCode = viewModel.GoogleAnalyticsCode,
+                IsActive = true,
+                StartDateTime = viewModel.StartDateTime,
+                ClientId = clientId,
+                PostLoginVideoId = viewModel.PostLoginVideoId,
+                PreLoginVideoId = viewModel.PreLoginVideoId,
+                BenefitCondo = viewModel.BenefitCondo,
+                BenefitHotel = viewModel.BenefitHotel,
+                BenefitShopping = viewModel.BenefitShopping,
+                CardQuantity = viewModel.CardQuantity
+            };
+
+            _context.Campaigns.Add(model);
+            _context.SaveChanges();
+        }
     }
 }

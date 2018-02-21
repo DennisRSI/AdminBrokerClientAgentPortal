@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace Codes.Service.ViewModels
 {
@@ -24,14 +25,22 @@ namespace Codes.Service.ViewModels
         [Display(Name = "Package Id", Prompt = "Package Id")]
         public int PackageId { get; set; }
 
-        [Display(Name = "Start Date", Prompt = "Start Date")]
-        public DateTime? StartDateTime { get; set; } = null;
+        public DateTime? StartDateTime
+        {
+            get { return GetDateTime(StartDate, StartTime); }
+            set { } // TODO
+        }
 
-        [Display(Name = "End Date", Prompt = "End Date")]
-        public DateTime? EndDateTime { get; set; } = null;
+        public DateTime? EndDateTime
+        {
+            get { return GetDateTime(EndDate, EndTime); }
+            set { } // TODO
+        }
 
-        // ?? Start Time
-        // ?? End Time
+        public string StartDate { get; set; }
+        public string StartTime { get; set; }
+        public string EndDate { get; set; }
+        public string EndTime { get; set; }
 
         [Display(Name = "Campaign Description", Prompt = "Campaign Description")]
         public string CampaignDescription { get; set; }
@@ -79,6 +88,21 @@ namespace Codes.Service.ViewModels
                 }
 
                 return "Active";
+            }
+        }
+
+        private DateTime? GetDateTime(string date, string time)
+        {
+            string dateTime = $"{date} {time}";
+            string format = "yyyy-MM-dd HH:mm";
+
+            try
+            {
+                return DateTime.ParseExact(dateTime, format, CultureInfo.InvariantCulture);
+            }
+            catch (FormatException)
+            {
+                return null;
             }
         }
     }

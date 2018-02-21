@@ -37,7 +37,7 @@ namespace ClientPortal.Controllers.APIs
         [HttpPost("create/{id}")]
         public IActionResult Create(int id, [FromBody] CampaignViewModel model)
         {
-            _campaignService.Create(model);
+            _campaignService.Create(id, model);
             return Ok();
         }
     }
