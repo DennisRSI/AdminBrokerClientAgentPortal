@@ -3,6 +3,7 @@ using Codes.Service.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 
 namespace ClientPortal.Controllers.APIs
 {
@@ -31,6 +32,13 @@ namespace ClientPortal.Controllers.APIs
                     Message = $"Error: {ex.Message}"
                 };
             }
+        }
+
+        [HttpPost("create")]
+        public IActionResult Create( [FromBody] CampaignViewModel model)
+        {
+            _campaignService.Create(model);
+            return Ok();
         }
     }
 }

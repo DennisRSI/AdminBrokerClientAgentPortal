@@ -22,11 +22,34 @@ function Campaign(){
         $('#postVidCarousel').on('click', '.video-select', function () {
             self.selectVideo($(this), 'post');
         });
+
+        $('#addCampaignButton').click(function () {
+            var data = self.serializeFormJSON($('#addCampaignForm'));
+
+            $.ajax({
+                url: '/api/campaign/create',
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function (result) {
+                    if (result.is_success == true) {
+                        self.redirectToPage(result.account_id);
+                    }
+                    else {
+                        alert('Error: ' + result.message);
+                    }
+                },
+                error: function (xhr, resp, text) {
+                    console.log(xhr, resp, text);
+                }
+            })
+        });
     }
 
     this.selectVideo = function (element, type) {
         var id = element.data('videoid');
-        $('input#' + type + 'VideoId').val(id);
+        $('input#' + type + 'LoginVideoId').val(id);
 
         $('#' + type + 'VidCarousel .x_panel').removeClass('selected');
         element.parent().addClass('selected');
@@ -60,10 +83,27 @@ function Campaign(){
             { "data": "cardQuantity" },
             { "data": "campaignType" },
             { "data": "benefitText" },
-            { "data": "statusText" },
-            { "data": "clone" }
+            { "data": "statusText" }
         ];
 
         $dt = LIST.generateList("campaign_tbl", url, cols, "GET", false);
+    }
+
+    // TODO: Refactor this
+    this.serializeFormJSON = function (form) {
+        var o = {};
+        var a = form.serializeArray();
+        $.each(a, function () {
+            console.log('name: ' + this.name);
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
     }
 }
