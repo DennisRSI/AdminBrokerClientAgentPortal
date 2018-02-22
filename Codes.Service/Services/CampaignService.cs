@@ -47,7 +47,8 @@ namespace Codes.Service.Services
                 CampaignDescription = viewModel.CampaignDescription,
                 CampaignName = viewModel.CampaignName,
                 CampaignType = viewModel.CampaignType,
-                CustomCSS = viewModel.CustomCSS, // TODO: Need to split this into two
+                CustomCSS = viewModel.CustomCSS,
+                CustomCssPost = viewModel.CustomCssPost,
                 EndDateTime = viewModel.EndDateTime,
                 GoogleAnalyticsCode = viewModel.GoogleAnalyticsCode,
                 IsActive = true,
