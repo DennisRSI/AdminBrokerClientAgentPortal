@@ -11,9 +11,10 @@ using System;
 namespace Codes.Service.Data.Migrations
 {
     [DbContext(typeof(CodesDbContext))]
-    partial class CodesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180221234859_CustomCssPost")]
+    partial class CustomCssPost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1159,12 +1160,12 @@ namespace Codes.Service.Data.Migrations
                     b.HasOne("Codes.Service.Models.VideoModel", "PostLoginVideo")
                         .WithMany()
                         .HasForeignKey("PostLoginVideoId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Codes.Service.Models.VideoModel", "PreLoginVideo")
                         .WithMany()
                         .HasForeignKey("PreLoginVideoId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Codes.Service.Models.ClientModel", b =>
