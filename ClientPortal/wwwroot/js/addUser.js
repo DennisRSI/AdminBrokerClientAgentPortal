@@ -1,4 +1,4 @@
-﻿var ADDUSER = new AddUser();
+var ADDUSER = new AddUser();
 
 function AddUser(){
     var self = this;
@@ -8,7 +8,7 @@ function AddUser(){
         
         $('#addUserBTN').click(function () {
             var data = self.serializeFormJSON($('#addUserForm'));
-            alert(JSON.stringify(data));
+
             $.ajax({
                 url: url, // url where to submit the request
                 type: "POST", // type of action POST || GET
@@ -34,11 +34,10 @@ function AddUser(){
         var url = '/api/menu/my-account/';
         url += accountId;
         $("#loader-container").show();
-        //alert(url);
+
         $.get(url, function (data, status) {
             $('#main_panel').html(data);
             $("#loader-container").hide();
-            //alert("Data: " + data + "\nStatus: " + status);
         });
     }
 
@@ -57,5 +56,4 @@ function AddUser(){
         });
         return o;
     }
-    
 }
