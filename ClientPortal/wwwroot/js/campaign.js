@@ -24,6 +24,11 @@ function Campaign(){
             self.selectVideo($(this), 'post');
         });
 
+        $('#campaign_tbl').on('click', 'i.clone', function () {
+            var id = $(this).data('clone');
+            self.cloneCampaign(id);
+        });
+
         $('#addCampaignButton').click(function () {
             var data = self.serializeFormJSON($('#addCampaignForm'));
 
@@ -80,10 +85,25 @@ function Campaign(){
             { "data": "cardQuantity" },
             { "data": "campaignType" },
             { "data": "benefitText" },
-            { "data": "statusText" }
+            { "data": "statusText" },
+            {
+                "data": "campaignId",
+                "className": "text-center",
+                "render": function (data, type, row) {
+                    return '<i data-clone="' + data + '" class="clone fa fa-clone fa-sm"></i>';
+                }
+            },
         ];
 
         dataTable = LIST.generateUpdatableList("#campaign_tbl", url, cols, "GET");
+    }
+
+    this.cloneCampaign = function (campaignId) {
+        $.post('/api/campaign/clone/' + campaignId,
+            function (data) {
+                dataTable.ajax.reload();
+            }
+        );
     }
 
     // TODO: Refactor this

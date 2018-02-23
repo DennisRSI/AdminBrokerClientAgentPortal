@@ -34,6 +34,13 @@ namespace ClientPortal.Controllers.APIs
             }
         }
 
+        [HttpPost("clone/{campaignId}")]
+        public IActionResult Clone(int campaignId)
+        {
+            _campaignService.Clone(campaignId);
+            return Ok();
+        }
+
         [HttpPost("create/{id}")]
         public IActionResult Create(int id, [FromBody] CampaignViewModel model)
         {

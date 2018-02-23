@@ -4,7 +4,8 @@ namespace Codes.Service.Interfaces
 {
     public interface ICampaignService
     {
-        DataTableViewModel<CampaignViewModel> GetByClient(int id);
+        void Clone(int campaignId);
         void Create(int clientId, CampaignViewModel viewModel);
+        DataTableViewModel<CampaignViewModel> GetByClient(int id);
     }
 }

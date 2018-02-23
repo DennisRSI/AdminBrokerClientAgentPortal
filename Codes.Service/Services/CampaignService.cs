@@ -3,7 +3,9 @@ using Codes.Service.Data;
 using Codes.Service.Interfaces;
 using Codes.Service.Models;
 using Codes.Service.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,21 +24,22 @@ namespace Codes.Service.Services
             _mapper = mapper;
         }
 
-        public DataTableViewModel<CampaignViewModel> GetByClient(int id)
+        public void Clone(int campaignId)
         {
-            var queryResult = _context.Campaigns
-                                .Where(c => c.ClientId == id && c.IsActive)
-                                .OrderByDescending(c => c.CreationDate);
+            var clone = _context.Campaigns
+                            .AsNoTracking()
+                            .Single(c => c.CampaignId == campaignId);
 
-            var data = _mapper.Map<IEnumerable<CampaignModel>, IEnumerable<CampaignViewModel>>(queryResult);
+            clone.CampaignId = 0;
+            clone.CreationDate = DateTime.Now;
 
-            return new DataTableViewModel<CampaignViewModel>
+            if (!clone.CampaignName.Contains(" Copy"))
             {
-                NumberOfRows = queryResult.Count(),
-                RecordsFiltered = queryResult.Count(),
-                Data = data.ToArray(),
-                Message = "Success"
-            };
+                clone.CampaignName += " Copy";
+            }
+
+            _context.Campaigns.Add(clone);
+            _context.SaveChanges();
         }
 
         public void Create(int clientId, CampaignViewModel viewModel)
@@ -64,6 +67,23 @@ namespace Codes.Service.Services
 
             _context.Campaigns.Add(model);
             _context.SaveChanges();
+        }
+
+        public DataTableViewModel<CampaignViewModel> GetByClient(int id)
+        {
+            var queryResult = _context.Campaigns
+                                .Where(c => c.ClientId == id && c.IsActive)
+                                .OrderByDescending(c => c.CreationDate);
+
+            var data = _mapper.Map<IEnumerable<CampaignModel>, IEnumerable<CampaignViewModel>>(queryResult);
+
+            return new DataTableViewModel<CampaignViewModel>
+            {
+                NumberOfRows = queryResult.Count(),
+                RecordsFiltered = queryResult.Count(),
+                Data = data.ToArray(),
+                Message = "Success"
+            };
         }
     }
 }
