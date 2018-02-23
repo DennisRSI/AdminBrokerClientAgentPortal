@@ -202,6 +202,31 @@ function List() {
         return $dt;
     }
 
+    // generateList() doesn't work with ajax.reload(), this method can be used instead
+    this.generateUpdatableList = function (tableSelector, url, columns, method) {
+        return $(tableSelector).DataTable({
+            "processing": true,
+            "language": {
+                "loadingRecords": "&nbsp;",
+                "processing": "<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i><span> Loading...</span>"
+            },
+            "serverSide": false,
+            "filter": true,
+            "orderMulti": false,
+            "ajax": {
+                url: url,
+                method: method
+            },
+            "columnDefs":
+            [{
+                "targets": [0],
+                "visible": true,
+                "searchable": true
+            }],
+            "columns": columns
+        });
+    }
+
     this.downloadCodes = function (codeRangeId) {
 
     }

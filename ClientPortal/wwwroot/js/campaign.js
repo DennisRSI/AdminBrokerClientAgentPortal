@@ -1,11 +1,12 @@
-﻿var CAMPAIGN = new Campaign();
+var CAMPAIGN = new Campaign();
 
 function Campaign(){
     var self = this;
+    var dataTable;
 
     this.init = function (clientId) {
 
-        self.updateClientCampaigns(clientId);
+        self.initCampaignTable(clientId);
 
         $.get('/api/video/?isPreLogin=true', function (data) {
             self.processAjaxData(data, 'pre');
@@ -29,16 +30,12 @@ function Campaign(){
             $.ajax({
                 url: '/api/campaign/create/' + clientId,
                 type: 'POST',
-                dataType: 'json',
+                dataType: 'text',
                 contentType: 'application/json',
                 data: JSON.stringify(data),
                 success: function (result) {
-                    if (result.is_success == true) {
-                        self.redirectToPage(result.account_id);
-                    }
-                    else {
-                        alert('Error: ' + result.message);
-                    }
+                    $('.new-campaign-modal-lg').modal('hide');
+                    dataTable.ajax.reload();
                 },
                 error: function (xhr, resp, text) {
                     console.log(xhr, resp, text);
@@ -74,7 +71,7 @@ function Campaign(){
         $('#' + type + 'VidCarousel .item:first').addClass('active');
     }
 
-    this.updateClientCampaigns = function (clientId) {
+    this.initCampaignTable = function (clientId) {
         var url = "api/campaign/getbyclient/" + clientId;
 
         var cols = [
@@ -86,7 +83,7 @@ function Campaign(){
             { "data": "statusText" }
         ];
 
-        $dt = LIST.generateList("campaign_tbl", url, cols, "GET", false);
+        dataTable = LIST.generateUpdatableList("#campaign_tbl", url, cols, "GET");
     }
 
     // TODO: Refactor this
