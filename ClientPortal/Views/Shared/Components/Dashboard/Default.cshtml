@@ -1,4 +1,5 @@
-﻿<div class="col-md-12 col-sm-12 col-xs-12">
+﻿@model Codes.Service.ViewModels.DashboardViewModel
+<div class="col-md-12 col-sm-12 col-xs-12">
     <br />
     <span class="h2">Admin Dashboard</span>
     <hr class="thicc-hr">
@@ -30,21 +31,21 @@
                 <div class="x_panel text-center">
                     <h4>Total Cards Purchased</h4>
                     <hr class="card-hr">
-                    <h3>335,000</h3>
+                    <h3>@Html.DisplayFor(m => m.PhysicalCardsPurchased)</h3>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                 <div class="x_panel text-center">
                     <h4>Total Cards In Campaigns</h4>
                     <hr class="card-hr">
-                    <h3>330,250</h3>
+                    <h3>@Html.DisplayFor(m => m.PhysicalCardsInCampaigns)</h3>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                 <div class="x_panel text-center">
                     <h4>Total Cards Activated</h4>
                     <hr class="card-hr">
-                    <h3>285,146</h3>
+                    <h3>@Html.DisplayFor(m => m.PhysicalCardsActivated)</h3>
                 </div>
             </div>
         </div>
@@ -59,21 +60,21 @@
                 <div class="x_panel text-center">
                     <h4>Total Cards Generated</h4>
                     <hr class="card-hr">
-                    <h3>1,214,000</h3>
+                    <h3>@Html.DisplayFor(m => m.VirtualCardsGenerated)</h3>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                 <div class="x_panel text-center">
                     <h4>Total Cards In Campaigns</h4>
                     <hr class="card-hr">
-                    <h3>1,150,500</h3>
+                    <h3>@Html.DisplayFor(m => m.VirtualCardsInCampaigns)</h3>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                 <div class="x_panel text-center">
                     <h4>Total Cards Activated</h4>
                     <hr class="card-hr">
-                    <h3>850,161</h3>
+                    <h3>@Html.DisplayFor(m => m.VirtualCardsActivated)</h3>
                 </div>
             </div>
         </div>
@@ -88,21 +89,21 @@
                 <div class="x_panel text-center">
                     <h4>All Brokers<br />Hotel/Condo Savings</h4>
                     <hr class="card-hr">
-                    <h3>$776,956.32</h3>
+                    <h3>@Html.DisplayFor(m => m.OverviewSavings)</h3>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                 <div class="x_panel text-center">
                     <h4>All Brokers<br />Commissions Paid</h4>
                     <hr class="card-hr">
-                    <h3>$78,559.84</h3>
+                    <h3>@Html.DisplayFor(m => m.OverviewCommisionsPaid)</h3>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                 <div class="x_panel text-center">
                     <h4>All Brokers<br />Commissions Owed</h4>
                     <hr class="card-hr">
-                    <h3>$12,985.65</h3>
+                    <h3>@Html.DisplayFor(m => m.OverviewCommisionsOwed)</h3>
                 </div>
             </div>
         </div>
@@ -118,39 +119,39 @@
                     <div class="x_panel text-center">
                         <i class="fa fa-hotel dashboard-icons"></i><br /><br />
                         <h5>Hotel Savings</h5>
-                        <h4>$543,869.43</h4>
+                        <h4>@Html.DisplayFor(m => m.HotelSavings)</h4>
                         <hr>
                         <h5>Hotel Commissions Paid</h5>
-                        <h4>$54,991.89</h4>
+                        <h4>@Html.DisplayFor(m => m.HotelCommissionsPaid)</h4>
                         <hr>
                         <h5>Hotel Commissions Owed</h5>
-                        <h4>$9,089.96</h4>
+                        <h4>@Html.DisplayFor(m => m.HotelCommissionsOwed)</h4>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                     <div class="x_panel text-center">
                         <i class="fa fa-building-o dashboard-icons"></i><br /><br />
                         <h5>Condo Savings</h5>
-                        <h4>$233,086.89</h4>
+                        <h4>@Html.DisplayFor(m => m.CondoSavings)</h4>
                         <hr>
                         <h5>Condo Commissions Paid</h5>
-                        <h4>$23,567.95</h4>
+                        <h4>@Html.DisplayFor(m => m.CondoCommissionsPaid)</h4>
                         <hr>
                         <h5>Condo Commissions Owed</h5>
-                        <h4>$3,895.69</h4>
+                        <h4>@Html.DisplayFor(m => m.CondoCommissionsOwed)</h4>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                     <div class="x_panel text-center">
                         <i class="fa fa-shopping-cart dashboard-icons"></i><br /><br />
                         <h5>Shopping Volume</h5>
-                        <h4>$118,567.22</h4>
+                        <h4>@Html.DisplayFor(m => m.ShoppingVolume)</h4>
                         <hr>
                         <h5>Cashback To Members</h5>
-                        <h4>$11,857.20</h4>
+                        <h4>@Html.DisplayFor(m => m.ShoppingCashback)</h4>
                         <hr>
                         <h5>Pending Cashback</h5>
-                        <h4>$2,768.33</h4>
+                        <h4>@Html.DisplayFor(m => m.ShoppingPendingCashback)</h4>
                     </div>
                 </div>
             </div>
@@ -175,42 +176,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="">
-                            <td class=""><a href="#">James McBurney</a></td>
-                            <td class="">62,000</td>
-                            <td class="">56,255</td>
-                            <td class="">90.7%</td>
-                            <td class="">86,000</td>
-                            <td class="">68,100</td>
-                            <td class="">79.2%</td>
-                        </tr>
-                        <tr class="">
-                            <td class="">Pat Talerico</td>
-                            <td class="">115,000</td>
-                            <td class="">108,768</td>
-                            <td class="">94.6%</td>
-                            <td class="">541,000</td>
-                            <td class="">325,900</td>
-                            <td class="">60.2%</td>
-                        </tr>
-                        <tr class="">
-                            <td class="">Craig Armstrong</td>
-                            <td class="">76,000</td>
-                            <td class="">48,500</td>
-                            <td class="">63.8%</td>
-                            <td class="">238,000</td>
-                            <td class="">237,200</td>
-                            <td class="">99.7%</td>
-                        </tr>
-                        <tr class="">
-                            <td class="">Jeremy Lawson</td>
-                            <td class="">82,000</td>
-                            <td class="">71,623</td>
-                            <td class="">87.3%</td>
-                            <td class="">349,000</td>
-                            <td class="">218,961</td>
-                            <td class="">62.7%</td>
-                        </tr>
+                        @Html.DisplayFor(m => m.CardDistributions)
                     </tbody>
                 </table>
             </div>

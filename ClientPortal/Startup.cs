@@ -47,6 +47,7 @@ namespace ClientPortal
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IVideoService, VideoService>();
             services.AddTransient<ICampaignService, CampaignService>();
+            services.AddTransient<IDashboardService, DashboardService>();
 
             services.AddMvc();
             services.AddAutoMapper(typeof(Startup));
