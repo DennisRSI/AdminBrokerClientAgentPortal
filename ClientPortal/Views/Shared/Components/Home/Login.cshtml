@@ -8,88 +8,49 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-@{ 
+@{
     ViewData["BodyCss"] = "login";
 }
-    <div>
-        <a class="hiddenanchor" id="signup"></a>
-        <a class="hiddenanchor" id="signin"></a>
+<div>
+    <a class="hiddenanchor" id="signup"></a>
+    <a class="hiddenanchor" id="signin"></a>
 
-        <div class="login_wrapper">
-            <div class="animate form login_form">
-                <section class="login_content">
-                    <div class="x_panel">
-                        <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-                            <h1>Dashboard Login</h1>
-                            <div>
-                                <input asp-for="Email" class="form-control" placeholder="Email" required="" />
-                            </div>
-                            <div>
-                                <input asp-for="Password" class="form-control" placeholder="Password" required="" />
-                            </div>
+    <div class="login_wrapper">
+        <div class="animate form login_form">
+            <section class="login_content">
+                <div class="x_panel">
+                    <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                        <h1>Dashboard Login</h1>
+                        <div>
+                            <input asp-for="Email" class="form-control" placeholder="Email" required="" />
+                        </div>
+                        <div>
+                            <input asp-for="Password" class="form-control" placeholder="Password" required="" />
+                        </div>
 
-                            <div>
-                                <button class="btn btn-travnow btn-block" type="submit" value="Login">Login</button>
-                            </div>
+                        <div>
+                            <button class="btn btn-travnow btn-block" type="submit" value="Login">Login</button>
+                        </div>
+                        <br />
+                        <div class="clearfix"></div>
+
+                        <div class="separator">
+                            <a class="reset_pass" asp-action="ForgotPassword">Lost your password?</a>
+                            <span class="change_link"></span>
+                            <div class="clearfix"></div>
                             <br />
-                            <div class="clearfix"></div>
-
-                            <div class="separator">
-                                <a class="reset_pass" asp-action="ForgotPassword">Lost your password?</a>
-                                <span class="change_link"></span>
-                                <div class="clearfix"></div>
-                                <br />
-                                <div>
-                                    <h1><img src="images/travnow-gray-logo.png"></h1>
-                                    <p>
-                                        &copy; Copyright 2017 TravNow&trade;. All Rights Reserved.
-                                        <br /><a href="#">Privacy and Terms of Use</a><br /><br />
-                                    </p>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <span class="disclaimer-text">TravNow&trade; Dashboard Pre-Alpha v.0.01</span>
-                </section>
-            </div>
-
-            <div id="register" class="animate form registration_form">
-                <section class="login_content">
-                    <div class="x_panel">
-                        <form>
-                            <h1></h1>
                             <div>
-                                <input type="email" class="form-control" placeholder="Email" required="" />
-                            </div>
-                            <div>
-                                <input type="password" class="form-control" placeholder="Password" required="" />
-                            </div>
-                            <div>
-                                <button class="btn btn-travnow btn-block" href="#"></button><br /><br />
-                            </div>
-
-                            <div class="clearfix"></div>
-
-                            <div class="separator">
-                                <p class="change_link">
-                                    <a href="#signin" class="to_register"></a>
+                                <h1><img src="images/travnow-gray-logo.png"></h1>
+                                <p>
+                                    &copy; Copyright 2017 TravNow&trade;. All Rights Reserved.
+                                    <br /><a href="#">Privacy and Terms of Use</a><br /><br />
                                 </p>
-
-                                <div class="clearfix"></div>
-                                <br />
-
-                                <div>
-                                    <h1><img src="images/travnow-gray-logo.png"></h1>
-                                    <span>
-                                        <br /><a href="#"></a>
-                                    </span>
-                                </div>
                             </div>
-                        </form>
-                    </div>
-                    <span class="disclaimer-text"></span>
-                </section>
-            </div>
+                        </div>
+                    </form>
+                </div>
+                <span class="disclaimer-text">TravNow&trade; Dashboard Pre-Alpha v.0.01</span>
+            </section>
         </div>
     </div>
-
+</div>
