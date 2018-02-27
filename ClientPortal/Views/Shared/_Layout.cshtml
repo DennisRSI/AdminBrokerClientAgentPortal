@@ -118,13 +118,8 @@
         <script src="~/js/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-        @RenderSection("ScriptLinks", required: false)
-        <script type="text/javascript">
-        $(document).ready(function () {
-            @RenderSection("Scripts", required: false)
-        });
-        </script>
-
-
+    
+    @RenderSection("ScriptLinks", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
