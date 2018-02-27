@@ -4527,6 +4527,11 @@ form:after {
                 outline: none
             }
 
+.leftalign section
+{
+    text-align: left;
+}
+
 #username {
     background-position: 10px 10px !important
 }
