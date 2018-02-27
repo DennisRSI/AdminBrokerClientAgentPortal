@@ -1,16 +1,14 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using ClientPortal.Models
-@using System.Collections.Generic
-@using System.Linq
-@using Microsoft.AspNetCore.Http
-@using Microsoft.AspNetCore.Http.Authentication
 @model LoginViewModel
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["BodyCss"] = "login";
+    ViewData["Title"] = "Login";
 }
+
 <div>
     <a class="hiddenanchor" id="signup"></a>
     <a class="hiddenanchor" id="signin"></a>
@@ -40,7 +38,7 @@
                             <div class="clearfix"></div>
                             <br />
                             <div>
-                                <h1><img src="images/travnow-gray-logo.png"></h1>
+                                <h1><img src="~/images/travnow-gray-logo.png"></h1>
                                 <p>
                                     &copy; Copyright 2017 TravNow&trade;. All Rights Reserved.
                                     <br /><a href="#">Privacy and Terms of Use</a><br /><br />

@@ -65,7 +65,7 @@ namespace ClientPortal.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToLocal("/");
                 }
                 if (result.RequiresTwoFactor)
                 {
