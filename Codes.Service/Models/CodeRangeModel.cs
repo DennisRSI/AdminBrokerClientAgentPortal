@@ -43,7 +43,24 @@ namespace Codes.Service.Models
         public ICollection<UnusedCodeModel> UnusedCodes { get; set; }
         public ICollection<UsedCodeModel> UsedCodes { get; set; }
         public ICollection<PendingCodeModel> PendingCodes { get; set; }
+    }
 
+    public static class CodeRangeModelExtensions
+    {
+        public static int GetTotalCodes(this CodeRangeModel model)
+        {
+            if (model.CodeType == CodeType.Virtual)
+            {
+                return model.NumberOfUses;
+            }
 
+            return (model.EndNumber - model.StartNumber) / model.IncrementByNumber;
+        }
+    }
+
+    public static class CodeType
+    {
+        public const string Virtual = "Virtual";
+        public const string Physical = "Physical";
     }
 }

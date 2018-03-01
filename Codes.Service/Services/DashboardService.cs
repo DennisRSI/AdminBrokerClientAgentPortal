@@ -23,39 +23,17 @@ namespace Codes.Service.Services
         {
             var model = new DashboardViewModel();
 
-            var totals = GetTotals("Physical");
+            var totals = GetTotals(CodeType.Physical);
             model.PhysicalCardsPurchased = totals.Item1;
             model.PhysicalCardsInCampaigns = totals.Item2;
             model.PhysicalCardsActivated = totals.Item3;
 
-            totals = GetTotals("Virtual");
+            totals = GetTotals(CodeType.Virtual);
             model.VirtualCardsGenerated = totals.Item1;
             model.VirtualCardsInCampaigns = totals.Item2;
             model.VirtualCardsActivated = totals.Item3;
 
-            var distribution1 = new CardDistributionViewModel
-            {
-                Name = "Test 1",
-                PhysicalCardsTotal = 1000000,
-                PhysicalCardsActivated = 884292,
-                VirtualCardsTotal = 1000000,
-                VirtualCardsActivated = 884294,
-            };
-
-            var distribution2 = new CardDistributionViewModel
-            {
-                Name = "Test 2",
-                PhysicalCardsTotal = 1000000,
-                PhysicalCardsActivated = 884294,
-                VirtualCardsTotal = 1000000,
-                VirtualCardsActivated = 884294,
-            };
-
-            var distributions = new List<CardDistributionViewModel>();
-            distributions.Add(distribution1);
-            distributions.Add(distribution2);
-
-            model.CardDistributions = distributions;
+            model.CardDistributions = GetCardDistribution();
 
             return model;
         }
@@ -68,21 +46,37 @@ namespace Codes.Service.Services
 
             var purchases = _context.CodeRanges.Where(cr => cr.CodeType == codeType);
 
-            if (codeType == "Physical")
-            {
-                totalPurchases = purchases.Select(cr => (cr.EndNumber - cr.StartNumber) / cr.IncrementByNumber).Sum();
-            }
-            else
-            {
-                totalPurchases = purchases.Select(cr => cr.NumberOfUses).Sum();
-            }
-
+            totalPurchases = purchases.Select(cr => cr.GetTotalCodes()).Sum();
             totalInCampaigns = _context.UnusedCodes.Count(cr => cr.CodeType == codeType);
             totalInCampaigns += _context.PendingCodes.Count(cr => cr.CodeType == codeType);
-
             totalActivated += _context.UsedCodes.Count(cr => cr.CodeType == codeType);
 
             return (totalPurchases, totalInCampaigns, totalActivated);
+        }
+
+        private IEnumerable<CardDistributionViewModel> GetCardDistribution()
+        {
+            foreach (var broker in _context.Brokers)
+            {
+                var distribution = new CardDistributionViewModel
+                {
+                    Name = $"{broker.BrokerFirstName} {broker.BrokerLastName}"
+                };
+
+                distribution.PhysicalCardsTotal = _context.CodeRanges.Where(cr => cr.BrokerId == broker.BrokerId && cr.CodeType == CodeType.Physical)
+                                    .Select(cr => cr.GetTotalCodes())
+                                    .Sum();
+
+                distribution.PhysicalCardsActivated = _context.UsedCodes.Where(c => c.BrokerId == broker.BrokerId && c.CodeType == CodeType.Physical).Count();
+
+                distribution.VirtualCardsTotal = _context.CodeRanges.Where(cr => cr.BrokerId == broker.BrokerId && cr.CodeType == CodeType.Virtual)
+                    .Select(cr => cr.GetTotalCodes())
+                    .Sum();
+
+                distribution.VirtualCardsActivated = _context.UsedCodes.Where(c => c.BrokerId == broker.BrokerId && c.CodeType == CodeType.Virtual).Count();
+
+                yield return distribution;
+            }
         }
     }
 }
