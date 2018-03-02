@@ -17,7 +17,8 @@ function AddUser(){
                 data: JSON.stringify(data), // post data || get data
                 success: function (result) {
                     if (result.is_success == true) {
-                        self.redirectToPage(result.account_id);
+                        $('.modal').removeClass('fade').modal('hide');
+                        $('#sidebar-menu .nav-item.last-clicked').click();
                     }
                     else {
                         alert('Error: ' + result.message);
@@ -27,17 +28,6 @@ function AddUser(){
                     console.log(xhr, resp, text);
                 }
             })
-        });
-    }
-
-    this.redirectToPage = function (accountId) {
-        var url = '/api/menu/my-account/';
-        url += accountId;
-        $("#loader-container").show();
-
-        $.get(url, function (data, status) {
-            $('#main_panel').html(data);
-            $("#loader-container").hide();
         });
     }
 

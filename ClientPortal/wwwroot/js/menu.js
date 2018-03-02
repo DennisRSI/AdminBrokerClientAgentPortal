@@ -5,7 +5,10 @@ function Menu() {
     
     this.init = function () {
         $('.nav-item').click(function () {
-            
+
+            $('#sidebar-menu .nav-item').removeClass('last-clicked');
+            $(this).addClass('last-clicked');
+
             var id = '';
             var page = $(this).data('page')
             var cmd = "";
