@@ -1,0 +1,26 @@
+﻿@model Codes.Service.ViewModels.SearchViewModel
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <br />
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Search Results</h2>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 pull-right">
+                <div class="input-group">
+                    <input id="search-query" type="text" class="form-control" asp-for="Query">
+                    <span class="input-group-btn">
+                        <button id="search" type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <p class="text-muted font-13 m-b-30">
+                Data table of clients assigned to your organization
+            </p>
+        </div>
+    </div>
+</div>
+<script>
+    MENU.init();
+</script>
