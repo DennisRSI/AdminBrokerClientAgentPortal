@@ -196,6 +196,6 @@ namespace Codes.Service.Models
         public ICollection<PendingCodeModel> PendingCodes { get; set; }
         public ICollection<UnusedCodeModel> UnusedCodes { get; set; }
         public ICollection<UsedCodeModel> UsedCodes { get; set; }
-
+        public ICollection<DocumentModel> Documents { get; set; }
     }
 }
