@@ -13,20 +13,25 @@ function Menu() {
             var page = $(this).data('page')
             var cmd = "";
 
-            if (page === "admin-change" || page === "my-account" || page === "user-list") {
+            if (page === "admin-change" || page === "user-list") {
                 cmd = $(this).data('cmd');
+                self.get_page(page, cmd, id);
             }
 
             if (page === "user-list") {
                 id = $(this).data('id');
+                self.get_page(page, cmd, id);
             }
 
-            self.get_page(page, cmd, id);
+            if (page === "my-account") {
+                id = $(this).data('id');
+                self.loadPage(page, id);
+            }
         });
 
         $('#search').click(function () {
             var query = $('#search-query').val();
-            self.loadPage('search/' + query);
+            self.loadPage('search', query);
         });
     }
 
@@ -50,8 +55,17 @@ function Menu() {
         }
     }
 
-    this.loadPage = function(page) {
+    this.loadPage = function(page, param1, param2) {
         var url = "/api/menu/" + page
+
+        if (param1 !== undefined) {
+            url += "/" + param1;
+        }
+
+        if (param2 !== undefined) {
+            url += "/" + param2;
+        }
+
         $("#loader-container").show();
 
         $.get(url, function (data, status) {
