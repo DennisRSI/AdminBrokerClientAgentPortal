@@ -4,7 +4,6 @@ function List() {
     var self = this;
     
     this.init = function (role, brokerId, clientId) {
-        //alert(role);
         switch (role) {
             case "Super Administrator":
             case "Administrator":
@@ -25,10 +24,8 @@ function List() {
         }
     }
 
-   
     this.purchasesList = function(brokerId){
         var url = "api/list/purchase/" + brokerId.toString();
-        //alert(brokerId);
         var cols = [
             { "data": "creation_date" },
             { "data": "code_range_id" },
@@ -43,6 +40,7 @@ function List() {
 
         $dt = self.generateList("purchase_tbl", url, cols);
     }
+
     this.adminList = function (role) {
         var $dt;
         url = "/api/list/";
@@ -75,6 +73,7 @@ function List() {
             self.redirectToPage('/api/menu/my-account/' + data);
         });
     }
+
     this.brokerList = function () {
         var url = "api/list/broker";
         var cols = [
@@ -102,6 +101,7 @@ function List() {
             self.redirectToPage('/api/menu/my-account/' + data);
         });
     }
+
     this.agentList = function (brokerId, clientId) {
         var url = "api/list/agent/" + brokerId.toString() + "/" + clientId.toString();
         var cols = [
@@ -130,6 +130,7 @@ function List() {
             self.redirectToPage('/api/menu/my-account/' + data);
         });
     }
+
     this.clientList = function (brokerId, clientId) {
         var url = "api/list/client/" + brokerId.toString() + "/" + clientId.toString();
 
@@ -227,18 +228,12 @@ function List() {
         });
     }
 
-    this.downloadCodes = function (codeRangeId) {
-
-    }
-
     this.redirectToPage = function (url) {
         $("#loader-container").show();
-        //alert(url);
         $.get(url, function (data, status) {
             $('#main_panel').html(data);
             $("#loader-container").hide();
             ACCOUNT.init();
-            //alert("Data: " + data + "\nStatus: " + status);
         });
     }
 }
