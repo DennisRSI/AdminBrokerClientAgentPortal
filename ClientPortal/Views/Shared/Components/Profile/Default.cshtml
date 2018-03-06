@@ -56,7 +56,6 @@
                             <div class="input-group pull-right" style="width:33%">
                                 <button type="button" class="btn btn-travnow" data-toggle="modal" data-target=".change-password-modal"><i class="fa fa-lock icon-white purchase-button-icon"> Click To Change Password</i></button>
                             </div>
-                            <!--input-group-addon-->
                         </div>
                     </div>
                     <div class="form-group">
@@ -66,15 +65,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
-                        <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
-                            <input asp-for="MiddleName" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
                         <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
-                            <input asp-for="LastName " class="form-control">
+                            <input asp-for="LastName" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -189,22 +182,13 @@
                             <div class="input-group" style="width:66%">
                                 <input type="tel" asp-for="OfficePhone" class="form-control" data-inputmask="'mask' : '999-999-9999'">
                             </div>
-                            <div class="input-group" style="width:33%">
-                                <span class="input-group-addon" id="basic-addon1">Ext</span>
-                                <input asp-for="OfficeExtension" class="form-control">
-                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Fax</label>
-                        <!--<div class="col-lg-7 col-md-9 col-sm-9 col-xs-12 form-inline">-->
                         <div class="form-inline col-lg-7 col-md-9 col-sm-9 col-xs-12">
                             <div class="input-group" style="width:66%">
                                 <input type="tel" asp-for="Fax" class="form-control"  data-inputmask="'mask' : '999-999-9999'">
-                            </div>
-                            <div class="input-group" style="width:33%">
-                                <span class="input-group-addon" id="basic-addon1">Ext</span>
-                                <input asp-for="FaxExtension" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -235,92 +219,6 @@
     <div class="form-group col-lg-7 col-md-9 col-sm-9 col-xs-12">
         <button class="btn btn-primary pull-right" id="profile-submit">Update</button>
     </div>
-
-
-    <!--<br />
-    <div class="form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-        <div class="col-md-9 col-sm-9 col-xs-12">
-            <span class="shipping-text"></span><input type="checkbox" class="js-switch" checked />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-        <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
-            <input type="text" class="form-control" value="883 West Crestwood St" disabled>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-        <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
-            <input type="text" class="form-control" value="Tampa" disabled>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-        <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
-            <select class="form-control" disabled>
-                <option value="AL"></option>
-                <option value="AK"></option>
-                <option value="AR"></option>
-                <option value="AZ"></option>
-                <option value="CA"></option>
-                <option value="CO"></option>
-                <option value="CT"></option>
-                <option value="DC"></option>
-                <option value="DE"></option>
-                <option selected="FL"></option>
-                <option value="GA"></option>
-                <option value="HI"></option>
-                <option value="IA"></option>
-                <option value="ID"></option>
-                <option value="IL"></option>
-                <option value="IN"></option>
-                <option value="KS"></option>
-                <option value="KY"></option>
-                <option value="LA"></option>
-                <option value="MA"></option>
-                <option value="MD"></option>
-                <option value="ME"></option>
-                <option value="MI"></option>
-                <option value="MN"></option>
-                <option value="MO"></option>
-                <option value="MS"></option>
-                <option value="MT"></option>
-                <option value="NC"></option>
-                <option value="NE"></option>
-                <option value="NH"></option>
-                <option value="NJ"></option>
-                <option value="NM"></option>
-                <option value="NV"></option>
-                <option value="NY"></option>
-                <option value="ND"></option>
-                <option value="OH"></option>
-                <option value="OK"></option>
-                <option value="OR"></option>
-                <option value="PA"></option>
-                <option value="RI"></option>
-                <option value="SC"></option>
-                <option value="SD"></option>
-                <option value="TN"></option>
-                <option value="TX"></option>
-                <option value="UT"></option>
-                <option value="VT"></option>
-                <option value="VA"></option>
-                <option value="WA"></option>
-                <option value="WI"></option>
-                <option value="WV"></option>
-                <option value="WY"></option>
-            </select>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-        <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
-            <input type="number" class="form-control" value="33605" disabled>
-        </div>
-    </div>-->
-
 </form>
 
 <script type="text/javascript">
