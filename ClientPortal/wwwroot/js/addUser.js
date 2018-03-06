@@ -7,6 +7,18 @@ function AddUser(){
         var url = '/api/user/' + $('#userType').val();
         
         $('#addUserBTN').click(function () {
+
+            jQuery.validator.setDefaults({
+                errorPlacement: function (error, element) {
+                },
+            });
+
+            var valid = $('#addUserForm').valid();
+
+            if (!valid) {
+                return;
+            }
+
             var data = self.serializeFormJSON($('#addUserForm'));
 
             $.ajax({

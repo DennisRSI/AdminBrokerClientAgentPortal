@@ -66,7 +66,7 @@ function List() {
             }
         ];
 
-        $dt = self.generateList("admin_tbl", url, cols);
+        $dt = self.generateUpdatableList('#admin_tbl', url, cols, 'POST');
 
         $dt.on('click', 'tr', function () {
             var data = $dt.row(this).id();

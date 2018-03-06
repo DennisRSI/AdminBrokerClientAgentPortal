@@ -2875,6 +2875,10 @@ span.section {
     width: 100%
 }
 
+.form-control.error {
+    border-color: red;
+}
+
 .form-horizontal .control-label {
     padding-top: 8px
 }
