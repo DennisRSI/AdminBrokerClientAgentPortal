@@ -163,7 +163,7 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 table-responsive">
                 <p class="h4">Card Distribution By Broker</p>
-                <table class="table table-bordered table-striped jambo_table">
+                <table id="card-distribution" class="table table-bordered table-striped jambo_table">
                     <thead>
                         <tr class="headings">
                             <th class="column-title">Broker</th>
@@ -183,3 +183,8 @@
         </div>
     </div>
 </div>
+<script>
+    window.onload = function () {
+        DASHBOARD.init();
+    }
+</script>
