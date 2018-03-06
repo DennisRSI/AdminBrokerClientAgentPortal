@@ -4,6 +4,11 @@ function AddUser(){
     var self = this;
 
     this.init = function () {
+        
+        $('input[type="tel"]').inputmask({
+            mask: '(999) 999-9999'
+        });
+
         var url = '/api/user/' + $('#userType').val();
         
         $('#addUserBTN').click(function () {
