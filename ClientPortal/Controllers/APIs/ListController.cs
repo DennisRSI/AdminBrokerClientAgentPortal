@@ -71,25 +71,10 @@ namespace ClientPortal.Controllers.APIs
             return await _GetAdminData("Super Administrator");
         }
 
-        // GET: api/<controller>
         [HttpPost("admin")]
         public async Task<DataTableViewModel<AdminListViewModel>> Admin()
         {
-            DataTableViewModel<AdminListViewModel> model = new DataTableViewModel<AdminListViewModel>();
-
-            try
-            {
-                (int draw, int startRowIndex, int numberOfRows, string sortColumn, string sortDirection, string searchValue) = _ParseForm(Request.Form);
-
-                model = await _GetAdminData(startRowIndex, numberOfRows, draw, sortColumn, sortDirection, searchValue, "Administrator");
-                
-            }
-            catch (Exception ex)
-            {
-                model.Message = $"Error: {ex.Message}";
-            }
-
-            return model;
+            return await _GetAdminData("Administrator");
         }
 
         [HttpPost("client/{brokerId}/{campaignId}")]
