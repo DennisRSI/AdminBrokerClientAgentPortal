@@ -10,8 +10,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace ClientPortal.Controllers.APIs
 {
     [Route("api/[controller]")]
@@ -28,21 +26,6 @@ namespace ClientPortal.Controllers.APIs
             _userManager = userManager;
         }
 
-        // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<controller>
         [HttpPost("{userType}")]
         public async Task<JObject> Post(string userType, [FromBody]dynamic obj)
         {
@@ -372,7 +355,6 @@ namespace ClientPortal.Controllers.APIs
             return returnObj;
         }
 
-        // PUT api/<controller>/5
         [HttpPut("{userType}")]
         public async Task<JObject> Put(string userType, [FromBody]dynamic obj)
         {
@@ -557,10 +539,11 @@ namespace ClientPortal.Controllers.APIs
             return returnObj;
         }
 
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpPost("changepassword/{id}/{password}")]
+        public IActionResult ChangePassword(string id, string password)
         {
+            var result = _context.ChangePassword(id, password);
+            return Ok(result);
         }
     }
 }

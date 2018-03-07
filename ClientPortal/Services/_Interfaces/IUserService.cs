@@ -17,5 +17,6 @@ namespace ClientPortal.Services._Interfaces
         Task<AdminViewModel> AdminAdd(AdminViewModel model, string password);
         Task<AdminViewModel> SuperAdminAdd(AdminViewModel model, string password);
         Task<AdminViewModel> AdminUpdate(AdminViewModel model);
+        Task<bool> ChangePassword(string id, string password);
     }
 }
