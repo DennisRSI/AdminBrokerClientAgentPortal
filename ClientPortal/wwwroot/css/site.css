@@ -5743,3 +5743,7 @@ hr.thicc-hr {
 .checkbox-adjust {
     line-height: 3;
 }
+
+#search-results caption {
+    margin-bottom: 0;
+}

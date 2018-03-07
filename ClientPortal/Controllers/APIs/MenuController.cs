@@ -54,8 +54,7 @@ namespace ClientPortal.Controllers.APIs
         [HttpGet("search/{query}")]
         public IActionResult Search(string query)
         {
-            var model = _searchService.GetAdmin(query);
-            return ViewComponent("Search", model);
+            return ViewComponent("Search", query);
         }
     }
 }

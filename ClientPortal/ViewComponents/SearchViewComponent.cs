@@ -9,17 +9,20 @@ namespace ClientPortal.ViewComponents
     public class SearchViewComponent : ViewComponent
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ISearchService _searchService;
 
-        public SearchViewComponent(SignInManager<ApplicationUser> signInManager)
+        public SearchViewComponent(SignInManager<ApplicationUser> signInManager, ISearchService searchService)
         {
             _signInManager = signInManager;
+            _searchService = searchService;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(string query)
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
-                return await Task.FromResult(View());
+                var model = _searchService.GetAdmin(query);
+                return await Task.FromResult(View(model));
             }
 
             return null;
