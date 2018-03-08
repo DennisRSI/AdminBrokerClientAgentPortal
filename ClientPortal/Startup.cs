@@ -52,6 +52,7 @@ namespace ClientPortal
             services.AddTransient<ICampaignService, CampaignService>();
             services.AddTransient<IDashboardService, DashboardService>();
             services.AddTransient<ISearchService, SearchService>();
+            services.AddTransient<ICardService, CardService>();
 
             services.AddMvc();
             services.AddAutoMapper(typeof(Startup));

@@ -29,9 +29,16 @@ function Menu() {
             }
         });
 
+        $('.nav-page-id').click(function () {
+            var page = $(this).data('page')
+            var id = $(this).data('id')
+            self.loadPage(page, id);
+        });
+
         $('#search').click(function () {
+            var page = $(this).data('page')
             var query = $('#search-query').val();
-            self.loadPage('search', query);
+            self.loadPage(page, query);
         });
     }
 

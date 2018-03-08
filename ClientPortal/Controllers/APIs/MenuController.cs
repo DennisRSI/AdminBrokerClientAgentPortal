@@ -56,5 +56,11 @@ namespace ClientPortal.Controllers.APIs
         {
             return ViewComponent("Search", query);
         }
+
+        [HttpGet("card-details/{id}")]
+        public IActionResult CardDetails(int id)
+        {
+            return ViewComponent("CardDetails", id);
+        }
     }
 }
