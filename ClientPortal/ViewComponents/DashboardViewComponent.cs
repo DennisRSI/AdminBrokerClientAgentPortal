@@ -1,10 +1,8 @@
 ﻿using ClientPortal.Models;
+using ClientPortal.Extensions;
 using Codes.Service.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ClientPortal.ViewComponents
@@ -26,6 +24,7 @@ namespace ClientPortal.ViewComponents
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
+                ViewData["Role"] = HttpContext.User.GetRole().GetName();
                 var model = _dashboardService.GetAdmin();
                 return await Task.FromResult(View(model));
             }
