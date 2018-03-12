@@ -2,6 +2,14 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
     <br />
     <span class="h2">@ViewData["Role"] Dashboard</span>
+    @if (ViewData["Role"].ToString().Contains("Broker"))
+    {
+        <div class="title-right pull-right">
+            <a href="#" type="button" class="nav-page-id btn btn-travgreen btn-sm" data-controller="view" data-page="purchase">
+                <i class="fa fa-credit-card icon-white purchase-button-icon"></i>Purchase Cards
+            </a>
+        </div>
+    }
     <hr class="thicc-hr">
 </div>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -185,6 +193,10 @@
 </div>
 <script>
     window.onload = function () {
+        DASHBOARD.init();
+    }
+
+    if (typeof DASHBOARD !== "undefined") {
         DASHBOARD.init();
     }
 </script>

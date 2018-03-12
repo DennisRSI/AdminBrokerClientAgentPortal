@@ -1,0 +1,284 @@
+﻿@model Codes.Service.ViewModels.PurchaseViewModel
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <br />
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Purchase Cards</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12">
+                    <div class="col-lg-5 col-md-6 col-sm-7 col-xs-12">
+                        <table class="table table-bordered table-hover table-condensed table-striped jambo_table">
+                            <thead>
+                                <tr>
+                                    <th class="">Physical Cards</th>
+                                    <th class="">% of Face Value</th>
+                                </tr>
+                            </thead>
+                            <tbody id="price">
+                                <tr id="tier1">
+                                    <td class="quantity">1,000 (minimum)</td>
+                                    <td>@Html.DisplayFor(m => m.RateTier1)</td>
+                                </tr>
+                                <tr id="tier2">
+                                    <td class="quantity">5,000</td>
+                                    <td>@Html.DisplayFor(m => m.RateTier2)</td>
+                                </tr>
+                                <tr id="tier3">
+                                    <td class="quantity">10,000</td>
+                                    <td>@Html.DisplayFor(m => m.RateTier3)</td>
+                                </tr>
+                                <tr id="tier4">
+                                    <td class="quantity">25,000</td>
+                                    <td>@Html.DisplayFor(m => m.RateTier4)</td>
+                                </tr>
+                                <tr id="tier5">
+                                    <td class="quantity">50,000</td>
+                                    <td>@Html.DisplayFor(m => m.RateTier5)</td>
+                                </tr>
+                                <tr id="tier6">
+                                    <td class="quantity">100,000+</td>
+                                    <td>@Html.DisplayFor(m => m.RateTier6)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-7 col-md-6 col-sm-5 col-xs-12">
+                        <div class="x_panel_info">
+                            <div class="row bg_info">
+                                <span class="info-text">Physical Cards: You may only select one (1) denomination per order. If you want to order multiple denominations,
+                                you must place separate orders as quantity discounts apply to each denomination separately.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <label class="h4">Physical Cards:</label>
+                                <hr class="card-hr"><br />
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <span class="">Face Value:</span>
+                                    <select id="physical-value" class="form-control nested-dropdown price-change">
+                                        <option>Select Face Value</option>
+                                        <option>$50</option>
+                                        <option>$100</option>
+                                        <option>$150</option>
+                                        <option selected>$200</option>
+                                        <option>$250</option>
+                                        <option>$300</option>
+                                        <option>$350</option>
+                                        <option>$400</option>
+                                        <option>$450</option>
+                                        <option>$500</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <span class="">Quantity:</span>
+                                    <input id="physical-quantity" type="number" class="form-control price-change" placeholder="Minimum order: 1,000" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <label class="h4">Virtual Cards:</label>
+                                <hr class="card-hr"><br />
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <span class="">Face Value:</span>
+                                    <select class="form-control nested-dropdown">
+                                        <option>Select Face Value</option>
+                                        <option>$50</option>
+                                        <option>$100</option>
+                                        <option>$150</option>
+                                        <option>$200</option>
+                                        <option>$250</option>
+                                        <option>$300</option>
+                                        <option>$350</option>
+                                        <option>$400</option>
+                                        <option>$450</option>
+                                        <option>$500</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <span class="">Quantity:</span>
+                                    <input type="number" class="form-control" placeholder="No Minimum Required" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
+                    <div class="panel panel-default credit-card-box">
+                        <div class="panel-heading display-table">
+                            <div class="row display-tr">
+                                <h3 class="panel-title display-td">Payment Details</h3>
+                                <hr class="card-hr"><br />
+                                <h5>Card Order: $<span id="order-card">0</span></h5>
+                                <h5>Shipping & Handling: $24.95</h5>
+                                <hr class="card-hr">
+                                <h2>Total: $<span id="order-total">24.95</span></h2><br />
+                                <div class="display-td">
+                                    <img class="img-responsive pull-right" src="images/accepted_cc.png">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <form role="form" id="payment-form" method="POST" action="javascript:void(0);">
+                                <div class="row">
+                                    <div class="col-md-8 col-xs-6">
+                                        <div class="form-group">
+                                            <label for="cardHolder">Cardholder Name</label>
+                                            <div class="input-group">
+                                                <input type="tel" class="form-control" name="cardHolder" placeholder="Name as it appears on card" required autofocus />
+                                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-xs-6">
+                                        <div class="form-group">
+                                            <label for="billingZIP">ZIP</label>
+                                            <div class="input-group">
+                                                <input type="tel" class="form-control" name="billingZIP" placeholder="Billing" required autofocus />
+                                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="shippingAddress">Ship-To Address</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="shippingAddress" placeholder="Physical addresses only" required autofocus />
+                                                <span class="input-group-addon"><i class="fa fa-map-o"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="shippingCity">Ship-To City</label>
+                                            <input type="text" class="form-control" name="shippingCity" placeholder="City" required autofocus />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-xs-6">
+                                        <div class="form-group">
+                                            <label for="shippingState">State</label>
+                                            <select class="form-control nested-dropdown">
+                                                <option>Select</option>
+                                                <option value="AL">AL</option>
+                                                <option value="AK">AK</option>
+                                                <option value="AR">AR</option>
+                                                <option value="AZ">AZ</option>
+                                                <option value="CA">CA</option>
+                                                <option value="CO">CO</option>
+                                                <option value="CT">CT</option>
+                                                <option value="DC">DC</option>
+                                                <option value="DE">DE</option>
+                                                <option value="FL">FL</option>
+                                                <option value="GA">GA</option>
+                                                <option value="HI">HI</option>
+                                                <option value="IA">IA</option>
+                                                <option value="ID">ID</option>
+                                                <option value="IL">IL</option>
+                                                <option value="IN">IN</option>
+                                                <option value="KS">KS</option>
+                                                <option value="KY">KY</option>
+                                                <option value="LA">LA</option>
+                                                <option value="MA">MA</option>
+                                                <option value="MD">MD</option>
+                                                <option value="ME">ME</option>
+                                                <option value="MI">MI</option>
+                                                <option value="MN">MN</option>
+                                                <option value="MO">MO</option>
+                                                <option value="MS">MS</option>
+                                                <option value="MT">MT</option>
+                                                <option value="NC">NC</option>
+                                                <option value="NE">NE</option>
+                                                <option value="NH">NH</option>
+                                                <option value="NJ">NJ</option>
+                                                <option value="NM">NM</option>
+                                                <option value="NV">NV</option>
+                                                <option value="NY">NY</option>
+                                                <option value="ND">ND</option>
+                                                <option value="OH">OH</option>
+                                                <option value="OK">OK</option>
+                                                <option value="OR">OR</option>
+                                                <option value="PA">PA</option>
+                                                <option value="RI">RI</option>
+                                                <option value="SC">SC</option>
+                                                <option value="SD">SD</option>
+                                                <option value="TN">TN</option>
+                                                <option value="TX">TX</option>
+                                                <option value="UT">UT</option>
+                                                <option value="VT">VT</option>
+                                                <option value="VA">VA</option>
+                                                <option value="WA">WA</option>
+                                                <option value="WI">WI</option>
+                                                <option value="WV">WV</option>
+                                                <option value="WY">WY</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-xs-6">
+                                        <div class="form-group">
+                                            <label for="shippingZIP">ZIP</label>
+                                            <div class="input-group">
+                                                <input type="tel" class="form-control" name="shippingZIP" placeholder="Ship-To" required autofocus />
+                                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><br />
+                                <div class="row">
+                                    <div class="col-md-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="cardNumber">Card Number</label>
+                                            <div class="input-group">
+                                                <input type="tel" class="form-control" name="cardNumber" placeholder="Valid Card Number" autocomplete="cc-number" required autofocus />
+                                                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-7 col-xs-7">
+                                        <div class="form-group">
+                                            <label for="cardExpiry"><span class="hidden-xs">Expiration</span><span class="visible-xs-inline">EXP</span> DATE</label>
+                                            <input type="tel" class="form-control" name="cardExpiry" placeholder="MM / YY" autocomplete="cc-exp" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-xs-5 pull-right">
+                                        <div class="form-group">
+                                            <label for="cardCVC">CVC Code</label>
+                                            <input type="tel" class="form-control" name="cardCVC" placeholder="CVC" autocomplete="cc-csc" required />
+                                        </div>
+                                    </div>
+                                </div><hr class="card-hr"><br />
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button class="subscribe btn btn-travgreen btn-lg btn-block" type="button">Order Now</button>
+                                    </div>
+                                </div>
+                                <div class="row" style="display:none;">
+                                    <div class="col-xs-12">
+                                        <p class="payment-errors"></p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/purchase.js"></script>
+<script>
+    PURCHASE.init();
+</script>

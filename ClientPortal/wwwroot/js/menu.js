@@ -25,20 +25,26 @@ function Menu() {
 
             if (page === "my-account") {
                 id = $(this).data('id');
-                self.loadPage(page, id);
+                self.loadPage('menu', page, id);
             }
         });
 
         $('.nav-page-id').click(function () {
+            var controller = $(this).data('controller')
             var page = $(this).data('page')
             var id = $(this).data('id')
-            self.loadPage(page, id);
+
+            if (!controller) {
+                controller = 'menu';
+            }
+
+            self.loadPage(controller, page, id);
         });
 
         $('#search').click(function () {
             var page = $(this).data('page')
             var query = $('#search-query').val();
-            self.loadPage(page, query);
+            self.loadPage('menu', page, query);
         });
     }
 
@@ -62,22 +68,22 @@ function Menu() {
         }
     }
 
-    this.loadPage = function(page, param1, param2) {
-        var url = "/api/menu/" + page
+    this.loadPage = function(controller, page, param1, param2) {
+        var url = '/api/' + controller + '/' + page
 
         if (param1 !== undefined) {
-            url += "/" + param1;
+            url += '/' + param1;
         }
 
         if (param2 !== undefined) {
-            url += "/" + param2;
+            url += '/' + param2;
         }
 
-        $("#loader-container").show();
+        $('#loader-container').show();
 
         $.get(url, function (data, status) {
             $('#main_panel').html(data);
-            $("#loader-container").hide();
+            $('#loader-container').hide();
         });
     }
 }

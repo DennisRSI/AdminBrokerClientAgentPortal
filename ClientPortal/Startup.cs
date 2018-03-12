@@ -44,15 +44,7 @@ namespace ClientPortal
             services.AddDbContext<CodesDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("CodeGeneratorConnection")));
 
-            // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<ICodeService, CodeService>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IVideoService, VideoService>();
-            services.AddTransient<ICampaignService, CampaignService>();
-            services.AddTransient<IDashboardService, DashboardService>();
-            services.AddTransient<ISearchService, SearchService>();
-            services.AddTransient<ICardService, CardService>();
+            RegisterApplicationServices(services);
 
             services.AddMvc();
             services.AddAutoMapper(typeof(Startup));
@@ -82,6 +74,19 @@ namespace ClientPortal
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private void RegisterApplicationServices(IServiceCollection services)
+        {
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<ICodeService, CodeService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IVideoService, VideoService>();
+            services.AddTransient<ICampaignService, CampaignService>();
+            services.AddTransient<IDashboardService, DashboardService>();
+            services.AddTransient<ISearchService, SearchService>();
+            services.AddTransient<ICardService, CardService>();
+            services.AddTransient<IPurchaseService, PurchaseService>();
         }
     }
 }
