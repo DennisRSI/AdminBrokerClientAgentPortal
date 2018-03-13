@@ -12,9 +12,10 @@ using System;
 namespace Codes.Service.Data.Migrations
 {
     [DbContext(typeof(CodesDbContext))]
-    partial class CodesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180312222001_AddPurchase")]
+    partial class AddPurchase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -957,10 +958,6 @@ namespace Codes.Service.Data.Migrations
                         .HasMaxLength(10);
 
                     b.Property<int>("BrokerId");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(200);
 
                     b.Property<DateTime>("CreationDate");
 

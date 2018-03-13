@@ -4,6 +4,6 @@ namespace Codes.Service.Interfaces
 {
     public interface IPurchaseService
     {
-        void Purchase(PurchaseViewModel model);
+        void Purchase(string brokerReference, PurchaseViewModel model);
     }
 }

@@ -28,17 +28,15 @@ namespace Codes.Service.ViewModels
         public int VirtualValue { get; set; }
         public int VirtualQuantity { get; set; }
 
-        public string CardName { get; set; }
-        public string CardZip { get; set; }
-        public string CardNumber { get; set; }
-        public string CardExpiration { get; set; }
-        public string CardCvc { get; set; }
+        public string FullName { get; set; }
+        public string BillingZip { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string ShippingZip { get; set; }
 
-        public string ShipAddress { get; set; }
-        public string ShipCity { get; set; }
-        public string ShipState { get; set; }
-        public string ShipZip { get; set; }
-
-        public decimal ShippingCost { get; set; }
+        public string CreditCardNumber { get; set; }
+        public string CreditCardExpiration { get; set; }
+        public string CreditCardCvc { get; set; }
     }
 }

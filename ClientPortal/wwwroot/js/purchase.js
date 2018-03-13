@@ -1,4 +1,4 @@
-﻿var PURCHASE = new Purchase();
+var PURCHASE = new Purchase();
 
 function Purchase() {
     var self = this;
@@ -6,20 +6,37 @@ function Purchase() {
     this.init = function () {
 
         $('.price-change').on('input', function () {
-            var value = $('#physical-value').val().replace('$', '');
-            var quantity = parseInt($('#physical-quantity').val());
+            var value = $('#physicalValue').val();
+            var quantity = parseInt($('#physicalQuantity').val()) || 0;
             var rate = self.getRate(quantity);
 
             var orderCard = value * rate * quantity;
             var orderTotal = orderCard + 24.95;
 
-            var cardStr = self.formatCurrency(orderCard);
-            var cardTotal = self.formatCurrency(orderTotal);
+            var cardStr = UTILITY.formatCurrency(orderCard);
+            var cardTotal = UTILITY.formatCurrency(orderTotal);
 
             $('#order-card').text(cardStr);
             $('#order-total').text(cardTotal);
         });
 
+        $('#order').click(function () {
+            var data = UTILITY.serializeFormJSON($('#payment-form'));
+
+            $.ajax({
+                url: '/api/purchase/purchase/',
+                type: 'POST',
+                dataType: 'text',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function (result) {
+
+                },
+                error: function (xhr, resp, text) {
+                    console.log(xhr, resp, text);
+                }
+            })
+        });
     }
 
     this.getRate = function (quantity) {
@@ -36,10 +53,5 @@ function Purchase() {
 
         return rate;
     }
-
-    this.formatCurrency = function (value) {
-        return value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
 }
 
-//# sourceURL=purchase.js
