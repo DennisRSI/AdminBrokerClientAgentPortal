@@ -4,6 +4,7 @@ using Codes.Service.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Codes.Service.ViewModels;
 
 namespace ClientPortal.ViewComponents
 {
@@ -20,12 +21,42 @@ namespace ClientPortal.ViewComponents
             _dashboardService = dashboardService;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(string role, int id)
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
-                ViewData["Role"] = HttpContext.User.GetRole().GetName();
-                var model = _dashboardService.GetAdmin();
+                if (role == string.Empty)
+                {
+                    role = HttpContext.User.GetRole().GetName();
+                }
+
+                DashboardViewModel model;
+
+                switch (role.ToLower())
+                {
+                    case "super administrator":
+                    case "administrator":
+                        model = _dashboardService.GetAdmin();
+                        break;
+
+                    case "broker":
+                        model = _dashboardService.GetBroker(id);
+                        break;
+
+                    case "agent":
+                        model = _dashboardService.GetAgent(id);
+                        break;
+
+                    case "client":
+                        model = _dashboardService.GetClient(id);
+                        break;
+
+                    default:
+                        model = _dashboardService.GetAdmin();
+                        break;
+                }
+
+                ViewData["Role"] = role;
                 return await Task.FromResult(View(model));
             }
 

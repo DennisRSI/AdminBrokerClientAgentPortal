@@ -10,7 +10,7 @@ function Menu() {
             $(this).addClass('last-clicked');
 
             var id = '';
-            var page = $(this).data('page')
+            var page = $(this).data('page');
             var cmd = "";
 
             if (page === "admin-change" || page === "user-list") {
@@ -69,7 +69,7 @@ function Menu() {
     }
 
     this.loadPage = function(controller, page, param1, param2) {
-        var url = '/api/' + controller + '/' + page
+        var url = '/api/' + controller + '/' + page;
 
         if (param1 !== undefined) {
             url += '/' + param1;

@@ -7,10 +7,10 @@
             <li asp-authorize asp-roles="Administrator,Super Administrator">
                 <a><i class="fa fa-credit-card nav-icons-blue"></i> Admin Dashboard <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
-                    <li><a class="nav-item" href="#" data-page="dashboard">@Model.RoleName Dashboard</a></li>
-                    <li><a class="nav-item" href="#" data-page="admin-change" data-cmd="broker">Broker Dashboards</a></li>
-                    <li><a class="nav-item" href="#" data-page="admin-change" data-cmd="agent">Agent Dashboards</a></li>
-                    <li><a class="nav-item" href="#" data-page="admin-change" data-cmd="client">Client Dashboards</a></li>
+                    <li><a class="nav-page-id" href="#" data-controller="dashboard" data-page="select" data-id="@Model.RoleName">@Model.RoleName Dashboard</a></li>
+                    <li><a class="nav-page-id" href="#" data-controller="dashboard" data-page="select" data-id="broker">Broker Dashboards</a></li>
+                    <li><a class="nav-page-id" href="#" data-controller="dashboard" data-page="select" data-id="agent">Agent Dashboards</a></li>
+                    <li><a class="nav-page-id" href="#" data-controller="dashboard" data-page="select" data-id="client">Client Dashboards</a></li>
                 </ul>
             </li>
             <li asp-authorize asp-roles="Broker,Agent,Client">

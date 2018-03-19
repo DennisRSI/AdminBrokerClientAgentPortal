@@ -35,13 +35,16 @@
     <div class="x_row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <p class="h3"><i class="fa fa-credit-card"></i> Physical Cards</p>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                <div class="x_panel text-center">
-                    <h4>Total Cards Purchased</h4>
-                    <hr class="card-hr">
-                    <h3>@Html.DisplayFor(m => m.PhysicalCardsPurchased)</h3>
+            @if (ViewData["Role"].ToString().Contains("Broker") || ViewData["Role"].ToString().Contains("Admin"))
+            {
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                    <div class="x_panel text-center">
+                        <h4>Total Cards Purchased</h4>
+                        <hr class="card-hr">
+                        <h3>@Html.DisplayFor(m => m.PhysicalCardsPurchased)</h3>
+                    </div>
                 </div>
-            </div>
+            }
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                 <div class="x_panel text-center">
                     <h4>Total Cards In Campaigns</h4>
@@ -64,13 +67,16 @@
     <div class="x_row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <p class="h3"><i class="fa fa-credit-card"></i> Virtual Cards</p>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                <div class="x_panel text-center">
-                    <h4>Total Cards Generated</h4>
-                    <hr class="card-hr">
-                    <h3>@Html.DisplayFor(m => m.VirtualCardsGenerated)</h3>
+            @if (ViewData["Role"].ToString().Contains("Broker") || ViewData["Role"].ToString().Contains("Admin"))
+            {
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                    <div class="x_panel text-center">
+                        <h4>Total Cards Generated</h4>
+                        <hr class="card-hr">
+                        <h3>@Html.DisplayFor(m => m.VirtualCardsGenerated)</h3>
+                    </div>
                 </div>
-            </div>
+            }
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                 <div class="x_panel text-center">
                     <h4>Total Cards In Campaigns</h4>
@@ -170,11 +176,11 @@
     <div class="x_panel">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 table-responsive">
-                <p class="h4">Card Distribution By Broker</p>
+                <p class="h4">Card Distribution By @Model.DistributionDetailType</p>
                 <table id="card-distribution" class="table table-bordered table-striped jambo_table">
                     <thead>
                         <tr class="headings">
-                            <th class="column-title">Broker</th>
+                            <th class="column-title">@Model.DistributionDetailType</th>
                             <th class="column-title">Physical Cards</th>
                             <th class="column-title">Activated</th>
                             <th class="column-title">% Rate</th>

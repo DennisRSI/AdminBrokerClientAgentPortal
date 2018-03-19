@@ -59,6 +59,8 @@ namespace Codes.Service.ViewModels
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal ShoppingPendingCashback { get; set; }
 
+        public string DistributionDetailType { get; set; }
+
         public IEnumerable<CardDistributionViewModel> CardDistributions { get; set; } = new List<CardDistributionViewModel>();
     }
 

@@ -1,0 +1,23 @@
+﻿@model Codes.Service.ViewModels.DashboardSelectViewModel
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <br />
+    <span class="h2">@Model.Role Dashboard Simulation</span>
+    <hr class="thicc-hr">
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <form class="form-group">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                Select @Model.Role to Simulate
+                @Html.DropDownListFor(m => m.Role, new SelectList(Model.Accounts, "AccountId", "Name"), new { @class = "form-control form-group" })
+            </div><br />
+            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                <button id="simulate" type="button" class="btn btn-travgreen">Simulate</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="~/js/dashboard-select.js"></script>
+<script>
+    DASHBOARDSELECT.init('@Model.Role');
+</script>
