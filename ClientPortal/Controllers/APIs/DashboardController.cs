@@ -18,6 +18,12 @@ namespace ClientPortal.Controllers.APIs
             _userManager = userManager;
         }
 
+        [HttpGet("default")]
+        public IActionResult GetDefault()
+        {
+            return ViewComponent("Dashboard", new { role = "", id = 0 });
+        }
+
         [HttpGet("select/{role}")]
         public IActionResult SelectRole(string role)
         {

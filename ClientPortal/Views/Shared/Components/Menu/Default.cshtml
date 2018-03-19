@@ -7,14 +7,14 @@
             <li asp-authorize asp-roles="Administrator,Super Administrator">
                 <a><i class="fa fa-credit-card nav-icons-blue"></i> Admin Dashboard <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
-                    <li><a class="nav-page-id" href="#" data-controller="dashboard" data-page="select" data-id="@Model.RoleName">@Model.RoleName Dashboard</a></li>
+                    <li><a class="nav-page-id" href="#" data-controller="dashboard" data-page="default">@Model.RoleName Dashboard</a></li>
                     <li><a class="nav-page-id" href="#" data-controller="dashboard" data-page="select" data-id="broker">Broker Dashboards</a></li>
                     <li><a class="nav-page-id" href="#" data-controller="dashboard" data-page="select" data-id="agent">Agent Dashboards</a></li>
                     <li><a class="nav-page-id" href="#" data-controller="dashboard" data-page="select" data-id="client">Client Dashboards</a></li>
                 </ul>
             </li>
             <li asp-authorize asp-roles="Broker,Agent,Client">
-                <a class="nav-item" href="#" data-page="dashboard" ><i class="fa fa-credit-card nav-icons-blue"></i> @Model.RoleName Dashboard </a>
+                <a class="nav-page-id" href="#" data-controller="dashboard" data-page="default"><i class="fa fa-credit-card nav-icons-blue"></i> @Model.RoleName Dashboard </a>
             </li>
             <li asp-authorize asp-roles="Super Administrator">
                 <a class="nav-item" href="#" data-id="@Model.AccountId" data-page="user-list" data-cmd="Super Administrator"><i class="fa fa-users nav-icons-blue"></i> Super Admin Management</a>

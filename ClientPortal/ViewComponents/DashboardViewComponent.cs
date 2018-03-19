@@ -13,12 +13,17 @@ namespace ClientPortal.ViewComponents
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IDashboardService _dashboardService;
+        private readonly IAccountService _accountService;
 
-        public DashboardViewComponent(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IDashboardService dashboardService)
+        public DashboardViewComponent(SignInManager<ApplicationUser> signInManager,
+                                        UserManager<ApplicationUser> userManager,
+                                        IDashboardService dashboardService,
+                                        IAccountService accountService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _dashboardService = dashboardService;
+            _accountService = accountService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(string role, int id)
@@ -28,6 +33,9 @@ namespace ClientPortal.ViewComponents
                 if (role == string.Empty)
                 {
                     role = HttpContext.User.GetRole().GetName();
+
+                    var reference = _userManager.GetUserId(HttpContext.User);
+                    id = _accountService.GetIdFromReference(reference);
                 }
 
                 DashboardViewModel model;
