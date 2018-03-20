@@ -15,15 +15,53 @@ function Profile() {
             } else {
                 self.closeAllPanels(accordionId);
             }
-        })
+        });
 
-        
+        $("#password-save").on("click", function () {
+
+            var password1 = $('#password1').val();
+            var password2 = $('#password2').val();
+
+            if (password1 !== password2) {
+                alert('Passwords do not match');
+                return;
+            }
+
+            var url = '/api/user/changepassword/' + password1;
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (result) {
+                    if (result.isSuccess == true) {
+                        $('.modal').modal('hide');
+                        alert('Password successfully changed');
+                    }
+                    else {
+                        var alertMessage = "";
+
+                        for (var i = 0; i < result.messages.length; i++) {
+                            alertMessage += result.messages[i] + "\n";
+                        }
+
+                        alert(alertMessage);
+                    }
+                },
+                error: function (xhr, resp, text) {
+                    console.log(xhr, resp, text);
+                }
+            })
+
+        });
     }
 
     this.openAllPanels = function (aId) {
         console.log("setAllPanelOpen");
         $(aId + ' .panel-collapse:not(".in")').collapse('show');
     }
+
     this.closeAllPanels = function (aId) {
         console.log("setAllPanelclose");
         $(aId + ' .panel-collapse.in').collapse('hide');

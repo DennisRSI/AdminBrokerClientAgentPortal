@@ -539,10 +539,12 @@ namespace ClientPortal.Controllers.APIs
             return returnObj;
         }
 
-        [HttpPost("changepassword/{id}/{password}")]
-        public IActionResult ChangePassword(string id, string password)
+        [HttpPost("changepassword/{password}")]
+        public async Task<IActionResult> ChangePassword(string password)
         {
-            var result = _context.ChangePassword(id, password);
+            var id = _userManager.GetUserId(User);
+            var result = await _context.ChangePassword(id, password);
+
             return Ok(result);
         }
     }
