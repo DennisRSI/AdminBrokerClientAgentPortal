@@ -25,32 +25,33 @@
                     @if (!ViewData["ListType"].ToString().Contains("Administrator"))
                     {
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                            <input type="text" class="form-control has-feedback-left" name="company_name" id="company_name" placeholder="Company Name">
+                            <input type="text" class="form-control has-feedback-left" name="company_name" placeholder="Company Name">
                             <span class="fa fa-building form-control-feedback left" aria-hidden="true"></span>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                            <input type="text" class="form-control has-feedback-left" name="ein" id="ein" placeholder="EIN/FEIN">
+                            <input type="text" class="form-control has-feedback-left" name="ein" placeholder="EIN/FEIN">
                             <span class="fa fa-info-circle form-control-feedback left" aria-hidden="true"></span>
                         </div>
                     }
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-left" name="first_name" id="first_name" placeholder="First Name" required>
+                        <input type="text" class="form-control has-feedback-left" name="first_name" placeholder="First Name" required>
                         <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-left" name="last_name" id="last_name" placeholder="Last Name" required>
+                        <input type="text" class="form-control has-feedback-left" name="last_name" placeholder="Last Name" required>
                         <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-left" name="address" id="address" placeholder="Office Address">
+                        <input type="text" class="form-control has-feedback-left" name="address" placeholder="Office Address">
                         <span class="fa fa-map-marker form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-left" name="city" id="city" placeholder="City">
+                        <input type="text" class="form-control has-feedback-left" name="city" placeholder="City">
                         <span class="fa fa-map-marker form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group">
-                        <select id="state" name="state" class="form-control">
+                        <select name="state" class="form-control">
+                            <option>Select State</option>
                             <option value="AL">AL</option>
                             <option value="AK">AK</option>
                             <option value="AR">AR</option>
@@ -105,35 +106,35 @@
                         </select>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="number" class="form-control has-feedback-left" name="postal_code" id="postal_code" placeholder="Postal Code">
+                        <input type="number" class="form-control has-feedback-left" name="postal_code" placeholder="Postal Code">
                         <span class="fa fa-map-marker form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group">
-                        <select id="country" name="country" class="form-control">
+                        <select name="country" class="form-control">
                             <option value="USA">USA</option>
                             <option value="CAN">CAN</option>
                         </select>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                        <input type="email" class="form-control has-feedback-left" name="email" id="email" placeholder="Email" required>
+                        <input type="email" class="form-control has-feedback-left" name="email" placeholder="Email" required>
                         <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="tel" class="form-control has-feedback-left" name="mobile_phone" id="mobile_phone" placeholder="Mobile Phone">
+                        <input type="tel" class="form-control has-feedback-left" name="mobile_phone" placeholder="Mobile Phone">
                         <span class="fa fa-mobile-phone form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="tel" class="form-control has-feedback-left" name="work_phone" id="work_phone" placeholder="Office Phone">
+                        <input type="tel" class="form-control has-feedback-left" name="work_phone" placeholder="Office Phone">
                         <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="tel" class="form-control has-feedback-left" name="fax" id="fax" placeholder="Office Fax">
+                        <input type="tel" class="form-control has-feedback-left" name="fax" placeholder="Office Fax">
                         <span class="fa fa-fax form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     @if (ViewData["ListType"].ToString() == "Agent" || ViewData["ListType"].ToString() == "Client")
                     {
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 offset-lg-4 offset-md-4 offset-sm-6  form-group has-feedback">
-                            <input type="number" class="form-control has-feedback-left" name="commission_rate" id="commission_rate" placeholder="Commission Rate">
+                            <input type="number" class="form-control has-feedback-left" name="commission_rate" placeholder="Commission Rate">
                             <span class="fa fa-dollar form-control-feedback left" aria-hidden="true"></span>
                         </div>
                     }
@@ -143,14 +144,14 @@
                             <br /><br />
                             <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Upload W9:</label><br />
                             <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custom-file">
-                                <input type="file" id="documentW9" name="documentW9" class="custom-file-input">
+                                <input type="file" name="documentW9" class="custom-file-input">
                                 <span class="custom-file-control"></span>
                             </label>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Upload Other Documents:</label><br />
                             <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custom-file">
-                                <input type="file" id="documentOther" name="documentOther" class="custom-file-input">
+                                <input type="file" name="documentOther" class="custom-file-input">
                                 <span class="custom-file-control"></span>
                             </label>
                         </div>
@@ -165,15 +166,15 @@
                         <div class="form-group">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                 <label class="control-label">Broker Commission Percentage</label>
-                                <input id="broker_commission_percentage" name="broker_commission_percentage" type="number" class="form-control" placeholder="ex. 50.0" value="50.0">
+                                <input name="broker_commission_percentage" type="number" class="form-control" placeholder="ex. 50.0" value="50.0">
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                 <label class="control-label">Agent Commission Percentage</label>
-                                <input id="agent_commission_percentage" name="agent_commission_percentage" type="number" class="form-control" placeholder="ex. 12.5" value="12.5">
+                                <input name="agent_commission_percentage" type="number" class="form-control" placeholder="ex. 12.5" value="12.5">
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                 <label class="control-label">Client Commission Percentage</label>
-                                <input id="client_commission_percentage" name="client_commission_percentage" type="number" class="form-control" placeholder="ex. 3.0" value="3.0">
+                                <input name="client_commission_percentage" type="number" class="form-control" placeholder="ex. 3.0" value="3.0">
                             </div>
                             <br />
                         </div>
@@ -193,7 +194,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-lg-4 col-md-4 col-sm-6 col-xs-12">1,000 Cards</label>
                                     <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
-                                        <input name="cards_1000" id="cards_1000" type="number" class="form-control" value="0.55">
+                                        <input name="cards_1000" type="number" class="form-control" value="0.55">
                                     </div>
                                 </div>
                             </div>
@@ -201,7 +202,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-lg-4 col-md-4 col-sm-6 col-xs-12">5,000 Cards</label>
                                     <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
-                                        <input name="cards_5000" id="cards_5000" type="number" class="form-control" value="0.50">
+                                        <input name="cards_5000" type="number" class="form-control" value="0.50">
                                     </div>
                                 </div>
                             </div>
@@ -209,7 +210,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-lg-4 col-md-4 col-sm-6 col-xs-12">10,000 Cards</label>
                                     <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
-                                        <input name="cards_10000" id="cards_10000" type="number" class="form-control" value="0.40">
+                                        <input name="cards_10000" type="number" class="form-control" value="0.40">
                                     </div>
                                 </div>
                             </div>
@@ -217,7 +218,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-lg-4 col-md-4 col-sm-6 col-xs-12">25,000 Cards</label>
                                     <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
-                                        <input name="cards_25000" id="cards_25000" type="number" class="form-control" value="0.35">
+                                        <input name="cards_25000" type="number" class="form-control" value="0.35">
                                     </div>
                                 </div>
                             </div>
@@ -225,7 +226,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-lg-4 col-md-4 col-sm-6 col-xs-12">50,000 Cards</label>
                                     <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
-                                        <input name="cards_50000" id="cards_50000" type="number" class="form-control" value="0.30">
+                                        <input name="cards_50000" type="number" class="form-control" value="0.30">
                                     </div>
                                 </div>
                             </div>
@@ -233,7 +234,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-lg-4 col-md-4 col-sm-6 col-xs-12">100,000+ Cards</label>
                                     <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
-                                        <input name="cards_100000" id="cards_100000" type="number" class="form-control" value="0.25">
+                                        <input name="cards_100000" type="number" class="form-control" value="0.25">
                                     </div>
                                 </div>
                             </div>
@@ -246,12 +247,12 @@
                                 <div class="form-group">
                                     <label class="control-label col-lg-4 col-md-4 col-sm-6 col-xs-12">Virtual Card Cap:</label>
                                     <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
-                                        <input name="virtual_cap" id="virtual_cap" type="number" class="form-control form-group" value="250000">
+                                        <input name="virtual_cap" type="number" class="form-control form-group" value="250000">
                                         <span class="help-block">Any broker purchases above this cap will be subject to Admin approval before being granted. All purchases below the cap will be instant.</span>
                                     </div>
                                     <label class="control-label col-lg-4 col-md-4 col-sm-6 col-xs-12">Timeframe:</label>
                                     <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
-                                        <input name="timeframe" id="timeframe" type="number" class="form-control form-group " placeholder="Enter number of days" value="7">
+                                        <input name="timeframe" type="number" class="form-control form-group " placeholder="Enter number of days" value="7">
                                         <span class="help-block">How long (in days) before the Virtual Card Cap resets?</span>
                                     </div>
                                 </div>
