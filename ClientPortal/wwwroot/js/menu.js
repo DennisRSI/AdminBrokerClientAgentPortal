@@ -40,12 +40,6 @@ function Menu() {
 
             self.loadPage(controller, page, id);
         });
-
-        $('#search').click(function () {
-            var page = $(this).data('page')
-            var query = $('#search-query').val();
-            self.loadPage('menu', page, query);
-        });
     }
 
     this.get_page = function (page, cmd, id) {

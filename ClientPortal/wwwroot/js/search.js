@@ -18,5 +18,10 @@ function Search() {
         $('#table-clients').DataTable(settings);
         $('#table-campaigns').DataTable(settings);
         $('#table-cards').DataTable(settings);
+
+        $('#search').click(function () {
+            var query = $('#search-query').val();
+            MENU.loadPage('menu', 'search', query);
+        });
     }
 }
