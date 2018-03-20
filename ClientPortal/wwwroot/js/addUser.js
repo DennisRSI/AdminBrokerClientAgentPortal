@@ -11,7 +11,7 @@ function AddUser(){
 
         var url = '/api/user/' + $('#userType').val();
         
-        $('#addUserBTN').click(function (event) {
+        $('button.add-user').click(function (event) {
 
             jQuery.validator.setDefaults({
                 errorPlacement: function (error, element) {
