@@ -11,20 +11,22 @@ function AddUser(){
 
         var url = '/api/user/' + $('#userType').val();
         
-        $('#addUserBTN').click(function () {
+        $('#addUserBTN').click(function (event) {
 
             jQuery.validator.setDefaults({
                 errorPlacement: function (error, element) {
                 },
             });
 
-            var valid = $('#addUserForm').valid();
+            var target = $(event.target);
+            var form = target.parents('form');
+            var valid = form.valid();
 
             if (!valid) {
                 return;
             }
 
-            var data = self.serializeFormJSON($('#addUserForm'));
+            var data = self.serializeFormJSON(form);
 
             $.ajax({
                 url: url, // url where to submit the request
