@@ -49,7 +49,7 @@
                     <li asp-authorize role="presentation" class="active">
                         <a href="#tab1" id="profile-tab" role="tab" data-toggle="tab" aria-expanded="true">Profile</a>
                     </li>
-                    @if (Model.BrokerId > 0 || User.IsInRole("Administrator") || User.IsInRole("Super Administrator"))
+                    @if (Model.BrokerId > 0)
                     {
                         <li asp-authorize role="presentation" class="">
                             <a href="#tab2" role="tab" id="agents-tab" data-id="@Model.BrokerId" data-toggle="tab" aria-expanded="false">Agents</a>
