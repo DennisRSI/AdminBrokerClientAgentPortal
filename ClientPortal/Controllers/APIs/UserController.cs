@@ -539,8 +539,16 @@ namespace ClientPortal.Controllers.APIs
             return returnObj;
         }
 
-        [HttpPost("changepassword/{password}")]
-        public async Task<IActionResult> ChangePassword(string password)
+        [HttpPost("changepassword/{id}/{password}")]
+        public async Task<IActionResult> ChangePassword(string id, string password)
+        {
+            var result = await _context.ChangePassword(id, password);
+
+            return Ok(result);
+        }
+
+        [HttpPost("updateprofile")]
+        public async Task<IActionResult> UpdateProfile(string password)
         {
             var id = _userManager.GetUserId(User);
             var result = await _context.ChangePassword(id, password);

@@ -2,7 +2,7 @@
 function Profile() {
     var self = this;
 
-    this.init = function () {
+    this.init = function (id) {
         $(".toggle-accordion").on("click", function () {
 
             var accordionId = $(this).attr("accordion-id"),
@@ -27,7 +27,7 @@ function Profile() {
                 return;
             }
 
-            var url = '/api/user/changepassword/' + password1;
+            var url = '/api/user/changepassword/' + id + '/' + password1;
 
             $.ajax({
                 url: url,
@@ -53,8 +53,27 @@ function Profile() {
                     console.log(xhr, resp, text);
                 }
             })
+        });
+
+        $("#profile-submit").on("click", function () {
+            var data = UTILITY.serializeFormJSON($('#payment-form'));
+
+            $.ajax({
+                url: '/api/purchase/purchase/',
+                type: 'POST',
+                dataType: 'text',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function (result) {
+
+                },
+                error: function (xhr, resp, text) {
+                    console.log(xhr, resp, text);
+                }
+            })
 
         });
+
     }
 
     this.openAllPanels = function (aId) {
