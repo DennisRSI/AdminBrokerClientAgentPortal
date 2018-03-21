@@ -158,5 +158,12 @@ namespace ClientPortal.Models
         public int AgentId { get; set; } = 0;
         public int BrokerId { get; set; } = 0;
 
+        public bool IsAdmin
+        {
+            get
+            {
+                return AgentId == 0 && BrokerId == 0 && ClientId == 0;
+            }
+        }
     }
 }
