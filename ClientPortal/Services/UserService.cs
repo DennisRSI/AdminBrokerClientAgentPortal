@@ -183,7 +183,41 @@ namespace ClientPortal.Services
         {
             try
             {
-                ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
+                var user = await _userManager.FindByEmailAsync(model.Email);
+
+                if (user != null && user.Id != null && user.Id.Length > 0)
+                {
+                    user.Address = model.Address;
+                    user.City = model.City;
+                    user.CompanyName = model.CompanyName;
+                    user.Country = model.Country;
+                    user.DeactivationDate = model.DeactivationDate;
+                    user.DeactivationReason = model.DeactivationReason;
+                    user.EIN = model.EIN;
+                    user.Email = model.Email;
+                    user.EmailConfirmed = true;
+                    user.Fax = model.Fax;
+                    user.FaxExtension = model.FaxExtension;
+                    user.FirstName = model.FirstName;
+                    user.MiddleName = model.MiddleName;
+                    user.LastName = model.LastName;
+                    user.MobilePhone = model.MobilePhone;
+                    user.NormalizedEmail = model.Email.ToUpper();
+                    user.NormalizedUserName = model.Email.ToUpper();
+                    user.OfficeExtension = model.OfficeExtension;
+                    user.OfficePhone = model.OfficePhone;
+                    user.PhoneNumberConfirmed = true;
+                    user.PostalCode = model.PostalCode;
+                    user.State = model.State;
+                    user.UserName = model.Email;
+
+                    await _userManager.UpdateAsync(user);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    model.Message = "Error: Admin not found";
+                }
             }
             catch (Exception ex)
             {

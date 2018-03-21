@@ -1,8 +1,10 @@
 ﻿var PROFILE = new Profile();
+
 function Profile() {
     var self = this;
 
     this.init = function (id) {
+
         $(".toggle-accordion").on("click", function () {
 
             var accordionId = $(this).attr("accordion-id"),
@@ -55,25 +57,37 @@ function Profile() {
             })
         });
 
-        $("#profile-submit").on("click", function () {
-            var data = UTILITY.serializeFormJSON($('#payment-form'));
+        $("#profile-submit").on("click", function (event) {
+
+            var target = $(event.target);
+            var form = target.parents('form');
+            var valid = form.valid();
+
+            if (!valid) {
+                return;
+            }
+
+            var data = UTILITY.serializeFormJSON(form);
 
             $.ajax({
-                url: '/api/purchase/purchase/',
+                url: '/api/user/updateprofile/' + id,
                 type: 'POST',
-                dataType: 'text',
+                dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify(data),
                 success: function (result) {
-
+                    if (result.isSuccess == true) {
+                        alert('Profile successfully updated.');
+                    }
+                    else {
+                        alert(result.message);
+                    }
                 },
                 error: function (xhr, resp, text) {
                     console.log(xhr, resp, text);
                 }
-            })
-
+            });
         });
-
     }
 
     this.openAllPanels = function (aId) {

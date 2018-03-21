@@ -355,190 +355,6 @@ namespace ClientPortal.Controllers.APIs
             return returnObj;
         }
 
-        [HttpPut("{userType}")]
-        public async Task<JObject> Put(string userType, [FromBody]dynamic obj)
-        {
-            dynamic returnObj = new JObject();
-            string companyName = "NA", ein = "NA", firstName = "NA", lastName = "NA", address = "NA", city = "NA", state = "NA", postalCode = "NA", country = "NA";
-            string mobilePhone = "NA", workPhone = "NA", fax = "NA", email = "NA", accountId = "NA";
-
-            try
-            {
-                var accountIdTmp = obj.account_id;
-                if (accountIdTmp != null && accountIdTmp.ToString().Length)
-                {
-                    accountId = accountIdTmp.ToString();
-
-                    var companyNameTmp = obj.company_name;
-                    if (companyNameTmp != null)
-                        companyName = companyNameTmp.ToString();
-
-                    var einTmp = obj.ein;
-                    if (einTmp != null)
-                        ein = einTmp.ToString();
-
-                    var firstNameTmp = obj.first_name;
-                    if (firstNameTmp != null)
-                        firstName = firstNameTmp.ToString();
-
-                    var lastNameTmp = obj.last_name;
-                    if (lastNameTmp != null)
-                        lastName = lastNameTmp.ToString();
-
-                    var addressTmp = obj.address;
-                    if (addressTmp != null)
-                        address = addressTmp.ToString();
-
-                    var cityTmp = obj.city;
-                    if (cityTmp != null)
-                        city = cityTmp.ToString();
-
-                    var stateTmp = obj.state;
-                    if (stateTmp != null)
-                        state = stateTmp.ToString();
-
-                    var postalCodeTmp = obj.postal_code;
-                    if (postalCodeTmp != null)
-                        postalCode = postalCodeTmp.ToString();
-
-                    var countryTmp = obj.country;
-                    if (countryTmp != null)
-                        country = countryTmp.ToString();
-
-                    var mobilePhoneTmp = obj.mobile_phone;
-                    if (mobilePhoneTmp != null)
-                        mobilePhone = mobilePhoneTmp.ToString();
-
-                    var workPhoneTmp = obj.work_phone;
-                    if (workPhoneTmp != null)
-                        workPhone = workPhoneTmp.ToString();
-
-                    var faxTmp = obj.fax;
-                    if (faxTmp != null)
-                        fax = faxTmp.ToString();
-
-                    var emailTmp = obj.email;
-                    if (emailTmp != null)
-                        email = emailTmp.ToString();
-
-                    switch (userType)
-                    {
-                        case "Administrator":
-                        case "Super Administrator":
-                            ApplicationUser adminModel = await _userManager.FindByIdAsync(accountId);
-
-                            if (companyName != "NA")
-                                adminModel.CompanyName = companyName;
-                            if (ein != "NA")
-                                adminModel.EIN = ein;
-                            if (firstName != "NA")
-                                adminModel.FirstName = firstName;
-                            if (lastName != "NA")
-                                adminModel.LastName = lastName;
-                            if (address != "NA")
-                                adminModel.Address = address;
-                            if (city != "NA")
-                                adminModel.City = city;
-                            if (state != "NA")
-                                adminModel.State = state;
-                            if (postalCode != "NA")
-                                adminModel.PostalCode = postalCode;
-                            if (country != "NA")
-                                adminModel.Country = country;
-                            if (mobilePhone != "NA")
-                                adminModel.MobilePhone = mobilePhone;
-                            if (workPhone != "NA")
-                                adminModel.OfficePhone = workPhone;
-                            if (fax != "NA")
-                                adminModel.Fax = fax;
-                            if (email != "NA")
-                            {
-                                adminModel.Email = email;
-                                adminModel.UserName = email;
-                            }
-
-                            IdentityResult adminUpdate = await _userManager.UpdateAsync(adminModel);
-
-                            returnObj.is_success = adminUpdate.Succeeded;
-
-                            if (!adminUpdate.Succeeded)
-                            {
-                                string errors = "";
-
-                                foreach (var error in adminUpdate.Errors)
-                                {
-                                    if (errors.Length > 0)
-                                        errors += " | ";
-
-                                    errors += error.Description;
-                                }
-
-                                returnObj.message = errors;
-                            }
-                            else
-                            {
-                                returnObj.accountId = accountId;
-                                returnObj.message = "Success";
-                            }
-                            break;
-                        case "Broker":
-                            int brokerId = 0;
-                            var brokerIdTmp = obj.broker_id;
-                            if (brokerIdTmp != null && int.TryParse(brokerIdTmp.ToString(), out brokerId))
-                            {
-                                BrokerViewModel broker = await _codeService.GetBrokerById(brokerId);
-                            }
-                            else
-                            {
-                                returnObj.is_success = false;
-                                returnObj.message = "broker_id is required";
-                            }
-                            break;
-                        case "Client":
-                            int clientId = 0;
-                            var clientIdTmp = obj.client_id;
-                            if (clientIdTmp != null && int.TryParse(clientIdTmp.ToString(), out clientId))
-                            {
-                                ClientViewModel client = await _codeService.GetClientById(clientId);
-                            }
-                            else
-                            {
-                                returnObj.is_success = false;
-                                returnObj.message = "client_id is required";
-                            }
-                                break;
-                        case "Agent":
-                            int agentId = 0;
-                            var agentIdTmp = obj.agent_id;
-                            if (agentIdTmp != null && int.TryParse(agentIdTmp.ToString(), out agentId))
-                            {
-                                AgentViewModel agent = await _codeService.GetAgentById(agentId);
-                            }
-                            else
-                            {
-                                returnObj.is_success = false;
-                                returnObj.message = "agent_id is required";
-                            }
-                            break;
-                    }
-                }
-                else
-                {
-                    returnObj.is_success = false;
-                    returnObj.message = "account_id is required";
-                }
-
-                
-            }
-            catch (Exception ex)
-            {
-                returnObj.is_success = false;
-                returnObj.message = ex.Message;
-            }
-
-            return returnObj;
-        }
-
         [HttpPost("changepassword/{id}/{password}")]
         public async Task<IActionResult> ChangePassword(string id, string password)
         {
@@ -547,13 +363,121 @@ namespace ClientPortal.Controllers.APIs
             return Ok(result);
         }
 
-        [HttpPost("updateprofile")]
-        public async Task<IActionResult> UpdateProfile(string password)
+        [HttpPost("updateprofile/{id}")]
+        public async Task<IActionResult> UpdateProfile(string id, [FromBody] ApplicationUser model)
         {
-            var id = _userManager.GetUserId(User);
-            var result = await _context.ChangePassword(id, password);
+            var user = await _userManager.FindByIdAsync(id);
+            model.BrokerId = user.BrokerId;
 
-            return Ok(result);
+            switch (user.Role)
+            {
+                case "Administrator":
+                    var adminResult = await UpdateAdmin(model);
+                    return Ok(adminResult);
+
+                case "Agent":
+                    var agentResult = await UpdateAgent(model);
+                    return Ok(agentResult);
+
+                case "Broker":
+                    var brokerResult = await UpdateBroker(model);
+                    return Ok(brokerResult);
+
+                case "Client":
+                    var clientResult = await UpdateClient(model);
+                    return Ok(clientResult);
+            }
+
+            return BadRequest();
+        }
+
+        private async Task<AdminViewModel> UpdateAdmin(ApplicationUser user)
+        {
+            var admin = new AdminViewModel()
+            {
+                Email = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                CompanyName = user.CompanyName,
+                EIN = user.EIN,
+                Address = user.Address,
+                City = user.City,
+                State = user.State,
+                PostalCode = user.PostalCode,
+                Country = user.Country,
+                MobilePhone = user.MobilePhone,
+                OfficePhone = user.OfficePhone,
+                Fax = user.Fax,
+            };
+
+            return await _context.AdminUpdate(admin);
+        }
+
+        private async Task<AgentViewModel> UpdateAgent(ApplicationUser user)
+        {
+            var agent = new AgentViewModel()
+            {
+                Email = user.UserName,
+                AgentFirstName = user.FirstName,
+                AgentLastName = user.LastName,
+                CompanyName = user.CompanyName,
+                EIN = user.EIN,
+                Address = user.Address,
+                City = user.City,
+                State = user.State,
+                PostalCode = user.PostalCode,
+                Country = user.Country,
+                MobilePhone = user.MobilePhone,
+                OfficePhone = user.OfficePhone,
+                Fax = user.Fax,
+            };
+
+            return await _context.AgentUpdate(agent);
+        }
+
+        private async Task<BrokerViewModel> UpdateBroker(ApplicationUser user)
+        {
+            var broker = new BrokerViewModel()
+            {
+                BrokerId = user.BrokerId,
+                Email = user.UserName,
+                BrokerFirstName = user.FirstName,
+                BrokerLastName = user.LastName,
+                CompanyName = user.CompanyName,
+                EIN = user.EIN,
+                Address = user.Address,
+                City = user.City,
+                State = user.State,
+                PostalCode = user.PostalCode,
+                Country = user.Country,
+                MobilePhone = user.MobilePhone,
+                OfficePhone = user.OfficePhone,
+                Fax = user.Fax,
+            };
+
+            return await _context.BrokerUpdate(broker);
+        }
+
+        private async Task<ClientViewModel> UpdateClient(ApplicationUser user)
+        {
+            var client = new ClientViewModel()
+            {
+                Email = user.UserName,
+                ContactFirstName = user.FirstName,
+                ContactLastName = user.LastName,
+                CompanyName = user.CompanyName,
+                EIN = user.EIN,
+                Address = user.Address,
+                City = user.City,
+                State = user.State,
+                PostalCode = user.PostalCode,
+                Country = user.Country,
+                MobilePhone = user.MobilePhone,
+                OfficePhone = user.OfficePhone,
+                Fax = user.Fax,
+            };
+
+            return await _context.ClientUpdate(client);
         }
     }
 }

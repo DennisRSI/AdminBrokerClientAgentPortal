@@ -165,5 +165,17 @@ namespace ClientPortal.Models
                 return AgentId == 0 && BrokerId == 0 && ClientId == 0;
             }
         }
+
+        public string Role
+        {
+            get
+            {
+                if (AgentId > 0) { return "Agent"; }
+                if (BrokerId > 0) { return "Broker"; }
+                if (ClientId > 0) { return "Client"; }
+
+                return "Administrator";
+            }
+        }
     }
 }
