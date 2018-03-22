@@ -2883,11 +2883,6 @@ span.section {
     padding-top: 8px
 }
 
-.form-control:focus {
-    border-color: #CCD0D7;
-    box-shadow: none !important
-}
-
 legend {
     font-size: 18px;
     color: inherit
