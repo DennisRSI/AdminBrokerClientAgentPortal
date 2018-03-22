@@ -34,19 +34,19 @@
                         </div>
                     }
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-left" name="first_name" placeholder="First Name" required>
+                        <input type="text" class="form-control has-feedback-left" name="first_name" placeholder="First Name" maxlength="255" required>
                         <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-left" name="last_name" placeholder="Last Name" required>
+                        <input type="text" class="form-control has-feedback-left" name="last_name" placeholder="Last Name" maxlength="255" required>
                         <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-left" name="address" placeholder="Office Address">
+                        <input type="text" class="form-control has-feedback-left" name="address" placeholder="Office Address" maxlength="255">
                         <span class="fa fa-map-marker form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-left" name="city" placeholder="City">
+                        <input type="text" class="form-control has-feedback-left" name="city" placeholder="City" maxlength="100">
                         <span class="fa fa-map-marker form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group">
@@ -106,17 +106,18 @@
                         </select>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="number" class="form-control has-feedback-left" name="postal_code" placeholder="Postal Code">
+                        <input type="number" class="form-control has-feedback-left" name="postal_code" placeholder="Postal Code" maxlength="10">
                         <span class="fa fa-map-marker form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group">
                         <select name="country" class="form-control">
+                            <option>Select Country</option>
                             <option value="USA">USA</option>
                             <option value="CAN">CAN</option>
                         </select>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                        <input type="email" class="form-control has-feedback-left" name="email" placeholder="Email" required>
+                        <input type="email" class="form-control has-feedback-left" name="email" placeholder="Email" maxlength="100" required>
                         <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
@@ -124,11 +125,11 @@
                         <span class="fa fa-mobile-phone form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="tel" class="form-control has-feedback-left" name="work_phone" placeholder="Office Phone">
+                        <input type="tel" class="form-control has-feedback-left" name="work_phone" placeholder="Office Phone" maxlength="10">
                         <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="tel" class="form-control has-feedback-left" name="fax" placeholder="Office Fax">
+                        <input type="tel" class="form-control has-feedback-left" name="fax" placeholder="Office Fax" maxlength="10">
                         <span class="fa fa-fax form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     @if (ViewData["ListType"].ToString() == "Agent" || ViewData["ListType"].ToString() == "Client")

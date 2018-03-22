@@ -9,8 +9,6 @@ function AddUser(){
             mask: '(999) 999-9999'
         });
 
-        var url = '/api/user/' + $('#userType').val();
-        
         $('button.add-user').click(function (event) {
 
             jQuery.validator.setDefaults({
@@ -20,6 +18,31 @@ function AddUser(){
 
             var target = $(event.target);
             var form = target.parents('form');
+
+            form.validate({
+                rules: {
+                    first_name: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 255
+                    },
+                    last_name: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 255
+                    },
+                    postal_code: {
+                        required: false,
+                        minlength: 5,
+                        maxlength: 10
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    }
+                }
+            });
+
             var valid = form.valid();
 
             if (!valid) {
@@ -27,6 +50,7 @@ function AddUser(){
             }
 
             var data = self.serializeFormJSON(form);
+            var url = '/api/user/' + $('#userType').val();
 
             $.ajax({
                 url: url, // url where to submit the request

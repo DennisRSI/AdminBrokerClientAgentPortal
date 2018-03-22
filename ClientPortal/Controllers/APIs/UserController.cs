@@ -61,7 +61,12 @@ namespace ClientPortal.Controllers.APIs
 
                 var stateTmp = obj.state;
                 if (stateTmp != null)
-                    state = stateTmp.ToString();
+                {
+                    if (!stateTmp.ToString().Contains("Select"))
+                    {
+                        state = stateTmp.ToString();
+                    }
+                }
 
                 var postalCodeTmp = obj.postal_code;
                 if (postalCodeTmp != null)
@@ -69,7 +74,12 @@ namespace ClientPortal.Controllers.APIs
 
                 var countryTmp = obj.country;
                 if (countryTmp != null)
-                    country = countryTmp.ToString();
+                {
+                    if (!countryTmp.ToString().Contains("Select"))
+                    {
+                        country = countryTmp.ToString();
+                    }
+                }
 
                 var mobilePhoneTmp = obj.mobile_phone;
                 if (mobilePhoneTmp != null)
