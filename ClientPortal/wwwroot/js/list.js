@@ -77,7 +77,14 @@ function List() {
     this.brokerList = function () {
         var url = "api/list/broker";
         var cols = [
-            { "data": "full_name" },
+            {
+                "data": "full_name",
+                "createdCell": function (td, cellData, rowData, row, col) {
+                    $(td).attr('title', 'Click to view details');
+                    $(td).attr('data-toggle', 'tooltip');
+                    $(td).attr('data-container', 'body');
+                }
+            },
             { "data": "company" },
             { "data": "email" },
             { "data": "phone" },
@@ -194,8 +201,10 @@ function List() {
                     "visible": true,
                     "searchable": true
                 }],
-                "columns": columns
-                
+                "columns": columns,
+                "initComplete": function (settings, json) {
+                    $('[data-toggle="tooltip"]').tooltip();
+                }
             });
         } else {
             $dt = $(tblParsed);
