@@ -49,17 +49,25 @@ function AddUser(){
                 return;
             }
 
-            var data = self.serializeFormJSON(form);
-            var url = '/api/user/' + $('#userType').val();
+            var data = UTILITY.serializeFormJSON(form);
+            var role = $('#userType').val();
+            var url = '/api/user/' + role;
 
             $.ajax({
-                url: url, // url where to submit the request
-                type: "POST", // type of action POST || GET
-                dataType: 'json', // data type
+                url: url,
+                type: "POST",
+                dataType: 'json',
                 contentType: 'application/json',
-                data: JSON.stringify(data), // post data || get data
+                data: JSON.stringify(data),
                 success: function (result) {
                     if (result.is_success == true) {
+                        var file1 = $('#w9')[0].files[0];
+                        var file2 = $('#other')[0].files[0];
+
+                        if (file1 !== undefined) {
+                            self.uploadFile('w9', file1, file2, role, result.broker_id);
+                        }
+
                         $('.modal').removeClass('fade').modal('hide');
                         $('#sidebar-menu .nav-item.last-clicked').click();
                     }
@@ -74,19 +82,32 @@ function AddUser(){
         });
     }
 
-    this.serializeFormJSON = function (form) {
-        var o = {};
-        var a = form.serializeArray();
-        $.each(a, function () {
-            if (o[this.name]) {
-                if (!o[this.name].push) {
-                    o[this.name] = [o[this.name]];
+    this.uploadFile = function (fileType, file1, file2, role, id) {
+
+        var url = ['/api/user/uploadfile', fileType, role, id].join('/');
+        var formData = new FormData();
+
+        if (fileType === 'w9') {
+            formData.append('file', file1);
+        }
+        else {
+            formData.append('file', file2);
+        }
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                if (fileType === 'w9' && file2 !== undefined) {
+                    self.uploadFile('other', file1, file2, role, id);
                 }
-                o[this.name].push(this.value || '');
-            } else {
-                o[this.name] = this.value || '';
+            },
+            error: function (xhr, resp, text) {
+                console.log(xhr, resp, text);
             }
         });
-        return o;
     }
 }

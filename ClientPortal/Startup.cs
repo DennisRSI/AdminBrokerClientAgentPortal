@@ -88,6 +88,7 @@ namespace ClientPortal
             services.AddTransient<ICardService, CardService>();
             services.AddTransient<IPurchaseService, PurchaseService>();
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IDocumentService, DocumentService>();
         }
     }
 }

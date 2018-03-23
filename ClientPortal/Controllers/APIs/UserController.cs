@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ClientPortal.Models;
 using ClientPortal.Services._Interfaces;
 using Codes.Service.Interfaces;
 using Codes.Service.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using Codes.Service.Models;
 
 namespace ClientPortal.Controllers.APIs
 {
@@ -17,13 +20,15 @@ namespace ClientPortal.Controllers.APIs
     {
         private readonly IUserService _context;
         private readonly ICodeService _codeService;
+        private readonly IDocumentService _documentService;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserController(IUserService context, ICodeService codeService, UserManager<ApplicationUser> userManager)
+        public UserController(IUserService context, ICodeService codeService, IDocumentService documentService, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _codeService = codeService;
             _userManager = userManager;
+            _documentService = documentService;
         }
 
         [HttpPost("{userType}")]
@@ -363,6 +368,27 @@ namespace ClientPortal.Controllers.APIs
             }
 
             return returnObj;
+        }
+
+        [HttpPost("uploadfile/{fileType}/{role}/{id}")]
+        public ActionResult UploadFile(string fileType, string role, int id, IFormFile file)
+        {
+            var documentType = DocumentType.Unknown;
+
+            if (fileType.ToLower() == "w9")
+            {
+                documentType = DocumentType.W9;
+            }
+
+            using (var memoryStream = new MemoryStream())
+            {
+                file.CopyTo(memoryStream);
+                var bytes = memoryStream.ToArray();
+
+                _documentService.Add(role, id, documentType, file.ContentType, bytes);
+            }
+
+            return Ok();
         }
 
         [HttpPost("changepassword/{id}/{password}")]

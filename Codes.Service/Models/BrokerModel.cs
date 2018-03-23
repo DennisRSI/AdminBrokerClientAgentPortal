@@ -190,6 +190,16 @@ namespace Codes.Service.Models
         [StringLength(450)]
         public string ApplicationReference { get; set; } = "";
 
+        public int? DocumentW9Id { get; set; }
+
+        [ForeignKey("DocumentW9Id")]
+        public virtual DocumentModel DocumentW9 { get; set; }
+
+        public int? DocumentOtherId { get; set; }
+
+        [ForeignKey("DocumentOtherId")]
+        public virtual DocumentModel DocumentOther { get; set; }
+
         public ICollection<AgentModel> Agents { get; set; }
         public ICollection<ClientModel> Clients { get; set; }
         public ICollection<CampaignModel> Campaigns { get; set; }

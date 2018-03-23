@@ -34,6 +34,7 @@ namespace Codes.Service.Data
         public DbSet<PendingCodeModel> PendingCodes { get; set; }
         public DbSet<VideoModel> Videos { get; set; }
         public DbSet<PurchaseModel> Purchases { get; set; }
+        public DbSet<DocumentModel> Documents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

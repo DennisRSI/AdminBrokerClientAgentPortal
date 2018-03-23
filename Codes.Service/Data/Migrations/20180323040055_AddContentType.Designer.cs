@@ -12,9 +12,10 @@ using System;
 namespace Codes.Service.Data.Migrations
 {
     [DbContext(typeof(CodesDbContext))]
-    partial class CodesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180323040055_AddContentType")]
+    partial class AddContentType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,10 +99,6 @@ namespace Codes.Service.Data.Migrations
 
                     b.Property<string>("DeactivationReason");
 
-                    b.Property<int?>("DocumentOtherId");
-
-                    b.Property<int?>("DocumentW9Id");
-
                     b.Property<string>("EIN")
                         .HasMaxLength(500);
 
@@ -138,10 +135,6 @@ namespace Codes.Service.Data.Migrations
                     b.HasKey("AgentId");
 
                     b.HasIndex("BrokerId");
-
-                    b.HasIndex("DocumentOtherId");
-
-                    b.HasIndex("DocumentW9Id");
 
                     b.ToTable("Agents");
                 });
@@ -191,10 +184,6 @@ namespace Codes.Service.Data.Migrations
                     b.Property<DateTime?>("DeactivationDate");
 
                     b.Property<string>("DeactivationReason");
-
-                    b.Property<int?>("DocumentOtherId");
-
-                    b.Property<int?>("DocumentW9Id");
 
                     b.Property<string>("EIN")
                         .HasMaxLength(500);
@@ -248,10 +237,6 @@ namespace Codes.Service.Data.Migrations
                     b.Property<int>("VirtualCardCap");
 
                     b.HasKey("BrokerId");
-
-                    b.HasIndex("DocumentOtherId");
-
-                    b.HasIndex("DocumentW9Id");
 
                     b.ToTable("Brokers");
                 });
@@ -1233,29 +1218,6 @@ namespace Codes.Service.Data.Migrations
                     b.HasOne("Codes.Service.Models.BrokerModel", "Broker")
                         .WithMany("Agents")
                         .HasForeignKey("BrokerId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Codes.Service.Models.DocumentModel", "DocumentOther")
-                        .WithMany()
-                        .HasForeignKey("DocumentOtherId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Codes.Service.Models.DocumentModel", "DocumentW9")
-                        .WithMany()
-                        .HasForeignKey("DocumentW9Id")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("Codes.Service.Models.BrokerModel", b =>
-                {
-                    b.HasOne("Codes.Service.Models.DocumentModel", "DocumentOther")
-                        .WithMany()
-                        .HasForeignKey("DocumentOtherId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Codes.Service.Models.DocumentModel", "DocumentW9")
-                        .WithMany()
-                        .HasForeignKey("DocumentW9Id")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

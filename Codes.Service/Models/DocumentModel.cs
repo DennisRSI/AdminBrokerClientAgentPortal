@@ -13,6 +13,9 @@ namespace Codes.Service.Models
         public DocumentType DocumentType { get; set; }
 
         [Required]
+        public string ContentType { get; set; }
+
+        [Required]
         public byte[] Data { get; set; }
     }
 

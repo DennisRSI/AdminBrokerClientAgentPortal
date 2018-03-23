@@ -17,7 +17,7 @@
                 </li>
             }
         </ul>
-        <form class="form-horizontal form-label-left input_mask">
+        <form id="add-user" class="form-horizontal form-label-left input_mask">
             <div id="myTabContent" class="tab-content">
 
                 <div role="tabpanel" class="tab-pane fade active in" id="tab1" aria-labelledby="profile-tab">
@@ -145,14 +145,14 @@
                             <br /><br />
                             <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Upload W9:</label><br />
                             <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custom-file">
-                                <input type="file" name="documentW9" class="custom-file-input">
+                                <input type="file" id="w9" name="documentW9" class="custom-file-input">
                                 <span class="custom-file-control"></span>
                             </label>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Upload Other Documents:</label><br />
                             <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custom-file">
-                                <input type="file" name="documentOther" class="custom-file-input">
+                                <input type="file" id="other" name="documentOther" class="custom-file-input">
                                 <span class="custom-file-control"></span>
                             </label>
                         </div>
@@ -274,6 +274,7 @@
 
 <input type="hidden" id="userType" value="@ViewData["ListType"]" />
 
+<script src="~/js/utility.js"></script>
 <script type="text/javascript">
     ADDUSER.init();
 </script>
