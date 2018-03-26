@@ -88,6 +88,8 @@ function init_sidebar() {
                     $SIDEBAR_MENU.find("li ul").slideUp();
                 }
             }
+
+            $li.siblings().removeClass('active');
             $li.addClass('active');
 
             $('ul:first', $li).slideDown(function () {
