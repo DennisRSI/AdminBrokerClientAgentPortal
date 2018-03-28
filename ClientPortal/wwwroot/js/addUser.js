@@ -9,6 +9,12 @@ function AddUser(){
             mask: '(999) 999-9999'
         });
 
+        $('button.add-user-open-modal').click(function (event) {
+            var target = $(this).data('target');
+            $('.nav-tabs').removeClass('active');
+            $(target + ' .tab-pane').addClass('active');
+        });
+
         $('button.add-user').click(function (event) {
 
             jQuery.validator.setDefaults({
@@ -61,8 +67,8 @@ function AddUser(){
                 data: JSON.stringify(data),
                 success: function (result) {
                     if (result.is_success == true) {
-                        var file1 = $('#w9')[0].files[0];
-                        var file2 = $('#other')[0].files[0];
+                        var file1 = form.children('.documentW9')[0].files[0];
+                        var file2 = form.children('.documentOther')[0].files[0];
 
                         if (file1 !== undefined) {
                             self.uploadFile('w9', file1, file2, role, result.broker_id);
