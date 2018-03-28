@@ -4,18 +4,18 @@ function AddUser(){
     var self = this;
 
     this.init = function () {
-        
+
         $('input[type="tel"]').inputmask({
             mask: '(999) 999-9999'
         });
 
-        $('button.add-user-open-modal').click(function (event) {
+        $('button.add-user-open-modal').unbind('click').click(function (event) {
             var target = $(this).data('target');
             $('.nav-tabs').removeClass('active');
             $(target + ' .tab-pane').addClass('active');
         });
 
-        $('button.add-user').click(function (event) {
+        $('button.add-user').unbind('click').click(function (event) {
 
             jQuery.validator.setDefaults({
                 errorPlacement: function (error, element) {
@@ -67,10 +67,17 @@ function AddUser(){
                 data: JSON.stringify(data),
                 success: function (result) {
                     if (result.is_success == true) {
-                        var file1 = form.children('.documentW9')[0].files[0];
-                        var file2 = form.children('.documentOther')[0].files[0];
+                        var fileInput1 = form.children('.documentW9')[0];
+                        var fileInput2 = form.children('.documentOther')[0];
 
-                        if (file1 !== undefined) {
+                        if (fileInput1 !== undefined) {
+                            var file1 = fileInput1.files[0];
+                            var file2 = undefined;
+
+                            if (fileInput2 !== undefined) {
+                                file2 = fileInput2.files[0];
+                            }
+
                             self.uploadFile('w9', file1, file2, role, result.broker_id);
                         }
 

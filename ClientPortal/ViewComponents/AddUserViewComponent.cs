@@ -1,4 +1,5 @@
 ﻿using ClientPortal.Models;
+using ClientPortal.Models._ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,12 +20,14 @@ namespace ClientPortal.ViewComponents
             _userManager = userManager;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(string userType)
+        public async Task<IViewComponentResult> InvokeAsync(int brokerId, string userType)
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
                 ViewData["ListType"] = userType;
-                return await Task.FromResult(View());
+                var model = new AddUserViewModel() { BrokerId = brokerId };
+
+                return await Task.FromResult(View(model));
             }
 
             return null;

@@ -85,7 +85,7 @@
                                     <div class="modal fade new-agent-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
-                                                <vc:add-user user-type="Agent"></vc:add-user>
+                                                <vc:add-user broker-id="@Model.BrokerId" user-type="Agent"></vc:add-user>
                                             </div>
                                         </div>
                                     </div>
@@ -111,7 +111,7 @@
                                     <div class="modal fade new-client-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
-                                                <vc:add-user user-type="Client"></vc:add-user>
+                                                <vc:add-user broker-id="@Model.BrokerId" user-type="Client"></vc:add-user>
                                             </div>
                                         </div>
                                     </div>

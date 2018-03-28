@@ -11,7 +11,6 @@ function Utility() {
         var o = {};
         var a = form.serializeArray();
         $.each(a, function () {
-            console.log('name: ' + this.name);
             if (o[this.name]) {
                 if (!o[this.name].push) {
                     o[this.name] = [o[this.name]];
