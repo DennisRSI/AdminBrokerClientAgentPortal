@@ -56,7 +56,7 @@ function AddUser(){
             }
 
             var data = UTILITY.serializeFormJSON(form);
-            var role = $('#userType').val();
+            var role = form.children('.userType').val();
             var url = '/api/user/' + role;
 
             $.ajax({

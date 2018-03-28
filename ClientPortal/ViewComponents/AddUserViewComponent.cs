@@ -2,9 +2,6 @@
 using ClientPortal.Models._ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ClientPortal.ViewComponents
@@ -24,8 +21,11 @@ namespace ClientPortal.ViewComponents
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
-                ViewData["ListType"] = userType;
-                var model = new AddUserViewModel() { BrokerId = brokerId };
+                var model = new AddUserViewModel()
+                {
+                    BrokerId = brokerId,
+                    UserType = userType
+                };
 
                 return await Task.FromResult(View(model));
             }

@@ -11,7 +11,7 @@
             <li role="presentation" class="active">
                 <a href="#addUserTab1" id="profile-tab" role="tab" data-toggle="tab" aria-expanded="true">Profile</a>
             </li>
-            @if (ViewData["ListType"].ToString() == "Broker")
+            @if (Model.UserType == "Broker")
             {
                 <li role="presentation" class="">
                     <a href="#addUserTab2" id="commission-tab" role="tab" data-toggle="tab" aria-expanded="false">Commission</a>
@@ -19,10 +19,11 @@
             }
         </ul>
         <form class="form-horizontal form-label-left input_mask">
+            <input type="hidden" class="userType" value="@Model.UserType" />
             <div id="myTabContent" class="tab-content">
                 <div id="addUserTab1" role="tabpanel" class="tab-pane active in" aria-labelledby="profile-tab">
                     <!-- Tab 1 Content -->
-                    @if (!ViewData["ListType"].ToString().Contains("Administrator"))
+                    @if (!Model.UserType.Contains("Administrator"))
                     {
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                             <input type="text" class="form-control has-feedback-left" name="company_name" placeholder="Company Name">
@@ -132,14 +133,14 @@
                         <input type="tel" class="form-control has-feedback-left" name="fax" placeholder="Office Fax" maxlength="10">
                         <span class="fa fa-fax form-control-feedback left" aria-hidden="true"></span>
                     </div>
-                    @if (ViewData["ListType"].ToString() == "Agent" || ViewData["ListType"].ToString() == "Client")
+                    @if (Model.UserType == "Agent" || Model.UserType == "Client")
                     {
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 offset-lg-4 offset-md-4 offset-sm-6  form-group has-feedback">
                             <input type="number" class="form-control has-feedback-left" name="commission_rate" placeholder="Commission Rate">
                             <span class="fa fa-dollar form-control-feedback left" aria-hidden="true"></span>
                         </div>
                     }
-                    @if (ViewData["ListType"].ToString() != "Administrator" && ViewData["ListType"].ToString() != "Super Administrator")
+                    @if (Model.UserType != "Administrator" && Model.UserType != "Super Administrator")
                     {
                         <div class="form-group">
                             <br /><br />
@@ -161,7 +162,7 @@
 
                     <!-- End Tab 1 Content -->
                 </div>
-                @if (ViewData["ListType"].ToString() == "Broker")
+                @if (Model.UserType == "Broker")
                 {
                     <div id="addUserTab2" role="tabpanel" class="tab-pane fade" aria-labelledby="commission-tab">
                         <!-- Tab 2 Content -->
@@ -267,13 +268,11 @@
             <div class="clearfix"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="add-user btn btn-primary">Add @ViewData["ListType"]</button>
+                <button type="button" class="add-user btn btn-primary">Add @Model.UserType</button>
             </div>
         </form>
     </div>
 </div>
-
-<input type="hidden" id="userType" value="@ViewData["ListType"]" />
 
 <script src="~/js/utility.js"></script>
 <script type="text/javascript">
