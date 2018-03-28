@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using ClientPortal.Models;
+using ClientPortal.Models._ViewModels;
 using Codes.Service.Models;
 using Codes.Service.ViewModels;
 using System;
@@ -19,6 +21,8 @@ namespace ClientPortal
                 .ForSourceMember(src => src.BenefitText, opt => opt.Ignore())
                 .ForSourceMember(src => src.StatusText, opt => opt.Ignore())
                 .ForSourceMember(src => src.IsSuccess, opt => opt.Ignore());
+
+            CreateMap<ApplicationUser, ProfileViewModel>(MemberList.Source);
         }
     }
 }

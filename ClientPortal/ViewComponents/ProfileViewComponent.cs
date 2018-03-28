@@ -1,4 +1,6 @@
-﻿using ClientPortal.Models;
+﻿using AutoMapper;
+using ClientPortal.Models;
+using ClientPortal.Models._ViewModels;
 using Codes.Service.Interfaces;
 using Codes.Service.Services;
 using Microsoft.AspNetCore.Identity;
@@ -15,21 +17,25 @@ namespace ClientPortal.ViewComponents
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ICodeService _context;
+        private readonly IMapper _mapper;
 
         public ProfileViewComponent(ICodeService context, 
             SignInManager<ApplicationUser> signInManager, 
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IMapper mapper)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(string profileId)
         {
-            ApplicationUser appUser = await _userManager.FindByIdAsync(profileId);
-            return View(appUser);
+            var user = await _userManager.FindByIdAsync(profileId);
+            var model = _mapper.Map<ApplicationUser, ProfileViewModel>(user);
 
+            return View(model);
         }
     }
 }
