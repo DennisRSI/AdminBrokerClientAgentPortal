@@ -1,9 +1,12 @@
 ﻿using Codes.Service.ViewModels;
+using System.Linq;
 
 namespace Codes.Service.Interfaces
 {
     public interface IPurchaseService
     {
-        void Purchase(string brokerReference, PurchaseViewModel model);
+        PurchaseDisplayViewModel Purchase(string brokerReference, PurchaseViewModel model);
+        IQueryable<PurchaseDisplayViewModel> GetList(int brokerId);
+        PurchaseDisplayViewModel GetDetails(int purchaseId);
     }
 }

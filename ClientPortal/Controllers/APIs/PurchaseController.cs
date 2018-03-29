@@ -27,10 +27,22 @@ namespace ClientPortal.Controllers.APIs
         {
             var reference = _userManager.GetUserId(User);
 
-            _purchaseService.Purchase(reference, model);
+            var result = _purchaseService.Purchase(reference, model);
 
-            // TODO: Go to purchase confirm page
-            return ViewComponent("Purchase");
+            return Ok(result);
+        }
+
+        [HttpGet("viewconfirmation/{purchaseId}")]
+        public IActionResult ViewConfirmation(int purchaseId)
+        {
+            return ViewComponent("PurchaseConfirm", purchaseId);
+        }
+
+        [HttpGet("list/{brokerId}")]
+        public IActionResult List(int brokerId)
+        {
+            var model = _purchaseService.GetList(brokerId);
+            return Ok(model);
         }
     }
 }

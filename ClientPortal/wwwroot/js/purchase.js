@@ -26,11 +26,11 @@ function Purchase() {
             $.ajax({
                 url: '/api/purchase/purchase/',
                 type: 'POST',
-                dataType: 'text',
+                dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify(data),
                 success: function (result) {
-
+                    MENU.loadPage('purchase', 'viewconfirmation', result.orderId);
                 },
                 error: function (xhr, resp, text) {
                     console.log(xhr, resp, text);

@@ -19,7 +19,7 @@ namespace Codes.Service.Services
             _logger = loggerFactory.CreateLogger<CodeService>();
         }
 
-        public void Purchase(string brokerReference, PurchaseViewModel model)
+        public PurchaseDisplayViewModel Purchase(string brokerReference, PurchaseViewModel model)
         {
             // TODO: Make the actual purchase here once the credit card processor is determined
 
@@ -46,6 +46,35 @@ namespace Codes.Service.Services
 
             _context.Purchases.Add(purchase);
             _context.SaveChanges();
+
+            return GetDisplayViewModel(purchase);
+        }
+
+        public IQueryable<PurchaseDisplayViewModel> GetList(int brokerId)
+        {
+            return _context.Purchases.Where(p => p.BrokerId == brokerId)
+                        .Select(p => GetDisplayViewModel(p));
+        }
+
+        public PurchaseDisplayViewModel GetDetails(int purchaseId)
+        {
+            var purchase = _context.Purchases.Single(p => p.PurchaseId == purchaseId);
+            return GetDisplayViewModel(purchase);
+        }
+
+        private PurchaseDisplayViewModel GetDisplayViewModel(PurchaseModel model)
+        {
+            return new PurchaseDisplayViewModel()
+            {
+                PurchaseDate = model.CreationDate,
+                OrderId = model.PurchaseId.ToString(),
+                PhysicalValue = model.PhysicalValue,
+                PhysicalQuantity = model.PhysicalQuantity,
+                VirtualValue = model.VirtualValue,
+                VirtualQuantity = model.VirtualQuantity,
+                SequenceStart = "SEQSTART",
+                SequenceEnd = "SEQEND"
+            };
         }
     }
 }
