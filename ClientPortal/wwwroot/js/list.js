@@ -25,20 +25,24 @@ function List() {
     }
 
     this.purchasesList = function(brokerId){
-        var url = "api/list/purchase/" + brokerId.toString();
+        var url = "api/purchase/list/" + brokerId;
         var cols = [
-            { "data": "creation_date" },
-            { "data": "code_range_id" },
-            { "data": "card_type" },
-            { "data": "amount_on_card" },
-            { "data": "quantity" },
-            { "data": "start_code" },
-            { "data": "end_code" },
-            { "data": "charge_amount" },
+            { "data": "purchaseDateString" },
+            { "data": "orderId" },
+            { "data": "physicalValueString" },
+            { "data": "physicalQuantity" },
+            { "data": "virtualValueString" },
+            { "data": "virtualQuantity" },
+            { "data": "sequenceStart" },
+            { "data": "sequenceEnd" },
+            { "data": "totalValue" },
             { "data": null, defaultContent: '<a href="#"><i class="fa fa-file-pdf-o pdf-icon-red"></i> Download</a>' },
         ];
 
-        $dt = self.generateList("purchase_tbl", url, cols);
+        var tableSettings = this.getDataTableDefaults(url, cols, 'GET');
+        tableSettings.ajax.dataSrc = '';
+
+        $('#purchase_tbl').DataTable(tableSettings);
     }
 
     this.adminList = function (role) {
@@ -244,5 +248,29 @@ function List() {
             $("#loader-container").hide();
             ACCOUNT.init();
         });
+    }
+
+    this.getDataTableDefaults = function (url, columns, method) {
+        return {
+            "processing": true,
+            "language": {
+                "loadingRecords": "&nbsp;",
+                "processing": "<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i><span> Loading...</span>"
+            },
+            "serverSide": false,
+            "filter": true,
+            "orderMulti": false,
+            "ajax": {
+                url: url,
+                method: method
+            },
+            "columnDefs":
+                [{
+                    "targets": [0],
+                    "visible": true,
+                    "searchable": true
+                }],
+            "columns": columns
+        };
     }
 }

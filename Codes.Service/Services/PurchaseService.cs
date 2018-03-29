@@ -52,7 +52,7 @@ namespace Codes.Service.Services
 
         public IQueryable<PurchaseDisplayViewModel> GetList(int brokerId)
         {
-            return _context.Purchases.Where(p => p.BrokerId == brokerId)
+            return _context.Purchases.Where(p => p.BrokerId == brokerId).OrderByDescending(p => p.PurchaseId)
                         .Select(p => GetDisplayViewModel(p));
         }
 

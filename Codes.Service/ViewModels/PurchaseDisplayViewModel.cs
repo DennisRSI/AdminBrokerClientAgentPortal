@@ -17,11 +17,27 @@ namespace Codes.Service.ViewModels
         public string SequenceStart { get; set; }
         public string SequenceEnd { get; set; }
 
-        public int TotalValue
+        public string PurchaseDateString
+        {
+            get { return PurchaseDate.ToString("d"); }
+        }
+
+        public string PhysicalValueString
+        {
+            get { return PhysicalValue.ToString("c"); }
+        }
+
+        public string VirtualValueString
+        {
+            get { return VirtualValue.ToString("c"); }
+        }
+
+        public string TotalValue
         {
             get
             {
-                return PhysicalValue * PhysicalQuantity + VirtualValue * VirtualQuantity;
+                var total = PhysicalValue * PhysicalQuantity + VirtualValue * VirtualQuantity;
+                return total.ToString("c");
             }
         }
     }
