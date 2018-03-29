@@ -47,6 +47,8 @@ namespace ClientPortal
             RegisterApplicationServices(services);
 
             services.AddMvc();
+
+            // TODO: This line needs to be commented out to drop database. Not sure why. Look into fixing this later.
             services.AddAutoMapper(typeof(Startup));
         }
 
