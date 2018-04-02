@@ -45,25 +45,18 @@
                     <li asp-authorize role="presentation" class="active">
                         <a href="#tab1" id="profile-tab" role="tab" data-toggle="tab" aria-expanded="true">Profile</a>
                     </li>
-                    @if (Model.BrokerId > 0)
+                    @if (Model.Role == "Broker")
                     {
                         <li asp-authorize role="presentation" class="">
                             <a href="#tab2" role="tab" id="agents-tab" data-id="@Model.BrokerId" data-toggle="tab" aria-expanded="false">Agents</a>
                         </li>
-                    }
-                    @if (Model.BrokerId > 0 || Model.AgentId > 0)
-                    {
                         <li asp-authorize role="presentation" class="">
                             <a href="#tab3" role="tab" id="clients-tab" data-id="@Model.BrokerId" data-toggle="tab" aria-expanded="false">Clients</a>
                         </li>
-                    }
-                    @if (Model.BrokerId > 0)
-                    {
                         <li asp-authorize role="presentation" class="">
                             <a href="#tab5" role="tab" id="purchase-tab" data-id="@Model.BrokerId" data-toggle="tab" aria-expanded="false">Purchases</a>
                         </li>
                     }
-
                 </ul>
                 <div id="myTabContent" class="tab-content">
                     <!-- Tab1  -->

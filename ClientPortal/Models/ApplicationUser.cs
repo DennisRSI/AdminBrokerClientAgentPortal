@@ -171,8 +171,8 @@ namespace ClientPortal.Models
             get
             {
                 if (AgentId > 0) { return "Agent"; }
-                if (BrokerId > 0) { return "Broker"; }
                 if (ClientId > 0) { return "Client"; }
+                if (BrokerId > 0) { return "Broker"; }
 
                 return "Administrator";
             }
