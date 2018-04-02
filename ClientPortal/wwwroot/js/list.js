@@ -36,13 +36,21 @@ function List() {
             { "data": "sequenceStart" },
             { "data": "sequenceEnd" },
             { "data": "totalValue" },
-            { "data": null, defaultContent: '<a href="#"><i class="fa fa-file-pdf-o pdf-icon-red"></i> Download</a>' },
+            { "data": null, defaultContent: '<a href="#" class="pdf"><i class="fa fa-file-pdf-o pdf-icon-red"></i> Download</a>' },
         ];
 
-        var tableSettings = this.getDataTableDefaults(url, cols, 'GET');
+        var selector = '#purchase_tbl';
+        var tableSettings = this.getDataTableDefaults(url, cols, 'GET', 'orderId');
         tableSettings.ajax.dataSrc = '';
 
-        $('#purchase_tbl').DataTable(tableSettings);
+        if (!$.fn.DataTable.isDataTable(selector)) {
+            $(selector).DataTable(tableSettings);
+
+            $(selector).on('click', 'a.pdf', function () {
+                var id = $(this).closest('tr').attr('id');
+                PDF.getPurchasePdf(id);
+            });
+        }
     }
 
     this.adminList = function (role) {
@@ -250,7 +258,7 @@ function List() {
         });
     }
 
-    this.getDataTableDefaults = function (url, columns, method) {
+    this.getDataTableDefaults = function (url, columns, method, identifier) {
         return {
             "processing": true,
             "language": {
@@ -270,7 +278,12 @@ function List() {
                     "visible": true,
                     "searchable": true
                 }],
-            "columns": columns
+            "columns": columns,
+            "createdRow": function (row, data, index) {
+                if (data.hasOwnProperty(identifier)) {
+                    row.id = data[identifier];
+                }
+            }
         };
     }
 }
