@@ -23,5 +23,11 @@ namespace ClientPortal.Controllers.APIs
         {
             return ViewComponent("Purchase");
         }
+
+        [HttpGet("myclients")]
+        public IActionResult MyClients()
+        {
+            return ViewComponent("MyClients");
+        }
     }
 }

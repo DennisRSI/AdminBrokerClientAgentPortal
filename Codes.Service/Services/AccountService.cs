@@ -1,6 +1,7 @@
 ﻿using Codes.Service.Data;
 using Codes.Service.Interfaces;
 using Codes.Service.Models;
+using Codes.Service.ViewModels;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,22 @@ namespace Codes.Service.Services
             }
 
             return 0;
+        }
+
+        public IEnumerable<MyClientViewModel> GetClientsByBroker(int brokerId)
+        {
+            return _context.Clients.Where(c => c.BrokerId == brokerId)
+                .Select(c =>
+                       new MyClientViewModel()
+                       {
+                           CardQuantity = 1,
+                           CompanyName = c.CompanyName,
+                           ContactName = $"{c.ContactFirstName} {c.ContactLastName}",
+                           Email = c.Email,
+                           PhoneNumber = c.OfficePhone,
+                           SalesAgent = "?"
+                       }
+                );
         }
     }
 }
