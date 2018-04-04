@@ -82,7 +82,7 @@ function AddUser(){
                         }
 
                         $('.modal').removeClass('fade').modal('hide');
-                        $('#sidebar-menu .nav-item.last-clicked').click();
+                        $('#sidebar-menu .last-clicked').click();
                     }
                     else {
                         alert('Error: ' + result.message);

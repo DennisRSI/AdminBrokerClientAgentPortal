@@ -5,8 +5,7 @@ function Menu() {
     
     this.init = function () {
         $('.nav-item').click(function () {
-
-            $('#sidebar-menu .nav-item').removeClass('last-clicked');
+            $('#sidebar-menu .nav-item, #sidebar-menu .nav-page-id').removeClass('last-clicked');
             $(this).addClass('last-clicked');
 
             var id = '';
@@ -30,6 +29,9 @@ function Menu() {
         });
 
         $('.nav-page-id').click(function () {
+            $('#sidebar-menu .nav-item, #sidebar-menu .nav-page-id').removeClass('last-clicked');
+            $(this).addClass('last-clicked');
+
             var controller = $(this).data('controller')
             var page = $(this).data('page')
             var id = $(this).data('id')
