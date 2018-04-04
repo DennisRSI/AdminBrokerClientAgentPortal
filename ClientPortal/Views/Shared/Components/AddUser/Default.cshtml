@@ -140,7 +140,7 @@
                             <span class="fa fa-dollar form-control-feedback left" aria-hidden="true"></span>
                         </div>
                     }
-                    @if (Model.UserType != "Administrator" && Model.UserType != "Super Administrator")
+                    @if (Model.UserType == "Broker" && Model.UserType != "Agent")
                     {
                         <div class="form-group">
                             <br /><br />
