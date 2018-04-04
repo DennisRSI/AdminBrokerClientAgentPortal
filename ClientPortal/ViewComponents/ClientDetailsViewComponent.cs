@@ -1,10 +1,7 @@
 ﻿using ClientPortal.Models;
-using ClientPortal.Models._ViewModels;
+using Codes.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ClientPortal.ViewComponents
@@ -20,14 +17,15 @@ namespace ClientPortal.ViewComponents
             _userManager = userManager;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(string accountId)
+        public async Task<IViewComponentResult> InvokeAsync(string applicationReference)
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
-                PageViewModel model = new PageViewModel()
+                var model = new ClientDetailsViewModel()
                 {
-                    AccountId = accountId
+                    ApplicationReference = applicationReference
                 };
+
 
                 return await Task.FromResult(View(model));
             }

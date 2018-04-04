@@ -51,6 +51,8 @@ namespace Codes.Service.Services
                 .Select(c =>
                        new MyClientViewModel()
                        {
+                           ApplicationReference = c.ApplicationReference,
+                           ClientId = c.ClientId,
                            CardQuantity = 1,
                            CompanyName = c.CompanyName,
                            ContactName = $"{c.ContactFirstName} {c.ContactLastName}",

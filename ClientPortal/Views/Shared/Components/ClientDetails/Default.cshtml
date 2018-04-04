@@ -1,4 +1,4 @@
-﻿@model PageViewModel
+﻿@model Codes.Service.ViewModels.ClientDetailsViewModel
 <div class="col-md-12 col-sm-12 col-xs-12">
     <br />
     <div class="x_panel">
@@ -13,8 +13,8 @@
         </div>
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <vc:client-info account-id="@Model.AccountId"></vc:client-info>
-               <!--Totals go here -->
+                <vc:client-info account-id="@Model.ApplicationReference"></vc:client-info>
+                <!--Totals go here -->
             </div>
             <!-- Chart Campaign Distribution -->
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">

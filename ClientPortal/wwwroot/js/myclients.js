@@ -19,11 +19,16 @@ function MyClients() {
         ];
 
         var selector = '#myclients_tbl';
-        var tableSettings = LIST.getDataTableDefaults(url, cols, 'GET', 'clientId');
+        var tableSettings = LIST.getDataTableDefaults(url, cols, 'GET', 'applicationReference');
         tableSettings.ajax.dataSrc = '';
 
         if (!$.fn.DataTable.isDataTable(selector)) {
-            $(selector).DataTable(tableSettings);
+            var table = $(selector).DataTable(tableSettings);
+
+            table.on('click', 'tr', function () {
+                var id = $(this).attr('id');
+                MENU.loadPage('view', 'clientdetails', id);
+            });
         }
     }
 }
