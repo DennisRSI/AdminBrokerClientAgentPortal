@@ -39,7 +39,7 @@ namespace ClientPortal.Controllers.APIs
                 case "user-list":
                     return ViewComponent("UserManagement", new { type = cmd });
                 case "client-details":
-                    return ViewComponent("ClientDetails", new { accountId = cmd });
+                    return ViewComponent("ClientDetails", new { applicationReference = cmd });
                 case "clients-campaigns":
                     return null;
                 case "campaign-list":

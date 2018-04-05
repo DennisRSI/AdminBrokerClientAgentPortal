@@ -91,6 +91,7 @@ namespace ClientPortal
             services.AddTransient<IPurchaseService, PurchaseService>();
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IDocumentService, DocumentService>();
+            services.AddTransient<IViewDataService, ViewDataService>();
         }
     }
 }
