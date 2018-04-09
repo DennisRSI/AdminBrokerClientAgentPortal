@@ -226,7 +226,7 @@ function List() {
 
     // generateList() doesn't work with ajax.reload(), this method can be used instead
     this.generateUpdatableList = function (tableSelector, url, columns, method) {
-        return $(tableSelector).DataTable({
+        var table = $(tableSelector).DataTable({
             "processing": true,
             "language": {
                 "loadingRecords": "&nbsp;",
@@ -247,6 +247,10 @@ function List() {
             }],
             "columns": columns
         });
+
+        table.css('width', '100%');
+
+        return table;
     }
 
     this.redirectToPage = function (url) {
