@@ -35,5 +35,11 @@ namespace ClientPortal.Controllers.APIs
         {
             return ViewComponent("ClientDetails", applicationReference);
         }
+
+        [HttpGet("clientedit/{clientId}")]
+        public IActionResult ClientEdit(int clientId)
+        {
+            return ViewComponent("ClientEdit", clientId);
+        }
     }
 }

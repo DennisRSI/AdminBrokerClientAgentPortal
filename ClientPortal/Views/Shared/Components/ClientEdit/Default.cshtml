@@ -1,0 +1,219 @@
+﻿@model Codes.Service.ViewModels.ClientEditViewModel
+<div class="col-lg-8 col-md-11 col-sm-12 col-xs-12">
+    <br />
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Edit Client</h2>
+            <div class="title-right pull-right">
+                <a href="#" type="button" class="btn btn-sm btn-default">Cancel</a>
+                <a href="#" type="button" class="btn btn-sm btn-travnow">Save</a>
+            </div>
+            <div class="clearfix"></div>
+        </div><br />
+        <div class="row">
+            <form class="form-horizontal form-label-left">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Company Name</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" value="@Model.CompanyName">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">EIN/FEIN</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" value="@Model.EIN">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Address</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" value="@Model.Address">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">City</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" value="@Model.City">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">State</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="form-control">
+                            <option>Select State</option>
+                            <option value="AL">AL</option>
+                            <option value="AK">AK</option>
+                            <option value="AR">AR</option>
+                            <option value="AZ">AZ</option>
+                            <option value="CA">CA</option>
+                            <option value="CO">CO</option>
+                            <option value="CT">CT</option>
+                            <option value="DC">DC</option>
+                            <option value="DE">DE</option>
+                            <option value="FL">FL</option>
+                            <option value="GA">GA</option>
+                            <option value="HI">HI</option>
+                            <option value="IA">IA</option>
+                            <option value="ID">ID</option>
+                            <option value="IL">IL</option>
+                            <option value="IN">IN</option>
+                            <option value="KS">KS</option>
+                            <option value="KY">KY</option>
+                            <option value="LA">LA</option>
+                            <option value="MA">MA</option>
+                            <option value="MD">MD</option>
+                            <option value="ME">ME</option>
+                            <option value="MI">MI</option>
+                            <option value="MN">MN</option>
+                            <option value="MO">MO</option>
+                            <option value="MS">MS</option>
+                            <option value="MT">MT</option>
+                            <option value="NC">NC</option>
+                            <option value="NE">NE</option>
+                            <option value="NH">NH</option>
+                            <option value="NJ">NJ</option>
+                            <option value="NM">NM</option>
+                            <option value="NV">NV</option>
+                            <option value="NY">NY</option>
+                            <option value="ND">ND</option>
+                            <option value="OH">OH</option>
+                            <option value="OK">OK</option>
+                            <option value="OR">OR</option>
+                            <option value="PA">PA</option>
+                            <option value="RI">RI</option>
+                            <option value="SC">SC</option>
+                            <option value="SD">SD</option>
+                            <option value="TN">TN</option>
+                            <option value="TX">TX</option>
+                            <option value="UT">UT</option>
+                            <option value="VT">VT</option>
+                            <option value="VA">VA</option>
+                            <option value="WA">WA</option>
+                            <option value="WI">WI</option>
+                            <option value="WV">WV</option>
+                            <option value="WY">WY</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Zip Code</label>
+                    <div class="col-lg-2 col-md-2 col-sm-9 col-xs-12">
+                        <input type="number" class="form-control" value="@Model.PostalCode">
+                    </div>
+                </div><br />
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Contact First Name</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" value="@Model.FirstName">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Contact Last Name</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" value="@Model.LastName">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Mobile Phone</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input type="tel" class="form-control" value="@Model.MobilePhone" data-inputmask="'mask' : '999-999-9999'">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Contact Phone</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input type="tel" class="form-control" value="@Model.ContactPhone" data-inputmask="'mask' : '999-999-9999'">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Office Fax</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input type="tel" class="form-control" value="@Model.OfficeFax" data-inputmask="'mask' : '999-999-9999'">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Contact Email</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input type="email" class="form-control" value="@Model.Email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Commission Rate</label>
+                    <div class="col-lg-9 col-md-2 col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" value="3%">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">W9 Upload</label>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                        <a href="#"><i class="fa fa-file-pdf-o pdf-icon"></i></a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <a href="#" class="checkbox-adjust"></a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Agent(s) Assigned</label>
+                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                        <br />
+                        <input type="checkbox" name="" id="" value="James McBurney" required class="flat" checked />
+                        <br />
+                        <input type="checkbox" name="" id="" value="Todd Schade" class="flat" />
+                    </div>
+                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                        <br />
+                        <input type="checkbox" name="" id="" value="Carl McPhearson" required class="flat" />
+                        <br />
+                        <input type="checkbox" name="" id="" value="Jim Parkinson" class="flat" />
+                    </div>
+                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                        <br />
+                        <input type="checkbox" name="" id="" value="Carl McPhearson" required class="flat" />
+                        <br />
+                        <input type="checkbox" name="" id="" value="Jim Parkinson" class="flat" />
+                    </div>
+                </div><br />
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Client Active</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target=".change-password-modal">
+                            <i class="fa fa-times icon-white purchase-button-icon"></i>
+                            Deactivate Client
+                        </button>
+                        <div class="modal fade change-password-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true"></span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel2"></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                                <span class=""></span>
+                                            </div>
+                                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                                <br />
+                                                <textarea class="form-control" placeholder="Please describe the reason for deactivating this client." rows=5></textarea><br />
+                                            </div>
+                                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                                <span class=""><em><a href="mailto:brokersupport@travnow.com"></a></em></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-travnow"></button>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -7,5 +7,6 @@ namespace Codes.Service.Interfaces
     {
         int GetIdFromReference(string reference);
         IEnumerable<MyClientViewModel> GetClientsByBroker(int brokerId);
+        ClientEditViewModel GetClientEdit(int clientId);
     }
 }

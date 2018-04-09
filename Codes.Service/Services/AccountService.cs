@@ -1,4 +1,5 @@
-﻿using Codes.Service.Data;
+﻿using AutoMapper;
+using Codes.Service.Data;
 using Codes.Service.Interfaces;
 using Codes.Service.Models;
 using Codes.Service.ViewModels;
@@ -12,11 +13,13 @@ namespace Codes.Service.Services
     {
         private readonly ILogger _logger;
         private readonly CodesDbContext _context;
+        private readonly IMapper _mapper;
 
-        public AccountService(CodesDbContext context, ILoggerFactory loggerFactory)
+        public AccountService(CodesDbContext context, ILoggerFactory loggerFactory, IMapper mapper)
         {
             _context = context;
             _logger = loggerFactory.CreateLogger<CodeService>();
+            _mapper = mapper;
         }
 
         public int GetIdFromReference(string reference)
@@ -61,6 +64,15 @@ namespace Codes.Service.Services
                            SalesAgent = "?"
                        }
                 );
+        }
+
+        public ClientEditViewModel GetClientEdit(int clientId)
+        {
+            var client = _context.Clients.Single(c => c.ClientId == clientId);
+
+            var model = _mapper.Map<ClientEditViewModel>(client);
+
+            return model;
         }
     }
 }

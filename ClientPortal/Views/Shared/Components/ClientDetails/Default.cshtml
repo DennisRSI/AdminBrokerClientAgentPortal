@@ -5,7 +5,7 @@
         <div class="x_title">
             <h2>Client Management</h2>
             <div class="title-right pull-right">
-                <a href="client-edit.html" type="button" class="btn btn-sm btn-travnow">
+                <a type="button" href="#" class="btn btn-sm btn-travnow nav-page-id" data-controller="view" data-page="clientedit" data-id="@Model.ClientId">
                     <i class="fa fa-edit icon-white purchase-button-icon"></i>Edit
                 </a>
             </div>
@@ -116,16 +116,16 @@
                                         <div class="row">
                                             <div class="col-md-3 col-sm-6 col-xs-12">
                                                 <h5><i class="fa fa-calendar"></i> &nbsp;Expected Start Date:</h5>
-                                                    <fieldset class="form-horizontal">
-                                                        <div class="control-group">
-                                                            <div class="controls">
-                                                                <div class=" form-group text-center">
-                                                                    <input id="startDate" name="startDate" type="date" class="form-control has-feedback-left" placeholder="Start Date">
-                                                                    <span class="disclaimer-text">MM/DD/YYYY</span>
-                                                                </div>
+                                                <fieldset class="form-horizontal">
+                                                    <div class="control-group">
+                                                        <div class="controls">
+                                                            <div class=" form-group text-center">
+                                                                <input id="startDate" name="startDate" type="date" class="form-control has-feedback-left" placeholder="Start Date">
+                                                                <span class="disclaimer-text">MM/DD/YYYY</span>
                                                             </div>
                                                         </div>
-                                                    </fieldset>
+                                                    </div>
+                                                </fieldset>
                                             </div>
                                             <div class="col-md-3 col-sm-6 col-xs-12">
                                                 <h5><i class="fa fa-calendar"></i> &nbsp;Campaign End Date:</h5>
@@ -563,8 +563,11 @@
         </div>
     </div>
 </div>
+<script src="~/js/menu.js"></script>
 <script src="~/js/client-details.js"></script>
 <script type="text/javascript">
+    MENU.init();
+
     var labels = [];
     var data = [];
 

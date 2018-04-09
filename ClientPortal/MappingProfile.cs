@@ -3,7 +3,6 @@ using ClientPortal.Models;
 using ClientPortal.Models._ViewModels;
 using Codes.Service.Models;
 using Codes.Service.ViewModels;
-using System;
 
 namespace ClientPortal
 {
@@ -23,6 +22,7 @@ namespace ClientPortal
                 .ForSourceMember(src => src.IsSuccess, opt => opt.Ignore());
 
             CreateMap<ApplicationUser, ProfileViewModel>(MemberList.Source);
+            CreateMap<ClientModel, ClientEditViewModel>();
         }
     }
 }
