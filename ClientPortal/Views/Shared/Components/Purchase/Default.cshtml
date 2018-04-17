@@ -63,8 +63,8 @@
                                     <hr class="card-hr"><br />
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <span>Face Value:</span>
-                                        <select id="physicalValue" name="physicalValue" class="form-control nested-dropdown price-change">
-                                            <option>Select Face Value</option>
+                                        <select id="physicalValue" name="physicalValue" class="form-control nested-dropdown price-change" required>
+                                            <option value="">Select Face Value</option>
                                             <option value="50">$50</option>
                                             <option value="100">$100</option>
                                             <option value="150">$150</option>
@@ -79,7 +79,7 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <span class="">Quantity:</span>
-                                        <input id="physicalQuantity" name="physicalQuantity" type="number" class="form-control price-change" placeholder="Minimum order: 1,000" />
+                                        <input id="physicalQuantity" name="physicalQuantity" type="number" class="form-control price-change" placeholder="Minimum order: 1,000" required />
                                     </div>
                                 </div>
                             </div>
@@ -91,8 +91,8 @@
                                     <hr class="card-hr"><br />
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <span class="">Face Value:</span>
-                                        <select id="virtualValue" name="virtualValue" class="form-control nested-dropdown">
-                                            <option>Select Face Value</option>
+                                        <select id="virtualValue" name="virtualValue" class="form-control nested-dropdown" required>
+                                            <option value="">Select Face Value</option>
                                             <option value="50">$50</option>
                                             <option value="100">$100</option>
                                             <option value="150">$150</option>
@@ -107,7 +107,7 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <span>Quantity:</span>
-                                        <input id="virtualQuantity" name="virtualQuantity" type="number" class="form-control" placeholder="No Minimum Required" />
+                                        <input id="virtualQuantity" name="virtualQuantity" type="number" class="form-control" placeholder="No Minimum Required" required />
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@
                                         <div class="form-group">
                                             <label for="cardHolder">Cardholder Name</label>
                                             <div class="input-group">
-                                                <input id="fullName" name="fullName" type="tel" class="form-control" placeholder="Name as it appears on card" required autofocus />
+                                                <input id="fullName" name="fullName" type="tel" class="form-control" placeholder="Name as it appears on card" required />
                                                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                             </div>
                                         </div>
@@ -143,7 +143,7 @@
                                         <div class="form-group">
                                             <label for="billingZIP">ZIP</label>
                                             <div class="input-group">
-                                                <input id="billingZip" name="billingZip" type="text" class="form-control" name="billingZIP" placeholder="Billing" required autofocus />
+                                                <input id="billingZip" name="billingZip" type="number" class="form-control" placeholder="Billing" maxlength="5" required />
                                                 <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
                                             </div>
                                         </div>
@@ -154,7 +154,7 @@
                                         <div class="form-group">
                                             <label for="shippingAddress">Ship-To Address</label>
                                             <div class="input-group">
-                                                <input id="address" name="address" type="text" class="form-control" placeholder="Physical addresses only" required autofocus />
+                                                <input id="address" name="address" type="text" class="form-control" placeholder="Physical addresses only" required />
                                                 <span class="input-group-addon"><i class="fa fa-map-o"></i></span>
                                             </div>
                                         </div>
@@ -164,14 +164,14 @@
                                     <div class="col-md-4 col-xs-12">
                                         <div class="form-group">
                                             <label for="shippingCity">Ship-To City</label>
-                                            <input id="city" name="city" type="text" class="form-control" placeholder="City" required autofocus />
+                                            <input id="city" name="city" type="text" class="form-control" placeholder="City" required />
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-xs-6">
                                         <div class="form-group">
                                             <label for="shippingState">State</label>
-                                            <select id="state" name="state" class="form-control nested-dropdown">
-                                                <option>Select</option>
+                                            <select id="state" name="state" class="form-control nested-dropdown" required>
+                                                <option value="">Select</option>
                                                 <option value="AL">AL</option>
                                                 <option value="AK">AK</option>
                                                 <option value="AR">AR</option>
@@ -230,7 +230,7 @@
                                         <div class="form-group">
                                             <label for="shippingZIP">ZIP</label>
                                             <div class="input-group">
-                                                <input id="shippingZip" name="shippingZip" type="tel" class="form-control" placeholder="Ship-To" required autofocus />
+                                                <input id="shippingZip" name="shippingZip" type="tel" class="form-control" placeholder="Ship-To" maxlength="5" required />
                                                 <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
                                             </div>
                                         </div>
@@ -241,7 +241,7 @@
                                         <div class="form-group">
                                             <label for="cardNumber">Card Number</label>
                                             <div class="input-group">
-                                                <input id="creditCardNumber" name="creditCardNumber" type="tel" class="form-control" placeholder="Valid Card Number" autocomplete="cc-number" required autofocus />
+                                                <input id="creditCardNumber" name="creditCardNumber" type="tel" class="form-control" placeholder="Valid Card Number" autocomplete="cc-number" required />
                                                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
                                             </div>
                                         </div>

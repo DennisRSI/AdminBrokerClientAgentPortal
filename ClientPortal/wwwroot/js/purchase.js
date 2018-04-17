@@ -5,6 +5,10 @@ function Purchase() {
 
     this.init = function () {
 
+        $('#creditCardExpiration').inputmask({
+            mask: '[9]9/99'
+        });
+
         $('.price-change').on('input', function () {
             var value = $('#physicalValue').val();
             var quantity = parseInt($('#physicalQuantity').val()) || 0;
@@ -21,6 +25,62 @@ function Purchase() {
         });
 
         $('#order').click(function () {
+
+            var target = $(event.target);
+            var form = target.parents('form');
+
+            form.validate({
+                rules: {
+                    physicalQuantity: {
+                        required: true,
+                        range: [1000, 1000000]
+                    },
+                    virtualQuantity: {
+                        required: true,
+                        range: [0, 1000000]
+                    },
+                    fullName: {
+                        required: true,
+                        minlength: 2
+                    },
+                    billingZip: {
+                        required: true,
+                        range: [10000, 99999]
+                    },
+                    address: {
+                        required: true,
+                        minlength: 2
+                    },
+                    city: {
+                        required: true,
+                        minlength: 2
+                    },
+                    shippingZip: {
+                        required: true,
+                        range: [10000, 99999]
+                    },
+                    creditCardNumber: {
+                        required: true,
+                        minlength: 16,
+                        maxlength: 16
+                    },
+                    creditCardExpiration: {
+                        required: true,
+                    },
+                    creditCardCVC: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 4
+                    },
+                }
+            });
+
+            var valid = form.valid();
+
+            if (!valid) {
+                return;
+            }
+
             var data = UTILITY.serializeFormJSON($('#payment-form'));
 
             $.ajax({
