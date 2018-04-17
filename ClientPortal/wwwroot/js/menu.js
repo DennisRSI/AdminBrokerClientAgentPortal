@@ -4,7 +4,7 @@ function Menu() {
     var self = this;
     
     this.init = function () {
-        $('.nav-item').click(function () {
+        $('body').on('click', '.nav-item', function () {
             $('#sidebar-menu .nav-item, #sidebar-menu .nav-page-id').removeClass('last-clicked');
             $(this).addClass('last-clicked');
 
@@ -28,7 +28,7 @@ function Menu() {
             }
         });
 
-        $('.nav-page-id').click(function () {
+        $('body').on('click', '.nav-page-id', function () {
             $('#sidebar-menu .nav-item, #sidebar-menu .nav-page-id').removeClass('last-clicked');
             $(this).addClass('last-clicked');
 
