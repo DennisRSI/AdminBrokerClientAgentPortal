@@ -21,6 +21,8 @@ namespace ClientPortal
 {
     public class Startup
     {
+        private static bool IsAutoMapperInitialized;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -48,8 +50,13 @@ namespace ClientPortal
 
             services.AddMvc();
 
-            // TODO: This line needs to be commented out to drop database. Not sure why. Look into fixing this later.
-            services.AddAutoMapper(typeof(Startup));
+            // Extra if statement needed because of this issue:
+            // https://github.com/AutoMapper/AutoMapper.Extensions.Microsoft.DependencyInjection/issues/49
+            if (!IsAutoMapperInitialized)
+            {
+                IsAutoMapperInitialized = true;
+                services.AddAutoMapper(typeof(Startup));
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
