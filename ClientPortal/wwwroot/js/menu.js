@@ -12,12 +12,13 @@ function Menu() {
             var page = $(this).data('page');
             var cmd = "";
 
-            if (page === "admin-change" || page === "user-list") {
+            if (page === "admin-change") {
                 cmd = $(this).data('cmd');
                 self.get_page(page, cmd, id);
             }
 
             if (page === "user-list") {
+                cmd = $(this).data('cmd');
                 id = $(this).data('id');
                 self.get_page(page, cmd, id);
             }
@@ -59,7 +60,6 @@ function Menu() {
         if (page === "user-list") {
             var brokerId = 0;
             var clientId = 0;
-            
             LIST.init(cmd, brokerId, clientId);
         }
     }
