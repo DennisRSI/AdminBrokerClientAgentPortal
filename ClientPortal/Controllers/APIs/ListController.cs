@@ -122,9 +122,7 @@ namespace ClientPortal.Controllers.APIs
 
             try
             {
-                (int draw, int startRowIndex, int numberOfRows, string sortColumn, string sortDirection, string searchValue) = _ParseForm(Request.Form);
-
-                model = await _context.GetBrokers(draw, startRowIndex, numberOfRows, searchValue, sortColumn, sortDirection);
+                model = await _context.GetBrokers();
             }
             catch (Exception ex)
             {

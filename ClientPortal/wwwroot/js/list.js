@@ -113,12 +113,17 @@ function List() {
             }
         ];
 
-        $dt = self.generateList("broker_tbl", url, cols);
+        var selector = '#broker_tbl';
+        var tableSettings = this.getDataTableDefaults(url, cols, 'POST');
 
-        $dt.on('click', 'tr', function () {
-            var data = $dt.row(this).id();
-            self.redirectToPage('/api/menu/my-account/' + data);
-        });
+        if (!$.fn.DataTable.isDataTable(selector)) {
+            var table = $(selector).DataTable(tableSettings);
+
+            $(selector).on('click', 'tr', function () {
+                var data = $(this).attr('id');
+                self.redirectToPage('/api/menu/my-account/' + data);
+            });
+        }
     }
 
     this.agentList = function (brokerId, clientId) {
@@ -248,7 +253,7 @@ function List() {
             "columns": columns
         });
 
-        table.css('width', '100%');
+        $(tableSelector).css('width', '100%');
 
         return table;
     }

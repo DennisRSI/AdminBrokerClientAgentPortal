@@ -1306,86 +1306,16 @@ namespace Codes.Service.Services
 
             return broker;
         }
-        public async Task<DataTableViewModel<BrokerListViewModel>> GetBrokers(int draw, int startRowIndex = 0, int numberOfRows = 10, string searchValue = null, string sortColumn = "DEFAULT", string sortDirection = "ASC", bool onlyActive = false)
+
+        public async Task<DataTableViewModel<BrokerListViewModel>> GetBrokers()
         {
             DataTableViewModel<BrokerListViewModel> model = new DataTableViewModel<BrokerListViewModel>();
 
             try
             {
                 model.RoleName = "Broker";
-                
-                model.Draw = draw;
                 var tmp = from b in _context.Brokers select b;
-                model.NumberOfRows = tmp.Count();
-                if (!string.IsNullOrEmpty(searchValue))
-                {
-                    int? c = null;
-
-                    int c1 = 0;
-                    if (int.TryParse(searchValue, out c1))
-                        c = c1;
-
-                    tmp = tmp.Where(x => x.BrokerId == c
-                        || x.CompanyName.Contains(searchValue)
-                        || x.Email.Contains(searchValue)
-                        || x.BrokerFirstName.Contains(searchValue)
-                        || x.BrokerLastName.Contains(searchValue)
-                        || x.MobilePhone.Contains(searchValue)
-                        || x.OfficePhone.Contains(searchValue)
-                        || x.Fax.Contains(searchValue)
-                        || x.ApplicationReference.Contains(searchValue));
-
-                    if (onlyActive)
-                        tmp = tmp.Where(x => x.IsActive);
-                }
-                model.RecordsFiltered = tmp.Count();
-                if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortDirection)))
-                {
-                    switch (sortColumn)
-                    {
-                        case "company_name":
-                            if (sortDirection.ToUpper() == "ASC")
-                                tmp = tmp.OrderBy(o => o.CompanyName);
-                            else
-                                tmp = tmp.OrderByDescending(o => o.CompanyName);
-                            break;
-                        case "email":
-                            if (sortDirection.ToUpper() == "ASC")
-                                tmp = tmp.OrderBy(o => o.Email);
-                            else
-                                tmp = tmp.OrderByDescending(o => o.Email);
-                            break;
-                        case "phone":
-                            if (sortDirection.ToUpper() == "ASC")
-                                tmp = tmp.OrderBy(o => o.OfficePhone);
-                            else
-                                tmp = tmp.OrderByDescending(o => o.OfficePhone);
-                            break;
-                        case "activation_date":
-                            if (sortDirection.ToUpper() == "ASC")
-                                tmp = tmp.OrderBy(o => o.CreationDate);
-                            else
-                                tmp = tmp.OrderByDescending(o => o.CreationDate);
-                            break;
-                        case "deactivation_date":
-                            if (sortDirection.ToUpper() == "ASC")
-                                tmp = tmp.OrderBy(o => o.DeactivationDate);
-                            else
-                                tmp = tmp.OrderByDescending(o => o.DeactivationDate);
-                            break;
-                        default:
-                            if (sortDirection.ToUpper() == "ASC")
-                                tmp = tmp.OrderBy(o => o.BrokerFirstName);
-                            else
-                                tmp = tmp.OrderByDescending(o => o.BrokerFirstName);
-                            break;
-                    }
-                    //tmp = tmp.OrderBy(search + " " + sortDirection);
-                }
-
                 var ct = tmp;
-
-                model.RecordsFiltered = ct.Count();
 
                 model.Data = await (from t in tmp
                                      select new BrokerListViewModel
@@ -1402,7 +1332,7 @@ namespace Codes.Service.Services
                                          MiddleName = t.BrokerMiddleName,
                                          Extension = t.MobilePhone != null && t.MobilePhone.Length > 0 ? "" : t.OfficeExtension,
                                          Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone : t.OfficePhone
-                                     }).Skip(startRowIndex).Take(numberOfRows).ToArrayAsync();
+                                     }).ToArrayAsync();
                 model.Message = "Success";
             }
             catch (Exception ex)
@@ -1412,6 +1342,7 @@ namespace Codes.Service.Services
 
             return model;
         }
+
         public async Task<BrokerViewModel> GetBrokerByReference(string referenceId)
         {
             BrokerViewModel model = new BrokerViewModel();

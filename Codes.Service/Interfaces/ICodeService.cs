@@ -84,7 +84,7 @@ namespace Codes.Service.Interfaces
         //Task<(bool isSuccess, int codeRangeId, int codeActivationId, string message)> IsCodeInRange(int rsiOrgId, string preAlpha, string postAlpha, int numericValue);
         Task<BrokerViewModel> GetBrokerById(int brokerId);
         Task<BrokerViewModel> GetBrokerByAccountId(string accountId);
-        Task<DataTableViewModel<BrokerListViewModel>> GetBrokers(int draw, int startRowIndex = 0, int numberOfRows = 10, string searchValue = null, string sortColumn = "DEFAULT", string sortDirection = "ASC", bool onlyActive = false);
+        Task<DataTableViewModel<BrokerListViewModel>> GetBrokers();
         Task<AgentViewModel> GetAgentById(int agentId);
         Task<AgentViewModel> GetAgentByAccountId(string accountId);
         Task<DataTableViewModel<AgentListViewModel>> GetAgents(int draw, int brokerId, int startRowIndex = 0, int numberOfRows = 10, string searchValue = null, int? campaignId = null, string sortColumn = "DEFAULT", string sortDirection = "ASC");
