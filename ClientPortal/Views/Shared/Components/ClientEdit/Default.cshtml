@@ -5,41 +5,41 @@
         <div class="x_title">
             <h2>Edit Client</h2>
             <div class="title-right pull-right">
-                <a href="#" type="button" class="btn btn-sm btn-default">Cancel</a>
-                <a href="#" type="button" class="btn btn-sm btn-travnow">Save</a>
+                <a href="#" type="button" class="btn btn-sm btn-default nav-page-id" data-controller="view" data-page="clientdetails" data-id="@Model.ApplicationReference">Cancel</a>
+                <a id="save" href="#" type="button" class="btn btn-sm btn-travnow">Save</a>
             </div>
             <div class="clearfix"></div>
         </div><br />
         <div class="row">
-            <form class="form-horizontal form-label-left">
+            <form id="edit" class="form-horizontal form-label-left">
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Company Name</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="text" class="form-control" value="@Model.CompanyName">
+                        <input type="text" class="form-control" asp-for="CompanyName">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">EIN/FEIN</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="text" class="form-control" value="@Model.EIN">
+                        <input type="text" class="form-control" asp-for="EIN">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Address</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="text" class="form-control" value="@Model.Address">
+                        <input type="text" class="form-control" asp-for="Address">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">City</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="text" class="form-control" value="@Model.City">
+                        <input type="text" class="form-control" asp-for="City">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">State</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <select class="form-control">
+                        <select class="form-control" asp-for="State">
                             <option>Select State</option>
                             <option value="AL">AL</option>
                             <option value="AK">AK</option>
@@ -98,43 +98,54 @@
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Zip Code</label>
                     <div class="col-lg-2 col-md-2 col-sm-9 col-xs-12">
-                        <input type="number" class="form-control" value="@Model.PostalCode">
+                        <input type="number" class="form-control" asp-for="PostalCode">
                     </div>
-                </div><br />
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Country</label>
+                    <div class="col-lg-2 col-md-2 col-sm-9 col-xs-12">
+                        <select name="Country" class="form-control">
+                            <option>Select Country</option>
+                            <option value="USA">USA</option>
+                            <option value="CAN">CAN</option>
+                        </select>
+                    </div>
+                </div>
+                <br />
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Contact First Name</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="text" class="form-control" value="@Model.FirstName">
+                        <input type="text" class="form-control" asp-for="FirstName">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Contact Last Name</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="text" class="form-control" value="@Model.LastName">
+                        <input type="text" class="form-control" asp-for="LastName">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Mobile Phone</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="tel" class="form-control" value="@Model.MobilePhone" data-inputmask="'mask' : '999-999-9999'">
+                        <input type="tel" class="form-control" asp-for="MobilePhone" data-inputmask="'mask' : '999-999-9999'">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Contact Phone</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="tel" class="form-control" value="@Model.ContactPhone" data-inputmask="'mask' : '999-999-9999'">
+                        <input type="tel" class="form-control" asp-for="ContactPhone" data-inputmask="'mask' : '999-999-9999'">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Office Fax</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="tel" class="form-control" value="@Model.OfficeFax" data-inputmask="'mask' : '999-999-9999'">
+                        <input type="tel" class="form-control" asp-for="OfficeFax" data-inputmask="'mask' : '999-999-9999'">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Contact Email</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="email" class="form-control" value="@Model.Email">
+                        <input type="email" class="form-control" asp-for="Email">
                     </div>
                 </div>
                 <div class="form-group">
@@ -217,3 +228,8 @@
         </div>
     </div>
 </div>
+<script src="~/js/client-edit.js"></script>
+<script>
+    MENU.init();
+    CLIENTEDIT.init('@Model.ApplicationReference');
+</script>

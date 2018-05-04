@@ -12,6 +12,7 @@ namespace Codes.Service.ViewModels
         public string City { get; set; }
         public string State { get; set; }
         public string PostalCode { get; set; }
+        public string Country { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MobilePhone { get; set; }
@@ -19,6 +20,11 @@ namespace Codes.Service.ViewModels
         public string OfficeFax { get; set; }
         public string Email { get; set; }
         public string CommissionRate { get; set; }
+
+        public string UserName
+        {
+            get { return Email; }
+        }
 
         public IEnumerable<ClientEditAgent> Agents { get; set; }
     }
@@ -28,6 +34,7 @@ namespace Codes.Service.ViewModels
         public int AgentId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public bool IsSelected { get; set; }
 
         public string FullName
         {

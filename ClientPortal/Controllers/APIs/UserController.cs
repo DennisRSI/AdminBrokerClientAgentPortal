@@ -404,6 +404,13 @@ namespace ClientPortal.Controllers.APIs
         {
             var user = await _userManager.FindByIdAsync(id);
             model.BrokerId = user.BrokerId;
+            model.ClientId = user.ClientId;
+            model.AgentId = user.AgentId;
+
+            if (String.IsNullOrEmpty(model.UserName))
+            {
+                model.UserName = model.Email;
+            }
 
             switch (user.Role)
             {
@@ -498,6 +505,7 @@ namespace ClientPortal.Controllers.APIs
         {
             var client = new ClientViewModel()
             {
+                ClientId = user.ClientId,
                 Email = user.UserName,
                 ContactFirstName = user.FirstName,
                 ContactLastName = user.LastName,
