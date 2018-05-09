@@ -29,37 +29,42 @@ namespace Codes.Service.Services
             var creditCard = new String(model.CreditCardNumber.Where(char.IsDigit).ToArray());
             var last4 = creditCard.Substring(Math.Max(0, creditCard.Length - 4));
 
-            var purchase = new PurchaseModel()
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                Broker = broker,
-                PhysicalValue = model.PhysicalValue,
-                PhysicalQuantity = model.PhysicalQuantity,
-                VirtualValue = model.VirtualValue,
-                VirtualQuantity = model.VirtualQuantity,
-                FullName = model.FullName,
-                BillingZip = model.BillingZip,
-                Address = model.Address,
-                City = model.City,
-                State = model.State,
-                ShippingZip = model.ShippingZip,
-                CreditCardLast4 = last4,
-            };
+                var purchase = new PurchaseModel()
+                {
+                    Broker = broker,
+                    PhysicalValue = model.PhysicalValue,
+                    PhysicalQuantity = model.PhysicalQuantity,
+                    VirtualValue = model.VirtualValue,
+                    VirtualQuantity = model.VirtualQuantity,
+                    FullName = model.FullName,
+                    BillingZip = model.BillingZip,
+                    Address = model.Address,
+                    City = model.City,
+                    State = model.State,
+                    ShippingZip = model.ShippingZip,
+                    CreditCardLast4 = last4,
+                };
 
-            _context.Purchases.Add(purchase);
+                _context.Purchases.Add(purchase);
+                _context.SaveChanges();
 
-            if (model.PhysicalQuantity > 0)
-            {
-                GenerateCodes(broker.BrokerId, "Physical", model.PhysicalQuantity, model.PhysicalValue);
+                if (model.PhysicalQuantity > 0)
+                {
+                    GenerateCodes(broker.BrokerId, purchase.PurchaseId, "Physical", model.PhysicalQuantity, model.PhysicalValue);
+                }
+
+                if (model.VirtualQuantity > 0)
+                {
+                    GenerateCodes(broker.BrokerId, purchase.PurchaseId, "Virtual", model.VirtualQuantity, model.VirtualValue);
+                }
+
+                _context.SaveChanges();
+                transaction.Commit();
+
+                return GetDisplayViewModel(purchase);
             }
-
-            if (model.VirtualQuantity > 0)
-            {
-                GenerateCodes(broker.BrokerId, "Virtual", model.VirtualQuantity, model.VirtualValue);
-            }
-
-            _context.SaveChanges();
-
-            return GetDisplayViewModel(purchase);
         }
 
         public IQueryable<PurchaseDisplayViewModel> GetList(int brokerId)
@@ -89,50 +94,22 @@ namespace Codes.Service.Services
             };
         }
 
-        private void GenerateCodes(int brokerId, string codeType, int quantity, decimal chargeAmount)
+        private void GenerateCodes(int brokerId, int purchaseId, string codeType, int quantity, decimal chargeAmount)
         {
-            const string letterStart = "aa";
-            const string letterEnd = "zz";
+            const string prefix = "aa";
+            const string suffix = "zz";
             const int increment = 3;
 
-            int start = 0;
-            int end = 0;
-
-            var codeRange = _context.CodeRanges
-                .Where(r => r.PreAlphaCharacters == letterStart && r.PostAlphaCharacters == letterEnd)
-                .OrderByDescending(r => r.EndNumber)
-                .Take(1);
-
-            if (codeRange.Any())
-            {
-                var single = codeRange.Single();
-                start = single.EndNumber + increment;
-            }
-
-            end = start + quantity * increment;
-
-            _context.Brokers.FromSql("EXECUTE dbo.GenerateCodes {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16}, {17}, {18}, {19}",
-                  letterStart, // @LettersStart
-                  letterEnd, // @LettersEnd
-                  increment, // @IncrementBy
-                  brokerId, // @BrokerId
-                  null, // @ClientId
-                  null, // @CampaignId
-                  codeType, // @CodeType
-                  String.Empty, // @Issuer
-                  0, // @PackageId
-                  5, // @PaddingNumber
-                  "0", // @PaddingValue
-                  start, // @StartNumber
-                  end, // @EndNumber
-                  0, // @HotelPoints
-                  0, // @CondoRewards
-                  1, // @NumberOfUses  ??
-                  chargeAmount, // @ChargeAmount
-                  null, // @StartDate
-                  null, // @EndDate
-                  1 // @VerifyEmail
-                  ).ToList();
+            _context.Brokers.FromSql("EXECUTE dbo.CreateCodes {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}",
+                                        brokerId,
+                                        purchaseId,
+                                        quantity,
+                                        1, // TODO: Number of uses. How to determine this?
+                                        codeType,
+                                        prefix,
+                                        suffix,
+                                        increment
+                                    ).ToList();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Codes.Service.Models
@@ -54,5 +55,7 @@ namespace Codes.Service.Models
 
         [ForeignKey("BrokerId")]
         public BrokerModel Broker { get; set; }
+
+        public List<CodeModel> Codes { get; set; }
     }
 }

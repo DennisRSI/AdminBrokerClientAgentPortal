@@ -66,6 +66,9 @@ namespace Codes.Service.Models
         [JsonProperty(PropertyName = "package_id")]
         public int PackageId { get; set; } = 0;
 
+        public int? PurchaseId { get; set; }
+        public PurchaseModel Purchase { get; set; }
+
         [JsonIgnore]
         public ICollection<CodeActivityModel> CodeActivities { get; set; } = new List<CodeActivityModel>();
     }

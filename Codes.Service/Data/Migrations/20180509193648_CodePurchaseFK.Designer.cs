@@ -12,9 +12,10 @@ using System;
 namespace Codes.Service.Data.Migrations
 {
     [DbContext(typeof(CodesDbContext))]
-    partial class CodesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180509193648_CodePurchaseFK")]
+    partial class CodePurchaseFK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
