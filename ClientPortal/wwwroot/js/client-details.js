@@ -26,7 +26,9 @@ function ClientDetails() {
             },
         ];
 
-        dataTable = LIST.generateUpdatableList("#campaign_tbl", url, cols, "GET");
+        if (!$.fn.DataTable.isDataTable("#campaign_tbl")) {
+            dataTable = LIST.generateUpdatableList("#campaign_tbl", url, cols, "GET");
+        }
     }
 
     this.loadChart = function (labelList, dataList) {

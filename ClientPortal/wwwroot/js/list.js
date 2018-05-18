@@ -45,6 +45,7 @@ function List() {
 
         if (!$.fn.DataTable.isDataTable(selector)) {
             $(selector).DataTable(tableSettings);
+            $(selector).css('width', '100%');
 
             $(selector).on('click', 'a.pdf', function () {
                 var id = $(this).closest('tr').attr('id');
@@ -226,6 +227,9 @@ function List() {
         } else {
             $dt = $(tblParsed);
         }
+
+        $('table.dataTable').css('width', '100%');
+
         return $dt;
     }
 

@@ -47,13 +47,13 @@
                     </li>
                     @if (Model.Role == "Broker")
                     {
-                        <li asp-authorize role="presentation" class="">
+                        <li asp-authorize role="presentation">
                             <a href="#tab2" role="tab" id="agents-tab" data-id="@Model.BrokerId" data-toggle="tab" aria-expanded="false">Agents</a>
                         </li>
-                        <li asp-authorize role="presentation" class="">
+                        <li asp-authorize role="presentation">
                             <a href="#tab3" role="tab" id="clients-tab" data-id="@Model.BrokerId" data-toggle="tab" aria-expanded="false">Clients</a>
                         </li>
-                        <li asp-authorize role="presentation" class="">
+                        <li asp-authorize role="presentation">
                             <a href="#tab5" role="tab" id="purchase-tab" data-id="@Model.BrokerId" data-toggle="tab" aria-expanded="false">Purchases</a>
                         </li>
                     }
