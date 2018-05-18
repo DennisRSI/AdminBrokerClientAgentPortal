@@ -1,9 +1,7 @@
 ﻿using Codes.Service.Data;
 using Codes.Service.Interfaces;
-using Codes.Service.Models;
 using Codes.Service.ViewModels;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Codes.Service.Services
@@ -27,6 +25,7 @@ namespace Codes.Service.Services
             {
                 ApplicationReference = client.ApplicationReference,
                 ClientId = client.ClientId,
+                CompanyName = client.CompanyName,
                 PhysicalTotal = 0,
                 PhysicalInCampaigns = 0,
                 PhysicalAvailable = 0,

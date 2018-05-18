@@ -7,6 +7,7 @@ namespace Codes.Service.ViewModels
     {
         public string ApplicationReference { get; set; }
         public int ClientId { get; set; }
+        public string CompanyName { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:n0}")]
         public int PhysicalTotal { get; set; }
