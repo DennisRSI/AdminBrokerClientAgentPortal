@@ -5,7 +5,6 @@ function Campaign(){
     var dataTable;
 
     this.init = function (clientId) {
-
         self.initCampaignTable(clientId);
 
         $.get('/api/video/?isPreLogin=true', function (data) {
@@ -30,7 +29,23 @@ function Campaign(){
         });
 
         $('#addCampaignButton').click(function () {
-            var data = self.serializeFormJSON($('#addCampaignForm'));
+
+            jQuery.validator.setDefaults({
+                errorPlacement: function (error, element) {
+                },
+            });
+
+            var form = $('#addCampaignForm');
+            var formValid = form.valid();
+
+            var preVideoValid = self.validateVideo('pre');
+            var postVideoValid = self.validateVideo('post');
+
+            if (!formValid || !preVideoValid || !postVideoValid) {
+                return;
+            }
+
+            var data = UTILITY.serializeFormJSON($('#addCampaignForm'));
 
             $.ajax({
                 url: '/api/campaign/create/' + clientId,
@@ -49,12 +64,34 @@ function Campaign(){
         });
     }
 
+    this.selectTemplate = function (element, type) {
+        var id = element.data('videoid');
+        $('input#' + type + 'LoginVideoId').val(id);
+
+        $('#' + type + 'VidCarousel .x_panel').removeClass('selected');
+        element.parent().addClass('selected');
+    }
+
     this.selectVideo = function (element, type) {
         var id = element.data('videoid');
         $('input#' + type + 'LoginVideoId').val(id);
 
         $('#' + type + 'VidCarousel .x_panel').removeClass('selected');
         element.parent().addClass('selected');
+    }
+
+    this.validateVideo = function (type) {
+        var videoId = $('input#' + type + 'LoginVideoId').val();
+        var videoUrl = $('input#' + type + 'LoginVideoUrl').val();
+        var selector = '#' + type + 'ActivationVideo';
+
+        if (videoId || videoUrl) {
+            $(selector).removeClass('error');
+            return true;
+        }
+
+        $(selector).addClass('error');
+        return false;
     }
 
     this.processAjaxData = function (data, type) {
@@ -95,7 +132,9 @@ function Campaign(){
             },
         ];
 
-        dataTable = LIST.generateUpdatableList("#campaign_tbl", url, cols, "GET");
+        if (!$.fn.DataTable.isDataTable("#campaign_tbl")) {
+            dataTable = LIST.generateUpdatableList("#campaign_tbl", url, cols, "GET");
+        }
     }
 
     this.cloneCampaign = function (campaignId) {
@@ -104,23 +143,5 @@ function Campaign(){
                 dataTable.ajax.reload();
             }
         );
-    }
-
-    // TODO: Refactor this
-    this.serializeFormJSON = function (form) {
-        var o = {};
-        var a = form.serializeArray();
-        $.each(a, function () {
-            console.log('name: ' + this.name);
-            if (o[this.name]) {
-                if (!o[this.name].push) {
-                    o[this.name] = [o[this.name]];
-                }
-                o[this.name].push(this.value || '');
-            } else {
-                o[this.name] = this.value || '';
-            }
-        });
-        return o;
     }
 }

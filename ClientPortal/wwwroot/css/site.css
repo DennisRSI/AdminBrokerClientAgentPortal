@@ -1,20 +1,13 @@
 ﻿html, body {
     height: 100%;
 }
-/*Datatables styling*/
-/*div.dataTables_processing {
-    background-color: aliceblue;
-    border: 1px solid #000;
-    border-radius: 25px;
-    padding:10px;
-    height:500px;
-    width:500px;
-    z-index:999;
-}*/
-/*End Datatables styling*/
-/*Start Loading*/
+
 .table-select {
     cursor: pointer;
+}
+
+div.error {
+    border: solid 1px red;
 }
 
 #loader-container {

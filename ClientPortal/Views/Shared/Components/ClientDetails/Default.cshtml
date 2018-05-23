@@ -69,50 +69,49 @@
                                         <h3 class="modal-title" id="myModalLabel2"><span class="fa fa-flag left pull-right"></span>Create Campaign </h3>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="form-horizontal form-label-left input_mask">
-                                            <div class="row">
-                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                    <h4>General Motors Campaign Creation</h4><br />
-                                                </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <h4>@Model.CompanyName Campaign Creation</h4><br />
                                             </div>
-                                            <div class="row">
-                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                                                    <label class="">Create Campaign Name</label>
-                                                    <input type="text" class="form-control" id="campaignName" name="campaignName" placeholder="Campaign Name"><br />
-                                                    <label class="">Select Quantity</label>
-                                                    <input type="number" class="form-control" id="cardQuantity" name="cardQuantity" placeholder="Card Qty" max="20000">
-                                                    Physical Cards Available: 20,000<br />
-                                                    Virtual Cards Available: 49,500<br />
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                                                <label for="campaignName">Create Campaign Name</label>
+                                                <input type="text" class="form-control" id="campaignName" name="campaignName" placeholder="Campaign Name" required>
+                                                <br />
+                                                <label class="">Select Quantity</label>
+                                                <input type="number" class="form-control" id="cardQuantity" name="cardQuantity" placeholder="Card Qty" max="20000" required>
+                                                Physical Cards Available: 20,000<br />
+                                                Virtual Cards Available: 49,500<br />
 
-                                                    <em><a href="purchase-cards.html">Purchase More?</a></em>
+                                                <em><a href="#" class="nav-page-id" data-controller="view" data-page="purchase">Purchase More?</a></em>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                                                <label class="">Select Card Type</label>
+                                                <select class="form-control nested-dropdown" id="campaignType" name="campaignType">
+                                                    <option>Physical</option>
+                                                    <option>Virtual</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <span>Select Benefits For This Campaign:</span>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input id="benefitHotel" name="benefitHotel" value="true" type="checkbox" class="flat"> Hotel Benefit
+                                                    </label>
                                                 </div>
-                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                                                    <label class="">Select Card Type</label>
-                                                    <select class="form-control nested-dropdown" id="campaignType" name="campaignType">
-                                                        <option>Physical</option>
-                                                        <option>Virtual</option>
-                                                    </select>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input id="benefitCondo" name="benefitCondo" value="true" type="checkbox" class="flat"> Condo Benefit
+                                                    </label>
                                                 </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <span>Select Benefits For This Campaign:</span>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input id="benefitHotel" name="benefitHotel" value="true" type="checkbox" class="flat"> Hotel Benefit
-                                                        </label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input id="benefitCondo" name="benefitCondo" value="true" type="checkbox" class="flat"> Condo Benefit
-                                                        </label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input id="benefitShopping" name="benefitShopping" value="true" type="checkbox" class="flat"> Shopping Benefit
-                                                        </label>
-                                                    </div>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input id="benefitShopping" name="benefitShopping" value="true" type="checkbox" class="flat"> Shopping Benefit
+                                                    </label>
                                                 </div>
                                             </div>
-                                        </form><br />
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-3 col-sm-6 col-xs-12">
                                                 <h5><i class="fa fa-calendar"></i> &nbsp;Expected Start Date:</h5>
@@ -120,7 +119,7 @@
                                                     <div class="control-group">
                                                         <div class="controls">
                                                             <div class=" form-group text-center">
-                                                                <input id="startDate" name="startDate" type="date" class="form-control has-feedback-left" placeholder="Start Date">
+                                                                <input id="startDate" name="startDate" type="date" class="form-control has-feedback-left" placeholder="Start Date" required>
                                                                 <span class="disclaimer-text">MM/DD/YYYY</span>
                                                             </div>
                                                         </div>
@@ -133,7 +132,7 @@
                                                     <div class="control-group">
                                                         <div class="controls">
                                                             <div class=" form-group text-center">
-                                                                <input id="endDate" name="endDate" type="date" class="form-control has-feedback-left" placeholder="End Date">
+                                                                <input id="endDate" name="endDate" type="date" class="form-control has-feedback-left" placeholder="End Date" required>
                                                                 <span class="disclaimer-text">MM/DD/YYYY</span>
                                                             </div>
                                                         </div>
@@ -146,7 +145,7 @@
                                                     <div class="control-group">
                                                         <div class="controls">
                                                             <div class="form-group text-center">
-                                                                <input id="startTime" name="startTime" type="time" class="form-control has-feedback-left" placeholder="Start Time">
+                                                                <input id="startTime" name="startTime" type="time" class="form-control has-feedback-left" placeholder="Start Time" required>
                                                                 <span class="disclaimer-text">HH:MM AM/PM</span>
                                                             </div>
                                                         </div>
@@ -159,7 +158,7 @@
                                                     <div class="control-group">
                                                         <div class="controls">
                                                             <div class="form-group text-center">
-                                                                <input id="endTime" name="endTime" type="time" class="form-control has-feedback-left" placeholder="End Time">
+                                                                <input id="endTime" name="endTime" type="time" class="form-control has-feedback-left" placeholder="End Time" required>
                                                                 <span class="disclaimer-text">HH:MM AM/PM</span>
                                                             </div>
                                                         </div>
@@ -169,8 +168,9 @@
                                         </div><br />
                                         <div class="row">
                                             <div class="col-lg-12 col-md-12 form-group">
-                                                <label class="">Describe This Campaign</label>
-                                                <textarea class="form-control" id="campaignDescription" name="campaignDescription" placeholder="All campaigns must be approved before going live. Please describe the campaign for the review process." rows="6"></textarea><br />
+                                                <label for="campaignDescription">Describe This Campaign</label>
+                                                <textarea class="form-control" id="campaignDescription" name="campaignDescription" placeholder="All campaigns must be approved before going live. Please describe the campaign for the review process." rows="6" required></textarea>
+                                                <br />
                                             </div>
                                         </div>
                                         <hr class="card-hr">
@@ -290,47 +290,49 @@
                                                                         </div>
                                                                         <!-- End Template Carousel -->
 
-                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                            <br />
-                                                                            <label>2. Select a Pre-Activation Video:<br /><span class="disclaimer-text-larger"><em>Optionally, you can insert or upload your own video in the next step:</em></span></label><p></p>
-                                                                        </div>
+                                                                        <div id="preActivationVideo" class="clearfix">
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <br />
+                                                                                <label>2. Select a Pre-Activation Video:<br /><span class="disclaimer-text-larger"><em>Optionally, you can insert or upload your own video in the next step:</em></span></label><p></p>
+                                                                            </div>
 
-                                                                        <!-- Template for pre and post videos -->
-                                                                        <script id="template" type="text/x-jsrender">
-                                                                            <div class="video col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                                                <div class="x_panel text-center">
-                                                                                    <div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 10px">
-                                                                                        <iframe src="{{:url}}" class="embed-responsive-item" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                                                            <!-- Template for pre and post videos -->
+                                                                            <script id="template" type="text/x-jsrender">
+                                                                                <div class="video col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                                                                    <div class="x_panel text-center">
+                                                                                        <div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 10px">
+                                                                                            <iframe src="{{:url}}" class="embed-responsive-item" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                                                                        </div>
+                                                                                        <!-- <button class="btn btn-default btn-sm" type="button">Preview</button> -->
+                                                                                        <button class="btn btn-travgreen btn-sm video-select" type="button" data-videoid="{{:videoId}}">Select</button>
                                                                                     </div>
-                                                                                    <!-- <button class="btn btn-default btn-sm" type="button">Preview</button> -->
-                                                                                    <button class="btn btn-travgreen btn-sm video-select" type="button" data-videoid="{{:videoId}}">Select</button>
                                                                                 </div>
-                                                                            </div>
-                                                                        </script>
+                                                                            </script>
 
-                                                                        <!-- Start Video Carousel -->
-                                                                        <input type="hidden" id="preLoginVideoId" name="preLoginVideoId">
-                                                                        <div id="preVidCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-                                                                            <div class="carousel-inner" role="listbox">
+                                                                            <!-- Start Video Carousel -->
+                                                                            <input type="hidden" id="preLoginVideoId" name="preLoginVideoId">
+                                                                            <div id="preVidCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                                                                                <div class="carousel-inner" role="listbox">
+                                                                                </div>
+                                                                                <!-- Carousel Controls -->
+                                                                                <a class="left custom-carousel-control" href="#preVidCarousel" role="button" data-slide="prev">
+                                                                                    <span class="fa fa-angle-left" aria-hidden="true"></span>
+                                                                                    <span class="sr-only">Previous</span>
+                                                                                </a>
+                                                                                <a class="right custom-carousel-control" href="#preVidCarousel" role="button" data-slide="next">
+                                                                                    <span class="fa fa-angle-right" aria-hidden="true"></span>
+                                                                                    <span class="sr-only">Next</span>
+                                                                                </a>
+                                                                                <!-- End Carousel Controls -->
                                                                             </div>
-                                                                            <!-- Carousel Controls -->
-                                                                            <a class="left custom-carousel-control" href="#preVidCarousel" role="button" data-slide="prev">
-                                                                                <span class="fa fa-angle-left" aria-hidden="true"></span>
-                                                                                <span class="sr-only">Previous</span>
-                                                                            </a>
-                                                                            <a class="right custom-carousel-control" href="#preVidCarousel" role="button" data-slide="next">
-                                                                                <span class="fa fa-angle-right" aria-hidden="true"></span>
-                                                                                <span class="sr-only">Next</span>
-                                                                            </a>
-                                                                            <!-- End Carousel Controls -->
-                                                                        </div>
-                                                                        <!-- End Video Carousel -->
-                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                            <br />
-                                                                            <label>3. Enter Pre-Activation Video URL (Optional):</label>
-                                                                        </div>
-                                                                        <div class="col-lg-5 col-md-6 col-sm-9 col-xs-12 form-group">
-                                                                            <input type="text" class="form-control" placeholder="example: http://youtube.com/xR5pfy2">
+                                                                            <!-- End Video Carousel -->
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <br />
+                                                                                <label>3. Enter Pre-Activation Video URL (Optional):</label>
+                                                                            </div>
+                                                                            <div class="col-lg-5 col-md-6 col-sm-9 col-xs-12 form-group">
+                                                                                <input id="preLoginVideoUrl" name="preLoginVideoUrl" type="text" class="form-control" placeholder="example: http://youtube.com/xR5pfy2">
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -454,33 +456,37 @@
                                                                             <!-- End Carousel Controls -->
                                                                         </div>
                                                                         <!-- End Template Carousel -->
-                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                            <br />
-                                                                            <label>2. Select a Post-Activation Video:<br /><span class="disclaimer-text-larger"><em>Optionally, you can insert or upload your own video in the next step:</em></span></label><p></p>
-                                                                        </div>
-                                                                        <!-- Start Video Carousel -->
-                                                                        <input type="hidden" id="postLoginVideoId" name="postLoginVideoId">
-                                                                        <div id="postVidCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-                                                                            <div class="carousel-inner" role="listbox">
+
+                                                                        <div id="postActivationVideo" class="clearfix">
+
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <br />
+                                                                                <label>2. Select a Post-Activation Video:<br /><span class="disclaimer-text-larger"><em>Optionally, you can insert or upload your own video in the next step:</em></span></label><p></p>
                                                                             </div>
-                                                                            <!-- Carousel Controls -->
-                                                                            <a class="left custom-carousel-control" href="#postVidCarousel" role="button" data-slide="prev">
-                                                                                <span class="fa fa-angle-left" aria-hidden="true"></span>
-                                                                                <span class="sr-only">Previous</span>
-                                                                            </a>
-                                                                            <a class="right custom-carousel-control" href="#postVidCarousel" role="button" data-slide="next">
-                                                                                <span class="fa fa-angle-right" aria-hidden="true"></span>
-                                                                                <span class="sr-only">Next</span>
-                                                                            </a>
-                                                                            <!-- End Carousel Controls -->
-                                                                        </div>
-                                                                        <!-- End Video Carousel -->
-                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                            <br />
-                                                                            <label>3. Enter Post-Activation Video URL (Optional):</label>
-                                                                        </div>
-                                                                        <div class="col-lg-5 col-md-6 col-sm-9 col-xs-12 form-group">
-                                                                            <input type="text" class="form-control" placeholder="example: http://youtube.com/xR5pfy2">
+                                                                            <!-- Start Video Carousel -->
+                                                                            <input type="hidden" id="postLoginVideoId" name="postLoginVideoId">
+                                                                            <div id="postVidCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                                                                                <div class="carousel-inner" role="listbox">
+                                                                                </div>
+                                                                                <!-- Carousel Controls -->
+                                                                                <a class="left custom-carousel-control" href="#postVidCarousel" role="button" data-slide="prev">
+                                                                                    <span class="fa fa-angle-left" aria-hidden="true"></span>
+                                                                                    <span class="sr-only">Previous</span>
+                                                                                </a>
+                                                                                <a class="right custom-carousel-control" href="#postVidCarousel" role="button" data-slide="next">
+                                                                                    <span class="fa fa-angle-right" aria-hidden="true"></span>
+                                                                                    <span class="sr-only">Next</span>
+                                                                                </a>
+                                                                                <!-- End Carousel Controls -->
+                                                                            </div>
+                                                                            <!-- End Video Carousel -->
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <br />
+                                                                                <label>3. Enter Post-Activation Video URL (Optional):</label>
+                                                                            </div>
+                                                                            <div class="col-lg-5 col-md-6 col-sm-9 col-xs-12 form-group">
+                                                                                <input id="postLoginVideoUrl" name="postLoginVideoUrl" type="text" class="form-control" placeholder="example: http://youtube.com/xR5pfy2">
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -567,6 +573,9 @@
 <script src="~/js/client-details.js"></script>
 <script type="text/javascript">
     MENU.init();
+
+    var clientId = $('#id-store').data('clientid');
+    CAMPAIGN.init(clientId);
 
     var labels = [];
     var data = [];
