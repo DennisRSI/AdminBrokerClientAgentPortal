@@ -46,6 +46,7 @@
                 <div class="x_panel">
                     <div class="x_content">
                         <div class="text-center"><h4>Campaign Distribution</h4></div>
+                        <div id="nocampaigns" class="text-center"><em>No campaigns have been created</em></div>
                         <canvas id="chart-campaign" style="height:350px;"></canvas>
                     </div>
                 </div>
@@ -586,9 +587,13 @@
         @:data.push(@c.CardQuantity);
     }
 
-    labels.push('Unassigned');
-    data.push(@Model.PhysicalAvailable + @Model.VirtualAvailable);
+    if (labels.length > 0) {
+        $('#nocampaigns').hide();
 
-    CLIENTDETAILS.init(@Model.ClientId);
-    CLIENTDETAILS.loadChart(labels, data);
+        labels.push('Unassigned');
+        data.push(@Model.PhysicalAvailable + @Model.VirtualAvailable);
+
+        CLIENTDETAILS.init(@Model.ClientId);
+        CLIENTDETAILS.loadChart(labels, data);
+    }
 </script>
