@@ -402,6 +402,16 @@ namespace ClientPortal.Controllers.APIs
         [HttpPost("updateprofile/{id}")]
         public async Task<IActionResult> UpdateProfile(string id, [FromBody] ApplicationUser model)
         {
+            if (model.Country.StartsWith("Select"))
+            {
+                model.Country = String.Empty;
+            }
+
+            if (model.State.StartsWith("Select"))
+            {
+                model.State = String.Empty;
+            }
+
             var user = await _userManager.FindByIdAsync(id);
             model.BrokerId = user.BrokerId;
             model.ClientId = user.ClientId;

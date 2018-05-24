@@ -5,6 +5,18 @@ function ClientEdit() {
 
     this.init = function (clientId) {
 
+        $('input[type="tel"]').inputmask({
+            mask: '(999) 999-9999'
+        });
+
+        $('#ein').inputmask({
+            mask: '99-9999999'
+        });
+
+        $('#zip').inputmask({
+            mask: '99999'
+        });
+
         $("#save").on("click", function (event) {
 
             var form = $('#edit');
