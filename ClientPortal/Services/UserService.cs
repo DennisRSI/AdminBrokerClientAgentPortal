@@ -596,7 +596,7 @@ namespace ClientPortal.Services
         {
             try
             {
-                ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
+                var user = await _userManager.FindByIdAsync(model.ApplicationReference);
 
                 if (user != null && user.Id != null && user.Id.Length > 0)
                 {

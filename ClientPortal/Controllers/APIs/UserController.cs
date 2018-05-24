@@ -402,6 +402,8 @@ namespace ClientPortal.Controllers.APIs
         [HttpPost("updateprofile/{id}")]
         public async Task<IActionResult> UpdateProfile(string id, [FromBody] ApplicationUser model)
         {
+            model.Id = id;
+
             if (model.Country.StartsWith("Select"))
             {
                 model.Country = String.Empty;
@@ -515,6 +517,7 @@ namespace ClientPortal.Controllers.APIs
         {
             var client = new ClientViewModel()
             {
+                ApplicationReference = user.Id,
                 ClientId = user.ClientId,
                 Email = user.UserName,
                 ContactFirstName = user.FirstName,
