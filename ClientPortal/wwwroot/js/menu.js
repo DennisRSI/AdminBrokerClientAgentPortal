@@ -76,10 +76,10 @@ function Menu() {
         }
 
         $('#loader-container').show();
-
         $.get(url, function (data, status) {
             $('#main_panel').html(data);
             $('#loader-container').hide();
+            ACCOUNT.init();
         });
     }
 }

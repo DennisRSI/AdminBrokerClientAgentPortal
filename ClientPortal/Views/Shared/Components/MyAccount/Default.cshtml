@@ -1,4 +1,4 @@
-﻿@model ApplicationUser
+﻿@model MyAccountViewModel
 
 @{
 
@@ -42,9 +42,12 @@
             <!-- start Tabs -->
             <div class="" role="tabpanel" data-example-id="togglable-tabs">
                 <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                    <li asp-authorize role="presentation" class="active">
-                        <a href="#tab1" id="profile-tab" role="tab" data-toggle="tab" aria-expanded="true">Profile</a>
-                    </li>
+                    @if (Model.ShowProfileTab)
+                    {
+                        <li asp-authorize role="presentation" class="active">
+                            <a href="#tab1" id="profile-tab" role="tab" data-toggle="tab" aria-expanded="true">Profile</a>
+                        </li>
+                    }
                     @if (Model.Role == "Broker")
                     {
                         <li asp-authorize role="presentation">
@@ -128,20 +131,24 @@
                             <vc:list broker-id="@Model.BrokerId" client-id="@Model.ClientId" user-type="Campaigns"></vc:list>
                         </div>
                     </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tab5" aria-labelledby="purchase-tab">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <p class="h3">Purchase History</p>
-                                <vc:list broker-id="@Model.BrokerId" client-id="@Model.ClientId" user-type="Purchases"></vc:list>
-                            </div>
+                    <div role="tabpanel" class="tab-pane fade" id="tab5" aria-labelledby="purchase-tab">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <p class="h3">Purchase History</p>
+                            <vc:list broker-id="@Model.BrokerId" client-id="@Model.ClientId" user-type="Purchases"></vc:list>
                         </div>
-                        <!-- End Tab3  -->
                     </div>
+                    <!-- End Tab3  -->
+                </div>
             </div>
-            <!-- end Tabs -->
-
-        </div><br /><br />
-        <div class="row">
-
         </div>
     </div>
 </div>
+@if (!Model.ShowProfileTab)
+{
+    <script>
+        $('#agents-tab')[0].click();
+
+        id = $('#agents-tab').data('id');
+        LIST.init("Agent", id, 0);
+    </script>
+}
