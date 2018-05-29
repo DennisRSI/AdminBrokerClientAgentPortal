@@ -5,6 +5,10 @@ function AddUser(){
 
     this.init = function () {
 
+        $('input.ein').inputmask({
+            mask: '99-9999999'
+        });
+
         $('input[type="tel"]').inputmask({
             mask: '(999) 999-9999'
         });
