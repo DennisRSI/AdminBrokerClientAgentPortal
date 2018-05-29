@@ -128,15 +128,15 @@ namespace Codes.Service.Services
         {
             try
             {
-                AgentModel agent = await _context.Agents.FirstOrDefaultAsync(x => x.AgentId == model.AgentId);
+                var agent = await _context.Agents.FirstOrDefaultAsync(x => x.AgentId == model.AgentId);
 
-                if(agent != null && agent.AgentId > 0)
+                if (agent != null && agent.AgentId > 0)
                 {
                     agent.AgentId = model.AgentId;
+                    agent.BrokerId = model.BrokerId;
                     agent.Address = model.Address;
                     agent.AgentFirstName = model.AgentFirstName;
                     agent.AgentLastName = model.AgentLastName;
-                    agent.BrokerId = model.Broker != null && model.Broker.BrokerId > 0 ? model.Broker.BrokerId : 0;
                     agent.City = model.City;
                     agent.CompanyName = model.CompanyName;
                     agent.Country = model.Country;

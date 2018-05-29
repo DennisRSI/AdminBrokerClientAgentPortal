@@ -472,6 +472,9 @@ namespace ClientPortal.Controllers.APIs
         {
             var agent = new AgentViewModel()
             {
+                AgentId = user.AgentId,
+                BrokerId = user.BrokerId,
+                ApplicationReference = user.Id,
                 Email = user.UserName,
                 AgentFirstName = user.FirstName,
                 AgentLastName = user.LastName,
