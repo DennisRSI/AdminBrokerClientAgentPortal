@@ -80,20 +80,30 @@
                                                 <label for="campaignName">Create Campaign Name</label>
                                                 <input type="text" class="form-control" id="campaignName" name="campaignName" placeholder="Campaign Name" required>
                                                 <br />
-                                                <label class="">Select Quantity</label>
-                                                <input type="number" class="form-control" id="cardQuantity" name="cardQuantity" placeholder="Card Qty" max="20000" required>
-                                                Physical Cards Available: 20,000<br />
-                                                Virtual Cards Available: 49,500<br />
-
-                                                <em><a href="#" class="nav-page-id" data-controller="view" data-page="purchase">Purchase More?</a></em>
+                                                <label for="cardQuantity">Select Quantity</label>
+                                                <input type="number" class="form-control" id="cardQuantity" name="cardQuantity" placeholder="Card Qty" required>
+                                                <br />
+                                                <label>Activations Per Card</label>
+                                                <input type="number" class="form-control" id="activations" name="activations" placeholder="Determines how many activations each individual card number can have." required>
+                                                <br />
+                                                <label>Starting Number</label>
+                                                <input type="number" class="form-control" id="startingNumber" name="startingNumber" placeholder="Determines the first number of the card sequence." required>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                                                <label class="">Select Card Type</label>
-                                                <select class="form-control nested-dropdown" id="campaignType" name="campaignType">
+                                                <label>Select Card Type</label>
+                                                <select class="form-control nested-dropdown" id="campaignType" name="campaignType" style="margin-bottom: 0">
                                                     <option>Physical</option>
                                                     <option>Virtual</option>
                                                 </select>
+                                                <br />
+                                                <label>Pre-Alpha Character(s)</label>
+                                                <input type="text" class="form-control" id="cardPrefix" name="cardPrefix" placeholder="Alpha character to be at the start of each card." required>
+                                                <br />
+                                                <label>Post-Alpha Character(s)</label>
+                                                <input type="text" class="form-control" id="cardSuffix" name="cardSuffix" placeholder="Alpha character to be at the end of each card." required>
                                             </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                 <span>Select Benefits For This Campaign:</span>
                                                 <div class="checkbox">
@@ -177,7 +187,7 @@
                                         <hr class="card-hr">
                                         <div class="row">
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <h4>Create Activation Flow Landing Page</h4>
+                                                <h4>Create Activation Flow Landing Page - <span style="color: #E74C3C">COMING SOON</span></h4>
                                                 <p class="">The activation flow landing pages are where members will come to learn how to use and activate their new card. You can select from pre-made templates and educational videos or more advanced users have the option of inserting your own HTML code and upload or link to your own self-produced videos.</p><strong>You must select both a Pre-Activation and Post-Activation layout below before your campaign will be fully activated.</strong><p></p>
                                                 <br />
                                             </div>
@@ -536,10 +546,6 @@
                                             <span class="help-block">Note: You can set up a new Google Analytics tracking ID for each campaign and track them individually.</span>
                                         </div>
                                         <div class="clearfix"></div>
-
-                                        <div class="alert alert-warning" role="alert">
-                                            <i class="fa fa-warning"></i> Note: Be sure to issue physical cards in sequential order or you won't be able to put them back into inventory if you end a campaign and there are still unissued cards available to reallocate.
-                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
