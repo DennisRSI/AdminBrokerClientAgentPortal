@@ -460,6 +460,8 @@ namespace Codes.Service.Services
 
             return model;
         }*/
+
+        /* Not Used
         public async Task<CampaignViewModel> GetCampaignById(int campaignId)
         {
             CampaignViewModel campaign = new CampaignViewModel();
@@ -506,6 +508,9 @@ namespace Codes.Service.Services
 
             return campaign;
         }
+        */
+
+        /* Not used
         public async Task<ListViewModel<CampaignViewModel>> GetCampaigns(int brokerId, int startRowIndex = 0, int numberOfRows = 10, string sortColumn = "DEFAULT")
         {
             ListViewModel<CampaignViewModel> items = new ListViewModel<CampaignViewModel>();
@@ -556,6 +561,8 @@ namespace Codes.Service.Services
 
             return items;
         }
+        */
+
         public async Task<ClientViewModel> GetClientByAccountId(string accountId)
         {
             ClientViewModel client = new ClientViewModel();
