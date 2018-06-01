@@ -18,6 +18,14 @@ namespace Codes.Service.ViewModels
         [Display(Name = "Card Quantity", Prompt = "Card Quantity")]
         public int CardQuantity { get; set; }
 
+        public int ActivationsPerCard { get; set; }
+        public string CardPrefix { get; set; }
+        public string CardSuffix { get; set; }
+
+        public bool BenefitCondo { get; set; }
+        public bool BenefitHotel { get; set; }
+        public bool BenefitShopping { get; set; }
+
         [Display(Name = "Package Id", Prompt = "Package Id")]
         public int PackageId { get; set; }
 
@@ -37,9 +45,9 @@ namespace Codes.Service.ViewModels
         [Display(Name = "Campaign Description", Prompt = "Campaign Description")]
         public string CampaignDescription { get; set; }
 
-        public int PreLoginVideoId { get; set; }
+        public int? PreLoginVideoId { get; set; }
 
-        public int PostLoginVideoId { get; set; }
+        public int? PostLoginVideoId { get; set; }
 
         [Display(Name = "Google Analytics Code", Prompt = "Google Analytics Code")]
         public string GoogleAnalyticsCode { get; set; } = null;
@@ -83,6 +91,11 @@ namespace Codes.Service.ViewModels
         private DateTime? GetDateTime(string date)
         {
             string format = "yyyy-MM-dd";
+
+            if (date == null)
+            {
+                return null;
+            }
 
             try
             {

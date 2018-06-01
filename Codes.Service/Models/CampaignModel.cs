@@ -49,15 +49,6 @@ namespace Codes.Service.Models
         [Required]
         public int CardQuantity { get; set; }
 
-        [Required]
-        public bool BenefitCondo { get; set; }
-
-        [Required]
-        public bool BenefitHotel { get; set; }
-
-        [Required]
-        public bool BenefitShopping { get; set; }
-
         public DateTime? StartDateTime { get; set; } = null;
         public DateTime? EndDateTime { get; set; } = null;
         public string CampaignDescription { get; set; }
