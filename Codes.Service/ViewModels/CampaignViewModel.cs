@@ -18,10 +18,6 @@ namespace Codes.Service.ViewModels
         [Display(Name = "Card Quantity", Prompt = "Card Quantity")]
         public int CardQuantity { get; set; }
 
-        public bool BenefitCondo { get; set; }
-        public bool BenefitHotel { get; set; }
-        public bool BenefitShopping { get; set; }
-
         [Display(Name = "Package Id", Prompt = "Package Id")]
         public int PackageId { get; set; }
 
@@ -67,13 +63,7 @@ namespace Codes.Service.ViewModels
         {
             get
             {
-                string result = String.Empty;
-
-                result += BenefitCondo ? "Condo, " : String.Empty;
-                result += BenefitHotel ? "Hotel, " : String.Empty;
-                result += BenefitShopping ? "Shopping, " : String.Empty;
-
-                return result.TrimEnd(',', ' ');
+                return String.Empty;
             }
         }
 

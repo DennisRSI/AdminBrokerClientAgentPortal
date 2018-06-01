@@ -59,9 +59,6 @@ namespace Codes.Service.Services
                 ClientId = clientId,
                 PostLoginVideoId = viewModel.PostLoginVideoId,
                 PreLoginVideoId = viewModel.PreLoginVideoId,
-                BenefitCondo = viewModel.BenefitCondo,
-                BenefitHotel = viewModel.BenefitHotel,
-                BenefitShopping = viewModel.BenefitShopping,
                 CardQuantity = viewModel.CardQuantity
             };
 

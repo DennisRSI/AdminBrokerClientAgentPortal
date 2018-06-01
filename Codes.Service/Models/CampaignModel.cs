@@ -87,12 +87,12 @@ namespace Codes.Service.Models
         [ForeignKey("BrokerId")]
         public BrokerModel Broker { get; set; }
 
-        public int PreLoginVideoId { get; set; }
+        public int? PreLoginVideoId { get; set; }
 
         [ForeignKey("PreLoginVideoId")]
         public virtual VideoModel PreLoginVideo { get; set; }
 
-        public int PostLoginVideoId { get; set; }
+        public int? PostLoginVideoId { get; set; }
 
         [ForeignKey("PostLoginVideoId")]
         public virtual VideoModel PostLoginVideo { get; set; }
