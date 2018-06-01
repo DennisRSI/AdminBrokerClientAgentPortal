@@ -38,8 +38,8 @@ function Campaign(){
             var form = $('#addCampaignForm');
             var formValid = form.valid();
 
-            var preVideoValid = self.validateVideo('pre');
-            var postVideoValid = self.validateVideo('post');
+            var preVideoValid = true; // self.validateVideo('pre'); // Customized Layouts are not yet active
+            var postVideoValid = true; // self.validateVideo('post'); // Customized Layouts are not yet active
 
             if (!formValid || !preVideoValid || !postVideoValid) {
                 return;

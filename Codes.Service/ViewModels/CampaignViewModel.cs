@@ -27,20 +27,16 @@ namespace Codes.Service.ViewModels
 
         public DateTime? StartDateTime
         {
-            get { return GetDateTime(StartDate, StartTime); }
-            set { } // TODO
+            get { return GetDateTime(StartDate); }
         }
 
         public DateTime? EndDateTime
         {
-            get { return GetDateTime(EndDate, EndTime); }
-            set { } // TODO
+            get { return GetDateTime(EndDate); }
         }
 
         public string StartDate { get; set; }
-        public string StartTime { get; set; }
         public string EndDate { get; set; }
-        public string EndTime { get; set; }
 
         [Display(Name = "Campaign Description", Prompt = "Campaign Description")]
         public string CampaignDescription { get; set; }
@@ -94,14 +90,13 @@ namespace Codes.Service.ViewModels
             }
         }
 
-        private DateTime? GetDateTime(string date, string time)
+        private DateTime? GetDateTime(string date)
         {
-            string dateTime = $"{date} {time}";
-            string format = "yyyy-MM-dd HH:mm";
+            string format = "yyyy-MM-dd";
 
             try
             {
-                return DateTime.ParseExact(dateTime, format, CultureInfo.InvariantCulture);
+                return DateTime.ParseExact(date, format, CultureInfo.InvariantCulture);
             }
             catch (FormatException)
             {

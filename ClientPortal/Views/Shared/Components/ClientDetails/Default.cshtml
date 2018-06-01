@@ -92,15 +92,15 @@
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                                                 <label>Select Card Type</label>
                                                 <select class="form-control nested-dropdown" id="campaignType" name="campaignType" style="margin-bottom: 0">
-                                                    <option>Physical</option>
                                                     <option>Virtual</option>
+                                                    <!-- <option>Physical</option> -->
                                                 </select>
                                                 <br />
                                                 <label>Pre-Alpha Character(s)</label>
-                                                <input type="text" class="form-control" id="cardPrefix" name="cardPrefix" placeholder="Alpha character to be at the start of each card." required>
+                                                <input type="text" class="form-control" id="cardPrefix" name="cardPrefix" maxlength="3" placeholder="Alpha character to be at the start of each card." required>
                                                 <br />
                                                 <label>Post-Alpha Character(s)</label>
-                                                <input type="text" class="form-control" id="cardSuffix" name="cardSuffix" placeholder="Alpha character to be at the end of each card." required>
+                                                <input type="text" class="form-control" id="cardSuffix" name="cardSuffix" maxlength="3" placeholder="Alpha character to be at the end of each card.">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -125,7 +125,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-3 col-sm-6 col-xs-12">
-                                                <h5><i class="fa fa-calendar"></i> &nbsp;Expected Start Date:</h5>
+                                                <h5><i class="fa fa-calendar"></i> &nbsp;Campaign Start Date:</h5>
                                                 <fieldset class="form-horizontal">
                                                     <div class="control-group">
                                                         <div class="controls">
@@ -143,34 +143,8 @@
                                                     <div class="control-group">
                                                         <div class="controls">
                                                             <div class=" form-group text-center">
-                                                                <input id="endDate" name="endDate" type="date" class="form-control has-feedback-left" placeholder="End Date" required>
+                                                                <input id="endDate" name="endDate" type="date" class="form-control has-feedback-left" placeholder="End Date">
                                                                 <span class="disclaimer-text">MM/DD/YYYY</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-                                            </div>
-                                            <div class="col-md-3 col-sm-6 col-xs-12">
-                                                <h5><i class="fa fa-clock-o"></i> &nbsp;Expected Start Time:</h5>
-                                                <fieldset class="form-horizontal">
-                                                    <div class="control-group">
-                                                        <div class="controls">
-                                                            <div class="form-group text-center">
-                                                                <input id="startTime" name="startTime" type="time" class="form-control has-feedback-left" placeholder="Start Time" required>
-                                                                <span class="disclaimer-text">HH:MM AM/PM</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-                                            </div>
-                                            <div class="col-md-3 col-sm-6 col-xs-12">
-                                                <h5><i class="fa fa-clock-o"></i> &nbsp;Campaign End Time:</h5>
-                                                <fieldset class="form-horizontal">
-                                                    <div class="control-group">
-                                                        <div class="controls">
-                                                            <div class="form-group text-center">
-                                                                <input id="endTime" name="endTime" type="time" class="form-control has-feedback-left" placeholder="End Time" required>
-                                                                <span class="disclaimer-text">HH:MM AM/PM</span>
                                                             </div>
                                                         </div>
                                                     </div>
