@@ -163,6 +163,11 @@ BEGIN
 		EXEC dbo.SyncCodes;
 		SET @Message = 'Success';
 	END;
+
+    select *
+    from Brokers
+    where BrokerId = @BrokerId
+    
 	
 /*
 

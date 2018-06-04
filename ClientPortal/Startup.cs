@@ -99,6 +99,7 @@ namespace ClientPortal
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IDocumentService, DocumentService>();
             services.AddTransient<IViewDataService, ViewDataService>();
+            services.AddTransient<ICodeGeneratorService, CodeGeneratorService>();
         }
     }
 }

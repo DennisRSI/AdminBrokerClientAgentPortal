@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Codes.Service.Data;
+using Codes.Service.Domain;
 using Codes.Service.Interfaces;
 using Codes.Service.Models;
 using Codes.Service.ViewModels;
@@ -16,12 +17,13 @@ namespace Codes.Service.Services
         private readonly ILogger _logger;
         private readonly CodesDbContext _context;
         private readonly IMapper _mapper;
+        private readonly ICodeGeneratorService _codeGeneratorService;
 
-        public CampaignService(CodesDbContext context, ILoggerFactory loggerFactory, IMapper mapper)
+        public CampaignService(CodesDbContext context, ILoggerFactory loggerFactory, IMapper mapper, ICodeGeneratorService codeGeneratorService)
         {
             _context = context;
             _logger = loggerFactory.CreateLogger<CodeService>();
-            _mapper = mapper;
+            _codeGeneratorService = codeGeneratorService;
         }
 
         public void Clone(int campaignId)
@@ -44,26 +46,61 @@ namespace Codes.Service.Services
 
         public void Create(int clientId, CampaignViewModel viewModel)
         {
-           var model = new CampaignModel
-           {
-                BrokerId = 1, // Is the broker needed here because the client already is assigned to a broker?
-                CampaignDescription = viewModel.CampaignDescription,
-                CampaignName = viewModel.CampaignName,
-                CampaignType = viewModel.CampaignType,
-                CustomCSS = viewModel.CustomCSS,
-                CustomCssPost = viewModel.CustomCssPost,
-                EndDateTime = viewModel.EndDateTime,
-                GoogleAnalyticsCode = viewModel.GoogleAnalyticsCode,
-                IsActive = true,
-                StartDateTime = viewModel.StartDateTime,
-                ClientId = clientId,
-                PostLoginVideoId = viewModel.PostLoginVideoId,
-                PreLoginVideoId = viewModel.PreLoginVideoId,
-                CardQuantity = viewModel.CardQuantity
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                var model = new CampaignModel
+                {
+                    BrokerId = 1, // Is the broker needed here because the client already is assigned to a broker?
+                    CampaignDescription = viewModel.CampaignDescription,
+                    CampaignName = viewModel.CampaignName,
+                    CampaignType = viewModel.CampaignType,
+                    CustomCSS = viewModel.CustomCSS,
+                    CustomCssPost = viewModel.CustomCssPost,
+                    EndDateTime = viewModel.EndDateTime,
+                    GoogleAnalyticsCode = viewModel.GoogleAnalyticsCode,
+                    IsActive = true,
+                    StartDateTime = viewModel.StartDateTime,
+                    ClientId = clientId,
+                    PostLoginVideoId = viewModel.PostLoginVideoId,
+                    PreLoginVideoId = viewModel.PreLoginVideoId,
+                    CardQuantity = viewModel.CardQuantity
+                };
+
+                _context.Campaigns.Add(model);
+                _context.SaveChanges();
+
+                CreateCodes(viewModel);
+
+                transaction.Commit();
+            }
+
+        }
+
+        private void CreateCodes(CampaignViewModel model)
+        {
+            int startNumber = 1000;
+            int endNumber = 1000;
+
+            var options = new CodeGeneratorOptions()
+            {
+                Prefix = model.CardPrefix,
+                Suffix = model.CardSuffix,
+                Increment = model.Increment,
+                BrokerId = 1, // TODO
+                ClientId = 1, // TODO
+                CampaignId = 1, // TODO
+                PackageId = 0, // TODO
+                Padding = model.Padding,
+                StartNumber = startNumber,
+                EndNumber = endNumber,
+                FaceValue = 0, // TODO
+                Quantity = model.CardQuantity,
+                ActivationsPerCode = model.ActivationsPerCard,
+                StartDate = DateTime.Now, //  TODO model.StartDate,
+                EndDate = DateTime.Now // TODO model.EndDate
             };
 
-            _context.Campaigns.Add(model);
-            _context.SaveChanges();
+            _codeGeneratorService.GenerateCodes(1, options); // TODO: Change 1
         }
 
         public DataTableViewModel<CampaignViewModel> GetByClient(int id)
