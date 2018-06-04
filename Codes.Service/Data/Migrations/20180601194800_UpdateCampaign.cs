@@ -17,10 +17,6 @@ namespace Codes.Service.Data.Migrations
                 table: "Campaigns",
                 nullable: true,
                 oldClrType: typeof(int));
-
-            migrationBuilder.DropColumn("BenefitCondo", "Campaigns");
-            migrationBuilder.DropColumn("BenefitHotel", "Campaigns");
-            migrationBuilder.DropColumn("BenefitShopping", "Campaigns");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
