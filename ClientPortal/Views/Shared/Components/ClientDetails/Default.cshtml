@@ -78,27 +78,34 @@
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                                                 <label for="campaignName">Create Campaign Name</label>
-                                                <input type="text" class="form-control" id="campaignName" name="campaignName" placeholder="Campaign Name" required>
+                                                <input type="text" class="form-control" id="campaignName" name="campaignName" tabindex="1" placeholder="Campaign Name" required>
                                                 <br />
                                                 <label for="cardQuantity">Select Quantity</label>
-                                                <input type="number" class="form-control" id="cardQuantity" name="cardQuantity" placeholder="Card Qty" required>
+                                                <input type="number" class="form-control" id="cardQuantity" name="cardQuantity" tabindex="3" placeholder="Card Qty" required>
                                                 <br />
-                                                <label>Activations Per Card</label>
-                                                <input type="number" class="form-control" id="activationsPerCard" name="activationsPerCard" placeholder="Determines how many activations each individual card number can have." required>
+                                                <label for="cardPrefix">Pre-Alpha Character(s)</label>
+                                                <input type="text" class="form-control" id="cardPrefix" name="cardPrefix" maxlength="3" tabindex="5" placeholder="Alpha character to be at the start of each card." required>
+                                                <br />
+                                                <label for="padding">Padding</label>
+                                                <input type="text" class="form-control" id="padding" name="padding" maxlength="2" tabindex="7" value="6" placeholder="Number of placeholder digits" required>
                                                 <br />
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                                                <label>Select Card Type</label>
-                                                <select class="form-control nested-dropdown" id="campaignType" name="campaignType" style="margin-bottom: 0">
+                                                <label for="campaignType">Select Card Type</label>
+                                                <select class="form-control nested-dropdown" id="campaignType" name="campaignType" tabindex="2" style="margin-bottom: 0">
                                                     <option>Virtual</option>
                                                     <!-- <option>Physical</option> -->
                                                 </select>
                                                 <br />
-                                                <label>Pre-Alpha Character(s)</label>
-                                                <input type="text" class="form-control" id="cardPrefix" name="cardPrefix" maxlength="3" placeholder="Alpha character to be at the start of each card." required>
+                                                <label for="activationsPerCard">Activations Per Card</label>
+                                                <input type="number" class="form-control" id="activationsPerCard" name="activationsPerCard" tabindex="4" value="1" placeholder="Determines how many activations each individual card number can have." required>
                                                 <br />
-                                                <label>Post-Alpha Character(s)</label>
-                                                <input type="text" class="form-control" id="cardSuffix" name="cardSuffix" maxlength="3" placeholder="Alpha character to be at the end of each card.">
+                                                <label for="cardSuffix">Post-Alpha Character(s)</label>
+                                                <input type="text" class="form-control" id="cardSuffix" name="cardSuffix" maxlength="3" tabindex="6" placeholder="Alpha character to be at the end of each card.">
+                                                <br />
+                                                <label for="increment">Increment</label>
+                                                <input type="text" class="form-control" id="increment" name="increment" maxlength="3" tabindex="8" value="3" placeholder="Increment card numbers by this amount" required>
+                                                <br />
                                             </div>
                                         </div>
                                         <div class="row">

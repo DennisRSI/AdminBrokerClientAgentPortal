@@ -21,6 +21,8 @@ namespace Codes.Service.ViewModels
         public int ActivationsPerCard { get; set; }
         public string CardPrefix { get; set; }
         public string CardSuffix { get; set; }
+        public int Padding { get; set; }
+        public int Increment { get; set; }
 
         public bool BenefitCondo { get; set; }
         public bool BenefitHotel { get; set; }
