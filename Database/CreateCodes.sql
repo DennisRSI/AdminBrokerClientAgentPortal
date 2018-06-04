@@ -6,14 +6,14 @@ IF EXISTS ( SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'CreateCodes'
 go
 
 CREATE PROCEDURE [dbo].[CreateCodes]
-	@BrokerId INT,
-    @PurchaseId INT,
-    @NumberOfCodes INT,
-    @NumberOfUses INT,
+	@CampaignId INT,
     @CodeType VARCHAR(8),
-	@CodePrefix VARCHAR(5),
-	@CodeSuffix VARCHAR(5),
-	@IncrementBy INT
+    @Quantity INT,
+    @ActivationsPerCode INT,
+	@Prefix VARCHAR(3),
+	@Suffix VARCHAR(3),
+    @Padding INT,
+    @Increment INT,
 AS
 BEGIN
 	
