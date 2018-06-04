@@ -69,6 +69,9 @@ namespace Codes.Service.Models
         public int? PurchaseId { get; set; }
         public PurchaseModel Purchase { get; set; }
 
+        public int? CampaignId { get; set; } = null;
+        public CampaignModel Campaign { get; set; }
+
         [JsonIgnore]
         public ICollection<CodeActivityModel> CodeActivities { get; set; } = new List<CodeActivityModel>();
     }
