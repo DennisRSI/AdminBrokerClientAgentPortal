@@ -24,19 +24,9 @@
                     </tablehead>
                     <tablebody>
                         <tr>
-                            <td>Total Cards Assigned</td>
-                            <td>@Html.DisplayFor(m => m.PhysicalTotal)</td>
-                            <td>@Html.DisplayFor(m => m.VirtualTotal)</td>
-                        </tr>
-                        <tr>
                             <td>Cards in Campaigns</td>
                             <td>@Html.DisplayFor(m => m.PhysicalInCampaigns)</td>
                             <td>@Html.DisplayFor(m => m.VirtualInCampaigns)</td>
-                        </tr>
-                        <tr>
-                            <td>Available Cards</td>
-                            <td>@Html.DisplayFor(m => m.PhysicalAvailable)</td>
-                            <td>@Html.DisplayFor(m => m.VirtualAvailable)</td>
                         </tr>
                     </tablebody>
                 </table>
@@ -586,10 +576,6 @@
 
     if (labels.length > 0) {
         $('#nocampaigns').hide();
-
-        labels.push('Unassigned');
-        data.push(@Model.PhysicalAvailable + @Model.VirtualAvailable);
-
         CLIENTDETAILS.init(@Model.ClientId);
         CLIENTDETAILS.loadChart(labels, data);
     }

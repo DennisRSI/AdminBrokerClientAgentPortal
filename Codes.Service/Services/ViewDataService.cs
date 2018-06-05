@@ -26,12 +26,8 @@ namespace Codes.Service.Services
                 ApplicationReference = client.ApplicationReference,
                 ClientId = client.ClientId,
                 CompanyName = client.CompanyName,
-                PhysicalTotal = 0,
                 PhysicalInCampaigns = 0,
-                PhysicalAvailable = 0,
-                VirtualTotal = 0,
                 VirtualInCampaigns = 0,
-                VirtualAvailable = 0,
             };
 
             model.Campaigns = _context.Campaigns
