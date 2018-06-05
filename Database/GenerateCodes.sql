@@ -164,9 +164,10 @@ BEGIN
 		SET @Message = 'Success';
 	END;
 
-    select *
-    from Brokers
-    where BrokerId = @BrokerId
+	-- Required for Entity Framework
+    select top 1 *
+    from Codes
+
     
 	
 /*
