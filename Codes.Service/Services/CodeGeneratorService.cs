@@ -29,7 +29,7 @@ namespace Codes.Service.Services
                 options.ClientId,           // @ClientId INT,
                 options.CampaignId,         // @CampaignId INT,
                 "Virtual",                  // @CodeType VARCHAR(50) = 'Virtual',
-                "503",                      // @Issuer VARCHAR(100),
+                "530",                      // @Issuer VARCHAR(100),
                 options.PackageId,          // @PackageId INT = 0,
                 options.Padding,            // @PaddingNumber tinyint = 5,
                 "0",                        // @PaddingValue CHAR = '0',
