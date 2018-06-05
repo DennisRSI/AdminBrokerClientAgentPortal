@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 
 namespace Codes.Service.Services
 {
@@ -46,11 +47,13 @@ namespace Codes.Service.Services
 
         public void Create(int clientId, CampaignViewModel viewModel)
         {
+            var brokerId = _context.Clients.Single(c => c.ClientId == clientId).BrokerId;
+
             using (var transaction = _context.Database.BeginTransaction())
             {
                 var model = new CampaignModel
                 {
-                    BrokerId = 1, // Is the broker needed here because the client already is assigned to a broker?
+                    BrokerId = brokerId,
                     CampaignDescription = viewModel.CampaignDescription,
                     CampaignName = viewModel.CampaignName,
                     CampaignType = viewModel.CampaignType,
@@ -69,38 +72,64 @@ namespace Codes.Service.Services
                 _context.Campaigns.Add(model);
                 _context.SaveChanges();
 
-                CreateCodes(viewModel);
+                viewModel.CampaignId = model.CampaignId;
+
+                CreateCodes(clientId, brokerId, viewModel);
 
                 transaction.Commit();
             }
 
         }
 
-        private void CreateCodes(CampaignViewModel model)
+        private void CreateCodes(int clientId, int brokerId, CampaignViewModel model)
         {
-            int startNumber = 1000;
-            int endNumber = 1000;
+            int startNumber = 10000;
+            var range = _context.CodeRanges.Where(r => r.PreAlphaCharacters == model.CardPrefix && r.PostAlphaCharacters == model.CardSuffix);
+
+            if (range.Any())
+            {
+                startNumber = range.Max(r => r.EndNumber);
+            }
+
+            startNumber += model.Increment;
+            int endNumber = startNumber + (model.CardQuantity - 1) * model.Increment;
+            int packageId = PackageCode.GetCode(model.BenefitCondo, model.BenefitShopping, model.BenefitDining);
 
             var options = new CodeGeneratorOptions()
             {
                 Prefix = model.CardPrefix,
                 Suffix = model.CardSuffix,
                 Increment = model.Increment,
-                BrokerId = 1, // TODO
-                ClientId = 1, // TODO
-                CampaignId = 1, // TODO
-                PackageId = 0, // TODO
+                BrokerId = brokerId,
+                ClientId = clientId,
+                CampaignId = model.CampaignId,
+                PackageId = packageId,
                 Padding = model.Padding,
                 StartNumber = startNumber,
                 EndNumber = endNumber,
-                FaceValue = 0, // TODO
+                FaceValue = Convert.ToInt32(model.FaceValue),
                 Quantity = model.CardQuantity,
                 ActivationsPerCode = model.ActivationsPerCard,
-                StartDate = DateTime.Now, //  TODO model.StartDate,
-                EndDate = DateTime.Now // TODO model.EndDate
+                StartDate = GetDate(model.StartDate),
+                EndDate = GetNullableDate(model.EndDate)
             };
 
-            _codeGeneratorService.GenerateCodes(1, options); // TODO: Change 1
+            _codeGeneratorService.GenerateCodes(options);
+        }
+
+        private DateTime GetDate(string dateString)
+        {
+            return DateTime.Parse(dateString);
+        }
+
+        private DateTime? GetNullableDate(string dateString)
+        {
+            if (String.IsNullOrWhiteSpace(dateString))
+            {
+                return null;
+            }
+
+            return GetDate(dateString);
         }
 
         public DataTableViewModel<CampaignViewModel> GetByClient(int id)
@@ -109,7 +138,17 @@ namespace Codes.Service.Services
                                 .Where(c => c.ClientId == id && c.IsActive)
                                 .OrderByDescending(c => c.CreationDate);
 
-            var data = _mapper.Map<IEnumerable<CampaignModel>, IEnumerable<CampaignViewModel>>(queryResult);
+            // Automapper NullReferenceException here. Disabling for now.
+            //var data = _mapper.Map<IEnumerable<CampaignModel>, IEnumerable<CampaignViewModel>>(queryResult);
+
+            // Automapper workaround
+            var data = queryResult.Select(q => new CampaignViewModel()
+                {
+                    CampaignId = q.CampaignId,
+                    CampaignName = q.CampaignName,
+                    CardQuantity = q.CardQuantity,
+                    CampaignType = q.CampaignType
+                });
 
             return new DataTableViewModel<CampaignViewModel>
             {

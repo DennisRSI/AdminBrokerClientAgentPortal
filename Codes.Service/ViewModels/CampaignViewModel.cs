@@ -12,6 +12,8 @@ namespace Codes.Service.ViewModels
         [StringLength(100), Display(Name = "Campaign Name", Prompt = "Campaign Name")]
         public string CampaignName { get; set; }
 
+        public string FaceValue { get; set; }
+
         [StringLength(50), Display(Name = "Card Type", Prompt = "Card Type")]
         public string CampaignType { get; set; } = "Virtual";
 
@@ -25,8 +27,8 @@ namespace Codes.Service.ViewModels
         public int Increment { get; set; }
 
         public bool BenefitCondo { get; set; }
-        public bool BenefitHotel { get; set; }
         public bool BenefitShopping { get; set; }
+        public bool BenefitDining { get; set; }
 
         [Display(Name = "Package Id", Prompt = "Package Id")]
         public int PackageId { get; set; }

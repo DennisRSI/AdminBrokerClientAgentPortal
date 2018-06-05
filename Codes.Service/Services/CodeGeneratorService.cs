@@ -16,11 +16,11 @@ namespace Codes.Service.Services
             _context = context;
         }
 
-        public void GenerateCodes(int campaignId, CodeGeneratorOptions options)
+        public void GenerateCodes(CodeGeneratorOptions options)
         {
             string output = String.Empty;
 
-            _context.Brokers.FromSql("EXECUTE dbo.GenerateCodes {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16}, {17}, {18}, {19}, {20}",
+            _context.Codes.FromSql("EXECUTE dbo.GenerateCodes {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16}, {17}, {18}, {19}, {20}",
     
                 options.Prefix,             // @LettersStart VARCHAR(50) = '',
                 options.Suffix,             // @LettersEnd VARCHAR(50) = '',
