@@ -28,7 +28,7 @@ namespace Codes.Service.Services
                 options.BrokerId,           // @BrokerId INT,
                 options.ClientId,           // @ClientId INT,
                 options.CampaignId,         // @CampaignId INT,
-                "Virtual",                  // @CodeType VARCHAR(50) = 'Virtual',
+                options.CampaignType,       // @CodeType VARCHAR(50) = 'Virtual',
                 "530",                      // @Issuer VARCHAR(100),
                 options.PackageId,          // @PackageId INT = 0,
                 options.Padding,            // @PaddingNumber tinyint = 5,

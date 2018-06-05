@@ -83,20 +83,12 @@ namespace Codes.Service.Services
 
         private void CreateCodes(int clientId, int brokerId, CampaignViewModel model)
         {
-            int startNumber = 10000;
-            var range = _context.CodeRanges.Where(r => r.PreAlphaCharacters == model.CardPrefix && r.PostAlphaCharacters == model.CardSuffix);
-
-            if (range.Any())
-            {
-                startNumber = range.Max(r => r.EndNumber);
-            }
-
-            startNumber += model.Increment;
-            int endNumber = startNumber + (model.CardQuantity - 1) * model.Increment;
+            int endNumber = model.StartNumber + (model.CardQuantity - 1) * model.Increment;
             int packageId = PackageCode.GetCode(model.BenefitCondo, model.BenefitShopping, model.BenefitDining);
 
             var options = new CodeGeneratorOptions()
             {
+                CampaignType = model.CampaignType,
                 Prefix = model.CardPrefix,
                 Suffix = model.CardSuffix,
                 Increment = model.Increment,
@@ -105,7 +97,7 @@ namespace Codes.Service.Services
                 CampaignId = model.CampaignId,
                 PackageId = packageId,
                 Padding = model.Padding,
-                StartNumber = startNumber,
+                StartNumber = model.StartNumber,
                 EndNumber = endNumber,
                 FaceValue = Convert.ToInt32(model.FaceValue),
                 Quantity = model.CardQuantity,

@@ -13,6 +13,7 @@ namespace Codes.Service.ViewModels
         public string CampaignName { get; set; }
 
         public string FaceValue { get; set; }
+        public int StartNumber { get; set; }
 
         [StringLength(50), Display(Name = "Card Type", Prompt = "Card Type")]
         public string CampaignType { get; set; } = "Virtual";

@@ -4,6 +4,7 @@ namespace Codes.Service.Domain
 {
     public class CodeGeneratorOptions
     {
+        public string CampaignType { get; set; }
         public string Prefix { get; set; }
         public string Suffix { get; set; }
         public int Increment { get; set; }
