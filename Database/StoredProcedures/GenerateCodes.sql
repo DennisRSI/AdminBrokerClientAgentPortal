@@ -1,4 +1,6 @@
-
+IF OBJECT_ID('GenerateCodes', 'P') IS NOT NULL
+  DROP PROCEDURE GenerateCodes
+GO
 
 CREATE PROCEDURE [dbo].[GenerateCodes] 
 	-- Add the parameters for the stored procedure here

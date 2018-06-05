@@ -1,3 +1,6 @@
+IF OBJECT_ID('SyncCodes', 'P') IS NOT NULL
+  DROP PROCEDURE SyncCodes
+GO
 
 CREATE PROCEDURE [dbo].[SyncCodes] 
 	-- Add the parameters for the stored procedure here
