@@ -39,7 +39,8 @@ BEGIN
 	SET @CodeCount = 0;
 
 	DECLARE @TempTable as Table
-		(Code NVARCHAR(500),
+	(
+		Code NVARCHAR(500),
 		ChargeAmount DECIMAL(18,2),
 		CreationDate DATETIME,
 		EndDate DATETIME NULL,
@@ -52,7 +53,9 @@ BEGIN
 		CreatorIP NVARCHAR(50),
 		HotelPoints INT,
 		PackageId INT,
-		VerifyEmail BIT);
+		VerifyEmail BIT,
+		CampaignId INT
+	);
 
 	DECLARE @AlreadyInCodes as Table
 		(Code NVARCHAR(500));
@@ -71,35 +74,42 @@ BEGIN
 		WHILE @start <= @end
 		BEGIN
 			INSERT INTO @TempTable
-           ([Code]
-           ,[ChargeAmount]
-           ,[CreationDate]
-           ,[EndDate]
-           ,[IsActive]
-           ,[Issuer]
-           ,[NumberOfUses]
-           ,[StartDate]
-           ,[IssuerReference]
-           ,[CondoRewards]
-           ,[CreatorIP]
-           ,[HotelPoints]
-           ,[PackageId]
-           ,[VerifyEmail])
+        	(
+				 [Code]
+				,[ChargeAmount]
+				,[CreationDate]
+				,[EndDate]
+				,[IsActive]
+				,[Issuer]
+				,[NumberOfUses]
+				,[StartDate]
+				,[IssuerReference]
+				,[CondoRewards]
+				,[CreatorIP]
+				,[HotelPoints]
+				,[PackageId]
+				,[VerifyEmail]
+				,[CampaignId]
+		   )
      VALUES
-           (@LettersStart + [dbo].[PaddString] (CAST(@Start as VARCHAR(100)),@PaddingNumber,@PaddingValue) + @LettersEnd
-           , @ChargeAmount
-           ,GETDATE()
-           ,@EndDate
-           ,1
-           ,@Issuer
-           ,@NumberOfUses
-           ,@StartDate
-           ,@BrokerId
-           ,@CondoRewards
-           ,'127.0.0.1'
-           ,@HotelPoints
-           ,@PackageId
-           ,@VerifyEmail);
+           (
+				 @LettersStart + [dbo].[PaddString] (CAST(@Start as VARCHAR(100)),@PaddingNumber,@PaddingValue) + @LettersEnd
+				,@ChargeAmount
+				,GETDATE()
+				,@EndDate
+				,1
+				,@Issuer
+				,@NumberOfUses
+				,@StartDate
+				,@BrokerId
+				,@CondoRewards
+				,'127.0.0.1'
+				,@HotelPoints
+				,@PackageId
+				,@VerifyEmail
+				,@CampaignId
+			);
+			
 		SET @start = @start + @IncrementBy;
 		END;
 	

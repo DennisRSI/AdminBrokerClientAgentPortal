@@ -31,8 +31,10 @@ BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
+	
 	DECLARE @TempTable as Table
-		(Code NVARCHAR(500),
+	(
+		Code NVARCHAR(500),
 		ChargeAmount DECIMAL(18,2),
 		CreationDate DATETIME,
 		EndDate DATETIME NULL,
@@ -45,7 +47,10 @@ BEGIN
 		CreatorIP NVARCHAR(50),
 		HotelPoints INT,
 		PackageId INT,
-		VerifyEmail BIT);
+		VerifyEmail BIT,
+		CampaignId INT
+	);
+
 	DECLARE @TempMessage AS VARCHAR(MAX);
 	DECLARE @CodeRangeId AS INT,
 		@StartRange VARCHAR(500),
@@ -159,7 +164,8 @@ BEGIN
            ,[CreatorIP]
            ,[HotelPoints]
            ,[PackageId]
-           ,[VerifyEmail])
+           ,[VerifyEmail]
+		   ,[CampaignId])
 		SELECT * FROM @TempTable;
 
 		EXEC dbo.SyncCodes;
@@ -170,62 +176,4 @@ BEGIN
     select top 1 *
     from Codes
 
-    
-	
-/*
-
-IF @StartNumber > @EndNumber
-BEGIN
-	SET @Message = 'Error: StartNumber is greater than EndNumber'
-END
-ELSE
-BEGIN	
-
-
-	DECLARE @start INT;
-	DECLARE @end INT;
-
-	SELECT @start = @StartNumber, @end = @EndNumber;
-
-	WHILE @start <= @end
-	begin
-		--INSERT INTO BUR20VM.dbo.SEQUENTIAL_TABLE(CTN_NUM_SEQ)
-		--VALUES(@start)
-INSERT INTO [dbo].[Codes]
-           ([Code]
-           ,[ChargeAmount]
-           ,[CreationDate]
-           ,[DeactivationDate]
-           ,[EndDate]
-           ,[IsActive]
-           ,[Issuer]
-           ,[NumberOfUses]
-           ,[StartDate]
-           ,[IssuerReference]
-           ,[CondoRewards]
-           ,[CreatorIP]
-           ,[HotelPoints]
-           ,[PackageId]
-           ,[VerifyEmail])
-     VALUES
-           (@LettersStart + [dbo].[PaddString] (CAST(@Start as VARCHAR(100)),@PaddingNumber,@PaddingValue) + @LettersEnd
-           , @ChargeAmount
-           ,GETDATE()
-           ,NULL
-           ,@EndDate
-           ,1
-           ,@Issuer
-           ,@NumberOfUses
-           ,@StartDate
-           ,@BrokerId
-           ,@CondoRewards
-           ,'127.0.0.1'
-           ,@HotelPoints
-           ,@PackageId
-           ,1);
-		SET @start = @start + @IncrementBy;
-	end;
-
-	EXEC dbo.SyncCodes;
-	END;*/
 	END;
