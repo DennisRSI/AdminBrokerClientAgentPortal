@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Codes.Service.Models
 {
@@ -12,7 +11,6 @@ namespace Codes.Service.Models
     {
         public CampaignModel()
         {
-
         }
 
         public CampaignModel(CampaignViewModel model)
@@ -34,7 +32,6 @@ namespace Codes.Service.Models
             CreationDate = model.CreationDate;
             CreatorIP = model.CreatorIP;
             DeactivationDate = model.DeactivationDate;
-            
         }
 
         [Key, Required]
@@ -60,21 +57,29 @@ namespace Codes.Service.Models
 
         [Required]
         public int PackageId { get; set; }
+
         [Required]
         public int NumberOfUses { get; set; } = 1;
+
         [Required]
         public float Points { get; set; } = 0;
+
         public DateTime? StartDate { get; set; } = null;
         public DateTime? EndDate { get; set; } = null;
+
         [Required]
         public decimal Cost { get; set; } = 0;
+
         [Required]
         public bool VerifyEmail { get; set; } = true;
 
         public int? ClientId { get; set; }
+
         [ForeignKey("ClientId")]
         public ClientModel Client { get; set; }
+
         public int BrokerId { get; set; }
+
         [ForeignKey("BrokerId")]
         public BrokerModel Broker { get; set; }
 
@@ -92,6 +97,5 @@ namespace Codes.Service.Models
         public ICollection<UnusedCodeModel> UnusedCodes { get; set; }
         public ICollection<UsedCodeModel> UsedCodes { get; set; }
         public ICollection<PendingCodeModel> PendingCodes { get; set; }
-
     }
 }
