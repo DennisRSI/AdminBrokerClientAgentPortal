@@ -1,5 +1,4 @@
 ﻿using ClientPortal.Models;
-using Codes.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,10 +18,10 @@ namespace ClientPortal.Controllers.APIs
             _userManager = userManager;
         }
 
-        [HttpGet("view/{id}")]
-        public IActionResult View(int id)
+        [HttpGet("load/{name}")]
+        public IActionResult Load(string name)
         {
-            return ViewComponent("Report");
+            return ViewComponent("Report", name);
         }
     }
 }

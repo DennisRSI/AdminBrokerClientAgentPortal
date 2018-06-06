@@ -1,0 +1,89 @@
+﻿<div class="col-md-12 col-sm-12 col-xs-12">
+    <br />
+    <div class="x_panel no-print">
+        <div class="x_title no-print">
+            <h2>Activation Reports</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 no-print">
+            <div class="x_panel">
+                <div class="">
+                    <h4>Data Filters</h4>
+                    <hr class="card-hr2">
+                    <form class="form-group">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            Select Report
+                            <select class="form-control form-group" name="activationReport" onchange="location = this.value;">
+                                <option value="reports-activation-byclient.html" selected>By Client</option>
+                                <option value="reports-activation-byagent.html">By Agent</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            Select Client
+                            <select class="form-control form-group" name="paymentStatus">
+                                <option value="">All</option>
+                                <option value="" selected>General Motors</option>
+                                <option value="">Hobby Lobby</option>
+                                <option value="">JC Penney</option>
+                                <option value="">Travel Plus</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            Campaign Status
+                            <select class="form-control form-group" name="paymentStatus">
+                                <option value="">All</option>
+                                <option value="" selected>Active</option>
+                                <option value="">Inactive</option>
+                            </select>
+                        </div><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            Card Used?
+                            <select class="form-control form-group" name="paymentStatus">
+                                <option value="">All</option>
+                                <option value="" selected>Yes</option>
+                                <option value="">No</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 no-print">
+            <div class="x_panel">
+                <div class="">
+                    <h4>Filter by Activation Date</h4>
+                    <hr class="card-hr2">
+                    <form class="form-group">
+                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                            Start Date
+                            <div class="form-group">
+                                <div class='input-group date' id='myDatepicker2'>
+                                    <input type='text' class="form-control" placeholder="MM/DD/YYYY" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                            End Date
+                            <div class="form-group">
+                                <div class='input-group date' id='myDatepicker3'>
+                                    <input type='text' class="form-control" placeholder="MM/DD/YYYY" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center spacer-60">
+        <span class="h1 text-extra-muted">Select Filters Above and Run Report</span><br /><br /><br />
+        <button type="button" class="btn btn-travgreen">
+            <i class="fa fa-bar-chart icon-white purchase-button-icon"></i>Run Report
+        </button>
+    </div>
+</div>

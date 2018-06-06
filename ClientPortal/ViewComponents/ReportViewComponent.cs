@@ -14,11 +14,11 @@ namespace ClientPortal.ViewComponents
             _signInManager = signInManager;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(string name)
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
-                return await Task.FromResult(View());
+                return await Task.FromResult(View(name));
             }
 
             return null;
