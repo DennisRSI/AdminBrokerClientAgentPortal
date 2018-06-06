@@ -130,16 +130,13 @@ namespace Codes.Service.Services
                                 .Where(c => c.ClientId == id && c.IsActive)
                                 .OrderByDescending(c => c.CreationDate);
 
-            // Automapper NullReferenceException here. Disabling for now.
-            //var data = _mapper.Map<IEnumerable<CampaignModel>, IEnumerable<CampaignViewModel>>(queryResult);
-
-            // Automapper workaround
             var data = queryResult.Select(q => new CampaignViewModel()
                 {
                     CampaignId = q.CampaignId,
                     CampaignName = q.CampaignName,
                     CardQuantity = q.CardQuantity,
-                    CampaignType = q.CampaignType
+                    CampaignType = q.CampaignType,
+                    StartNumber = q.CampaignCodeRange.Max(r => r.CodeRange.StartNumber)
                 });
 
             return new DataTableViewModel<CampaignViewModel>

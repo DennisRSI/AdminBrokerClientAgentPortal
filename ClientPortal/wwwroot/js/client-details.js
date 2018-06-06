@@ -7,12 +7,14 @@ function ClientDetails() {
         self.initCampaignTable(clientId);
     }
 
+    // Is this still used?
     this.initCampaignTable = function (clientId) {
         var url = "api/campaign/getbyclient/" + clientId;
 
         var cols = [
             { "data": "campaignId" },
             { "data": "campaignName" },
+            { "data": "startNumber" },
             { "data": "cardQuantity" },
             { "data": "campaignType" },
             { "data": "benefitText" },

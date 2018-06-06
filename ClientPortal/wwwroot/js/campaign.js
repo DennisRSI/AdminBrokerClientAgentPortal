@@ -119,6 +119,7 @@ function Campaign(){
         var cols = [
             { "data": "campaignId" },
             { "data": "campaignName" },
+            { "data": "startNumber" },
             { "data": "cardQuantity" },
             { "data": "campaignType" },
             { "data": "benefitText" },
