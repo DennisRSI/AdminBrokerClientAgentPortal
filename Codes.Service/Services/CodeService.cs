@@ -1320,10 +1320,9 @@ namespace Codes.Service.Services
             try
             {
                 model.RoleName = "Broker";
-                var tmp = from b in _context.Brokers select b;
-                var ct = tmp;
+                var brokers = _context.Brokers.Where(b => b.IsActive && b.ApplicationReference != null);
 
-                model.Data = await (from t in tmp
+                model.Data = await (from t in brokers
                                      select new BrokerListViewModel
                                      {
                                          AccountId = t.ApplicationReference,
@@ -1339,6 +1338,7 @@ namespace Codes.Service.Services
                                          Extension = t.MobilePhone != null && t.MobilePhone.Length > 0 ? "" : t.OfficeExtension,
                                          Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone : t.OfficePhone
                                      }).ToArrayAsync();
+
                 model.Message = "Success";
             }
             catch (Exception ex)
