@@ -1,7 +1,9 @@
 ﻿using Codes.Service.Data;
+using Codes.Service.Domain;
 using Codes.Service.Interfaces;
 using Codes.Service.Models;
 using Codes.Service.ViewModels;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +14,15 @@ namespace Codes.Service.Services
     {
         private readonly ILogger _logger;
         private readonly CodesDbContext _context;
+        private readonly string _connectionString;
+        private readonly DashboardReports _dashboardReports;
 
-        public DashboardService(CodesDbContext context, ILoggerFactory loggerFactory)
+        public DashboardService(CodesDbContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
         {
             _context = context;
             _logger = loggerFactory.CreateLogger<CodeService>();
+            _connectionString = configuration.GetConnectionString("CodeGeneratorConnection");
+            _dashboardReports = new DashboardReports(_connectionString);
         }
 
         public DashboardViewModel GetAdmin()
@@ -25,12 +31,10 @@ namespace Codes.Service.Services
 
             var totals = GetTotals(CodeType.Physical);
             model.PhysicalCardsPurchased = totals.Item1;
-            model.PhysicalCardsInCampaigns = totals.Item2;
             model.PhysicalCardsActivated = totals.Item3;
 
             totals = GetTotals(CodeType.Virtual);
             model.VirtualCardsGenerated = totals.Item1;
-            model.VirtualCardsInCampaigns = totals.Item2;
             model.VirtualCardsActivated = totals.Item3;
 
             model.CardDistributions = GetCardDistributionAdmin();
@@ -40,21 +44,7 @@ namespace Codes.Service.Services
 
         public DashboardViewModel GetBroker(int id)
         {
-            var model = new DashboardViewModel() { DistributionDetailType = "Client" };
-
-            var totals = GetTotals(CodeType.Physical, id);
-            model.PhysicalCardsPurchased = totals.Item1;
-            model.PhysicalCardsInCampaigns = totals.Item2;
-            model.PhysicalCardsActivated = totals.Item3;
-
-            totals = GetTotals(CodeType.Virtual, id);
-            model.VirtualCardsGenerated = totals.Item1;
-            model.VirtualCardsInCampaigns = totals.Item2;
-            model.VirtualCardsActivated = totals.Item3;
-
-            model.CardDistributions = GetCardDistributionBroker(id);
-
-            return model;
+            return _dashboardReports.GetBroker(id);
         }
 
         public DashboardViewModel GetAgent(int id)
@@ -64,11 +54,9 @@ namespace Codes.Service.Services
             var campaigns = _context.CampaignAgents.Where(ca => ca.AgentId == id).Select(ca => ca.Campaign);
 
             var totals = GetTotalsFromCampaigns(CodeType.Physical, campaigns);
-            model.PhysicalCardsInCampaigns = totals.Item1;
             model.PhysicalCardsActivated = totals.Item2;
 
             totals = GetTotalsFromCampaigns(CodeType.Virtual, campaigns);
-            model.VirtualCardsInCampaigns = totals.Item1;
             model.VirtualCardsActivated = totals.Item2;
 
             model.CardDistributions = GetCardDistribution(campaigns);
@@ -83,11 +71,9 @@ namespace Codes.Service.Services
             var campaigns = _context.Campaigns.Where(c => c.ClientId == clientId);
 
             var totals = GetTotalsFromCampaigns(CodeType.Physical, campaigns);
-            model.PhysicalCardsInCampaigns = totals.Item1;
             model.PhysicalCardsActivated = totals.Item2;
 
             totals = GetTotalsFromCampaigns(CodeType.Virtual, campaigns);
-            model.VirtualCardsInCampaigns = totals.Item1;
             model.VirtualCardsActivated = totals.Item2;
 
             model.CardDistributions = GetCardDistribution(campaigns);

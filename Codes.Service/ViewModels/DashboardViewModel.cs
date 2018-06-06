@@ -9,16 +9,10 @@ namespace Codes.Service.ViewModels
         public int PhysicalCardsPurchased { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:n0}")]
-        public int PhysicalCardsInCampaigns { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:n0}")]
         public int PhysicalCardsActivated { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:n0}")]
         public int VirtualCardsGenerated { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:n0}")]
-        public int VirtualCardsInCampaigns { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:n0}")]
         public int VirtualCardsActivated { get; set; }
