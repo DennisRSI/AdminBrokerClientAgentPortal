@@ -1,5 +1,7 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace Codes.Service.Domain
 {
@@ -20,7 +22,7 @@ namespace Codes.Service.Domain
             return ExecuteDataTable(procedureName, new [] { parameter });
         }
 
-        public DataTable ExecuteDataTable(string procedureName, SqlParameter[] parameters)
+        public DataTable ExecuteDataTable(string procedureName, IEnumerable<SqlParameter> parameters)
         {
             var table = new DataTable();
 
@@ -31,7 +33,7 @@ namespace Codes.Service.Domain
                     using (var adapter = new SqlDataAdapter(cmd))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddRange(parameters);
+                        cmd.Parameters.AddRange(parameters.ToArray());
                         adapter.Fill(table);
 
                         return table;

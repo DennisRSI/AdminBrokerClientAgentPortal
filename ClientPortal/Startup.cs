@@ -100,6 +100,7 @@ namespace ClientPortal
             services.AddTransient<IDocumentService, DocumentService>();
             services.AddTransient<IViewDataService, ViewDataService>();
             services.AddTransient<ICodeGeneratorService, CodeGeneratorService>();
+            services.AddTransient<IReportService, ReportService>();
         }
     }
 }
