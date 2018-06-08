@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace ClientPortal.Models
 {
-    public class ActivationReportLoadViewModel
+    public class ActivationLoadViewModel
     {
-        public ActivationReportLoadViewModel()
+        public ActivationLoadViewModel()
         {
             Clients = new List<SelectListItem>();
             Agents = new List<SelectListItem>();

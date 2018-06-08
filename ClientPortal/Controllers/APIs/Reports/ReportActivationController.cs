@@ -33,7 +33,7 @@ namespace ClientPortal.Controllers.APIs
         public async Task<IActionResult> LoadAsync(string type)
         {
             var view = "Load" + type;
-            var model = new ActivationReportLoadViewModel();
+            var model = new ActivationLoadViewModel();
             var user = await _userManager.GetUserAsync(HttpContext.User);
             
             switch (type.ToLower())
