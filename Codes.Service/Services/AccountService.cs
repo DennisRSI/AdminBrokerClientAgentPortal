@@ -74,5 +74,17 @@ namespace Codes.Service.Services
 
             return model;
         }
+
+        public IEnumerable<AccountViewModel> GetClientsOfBroker(int brokerId)
+        {
+            return _context.Clients.Where(c => c.BrokerId == brokerId)
+                    .Select(c => new AccountViewModel(c.ClientId, c.CompanyName));
+        }
+
+        public IEnumerable<AccountViewModel> GetAgentsOfBroker(int brokerId)
+        {
+            return _context.Agents.Where(a => a.BrokerId == brokerId)
+                    .Select(a => new AccountViewModel(a.AgentId, a.CompanyName));
+        }
     }
 }
