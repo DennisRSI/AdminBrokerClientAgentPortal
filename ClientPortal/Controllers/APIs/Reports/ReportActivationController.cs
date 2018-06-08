@@ -46,5 +46,33 @@ namespace ClientPortal.Controllers.APIs
 
             return View(view, model);
         }
+
+        [HttpGet("gethtml/{type}/{id}")]
+        public async Task<IActionResult> GetHtml(string type, int id)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var model = new ActivationResultViewModel();
+
+            switch (type)
+            {
+                case "client":
+                    var clients = _accountService.GetClientsOfBroker(user.BrokerId)
+                        .Where(c => c.Id == id || id == 0)            
+                        .Select(c => new ActivationTableViewModel() { Id = c.Id, Type = type });
+
+                    model.Tables.AddRange(clients);
+                    break;
+
+                case "agent":
+                    var agents = _accountService.GetAgentsOfBroker(user.BrokerId)
+                        .Where(a => a.Id == id || id == 0)
+                        .Select(a => new ActivationTableViewModel() { Id = a.Id, Type = type });
+
+                    model.Tables.AddRange(agents);
+                    break;
+            }
+
+            return View("Html", model);
+        }
     }
 }
