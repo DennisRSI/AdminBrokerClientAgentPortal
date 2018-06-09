@@ -4,6 +4,6 @@ namespace Codes.Service.Interfaces
 {
     public interface IReportService
     {
-        DataTableViewModel<ActivationResultViewModel> GetDataActivation(ActivationReportViewModel model);
+        DataTableViewModel<ActivationCardViewModel> GetDataActivation(ActivationReportViewModel model);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Codes.Service.ViewModels
 {
-    public class ActivationResultViewModel : _BaseViewModel
+    public class ActivationCardViewModel : _BaseViewModel
     {
         public string CardNumber { get; set; }
         public DateTime ActivationDate { get; set; }

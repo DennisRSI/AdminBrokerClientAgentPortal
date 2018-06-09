@@ -1,9 +1,11 @@
 ﻿using ClientPortal.Models;
 using Codes.Service.Interfaces;
+using Codes.Service.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -35,7 +37,7 @@ namespace ClientPortal.Controllers.APIs
             var view = "Load" + type;
             var model = new ActivationLoadViewModel();
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            
+
             switch (type.ToLower())
             {
                 case "broker":
@@ -44,20 +46,30 @@ namespace ClientPortal.Controllers.APIs
                     break;
             };
 
-            return View(view, model);
+            return PartialView(view, model);
         }
 
-        [HttpGet("gethtml/{type}/{id}")]
-        public async Task<IActionResult> GetHtml(string type, int id)
+        [HttpGet("gethtml/{type}/{id}/{name}/{start}/{end}")]
+        public async Task<IActionResult> GetHtml(string type, int id, string name, string start, string end)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var model = new ActivationResultViewModel();
+
+            var startSplit = start.Split('-');
+            var endSplit = end.Split('-');
+
+            var model = new ActivationResultViewModel()
+            {
+                Type = type.First().ToString().ToUpper() + type.Substring(1),
+                AccountName = name,
+                StartDate = $"{startSplit[1]}/{startSplit[2]}/{startSplit[0]}",
+                EndDate = $"{endSplit[1]}/{endSplit[2]}/{endSplit[0]}",
+            };
 
             switch (type)
             {
                 case "client":
                     var clients = _accountService.GetClientsOfBroker(user.BrokerId)
-                        .Where(c => c.Id == id || id == 0)            
+                        .Where(c => c.Id == id || id == 0)
                         .Select(c => new ActivationTableViewModel() { Id = c.Id, Type = type });
 
                     model.Tables.AddRange(clients);
@@ -72,7 +84,46 @@ namespace ClientPortal.Controllers.APIs
                     break;
             }
 
-            return View("Html", model);
+            return PartialView("Html", model);
+        }
+
+        [HttpGet("getjson/{type}/{id}/{status}/{used}/{start}/{end}")]
+        public async Task<DataTableViewModel<ActivationCardViewModel>> GetJson(string type, int id, string status, string used, string start, string end)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            int? agentId = null;
+            int? brokerId = user.BrokerId;
+            int? clientId = null;
+            DateTime startDate = DateTime.Now.AddYears(-1);
+            DateTime endDate = DateTime.Now;
+
+            switch (type)
+            {
+                case "agent":
+                    agentId = id;
+                    break;
+
+                case "client":
+                    clientId = id;
+                    break;
+            }
+
+            startDate = DateTime.ParseExact(start, "yyyy-MM-dd", null);
+            endDate = DateTime.ParseExact(end, "yyyy-MM-dd", null);
+
+            var query = new ActivationReportViewModel()
+            {
+                AgentId = agentId,
+                BrokerId = brokerId,
+                ClientId = clientId,
+                CampaignStatus = status,
+                IsCardUsed = used == "Y",
+                StartDate = startDate,
+                EndDate = endDate,
+            };
+
+            return _reportService.GetDataActivation(query);
         }
     }
 }

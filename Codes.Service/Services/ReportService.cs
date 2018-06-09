@@ -1,15 +1,12 @@
 ﻿using Codes.Service.Data;
 using Codes.Service.Domain;
 using Codes.Service.Interfaces;
-using Codes.Service.Models;
 using Codes.Service.ViewModels;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 
 namespace Codes.Service.Services
 {
@@ -27,10 +24,10 @@ namespace Codes.Service.Services
             _dataAccess = new DataAccess(connectionString);
         }
 
-        public DataTableViewModel<ActivationResultViewModel> GetDataActivation(ActivationReportViewModel model)
+        public DataTableViewModel<ActivationCardViewModel> GetDataActivation(ActivationReportViewModel model)
         {
             const string procedureName = "ReportActivations";
-            var result = new DataTableViewModel<ActivationResultViewModel>();
+            var result = new DataTableViewModel<ActivationCardViewModel>();
 
             var totalCount = new SqlParameter()
             {
@@ -56,11 +53,11 @@ namespace Codes.Service.Services
             };
 
             var table = _dataAccess.ExecuteDataTable(procedureName, parameters);
-            var resultData = new List<ActivationResultViewModel>();
+            var resultData = new List<ActivationCardViewModel>();
 
             foreach (DataRow row in table.Rows)
             {
-                var activation = new ActivationResultViewModel()
+                var activation = new ActivationCardViewModel()
                 {
                     CardNumber = (string)row["CardNumber"],
                     ActivationDate = (DateTime)row["ActivationDate"],

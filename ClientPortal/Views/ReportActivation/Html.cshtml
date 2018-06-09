@@ -1,16 +1,16 @@
 ﻿@model ClientPortal.Models.ActivationResultViewModel
 <div class="x_panel">
     <div class="x_content">
-        <span class="h2 text-muted">Activation Report by Client</span>
-        <div class="pull-right no-print" style="display: block">
+        <span class="h2 text-muted">Activation Report by @Model.Type</span>
+        <div class="pull-right no-print" style="display: none">
             <a href="#" target="_blank"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-file-pdf-o"></i>&nbsp; Download PDF</button></a>&nbsp;
             <a href="#"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Export Excel</button></a>
         </div>
         <div class="clearfix"></div>
         <hr class="card-hr">
-        <span class="h4">Client: General Motors</span><br />
-        <span class="h4">Date Range: 08/03/2017 - 08/10/2017</span>
-        <div class="pull-right spacer-5">Report Ran: TEST 11/20/2017 09:23:18</div>
+        <span class="h4">@Model.Type: @Model.AccountName</span><br />
+        <span class="h4">Date Range: @Model.StartDate - @Model.EndDate</span>
+        <div class="pull-right spacer-5">Report Ran: @Model.ReportTime</div>
         <div class="clearfix"></div>
 
         @Html.DisplayFor(m => m.Tables)
