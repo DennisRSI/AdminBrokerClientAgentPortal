@@ -5,13 +5,8 @@ namespace Codes.Service.ViewModels
     //
     public class AccountViewModel
     {
-        public AccountViewModel(int id, string text)
-        {
-            Id = id;
-            Text = text;
-        }
-
         public int Id { get; set; }
-        public string Text { get; set; }
+        public string FullName { get; set; }
+        public string CompanyName { get; set; }
     }
 }

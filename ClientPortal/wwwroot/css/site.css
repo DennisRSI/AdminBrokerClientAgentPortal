@@ -5735,3 +5735,11 @@ hr.thicc-hr {
 #search-results caption {
     margin-bottom: 0;
 }
+
+.capitalFirstLetter {
+    display: inline-block;
+}
+
+.capitalFirstLetter:first-letter {
+    text-transform: uppercase;
+}

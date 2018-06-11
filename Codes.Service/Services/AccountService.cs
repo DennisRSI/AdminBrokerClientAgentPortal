@@ -78,13 +78,13 @@ namespace Codes.Service.Services
         public IEnumerable<AccountViewModel> GetClientsOfBroker(int brokerId)
         {
             return _context.Clients.Where(c => c.BrokerId == brokerId)
-                    .Select(c => new AccountViewModel(c.ClientId, c.CompanyName));
+                    .Select(c => new AccountViewModel() { Id = c.ClientId, FullName = $"{c.ContactFirstName} {c.ContactLastName}", CompanyName = c.CompanyName });
         }
 
         public IEnumerable<AccountViewModel> GetAgentsOfBroker(int brokerId)
         {
             return _context.Agents.Where(a => a.BrokerId == brokerId)
-                    .Select(a => new AccountViewModel(a.AgentId, a.CompanyName));
+                    .Select(a => new AccountViewModel() { Id = a.AgentId, FullName = $"{a.AgentFirstName} {a.AgentLastName}", CompanyName = a.CompanyName });
         }
     }
 }

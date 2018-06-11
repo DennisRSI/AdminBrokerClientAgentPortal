@@ -41,8 +41,8 @@ namespace ClientPortal.Controllers.APIs
             switch (type.ToLower())
             {
                 case "broker":
-                    model.Agents = _accountService.GetAgentsOfBroker(user.BrokerId).Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.Text });
-                    model.Clients = _accountService.GetClientsOfBroker(user.BrokerId).Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.Text });
+                    model.Agents = _accountService.GetAgentsOfBroker(user.BrokerId).Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName });
+                    model.Clients = _accountService.GetClientsOfBroker(user.BrokerId).Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName });
                     break;
             };
 
@@ -70,7 +70,7 @@ namespace ClientPortal.Controllers.APIs
                 case "client":
                     var clients = _accountService.GetClientsOfBroker(user.BrokerId)
                         .Where(c => c.Id == id || id == 0)
-                        .Select(c => new ActivationTableViewModel() { Id = c.Id, Type = type });
+                        .Select(c => new ActivationTableViewModel() { Id = c.Id, Type = type, CompanyName = c.CompanyName });
 
                     model.Tables.AddRange(clients);
                     break;
@@ -78,7 +78,7 @@ namespace ClientPortal.Controllers.APIs
                 case "agent":
                     var agents = _accountService.GetAgentsOfBroker(user.BrokerId)
                         .Where(a => a.Id == id || id == 0)
-                        .Select(a => new ActivationTableViewModel() { Id = a.Id, Type = type });
+                        .Select(a => new ActivationTableViewModel() { Id = a.Id, Type = type, CompanyName = a.CompanyName });
 
                     model.Tables.AddRange(agents);
                     break;
