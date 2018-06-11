@@ -11,7 +11,7 @@ function Activation() {
             $('#' + value).show();
         });
 
-        $('#run-report').click(function () {
+        $('button.runreport').click(function () {
             self.getHtml();
         });
     }
@@ -40,8 +40,6 @@ function Activation() {
             return;
         }
 
-        console.log('selected: ' + selectReport);
-
         if (selectReport == 'client') {
             name = $('#select-client option:selected').text();
         }
@@ -63,7 +61,7 @@ function Activation() {
             success: function (data) {
                 $('#result').html(data);
                 $('#start-report').hide();
-                $('#result').show();
+                $('#update-report').removeClass('hidden');
                 $("#loader-container").hide();
                 self.initDataTables();
             },
