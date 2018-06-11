@@ -27,19 +27,7 @@ namespace Codes.Service.Services
 
         public DashboardViewModel GetAdmin()
         {
-            var model = new DashboardViewModel() { DistributionDetailType = "Broker" };
-
-            var totals = GetTotals(CodeType.Physical);
-            model.PhysicalCardsPurchased = totals.Item1;
-            model.PhysicalCardsActivated = totals.Item3;
-
-            totals = GetTotals(CodeType.Virtual);
-            model.VirtualCardsGenerated = totals.Item1;
-            model.VirtualCardsActivated = totals.Item3;
-
-            model.CardDistributions = GetCardDistributionAdmin();
-
-            return model;
+            return _dashboardReports.GetAdmin();
         }
 
         public DashboardViewModel GetBroker(int id)

@@ -12,9 +12,24 @@ namespace Codes.Service.Domain
             _dataAccess = new DataAccess(connectionString);
         }
 
+        public DashboardViewModel GetAdmin()
+        {
+            return CallDashboardBroker(null);
+        }
+
         public DashboardViewModel GetBroker(int brokerId)
         {
-            var table = _dataAccess.ExecuteDataTable("DashboardBroker", "@BrokerId", brokerId);
+            return CallDashboardBroker(brokerId);
+        }
+
+        private DashboardViewModel CallDashboardBroker(int? brokerId)
+        {
+            var parameters = new[]
+{
+                new SqlParameter("@BrokerId", brokerId),
+            };
+
+            var table = _dataAccess.ExecuteDataTable("DashboardBroker", parameters);
             var row = table.Rows[0];
 
             var model = new DashboardViewModel()
