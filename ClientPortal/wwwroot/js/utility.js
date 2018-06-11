@@ -22,5 +22,11 @@ function Utility() {
         });
         return o;
     }
+
+    this.formatDateTime = function (value) {
+        var date = new Date(value);
+        var month = date.getMonth() + 1;
+        return (month.toString().length > 1 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+    }
 }
 

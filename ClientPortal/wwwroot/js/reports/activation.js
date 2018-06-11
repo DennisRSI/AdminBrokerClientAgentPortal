@@ -79,7 +79,14 @@ function Activation() {
 
         var columns = [
             { "data": "cardNumber" },
-            { "data": "activationDate" },
+            {
+                "data": "activationDate",
+                "render":
+                    function (data) {
+                        return UTILITY.formatDateTime(data);
+                    }
+            },
+
             { "data": "memberName" },
             { "data": "denomination" },
             { "data": "cardType" },
