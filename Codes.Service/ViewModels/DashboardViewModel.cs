@@ -54,52 +54,5 @@ namespace Codes.Service.ViewModels
         public decimal ShoppingPendingCashback { get; set; }
 
         public string DistributionDetailType { get; set; }
-
-        public IEnumerable<CardDistributionViewModel> CardDistributions { get; set; } = new List<CardDistributionViewModel>();
-    }
-
-    public class CardDistributionViewModel
-    {
-        public string Name { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:n0}")]
-        public int PhysicalCardsTotal { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:n0}")]
-        public int PhysicalCardsActivated { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:n0}")]
-        public int VirtualCardsTotal { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:n0}")]
-        public int VirtualCardsActivated { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:p1}")]
-        public decimal PhysicalCardsActivationRate
-        {
-            get
-            {
-                if (PhysicalCardsTotal == 0)
-                {
-                    return 0;
-                }
-
-                return (decimal)PhysicalCardsActivated / PhysicalCardsTotal;
-            }
-        }
-
-        [DisplayFormat(DataFormatString = "{0:p1}")]
-        public decimal VirtualCardsActivationRate
-        {
-            get
-            {
-                if (VirtualCardsTotal == 0)
-                {
-                    return 0;
-                }
-
-                return (decimal)VirtualCardsActivated / VirtualCardsTotal;
-            }
-        }
     }
 }

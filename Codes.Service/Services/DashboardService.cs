@@ -47,8 +47,6 @@ namespace Codes.Service.Services
             totals = GetTotalsFromCampaigns(CodeType.Virtual, campaigns);
             model.VirtualCardsActivated = totals.Item2;
 
-            model.CardDistributions = GetCardDistribution(campaigns);
-
             return model;
         }
 
@@ -63,8 +61,6 @@ namespace Codes.Service.Services
 
             totals = GetTotalsFromCampaigns(CodeType.Virtual, campaigns);
             model.VirtualCardsActivated = totals.Item2;
-
-            model.CardDistributions = GetCardDistribution(campaigns);
 
             return model;
         }
@@ -137,87 +133,6 @@ namespace Codes.Service.Services
             int totalActivated = used;
 
             return (totalInCampaigns, totalActivated);
-        }
-
-        private IEnumerable<CardDistributionViewModel> GetCardDistributionAdmin()
-        {
-            foreach (var broker in _context.Brokers)
-            {
-                var distribution = new CardDistributionViewModel
-                {
-                    Name = $"{broker.BrokerFirstName} {broker.BrokerLastName}"
-                };
-
-                distribution.PhysicalCardsTotal = _context.CodeRanges.Where(cr => cr.BrokerId == broker.BrokerId && cr.CodeType == CodeType.Physical)
-                                    .Select(cr => cr.GetTotalCodes())
-                                    .Sum();
-
-                distribution.PhysicalCardsActivated = _context.UsedCodes.Where(c => c.BrokerId == broker.BrokerId && c.CodeType == CodeType.Physical).Count();
-
-                distribution.VirtualCardsTotal = _context.CodeRanges.Where(cr => cr.BrokerId == broker.BrokerId && cr.CodeType == CodeType.Virtual)
-                    .Select(cr => cr.GetTotalCodes())
-                    .Sum();
-
-                distribution.VirtualCardsActivated = _context.UsedCodes.Where(c => c.BrokerId == broker.BrokerId && c.CodeType == CodeType.Virtual).Count();
-
-                yield return distribution;
-            }
-        }
-
-        private IEnumerable<CardDistributionViewModel> GetCardDistributionBroker(int brokerId)
-        {
-            foreach (var client in _context.Clients.Where(c => c.BrokerId == brokerId))
-            {
-                var distribution = new CardDistributionViewModel()
-                {
-                    Name = client.CompanyName
-                };
-
-                var campaignsIds = _context.Campaigns.Where(c => c.ClientId == client.ClientId).Select(c => c.CampaignId).ToList();
-
-                var unused = GetUnusedCodes(CodeType.Physical, brokerId).Count(c => campaignsIds.Contains(c.CampaignId.Value));
-                var pending = GetPendingCodes(CodeType.Physical, brokerId).Count(c => campaignsIds.Contains(c.CampaignId.Value));
-                var used = GetUsedCodes(CodeType.Physical, brokerId).Count(c => campaignsIds.Contains(c.CampaignId.Value));
-
-                distribution.PhysicalCardsTotal = unused + pending + used;
-                distribution.PhysicalCardsActivated = used;
-
-                unused = GetUnusedCodes(CodeType.Virtual, brokerId).Count(c => campaignsIds.Contains(c.CampaignId.Value));
-                pending = GetPendingCodes(CodeType.Virtual, brokerId).Count(c => campaignsIds.Contains(c.CampaignId.Value));
-                used = GetUsedCodes(CodeType.Virtual, brokerId).Count(c => campaignsIds.Contains(c.CampaignId.Value));
-
-                distribution.VirtualCardsTotal = unused + pending + used;
-                distribution.VirtualCardsActivated = used;
-
-                yield return distribution;
-            }
-        }
-
-        private IEnumerable<CardDistributionViewModel> GetCardDistribution(IQueryable<CampaignModel> campaigns)
-        {
-            foreach (var campaign in campaigns)
-            {
-                var distribution = new CardDistributionViewModel()
-                {
-                    Name = campaign.CampaignName
-                };
-
-                var unused = GetUnusedCodes(CodeType.Physical).Count(c => c.CampaignId == campaign.CampaignId);
-                var pending = GetPendingCodes(CodeType.Physical).Count(c => c.CampaignId == campaign.CampaignId);
-                var used = GetUsedCodes(CodeType.Physical).Count(c => c.CampaignId == campaign.CampaignId);
-
-                distribution.PhysicalCardsTotal = unused + pending + used;
-                distribution.PhysicalCardsActivated = used;
-
-                unused = GetUnusedCodes(CodeType.Virtual).Count(c => c.CampaignId == campaign.CampaignId);
-                pending = GetPendingCodes(CodeType.Virtual).Count(c => c.CampaignId == campaign.CampaignId);
-                used = GetUsedCodes(CodeType.Virtual).Count(c => c.CampaignId == campaign.CampaignId);
-
-                distribution.VirtualCardsTotal = unused + pending + used;
-                distribution.VirtualCardsActivated = used;
-
-                yield return distribution;
-            }
         }
 
         private IQueryable<CodeRangeModel> GetCodeRanges(string type, int brokerId = 0)
