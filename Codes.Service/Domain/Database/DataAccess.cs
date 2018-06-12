@@ -22,6 +22,11 @@ namespace Codes.Service.Domain
             return ExecuteDataTable(procedureName, new [] { parameter });
         }
 
+        public DataTable ExecuteDataTable(string procedureName)
+        {
+            return ExecuteDataTable(procedureName, Enumerable.Empty<SqlParameter>());
+        }
+
         public DataTable ExecuteDataTable(string procedureName, IEnumerable<SqlParameter> parameters)
         {
             var table = new DataTable();

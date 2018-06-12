@@ -54,5 +54,7 @@ namespace Codes.Service.ViewModels
         public decimal ShoppingPendingCashback { get; set; }
 
         public string DistributionDetailType { get; set; }
+        public string Role { get; set; }
+        public int Id { get; set; }
     }
 }

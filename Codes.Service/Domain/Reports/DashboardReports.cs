@@ -14,6 +14,7 @@ namespace Codes.Service.Domain
 
         public DashboardViewModel GetAdmin()
         {
+            // Broker and Admin share the same proc
             return CallDashboardBroker(null);
         }
 
@@ -25,7 +26,7 @@ namespace Codes.Service.Domain
         private DashboardViewModel CallDashboardBroker(int? brokerId)
         {
             var parameters = new[]
-{
+            {
                 new SqlParameter("@BrokerId", brokerId),
             };
 

@@ -64,6 +64,9 @@ namespace ClientPortal.ViewComponents
                         break;
                 }
 
+                model.Role = role;
+                model.Id = id;
+
                 ViewData["Role"] = role;
                 return await Task.FromResult(View(model));
             }
