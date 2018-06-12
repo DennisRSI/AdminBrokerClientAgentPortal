@@ -37,22 +37,17 @@
                     <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Commission Report by Broker</a></li>
                     <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Commission Report by Source</a></li>
                     <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Chargeback Report</a></li>
-                    <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Production Report by Source</a></li>
-                    <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Production Report by Broker</a></li>
-                    <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Production Report by Client</a></li>
-                    <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Production Report by Agent</a></li>
-                    <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Activation Reports</a></li>
+                    <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Production Report</a></li>
+                    <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Activation Report</a></li>
                 </ul>
             </li>
             <li asp-authorize asp-roles="Broker,Agent,Client">
                 <a><i class="fa fa-bar-chart nav-icons-blue"></i> Reports <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
-                    <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Commission Reports</a></li>
+                    <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Commission Report</a></li>
                     <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Chargeback Report</a></li>
-                    <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Production Report by Client</a></li>
-                    <li asp-authorize asp-roles="Broker"><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Production Report by Agent</a></li>
-                    <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Production Report by Campaign</a></li>
-                    <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Activation Reports</a></li>
+                    <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Production Report</a></li>
+                    <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Activation Report</a></li>
                 </ul>
             </li>
         </ul>
