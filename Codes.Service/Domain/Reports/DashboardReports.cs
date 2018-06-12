@@ -15,7 +15,10 @@ namespace Codes.Service.Domain
         public DashboardViewModel GetAdmin()
         {
             // Broker and Admin share the same proc
-            return CallDashboardBroker(null);
+            var model = CallDashboardBroker(null);
+            model.DistributionDetailType = "Broker";
+
+            return model;
         }
 
         public DashboardViewModel GetBroker(int brokerId)

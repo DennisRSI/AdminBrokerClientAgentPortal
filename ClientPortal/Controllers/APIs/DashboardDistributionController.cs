@@ -31,19 +31,19 @@ namespace ClientPortal.Controllers.APIs
         [HttpGet("broker/{brokerId}")]
         public DataTableViewModel<CardDistributionViewModel> GetBroker(int brokerId)
         {
-            return null;
+            return _dashboardDistributionService.GetBroker(brokerId);
         }
 
         [HttpGet("agent/{agentId}")]
         public DataTableViewModel<CardDistributionViewModel> GetAgent(int agentId)
         {
-            return null;
+            return _dashboardDistributionService.GetAgent(agentId);
         }
 
         [HttpGet("client/{clientId}")]
         public DataTableViewModel<CardDistributionViewModel> GetClient(int clientId)
         {
-            return null;
+            return _dashboardDistributionService.GetClient(clientId);
         }
     }
 }

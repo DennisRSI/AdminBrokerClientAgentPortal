@@ -25,7 +25,6 @@ function Dashboard() {
 
         var selector = '#card-distribution';
         var table = $(selector);
-        var id = table.attr('id');
         var role = table.data('role');
         var accountId = table.data('id');
 
@@ -33,7 +32,7 @@ function Dashboard() {
             role = 'admin';
         }
 
-        var url = ['/api/dashboarddistribution', role, id].join('/');
+        var url = ['/api/dashboarddistribution', role, accountId].join('/');
 
         var tableSettings = LIST.getDataTableDefaults(url, columns, 'GET');
 

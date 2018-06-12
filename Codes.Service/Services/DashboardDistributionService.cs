@@ -5,9 +5,10 @@ using Codes.Service.Models;
 using Codes.Service.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
+using System.Data.SqlClient;
 
 namespace Codes.Service.Services
 {
@@ -15,7 +16,6 @@ namespace Codes.Service.Services
     {
         private readonly ILogger _logger;
         private readonly CodesDbContext _context;
-        private readonly DashboardReports _dashboardReports;
         private readonly DataAccess _dataAccess;
 
         public DashboardDistributionService(CodesDbContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
@@ -29,15 +29,40 @@ namespace Codes.Service.Services
 
         public DataTableViewModel<CardDistributionViewModel> GetAdmin()
         {
+            return GetModel("DashboardDistributionAdmin", "@AdminId", 0);
+        }
+
+        public DataTableViewModel<CardDistributionViewModel> GetBroker(int brokerId)
+        {
+            return GetModel("DashboardDistributionBroker", "@BrokerId", brokerId);
+        }
+
+        public DataTableViewModel<CardDistributionViewModel> GetAgent(int agentId)
+        {
+            return GetModel("DashboardDistributionAgent", "@AgentId", agentId);
+        }
+
+        public DataTableViewModel<CardDistributionViewModel> GetClient(int clientId)
+        {
+            return GetModel("DashboardDistributionClient", "@ClientId", clientId);
+        }
+
+        private DataTableViewModel<CardDistributionViewModel> GetModel(string procedureName, string parameterName, int id)
+        {
+            var parameters = new[]
+            {
+                new SqlParameter(parameterName,  Convert.ToInt32(id)),
+            };
+
             var model = new DataTableViewModel<CardDistributionViewModel>();
-            var table = _dataAccess.ExecuteDataTable("DashboardDistributionAdmin");
+            var table = _dataAccess.ExecuteDataTable(procedureName, parameters);
             var results = new List<CardDistributionViewModel>();
 
             foreach (DataRow row in table.Rows)
             {
                 var result = new CardDistributionViewModel()
                 {
-                    Name = (string)row["BrokerFirstName"] + " " + (string)row["BrokerLastName"],
+                    Name = (string)row["FirstName"] + " " + (string)row["LastName"],
                     PhysicalTotal = (int)row["PhysicalTotal"],
                     PhysicalActivated = (int)row["PhysicalActivated"],
                     VirtualTotal = (int)row["VirtualTotal"],
@@ -49,21 +74,6 @@ namespace Codes.Service.Services
 
             model.Data = results.ToArray();
             return model;
-        }
-
-        public DataTableViewModel<CardDistributionViewModel> GetAgent(int agentId)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public DataTableViewModel<CardDistributionViewModel> GetBroker(int brokerId)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public DataTableViewModel<CardDistributionViewModel> GetClient(int clientId)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }
