@@ -1,0 +1,110 @@
+﻿<div class="col-md-12 col-sm-12 col-xs-12">
+    <br />
+    <div class="x_panel no-print">
+        <div class="x_title no-print">
+            <h2>Chargeback Report</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 no-print">
+            <div class="x_panel">
+                <div class="">
+                    <h4>Data Filters</h4>
+                    <hr class="card-hr2">
+                    <form class="form-group">
+                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                            Select Broker
+                            <select class="form-control form-group" name="chargebackBroker">
+                                <option value="all" selected>All Brokers</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                            Select Source
+                            <select class="form-control form-group" name="chargebackSource">
+                                <option value="all" selected>All Sources</option>
+                                <option>Alliance</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 no-print">
+            <div class="x_panel">
+                <div class="">
+                    <h4>Filter By Check-Out Date</h4>
+                    <hr class="card-hr2">
+                    <form class="form-group">
+                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                            From Check-Out
+                            <div class="form-group">
+                                <div class='input-group date' id='myDatepicker2'>
+                                    <input type="date" class="form-control" placeholder="MM/DD/YYYY" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                            To Check-Out
+                            <div class="form-group">
+                                <div class='input-group date' id='myDatepicker3'>
+                                    <input type="date" class="form-control" placeholder="MM/DD/YYYY" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 no-print">
+            <div class="x_panel">
+                <div class="">
+                    <h4>Filter By Chargeback Date</h4>
+                    <hr class="card-hr2">
+                    <form class="form-group">
+                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                            From Date
+                            <div class="form-group">
+                                <div class='input-group date' id='myDatepicker2'>
+                                    <input type="date" class="form-control" placeholder="MM/DD/YYYY" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                            To Date
+                            <div class="form-group">
+                                <div class='input-group date' id='myDatepicker3'>
+                                    <input type="date" class="form-control" placeholder="MM/DD/YYYY" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center spacer-60">
+        <span class="h1 text-extra-muted">Select Filters Above and Run Report</span><br /><br /><br />
+        <a href="admin-report-chargeback2.html">
+            <button type="button" class="btn btn-travgreen">
+                <i class="fa fa-bar-chart icon-white purchase-button-icon"></i>Run Report
+            </button>
+        </a>
+    </div>
+</div>
+
+<script src="~/js/list.js"></script>
+<script src="~/js/reports/activation.js"></script>
+<script>
+            // ACTIVATION.init();
+</script>
