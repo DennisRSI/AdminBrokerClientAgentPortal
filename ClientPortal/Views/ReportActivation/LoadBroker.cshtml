@@ -12,21 +12,24 @@
                     <div class="">
                         <h4>Data Filters</h4>
                         <hr class="card-hr2">
-                        <form class="form-group">
+                        <div class="form-group">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 Select Report
-                                <select id="select-report" class="form-control form-group">
-                                    <option value="client" selected>By Client</option>
-                                    <option value="agent">By Agent</option>
+                                <select id="select-report" class="form-control form-group" asp-items="@Model.ReportType"></select>
+                            </div>
+                            <div id="broker" class="col-lg-6 col-md-6 col-sm-6 col-xs-12 filter">
+                                Select Broker
+                                <select id="select-broker" name="broker" asp-items="@Model.Brokers" class="form-control form-group">
+                                    <option value="0">All</option>
                                 </select>
                             </div>
-                            <div id="client" class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div id="client" class="col-lg-6 col-md-6 col-sm-6 col-xs-12 filter">
                                 Select Client
                                 <select id="select-client" name="client" asp-items="@Model.Clients" class="form-control form-group">
                                     <option value="0">All</option>
                                 </select>
                             </div>
-                            <div id="agent" class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="display: none">
+                            <div id="agent" class="col-lg-6 col-md-6 col-sm-6 col-xs-12 filter">
                                 Select Agent
                                 <select id="select-agent" name="agent" asp-items="@Model.Agents" class="form-control form-group">
                                     <option value="0">All</option>
@@ -47,7 +50,7 @@
                                     <option value="N">No</option>
                                 </select>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -61,7 +64,7 @@
                                 Start Date
                                 <div class="form-group">
                                     <div class='input-group date' id='myDatepicker2'>
-                                        <input id="startDate" name="startDate" type="date" class="form-control" placeholder="MM/DD/YYYY" />
+                                        <input id="startDate" name="startDate" type="date" class="form-control startDate" placeholder="MM/DD/YYYY" />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -72,7 +75,7 @@
                                 End Date
                                 <div class="form-group">
                                     <div class='input-group date' id='myDatepicker3'>
-                                        <input id="endDate" name="endDate" type="date" class="form-control" placeholder="MM/DD/YYYY" />
+                                        <input id="endDate" name="endDate" type="date" class="form-control endDate" placeholder="MM/DD/YYYY" />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -100,8 +103,11 @@
     </form>
 </div>
 
+<script src="~/js/vendors/papaparse/papaparse.min.js"></script>
 <script src="~/js/list.js"></script>
+<script src="~/js/reports/report.js"></script>
 <script src="~/js/reports/activation.js"></script>
 <script>
     ACTIVATION.init();
+    REPORT.init();
 </script>

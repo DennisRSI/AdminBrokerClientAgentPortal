@@ -1,6 +1,6 @@
 @model ActivationTableViewModel
     <hr>
-    <p class="h3"><span class="capitalFirstLetter">@Model.Type</span>: @Model.CompanyName</p>
+    <p class="h3"><span class="capitalFirstLetter">@Model.Type</span>: <span class="tableName">@Model.CompanyName</span></p>
     <table id="@Model.Type-@Model.Id" data-type="@Model.Type" data-id="@Model.Id" class="table table-striped table-bordered jambo_table bulk_action">
         <thead>
             <tr>

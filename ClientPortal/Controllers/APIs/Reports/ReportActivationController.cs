@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,19 +35,58 @@ namespace ClientPortal.Controllers.APIs
         [HttpGet("load/{type}")]
         public async Task<IActionResult> LoadAsync(string type)
         {
-            var view = "Load" + type;
-            var model = new ActivationLoadViewModel();
+            // Currently the view is called "LoadBroker" for all types, consider renaming in the future.
+            var view = "LoadBroker";
+
+            ActivationLoadViewModel model = null;
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
             switch (type.ToLower())
             {
+                case "admin":
+                    model = LoadAdmin();
+                    break;
+
                 case "broker":
-                    model.Agents = _accountService.GetAgentsOfBroker(user.BrokerId).Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName });
-                    model.Clients = _accountService.GetClientsOfBroker(user.BrokerId).Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName });
+                    model = LoadBroker(user.BrokerId);
                     break;
             };
 
             return PartialView(view, model);
+        }
+
+        private ActivationLoadViewModel LoadAdmin()
+        {
+            ActivationLoadViewModel model = new ActivationLoadViewModel
+            {
+                ReportType = new List<SelectListItem>
+                {
+                    new SelectListItem() { Text = "By Broker", Value = "broker" },
+                    new SelectListItem() { Text = "By Client", Value = "client" },
+                    new SelectListItem() { Text = "By Agent", Value = "agent" }
+                },
+                Brokers = _accountService.GetAllBrokers().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName }),
+                Agents = _accountService.GetAllAgents().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName }),
+                Clients = _accountService.GetAllClients().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName })
+            };
+
+            return model;
+        }
+
+        private ActivationLoadViewModel LoadBroker(int brokerId)
+        {
+            ActivationLoadViewModel model = new ActivationLoadViewModel
+            {
+                ReportType = new List<SelectListItem>
+                {
+                    new SelectListItem() { Text = "By Client", Value = "client" },
+                    new SelectListItem() { Text = "By Agent", Value = "agent" }
+                },
+                Agents = _accountService.GetAgentsOfBroker(brokerId).Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName }),
+                Clients = _accountService.GetClientsOfBroker(brokerId).Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName })
+            };
+
+            return model;
         }
 
         [HttpGet("gethtml/{type}/{id}/{name}/{start}/{end}")]

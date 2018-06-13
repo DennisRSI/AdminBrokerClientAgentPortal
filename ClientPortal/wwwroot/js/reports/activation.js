@@ -5,7 +5,14 @@ function Activation() {
 
     this.init = function () {
 
-        $('#select-report').click(function () {
+        UTILITY.setQueryStartDate('input.startDate');
+        UTILITY.setQueryEndDate('input.endDate');
+
+        self.updateControls();
+
+        $('#select-report').change(function () {
+            self.updateControls();
+
             $('#client, #agent').hide();
             var value = $('#select-report').val();
             $('#' + value).show();
@@ -14,6 +21,12 @@ function Activation() {
         $('button.runreport').click(function () {
             self.getHtml();
         });
+    }
+
+    this.updateControls = function () {
+        $('.filter').addClass('hidden');
+        var value = $('#select-report option:selected').val();
+        $('#' + value).removeClass('hidden');
     }
 
     this.getHtml = function () {
