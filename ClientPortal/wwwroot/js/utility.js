@@ -28,5 +28,23 @@ function Utility() {
         var month = date.getMonth() + 1;
         return (month.toString().length > 1 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
     }
+
+    this.setQueryStartDate = function (selector) {
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = now.getFullYear() - 10 + "-" + (month) + "-" + (day);
+
+        $(selector).val(today);
+    }
+
+    this.setQueryEndDate = function (selector) {
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+
+        $(selector).val(today);
+    }
 }
 

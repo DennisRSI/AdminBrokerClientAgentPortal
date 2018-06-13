@@ -86,5 +86,43 @@ namespace Codes.Service.Services
             return _context.Agents.Where(a => a.BrokerId == brokerId)
                     .Select(a => new AccountViewModel() { Id = a.AgentId, FullName = $"{a.AgentFirstName} {a.AgentLastName}", CompanyName = a.CompanyName });
         }
+
+        public IEnumerable<AccountViewModel> GetAllBrokers()
+        {
+            return _context.Brokers.Where(b => b.IsActive)
+                    .Select(b => new AccountViewModel() { Id = b.BrokerId, FullName = $"{b.BrokerFirstName} {b.BrokerLastName}", CompanyName = b.CompanyName });
+        }
+
+        public IEnumerable<AccountViewModel> GetAllClients()
+        {
+            return _context.Clients.Where(b => b.IsActive)
+                    .Select(c => new AccountViewModel() { Id = c.BrokerId, FullName = $"{c.ContactFirstName} {c.ContactLastName}", CompanyName = c.CompanyName });
+        }
+
+        public IEnumerable<AccountViewModel> GetAllAgents()
+        {
+            return _context.Agents.Where(b => b.IsActive)
+                    .Select(a => new AccountViewModel() { Id = a.BrokerId, FullName = $"{a.AgentFirstName} {a.AgentLastName}", CompanyName = a.CompanyName });
+        }
+
+        public IEnumerable<AccountViewModel> GetCampaignsOfBroker(int brokerId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<AccountViewModel> GetClientsOfAgent(int agentId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<AccountViewModel> GetCampaignsOfAgent(int agentId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<AccountViewModel> GetCampaignsOfClient(int clientId)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

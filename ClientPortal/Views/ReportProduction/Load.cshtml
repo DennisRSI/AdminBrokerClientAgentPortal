@@ -1,4 +1,4 @@
-﻿@model ActivationLoadViewModel
+﻿@model ProductionLoadViewModel
 <div class="col-md-12 col-sm-12 col-xs-12">
     <br />
     <div class="x_panel no-print">
@@ -8,17 +8,67 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 no-print">
             <div class="x_panel">
-                <div class="">
+                <div id="data-filters">
                     <h4>Data Filters</h4>
                     <hr class="card-hr2">
-                    <form class="form-group">
+                    <div id="select-report" class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            Select Report
+                            <select class="form-control form-group" asp-items="@Model.ReportType"></select>
+                        </div>
+                    </div>
+                    <div id="select-source" class="hidden filter">
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                Select Source
+                                <select class="form-control form-group">
+                                    <option value="all" selected>Alliance</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="payment-status" class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                Payment Status
+                                <select class="form-control form-group">
+                                    <option value="all" selected>All</option>
+                                    <option value="paid">Paid</option>
+                                    <option value="unpaid">Unpaid</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="select-broker" class="form-group filter hidden">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             Select Broker
-                            <select class="form-control form-group" name="prodBySource">
-                                <option value="all" selected>All Brokers</option>
+                            <select class="form-control form-group" asp-items="@Model.Brokers">
+                                <option value="0" selected>All Brokers</option>
                             </select>
                         </div>
-                    </form>
+                    </div>
+                    <div id="select-client" class="form-group filter hidden">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            Select Client
+                            <select class="form-control form-group" asp-items="@Model.Clients">
+                                <option value="0" selected>All Clients</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="select-agent" class="form-group filter hidden">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            Select Agent
+                            <select class="form-control form-group" asp-items="@Model.Agents">
+                                <option value="0" selected>All Agents</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="select-campaign" class="form-group filter hidden">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            Select Campaign
+                            <select class="form-control form-group" asp-items="@Model.Campaigns">
+                                <option value="0" selected>All Campaigns</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -31,8 +81,8 @@
                         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                             From Check-Out
                             <div class="form-group">
-                                <div class='input-group date' id='myDatepicker2'>
-                                    <input type="date" class="form-control" placeholder="MM/DD/YYYY" />
+                                <div class='input-group date'>
+                                    <input id="checkOutStart" type="date" class="form-control" placeholder="MM/DD/YYYY" />
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -42,8 +92,8 @@
                         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                             To Check-Out
                             <div class="form-group">
-                                <div class='input-group date' id='myDatepicker3'>
-                                    <input type="date" class="form-control" placeholder="MM/DD/YYYY" />
+                                <div class='input-group date'>
+                                    <input id="checkOutEnd" type="date" class="form-control" placeholder="MM/DD/YYYY" />
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -63,8 +113,8 @@
                         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                             Start Date
                             <div class="form-group">
-                                <div class='input-group date' id='myDatepicker2'>
-                                    <input type="date" class="form-control" placeholder="MM/DD/YYYY" />
+                                <div class='input-group date'>
+                                    <input id="bookingStart" type="date" class="form-control" placeholder="MM/DD/YYYY" />
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -74,8 +124,8 @@
                         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                             End Date
                             <div class="form-group">
-                                <div class='input-group date' id='myDatepicker3'>
-                                    <input type="date" class="form-control" placeholder="MM/DD/YYYY" />
+                                <div class='input-group date'>
+                                    <input id="bookingEnd" type="date" class="form-control" placeholder="MM/DD/YYYY" />
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -98,7 +148,7 @@
 </div>
 
 <script src="~/js/list.js"></script>
-<script src="~/js/reports/activation.js"></script>
+<script src="~/js/reports/production.js"></script>
 <script>
-        // ACTIVATION.init();
+    PRODUCTION.init();
 </script>
