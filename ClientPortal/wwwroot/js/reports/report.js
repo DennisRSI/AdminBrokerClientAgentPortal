@@ -10,26 +10,24 @@ function Report() {
     }
 
     this.exportExcel = function () {
-        var showHeader = true;
         var csv = '';
 
         $('table.dataTable').each(function (index) {
             var table = $(this).DataTable();
             var data = table.buttons.exportData();
-            var header = null;
 
             if (data.body.length > 0) {
-                if (showHeader) {
-                    header = data.header;
-                    showHeader = false;
-                }
 
                 var text = Papa.unparse(
                     {
-                        fields: header,
+                        fields: null,
                         data: data.body
                     }
                 );
+
+                if (csv === '') {
+                    csv = data.header.join(',') + '\n\n';
+                }
 
                 var clientName = $('.tableName').eq(index).text();
                 csv += clientName + '\n';
