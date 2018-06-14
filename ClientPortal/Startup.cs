@@ -16,6 +16,7 @@ using Codes.Service.Services;
 using Codes.Service.Data;
 using ClientPortal.Services._Interfaces;
 using AutoMapper;
+using Codes.Service.Domain;
 
 namespace ClientPortal
 {
@@ -102,6 +103,7 @@ namespace ClientPortal
             services.AddTransient<ICodeGeneratorService, CodeGeneratorService>();
             services.AddTransient<IReportService, ReportService>();
             services.AddTransient<IDashboardDistributionService, DashboardDistributionService>();
+            services.AddTransient<IAccountQueryFactory, AccountQueryFactory>();
         }
     }
 }

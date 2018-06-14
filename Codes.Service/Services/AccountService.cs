@@ -78,31 +78,31 @@ namespace Codes.Service.Services
         public IEnumerable<AccountViewModel> GetClientsOfBroker(int brokerId)
         {
             return _context.Clients.Where(c => c.BrokerId == brokerId)
-                    .Select(c => new AccountViewModel() { Id = c.ClientId, FullName = $"{c.ContactFirstName} {c.ContactLastName}", CompanyName = c.CompanyName });
+                    .Select(c => new AccountViewModel() { Id = c.ClientId, FirstName = c.ContactFirstName, LastName = c.ContactLastName, CompanyName = c.CompanyName });
         }
 
         public IEnumerable<AccountViewModel> GetAgentsOfBroker(int brokerId)
         {
             return _context.Agents.Where(a => a.BrokerId == brokerId)
-                    .Select(a => new AccountViewModel() { Id = a.AgentId, FullName = $"{a.AgentFirstName} {a.AgentLastName}", CompanyName = a.CompanyName });
+                    .Select(a => new AccountViewModel() { Id = a.AgentId, FirstName = a.AgentFirstName, LastName = a.AgentLastName, CompanyName = a.CompanyName });
         }
 
         public IEnumerable<AccountViewModel> GetAllBrokers()
         {
             return _context.Brokers.Where(b => b.IsActive)
-                    .Select(b => new AccountViewModel() { Id = b.BrokerId, FullName = $"{b.BrokerFirstName} {b.BrokerLastName}", CompanyName = b.CompanyName });
+                    .Select(b => new AccountViewModel() { Id = b.BrokerId, FirstName = b.BrokerFirstName, LastName = b.BrokerLastName, CompanyName = b.CompanyName });
         }
 
         public IEnumerable<AccountViewModel> GetAllClients()
         {
             return _context.Clients.Where(b => b.IsActive)
-                    .Select(c => new AccountViewModel() { Id = c.BrokerId, FullName = $"{c.ContactFirstName} {c.ContactLastName}", CompanyName = c.CompanyName });
+                    .Select(c => new AccountViewModel() { Id = c.BrokerId, FirstName = c.ContactFirstName, LastName = c.ContactLastName, CompanyName = c.CompanyName });
         }
 
         public IEnumerable<AccountViewModel> GetAllAgents()
         {
             return _context.Agents.Where(b => b.IsActive)
-                    .Select(a => new AccountViewModel() { Id = a.BrokerId, FullName = $"{a.AgentFirstName} {a.AgentLastName}", CompanyName = a.CompanyName });
+                    .Select(a => new AccountViewModel() { Id = a.BrokerId, FirstName = a.AgentFirstName, LastName = a.AgentLastName, CompanyName = a.CompanyName });
         }
 
         public IEnumerable<AccountViewModel> GetCampaignsOfBroker(int brokerId)
