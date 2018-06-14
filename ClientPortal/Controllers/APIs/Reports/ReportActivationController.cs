@@ -1,4 +1,5 @@
 ﻿using ClientPortal.Models;
+using Codes.Service.Domain;
 using Codes.Service.Interfaces;
 using Codes.Service.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -21,15 +22,17 @@ namespace ClientPortal.Controllers.APIs
         private readonly IReportService _reportService;
         private readonly IAccountService _accountService;
         private readonly ICodeService _context;
+        private readonly IAccountQueryFactory _accountQueryFactory;
 
         public ReportActivationController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager,
-                                            IReportService reportService, IAccountService accountService, ICodeService context)
+                                            IReportService reportService, IAccountService accountService, ICodeService context, IAccountQueryFactory accountQueryFactory)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _reportService = reportService;
             _accountService = accountService;
             _context = context;
+            _accountQueryFactory = accountQueryFactory;
         }
 
         [HttpGet("load/{type}")]
@@ -93,6 +96,7 @@ namespace ClientPortal.Controllers.APIs
         public async Task<IActionResult> GetHtml(string type, int id, string name, string start, string end)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
+            var accountQuery = _accountQueryFactory.GetAccountQuery(user.BrokerId, user.AgentId, user.ClientId);
 
             var startSplit = start.Split('-');
             var endSplit = end.Split('-');
@@ -107,17 +111,23 @@ namespace ClientPortal.Controllers.APIs
 
             switch (type)
             {
-                case "client":
-                    var clients = _accountService.GetClientsOfBroker(user.BrokerId)
+                case "broker":
+                    var brokers = accountQuery.GetBrokers()
                         .Where(c => c.Id == id || id == 0)
+                        .Select(c => new ActivationTableViewModel() { Id = c.Id, Type = type, CompanyName = c.CompanyName });
+
+                    model.Tables.AddRange(brokers);
+                    break;
+
+                case "client":
+                    var clients = accountQuery.GetClients().Where(c => c.Id == id || id == 0)
                         .Select(c => new ActivationTableViewModel() { Id = c.Id, Type = type, CompanyName = c.CompanyName });
 
                     model.Tables.AddRange(clients);
                     break;
 
                 case "agent":
-                    var agents = _accountService.GetAgentsOfBroker(user.BrokerId)
-                        .Where(a => a.Id == id || id == 0)
+                    var agents = accountQuery.GetAgents().Where(a => a.Id == id || id == 0)
                         .Select(a => new ActivationTableViewModel() { Id = a.Id, Type = type, CompanyName = a.CompanyName });
 
                     model.Tables.AddRange(agents);
@@ -133,7 +143,7 @@ namespace ClientPortal.Controllers.APIs
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
             int? agentId = null;
-            int? brokerId = user.BrokerId;
+            int? brokerId = null;
             int? clientId = null;
             DateTime startDate = DateTime.Now.AddYears(-1);
             DateTime endDate = DateTime.Now;
@@ -152,13 +162,25 @@ namespace ClientPortal.Controllers.APIs
             startDate = DateTime.ParseExact(start, "yyyy-MM-dd", null);
             endDate = DateTime.ParseExact(end, "yyyy-MM-dd", null);
 
+            bool? isCardUsed = null;
+
+            if (used == "Y")
+            {
+                isCardUsed = true;
+            }
+
+            if (used == "N")
+            {
+                isCardUsed = false;
+            }
+
             var query = new ActivationReportViewModel()
             {
                 AgentId = agentId,
                 BrokerId = brokerId,
                 ClientId = clientId,
                 CampaignStatus = status,
-                IsCardUsed = used == "Y",
+                IsCardUsed = isCardUsed,
                 StartDate = startDate,
                 EndDate = endDate,
             };
