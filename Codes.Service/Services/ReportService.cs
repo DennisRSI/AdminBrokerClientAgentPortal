@@ -61,12 +61,16 @@ namespace Codes.Service.Services
                 {
                     CardNumber = (string)row["CardNumber"],
                     ActivationDate = (DateTime)row["ActivationDate"],
-                    MemberName = (string)row["Member"],
+                    FirstName = (string)row["FirstName"],
+                    LastName = (string)row["LastName"],
                     Denomination = (Single)row["Denomination"],
                     CardType = (string)row["CardType"],
                     IsCardUsed = (string)row["CardUsed"],
                     CampaignName = (string)row["Campaign"],
-                    CardStatus = (string)row["Status"]
+                    CardStatus = (string)row["Status"],
+                    Phone = (string)row["Phone"],
+                    Email = (string)row["Email"],
+                    PostalCode = (string)row["PostalCode"]
                 };
 
                 resultData.Add(activation);
