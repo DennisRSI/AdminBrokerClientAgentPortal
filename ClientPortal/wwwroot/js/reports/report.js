@@ -17,6 +17,11 @@ function Report() {
             var data = table.buttons.exportData();
 
             if (data.body.length > 0) {
+                var clientName = $('.tableName').eq(index).text().replace(',', '');
+
+                data.body.forEach(function (element) {
+                    element.unshift(clientName);
+                });
 
                 var text = Papa.unparse(
                     {
@@ -25,13 +30,12 @@ function Report() {
                     }
                 );
 
+
                 if (csv === '') {
-                    csv = data.header.join(',') + '\n\n';
+                    csv = 'Name,' + data.header.join(',') + '\n';
                 }
 
-                var clientName = $('.tableName').eq(index).text();
-                csv += clientName + '\n';
-                csv += text + '\n\n';
+                csv += text + '\n';
             }
         });
 
