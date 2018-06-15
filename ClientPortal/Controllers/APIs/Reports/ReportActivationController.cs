@@ -38,9 +38,6 @@ namespace ClientPortal.Controllers.APIs
         [HttpGet("load/{type}")]
         public async Task<IActionResult> LoadAsync(string type)
         {
-            // Currently the view is called "LoadBroker" for all types, consider renaming in the future.
-            var view = "LoadBroker";
-
             ActivationLoadViewModel model = null;
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
@@ -55,7 +52,7 @@ namespace ClientPortal.Controllers.APIs
                     break;
             };
 
-            return PartialView(view, model);
+            return PartialView("Load", model);
         }
 
         private ActivationLoadViewModel LoadAdmin()
