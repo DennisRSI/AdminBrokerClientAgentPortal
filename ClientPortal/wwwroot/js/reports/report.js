@@ -4,6 +4,8 @@ function Report() {
     var self = this;
 
     this.init = function () {
+        $(document).off('click', '#export-excel');
+
         $(document).on('click', '#export-excel', function () {
             self.exportExcel();
         });
