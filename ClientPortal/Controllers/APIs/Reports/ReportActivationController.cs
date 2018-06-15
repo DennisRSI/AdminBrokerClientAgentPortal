@@ -187,7 +187,14 @@ namespace ClientPortal.Controllers.APIs
                 EndDate = endDate,
             };
 
-            return _reportService.GetDataActivation(query);
+            var result = _reportService.GetDataActivation(query);
+
+            if (!user.IsAdmin)
+            {
+                result.Data.ToList().ForEach(a => { a.Phone = String.Empty; a.Email = String.Empty; });
+            }
+
+            return result;
         }
     }
 }

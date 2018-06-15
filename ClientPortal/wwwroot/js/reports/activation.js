@@ -87,13 +87,16 @@ function Activation() {
                         return UTILITY.formatDateTime(data);
                     }
             },
-
             { "data": "memberName" },
             { "data": "denomination" },
             { "data": "cardType" },
             { "data": "isCardUsed" },
             { "data": "campaignName" },
-            { "data": "cardStatus" }
+            { "data": "cardStatus" },
+            { "data": "phone", "visible": false },
+            { "data": "email", "visible": false },
+            { "data": "firstName", "visible": false },
+            { "data": "lastName", "visible": false }
         ];
 
         $('table').each(function (index) {
