@@ -180,6 +180,11 @@ namespace Codes.Service.Models
         [ForeignKey("BrokerId")]
         public BrokerModel Broker { get; set; }
 
+        public int? AgentId { get; set; }
+
+        [ForeignKey("AgentId")]
+        public AgentModel Agent { get; set; }
+
         public ICollection<CampaignModel> Campaigns { get; set; }
     }
 }
