@@ -1,4 +1,5 @@
 ﻿using ClientPortal.Models;
+using Codes.Service.Domain;
 using Codes.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -19,109 +20,73 @@ namespace ClientPortal.Controllers.APIs
         private readonly IReportService _reportService;
         private readonly IAccountService _accountService;
         private readonly ICodeService _context;
+        private readonly IAccountQueryFactory _accountQueryFactory;
 
         public ReportProductionController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager,
-                                            IReportService reportService, IAccountService accountService, ICodeService context)
+                                            IReportService reportService, IAccountService accountService, ICodeService context, IAccountQueryFactory accountQueryFactory)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _reportService = reportService;
             _accountService = accountService;
             _context = context;
+            _accountQueryFactory = accountQueryFactory;
         }
 
         [HttpGet("load/{type}")]
         public async Task<IActionResult> LoadAsync(string type)
         {
-            ProductionLoadViewModel model = null;
             var user = await _userManager.GetUserAsync(HttpContext.User);
+            var accountQuery = _accountQueryFactory.GetAccountQuery(user.BrokerId, user.AgentId, user.ClientId);
 
-            switch (type.ToLower())
+            var model = new ProductionLoadViewModel
             {
-                case "admin":
-                    model = LoadAdmin();
-                    break;
-
-                case "broker":
-                    model = LoadBroker(user.BrokerId);
-                    break;
-
-                case "agent":
-                    model = LoadAgent(user.AgentId);
-                    break;
-
-                case "client":
-                    model = LoadClient(user.ClientId);
-                    break;
-            }
+                ReportType = GetReportType(type),
+                Brokers = accountQuery.GetBrokers().Select(b => new SelectListItem() { Value = b.Id.ToString(), Text = b.FullName }),
+                Clients = accountQuery.GetClients().Select(c => new SelectListItem() { Value = c.Id.ToString(), Text = c.CompanyName }),
+                Agents = accountQuery.GetAgents().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName }),
+                Campaigns = accountQuery.GetCampaigns().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName }),
+            };
 
             return PartialView("Load", model);
         }
 
-        private ProductionLoadViewModel LoadAdmin()
+        private List<SelectListItem> GetReportType(string type)
         {
-            return new ProductionLoadViewModel
+            switch (type.ToLower())
             {
-                ReportType = new List<SelectListItem>
-                {
-                    new SelectListItem() { Text = "By Source", Value = "source" },
-                    new SelectListItem() { Text = "By Broker", Value = "broker" },
-                    new SelectListItem() { Text = "By Client", Value = "client" },
-                    new SelectListItem() { Text = "By Agent", Value = "agent" }
-                },
+                case "admin":
+                    return new List<SelectListItem>()
+                    {
+                        new SelectListItem() { Text = "By Source", Value = "source" },
+                        new SelectListItem() { Text = "By Broker", Value = "broker" },
+                        new SelectListItem() { Text = "By Client", Value = "client" },
+                        new SelectListItem() { Text = "By Agent", Value = "agent" }
+                    };
 
-                Brokers = _accountService.GetAllBrokers().Select(b => new SelectListItem() { Value = b.Id.ToString(), Text = b.FullName }),
-                Clients = _accountService.GetAllClients().Select(c => new SelectListItem() { Value = c.Id.ToString(), Text = c.CompanyName }),
-                Agents = _accountService.GetAllAgents().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName })
-            };
-        }
+                case "broker":
+                    return new List<SelectListItem>()
+                    {
+                        new SelectListItem() { Text = "By Client", Value = "client" },
+                        new SelectListItem() { Text = "By Agent", Value = "agent" },
+                        new SelectListItem() { Text = "By Campaign", Value = "campaign" }
+                    };
 
-        private ProductionLoadViewModel LoadBroker(int brokerId)
-        {
-            return new ProductionLoadViewModel
-            {
-                ReportType = new List<SelectListItem>
-                {
-                    new SelectListItem() { Text = "By Client", Value = "client" },
-                    new SelectListItem() { Text = "By Agent", Value = "agent" },
-                    new SelectListItem() { Text = "By Campaign", Value = "campaign" }
-                },
+                case "agent":
+                    return new List<SelectListItem>()
+                    {
+                        new SelectListItem() { Text = "By Client", Value = "client" },
+                        new SelectListItem() { Text = "By Campaign", Value = "campaign" }
+                    };
 
-                // TODO: Update these
-                Clients = _accountService.GetAllClients().Select(c => new SelectListItem() { Value = c.Id.ToString(), Text = c.CompanyName }),
-                Agents = _accountService.GetAllAgents().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName }),
-                Campaigns = _accountService.GetAllBrokers().Select(b => new SelectListItem() { Value = b.Id.ToString(), Text = b.FullName })
-            };
-        }
+                case "client":
+                    return new List<SelectListItem>()
+                    {
+                        new SelectListItem() { Text = "By Campaign", Value = "campaign" }
+                    };
+            }
 
-        private ProductionLoadViewModel LoadAgent(int agentId)
-        {
-            return new ProductionLoadViewModel
-            {
-                ReportType = new List<SelectListItem>
-                {
-                    new SelectListItem() { Text = "By Client", Value = "client" },
-                    new SelectListItem() { Text = "By Campaign", Value = "campaign" }
-                },
-
-                // TODO: Update these
-                Clients = _accountService.GetAllClients().Select(c => new SelectListItem() { Value = c.Id.ToString(), Text = c.CompanyName }),
-                Campaigns = _accountService.GetAllAgents().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName })
-            };
-        }
-
-        private ProductionLoadViewModel LoadClient(int clientId)
-        {
-            return new ProductionLoadViewModel
-            {
-                ReportType = new List<SelectListItem>
-                {
-                    new SelectListItem() { Text = "By Campaign", Value = "campaign" }
-                },
-
-                // TODO: Update this
-                Campaigns = _accountService.GetAllAgents().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName })
-            };
+            return null;
         }
     }
 }

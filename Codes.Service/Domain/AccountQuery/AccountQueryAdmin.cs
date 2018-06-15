@@ -28,7 +28,8 @@ namespace Codes.Service.Domain
 
         public IEnumerable<AccountViewModel> GetCampaigns()
         {
-            throw new System.NotImplementedException();
+            return _context.Campaigns
+                .Select(c => new AccountViewModel() { Id = c.CampaignId, CompanyName = c.CampaignName });
         }
 
         public IEnumerable<AccountViewModel> GetClients()
