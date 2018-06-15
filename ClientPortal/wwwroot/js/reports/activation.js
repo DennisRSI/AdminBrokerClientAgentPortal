@@ -5,9 +5,6 @@ function Activation() {
 
     this.init = function () {
 
-        UTILITY.setQueryStartDate('input.startDate');
-        UTILITY.setQueryEndDate('input.endDate');
-
         self.updateControls();
 
         $('#select-report').change(function () {

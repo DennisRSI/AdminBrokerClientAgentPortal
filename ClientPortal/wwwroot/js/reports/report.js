@@ -4,11 +4,28 @@ function Report() {
     var self = this;
 
     this.init = function () {
+
+        self.initQueryDates();
+
         $(document).off('click', '#export-excel');
 
         $(document).on('click', '#export-excel', function () {
             self.exportExcel();
         });
+    }
+
+    this.initQueryDates = function (selector) {
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var endYear = now.getFullYear();
+        var startYear = endYear - 1;
+
+        var start = startYear + "-" + (month) + "-" + (day);
+        var end = endYear + "-" + (month) + "-" + (day);
+
+        $('.startQuery').val(start);
+        $('.endQuery').val(end);
     }
 
     this.exportExcel = function () {
