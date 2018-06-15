@@ -44,9 +44,9 @@ namespace Codes.Service.Services
                 new SqlParameter("@NumberOfRows", 10000),
                 new SqlParameter("@SortColumn", "ActivationDate"),
                 new SqlParameter("@SortDirection", "DESC"),
-                new SqlParameter("@BrokerId", Convert.ToInt32(model.BrokerId)),
-                new SqlParameter("@AgentId", Convert.ToInt32(model.AgentId)),
-                new SqlParameter("@ClientId", Convert.ToInt32(model.ClientId)),
+                new SqlParameter("@BrokerId", model.BrokerId),
+                new SqlParameter("@AgentId", model.AgentId),
+                new SqlParameter("@ClientId", model.ClientId),
                 new SqlParameter("@CampaignStatus", model.CampaignStatus),
                 new SqlParameter("@IsCardUsed", model.IsCardUsed),
                 totalCount

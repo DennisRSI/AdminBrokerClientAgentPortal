@@ -12,10 +12,6 @@ function Activation() {
 
         $('#select-report').change(function () {
             self.updateControls();
-
-            $('#client, #agent').hide();
-            var value = $('#select-report').val();
-            $('#' + value).show();
         });
 
         $('button.runreport').click(function () {
@@ -31,11 +27,10 @@ function Activation() {
 
     this.getHtml = function () {
         var type = $('#select-report').val();
-        var id = $('#select-client').val();
+        var id = $('#select-' + type).val();
         var start = $('#startDate').val();
         var end = $('#endDate').val();
-        var selectReport = $('#select-report').val();
-        var name;
+        var name = $('#select-' + type + ' option:selected').text();
 
         var valid = true;
 
@@ -51,13 +46,6 @@ function Activation() {
 
         if (!valid) {
             return;
-        }
-
-        if (selectReport == 'client') {
-            name = $('#select-client option:selected').text();
-        }
-        else {
-            name = $('#select-agent option:selected').text();
         }
 
         $('#startDate').removeClass('error');

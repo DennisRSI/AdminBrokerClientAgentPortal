@@ -114,7 +114,7 @@ namespace ClientPortal.Controllers.APIs
                 case "broker":
                     var brokers = accountQuery.GetBrokers()
                         .Where(c => c.Id == id || id == 0)
-                        .Select(c => new ActivationTableViewModel() { Id = c.Id, Type = type, CompanyName = c.CompanyName });
+                        .Select(c => new ActivationTableViewModel() { Id = c.Id, Type = type, CompanyName = c.FullName });
 
                     model.Tables.AddRange(brokers);
                     break;
@@ -145,11 +145,13 @@ namespace ClientPortal.Controllers.APIs
             int? agentId = null;
             int? brokerId = null;
             int? clientId = null;
-            DateTime startDate = DateTime.Now.AddYears(-1);
-            DateTime endDate = DateTime.Now;
 
             switch (type)
             {
+                case "broker":
+                    brokerId = id;
+                    break;
+
                 case "agent":
                     agentId = id;
                     break;
@@ -159,8 +161,8 @@ namespace ClientPortal.Controllers.APIs
                     break;
             }
 
-            startDate = DateTime.ParseExact(start, "yyyy-MM-dd", null);
-            endDate = DateTime.ParseExact(end, "yyyy-MM-dd", null);
+            var startDate = DateTime.ParseExact(start, "yyyy-MM-dd", null);
+            var endDate = DateTime.ParseExact(end, "yyyy-MM-dd", null);
 
             bool? isCardUsed = null;
 

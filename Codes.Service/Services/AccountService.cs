@@ -96,13 +96,13 @@ namespace Codes.Service.Services
         public IEnumerable<AccountViewModel> GetAllClients()
         {
             return _context.Clients.Where(b => b.IsActive)
-                    .Select(c => new AccountViewModel() { Id = c.BrokerId, FirstName = c.ContactFirstName, LastName = c.ContactLastName, CompanyName = c.CompanyName });
+                    .Select(c => new AccountViewModel() { Id = c.ClientId, FirstName = c.ContactFirstName, LastName = c.ContactLastName, CompanyName = c.CompanyName });
         }
 
         public IEnumerable<AccountViewModel> GetAllAgents()
         {
             return _context.Agents.Where(b => b.IsActive)
-                    .Select(a => new AccountViewModel() { Id = a.BrokerId, FirstName = a.AgentFirstName, LastName = a.AgentLastName, CompanyName = a.CompanyName });
+                    .Select(a => new AccountViewModel() { Id = a.AgentId, FirstName = a.AgentFirstName, LastName = a.AgentLastName, CompanyName = a.CompanyName });
         }
 
         public IEnumerable<AccountViewModel> GetCampaignsOfBroker(int brokerId)
