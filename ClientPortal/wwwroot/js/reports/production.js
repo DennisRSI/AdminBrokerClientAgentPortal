@@ -12,18 +12,16 @@ function Production() {
         });
 
         $('button.runreport').click(function () {
+            self.getHtml();
         });
     }
 
     this.updateControls = function () {
-
-        UTILITY.setQueryStartDate('#checkOutStart');
-        UTILITY.setQueryStartDate('#bookingStart');
-        UTILITY.setQueryEndDate('#checkOutEnd');
-        UTILITY.setQueryEndDate('#bookingEnd');
-
         $('.filter').addClass('hidden');
         var value = $('#select-report option:selected').val();
         $('#select-' + value).removeClass('hidden');
+    }
+
+    this.getHtml = function () {
     }
 }

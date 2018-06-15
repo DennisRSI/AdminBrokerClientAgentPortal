@@ -82,7 +82,7 @@
                             From Check-Out
                             <div class="form-group">
                                 <div class='input-group date'>
-                                    <input id="checkOutStart" type="date" class="form-control" placeholder="MM/DD/YYYY" />
+                                    <input id="checkOutStart" type="date" class="form-control startQuery" placeholder="MM/DD/YYYY" />
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -93,7 +93,7 @@
                             To Check-Out
                             <div class="form-group">
                                 <div class='input-group date'>
-                                    <input id="checkOutEnd" type="date" class="form-control" placeholder="MM/DD/YYYY" />
+                                    <input id="checkOutEnd" type="date" class="form-control endQuery" placeholder="MM/DD/YYYY" />
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -114,7 +114,7 @@
                             Start Date
                             <div class="form-group">
                                 <div class='input-group date'>
-                                    <input id="bookingStart" type="date" class="form-control" placeholder="MM/DD/YYYY" />
+                                    <input id="bookingStart" type="date" class="form-control startQuery" placeholder="MM/DD/YYYY" />
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -125,7 +125,7 @@
                             End Date
                             <div class="form-group">
                                 <div class='input-group date'>
-                                    <input id="bookingEnd" type="date" class="form-control" placeholder="MM/DD/YYYY" />
+                                    <input id="bookingEnd" type="date" class="form-control endQuery" placeholder="MM/DD/YYYY" />
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -139,16 +139,17 @@
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center spacer-60">
         <span class="h1 text-extra-muted">Select Filters Above and Run Report</span><br /><br /><br />
-        <a href="admin-report-prod-broker2.html">
-            <button type="button" class="btn btn-travgreen">
-                <i class="fa fa-bar-chart icon-white purchase-button-icon"></i>Run Report
-            </button>
-        </a>
+        <button type="button" class="btn btn-travgreen runreport">
+            <i class="fa fa-bar-chart icon-white purchase-button-icon"></i>Run Report
+        </button>
     </div>
 </div>
 
+<script src="~/js/vendors/papaparse/papaparse.min.js"></script>
 <script src="~/js/list.js"></script>
+<script src="~/js/reports/report.js"></script>
 <script src="~/js/reports/production.js"></script>
 <script>
     PRODUCTION.init();
+    REPORT.init();
 </script>
