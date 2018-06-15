@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
 
 namespace Codes.Service.Models
 {
@@ -15,7 +14,6 @@ namespace Codes.Service.Models
 
         public ClientModel()
         {
-
         }
 
         public ClientModel(ClientViewModel model)
@@ -49,26 +47,37 @@ namespace Codes.Service.Models
 
         [Key, Required]
         public int ClientId { get; set; }
+
         [Required, StringLength(500)]
         public string CompanyName { get; set; }
+
         [StringLength(255)]
         public string ContactFirstName { get; set; }
+
         [StringLength(255)]
         public string ContactMiddleName { get; set; } = "";
+
         [StringLength(255)]
         public string ContactLastName { get; set; }
+
         [StringLength(500)]
         public string EIN { get; set; } = "";
+
         [StringLength(255)]
         public string Address { get; set; } = "";
+
         [StringLength(100)]
         public string City { get; set; } = "";
+
         [StringLength(100)]
         public string State { get; set; } = "";
+
         [StringLength(50)]
         public string PostalCode { get; set; }
+
         [Required, StringLength(100)]
         public string Country { get; set; } = "USA";
+
         [StringLength(50), Phone]
         public string MobilePhone
         {
@@ -85,6 +94,7 @@ namespace Codes.Service.Models
                 }
             }
         }
+
         [StringLength(50), Phone]
         public string OfficePhone
         {
@@ -101,6 +111,7 @@ namespace Codes.Service.Models
                 }
             }
         }
+
         [StringLength(50)]
         public string OfficeExtension
         {
@@ -117,6 +128,7 @@ namespace Codes.Service.Models
                 }
             }
         }
+
         [StringLength(50)]
         public string Fax
         {
@@ -150,18 +162,24 @@ namespace Codes.Service.Models
                 }
             }
         }
+
         [StringLength(100), EmailAddress]
         public string Email { get; set; }
+
         public string DeactivationReason { get; set; } = null;
+
         [Required]
         public float CommissionRate { get; set; } = 0;
+
         [StringLength(450)]
         public string ApplicationReference { get; set; } = "";
+
         [Required]
         public int BrokerId { get; set; }
+
         [ForeignKey("BrokerId")]
         public BrokerModel Broker { get; set; }
-        public ICollection<CampaignModel> Campaigns { get; set; }
 
+        public ICollection<CampaignModel> Campaigns { get; set; }
     }
 }
