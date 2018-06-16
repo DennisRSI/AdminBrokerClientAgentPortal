@@ -136,7 +136,7 @@ namespace Codes.Service.Services
                     CampaignName = q.CampaignName,
                     CardQuantity = q.CardQuantity,
                     CampaignType = q.CampaignType,
-                    StartNumber = q.CampaignCodeRange.Max(r => r.CodeRange.StartNumber)
+                    StartNumber = (q.CampaignCodeRange.Count == 0) ? 0 : q.CampaignCodeRange.Max(r => r.CodeRange.StartNumber)
                 });
 
             return new DataTableViewModel<CampaignViewModel>
