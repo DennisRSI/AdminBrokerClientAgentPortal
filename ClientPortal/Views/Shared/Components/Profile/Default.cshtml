@@ -209,14 +209,14 @@
                 <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
                     <div class="panel-body">
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">W9 Upload</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">W9 Document</label>
                             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
                                 <a href="@Url.Action("Get", "Document", new { id = Model.DocumentW9Id })"><i class="fa fa-file-pdf-o pdf-icon"></i></a>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 hidden">
                                 <a href="#" class="checkbox-adjust">Replace Document</a>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 hidden">
                                 <input type="file" name="documentW9" class="custom-file-input">
                                 <button type="button">
                                     Replace
