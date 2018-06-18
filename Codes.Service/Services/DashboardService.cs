@@ -32,12 +32,18 @@ namespace Codes.Service.Services
 
         public DashboardViewModel GetBroker(int id)
         {
-            return _dashboardReports.GetBroker(id);
+            var model = _dashboardReports.GetBroker(id);
+            var broker = _context.Brokers.Single(b => b.BrokerId == id);
+            model.AccountName = $"{broker.BrokerFirstName} {broker.BrokerLastName}";
+
+            return model;
         }
 
         public DashboardViewModel GetAgent(int id)
         {
             var model = new DashboardViewModel() { DistributionDetailType = "Client" };
+            var agent = _context.Agents.Single(a => a.AgentId == id);
+            model.AccountName = $"{agent.AgentFirstName} {agent.AgentLastName}";
 
             var campaigns = _context.CampaignAgents.Where(ca => ca.AgentId == id).Select(ca => ca.Campaign);
 
@@ -53,6 +59,8 @@ namespace Codes.Service.Services
         public DashboardViewModel GetClient(int clientId)
         {
             var model = new DashboardViewModel() { DistributionDetailType = "Campaign" };
+            var client = _context.Clients.Single(c => c.ClientId == clientId);
+            model.AccountName = client.CompanyName;
 
             var campaigns = _context.Campaigns.Where(c => c.ClientId == clientId);
 
@@ -100,7 +108,7 @@ namespace Codes.Service.Services
             model.Accounts = _context.Clients.Where(c => c.IsActive && c.Broker.IsActive)
                 .Select(c => new DashboardAccountViewModel()
                 {
-                    Name = $"{c.ContactFirstName} {c.ContactLastName}",
+                    Name = c.CompanyName,
                     AccountId = c.ClientId
                 });
 

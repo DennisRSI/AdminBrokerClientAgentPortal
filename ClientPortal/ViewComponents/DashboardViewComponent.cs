@@ -30,12 +30,15 @@ namespace ClientPortal.ViewComponents
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
+                bool simulating = true;
+
                 if (role == string.Empty)
                 {
                     role = HttpContext.User.GetRole().GetName();
 
                     var reference = _userManager.GetUserId(HttpContext.User);
                     id = _accountService.GetIdFromReference(reference);
+                    simulating = false;
                 }
 
                 DashboardViewModel model;
@@ -66,6 +69,7 @@ namespace ClientPortal.ViewComponents
 
                 model.Role = role;
                 model.Id = id;
+                model.IsSimulating = simulating;
 
                 ViewData["Role"] = role;
                 return await Task.FromResult(View(model));

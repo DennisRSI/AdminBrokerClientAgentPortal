@@ -56,5 +56,7 @@ namespace Codes.Service.ViewModels
         public string DistributionDetailType { get; set; }
         public string Role { get; set; }
         public int Id { get; set; }
+        public bool IsSimulating { get; set; }
+        public string AccountName { get; set; }
     }
 }

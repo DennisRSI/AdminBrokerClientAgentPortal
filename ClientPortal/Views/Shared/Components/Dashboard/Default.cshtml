@@ -1,7 +1,13 @@
 ﻿@model Codes.Service.ViewModels.DashboardViewModel
 <div class="col-md-12 col-sm-12 col-xs-12">
     <br />
-    <span class="h2">@ViewData["Role"] Dashboard</span>
+    <span class="h2">
+        @ViewData["Role"] Dashboard
+        @if (Model.IsSimulating)
+        {
+            <span class="red dashboard_title">Simulating: @Model.AccountName</span>
+        }
+    </span>
     @if (ViewData["Role"].ToString().Contains("Broker"))
     {
         <div class="title-right pull-right">
