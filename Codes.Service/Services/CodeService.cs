@@ -1,4 +1,5 @@
 ﻿using Codes.Service.Data;
+using Codes.Service.Domain;
 using Codes.Service.Interfaces;
 using Codes.Service.Models;
 using Codes.Service.ViewModels;
@@ -10,7 +11,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
 
 namespace Codes.Service.Services
 {
@@ -803,7 +803,7 @@ namespace Codes.Service.Services
                                          LastName = t.ContactLastName,
                                          MiddleName = t.ContactMiddleName,
                                          Extension = t.MobilePhone != null && t.MobilePhone.Length > 0 ? "" : t.OfficeExtension,
-                                         Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone : t.OfficePhone,
+                                         Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone.FormatPhone() : t.OfficePhone.FormatPhone(),
                                          CommissionRate = t.CommissionRate
                                           
                                      }).Skip(startRowIndex).Take(numberOfRows).ToArrayAsync();
@@ -1174,7 +1174,7 @@ namespace Codes.Service.Services
                                          LastName = t.AgentLastName,
                                          MiddleName = t.AgentMiddleName,
                                          Extension = t.MobilePhone != null && t.MobilePhone.Length > 0 ? "" : t.OfficeExtension,
-                                         Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone : t.OfficePhone
+                                         Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone.FormatPhone() : t.OfficePhone.FormatPhone()
                                      }).Skip(startRowIndex).Take(numberOfRows).ToArrayAsync();
                 model.Message = "Success";
             }
@@ -1336,7 +1336,7 @@ namespace Codes.Service.Services
                                          LastName = t.BrokerLastName,
                                          MiddleName = t.BrokerMiddleName,
                                          Extension = t.MobilePhone != null && t.MobilePhone.Length > 0 ? "" : t.OfficeExtension,
-                                         Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone : t.OfficePhone
+                                         Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone.FormatPhone() : t.OfficePhone.FormatPhone()
                                      }).ToArrayAsync();
 
                 model.Message = "Success";
