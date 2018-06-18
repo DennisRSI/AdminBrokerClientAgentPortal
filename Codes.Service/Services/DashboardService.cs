@@ -69,11 +69,12 @@ namespace Codes.Service.Services
         {
             var model = new DashboardSelectViewModel() { Role = "Broker" };
 
-            model.Accounts = _context.Brokers.Select(b => new DashboardAccountViewModel()
-            {
-                Name = $"{b.BrokerFirstName} {b.BrokerLastName}",
-                AccountId = b.BrokerId
-            });
+            model.Accounts = _context.Brokers.Where(b => b.IsActive)
+                .Select(b => new DashboardAccountViewModel()
+                {
+                    Name = $"{b.BrokerFirstName} {b.BrokerLastName}",
+                    AccountId = b.BrokerId
+                });
 
             return model;
         }
@@ -82,11 +83,12 @@ namespace Codes.Service.Services
         {
             var model = new DashboardSelectViewModel() { Role = "Agent" };
 
-            model.Accounts = _context.Agents.Select(a => new DashboardAccountViewModel()
-            {
-                Name = $"{a.AgentFirstName} {a.AgentLastName}",
-                AccountId = a.AgentId
-            });
+            model.Accounts = _context.Agents.Where(a => a.IsActive && a.Broker.IsActive)
+                .Select(a => new DashboardAccountViewModel()
+                {
+                    Name = $"{a.AgentFirstName} {a.AgentLastName}",
+                    AccountId = a.AgentId
+                });
 
             return model;
         }
@@ -95,11 +97,12 @@ namespace Codes.Service.Services
         {
             var model = new DashboardSelectViewModel() { Role = "Client" };
 
-            model.Accounts = _context.Clients.Select(c => new DashboardAccountViewModel()
-            {
-                Name = $"{c.ContactFirstName} {c.ContactLastName}",
-                AccountId = c.ClientId
-            });
+            model.Accounts = _context.Clients.Where(c => c.IsActive && c.Broker.IsActive)
+                .Select(c => new DashboardAccountViewModel()
+                {
+                    Name = $"{c.ContactFirstName} {c.ContactLastName}",
+                    AccountId = c.ClientId
+                });
 
             return model;
         }
