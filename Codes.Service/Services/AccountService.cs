@@ -3,6 +3,7 @@ using Codes.Service.Data;
 using Codes.Service.Interfaces;
 using Codes.Service.Models;
 using Codes.Service.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,8 +70,9 @@ namespace Codes.Service.Services
         public ClientEditViewModel GetClientEdit(int clientId)
         {
             var client = _context.Clients.Single(c => c.ClientId == clientId);
-
             var model = _mapper.Map<ClientEditViewModel>(client);
+
+            model.Agents = GetAgentsOfBroker(client.BrokerId).Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName });
 
             return model;
         }

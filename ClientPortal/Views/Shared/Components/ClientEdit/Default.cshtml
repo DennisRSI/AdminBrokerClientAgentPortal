@@ -155,7 +155,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">W9 Upload</label>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">W9 Document</label>
                     <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
                         <a href="#"><i class="fa fa-file-pdf-o pdf-icon"></i></a>
                     </div>
@@ -164,24 +164,11 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Agent(s) Assigned</label>
-                    <div class="col-lg-3 col-sm-3 col-xs-12">
-                        <br />
-                        <input type="checkbox" name="" id="" value="James McBurney" required class="flat" checked />
-                        <br />
-                        <input type="checkbox" name="" id="" value="Todd Schade" class="flat" />
-                    </div>
-                    <div class="col-lg-3 col-sm-3 col-xs-12">
-                        <br />
-                        <input type="checkbox" name="" id="" value="Carl McPhearson" required class="flat" />
-                        <br />
-                        <input type="checkbox" name="" id="" value="Jim Parkinson" class="flat" />
-                    </div>
-                    <div class="col-lg-3 col-sm-3 col-xs-12">
-                        <br />
-                        <input type="checkbox" name="" id="" value="Carl McPhearson" required class="flat" />
-                        <br />
-                        <input type="checkbox" name="" id="" value="Jim Parkinson" class="flat" />
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Agent Assigned</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="form-control" asp-items="@Model.Agents">
+                            <option>Select Agent</option>
+                        </select>
                     </div>
                 </div><br />
                 <div class="form-group">

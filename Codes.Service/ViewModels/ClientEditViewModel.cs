@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace Codes.Service.ViewModels
 {
@@ -26,23 +27,7 @@ namespace Codes.Service.ViewModels
             get { return Email; }
         }
 
-        public IEnumerable<ClientEditAgent> Agents { get; set; }
-    }
-
-    public class ClientEditAgent
-    {
-        public int AgentId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public bool IsSelected { get; set; }
-
-        public string FullName
-        {
-            get
-            {
-                return $"{FirstName} {LastName}";
-            }
-        }
+        public IEnumerable<SelectListItem> Agents { get; set; }
     }
 }
 
