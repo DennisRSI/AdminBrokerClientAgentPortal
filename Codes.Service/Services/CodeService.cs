@@ -216,6 +216,7 @@ namespace Codes.Service.Services
                     client.OfficePhone = model.OfficePhone;
                     client.PostalCode = model.PostalCode;
                     client.State = model.State;
+                    client.AgentId = model.AgentId;
 
                     await _context.SaveChangesAsync();
                     model.Message = "Success";

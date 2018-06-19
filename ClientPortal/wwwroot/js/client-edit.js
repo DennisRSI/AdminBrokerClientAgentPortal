@@ -31,7 +31,7 @@ function ClientEdit() {
             console.log(data);
 
             $.ajax({
-                url: '/api/user/updateprofile/' + clientId,
+                url: '/api/user/clientupdateprofile/' + clientId,
                 type: 'POST',
                 dataType: 'json',
                 contentType: 'application/json',

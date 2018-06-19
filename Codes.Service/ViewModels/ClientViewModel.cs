@@ -123,5 +123,7 @@ namespace Codes.Service.ViewModels
         public string ApplicationReference { get; set; } = "";
         [Display(Name = "Broker", Prompt = "Broker")]
         public BrokerViewModel Broker { get; set; } = new BrokerViewModel();
+
+        public int? AgentId { get; set; }
     }
 }

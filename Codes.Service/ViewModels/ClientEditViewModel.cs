@@ -21,6 +21,7 @@ namespace Codes.Service.ViewModels
         public string OfficeFax { get; set; }
         public string Email { get; set; }
         public string CommissionRate { get; set; }
+        public int AgentId { get; set; }
 
         public string UserName
         {

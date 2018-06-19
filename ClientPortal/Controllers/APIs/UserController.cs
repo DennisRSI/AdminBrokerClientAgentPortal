@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Codes.Service.Models;
+using ClientPortal.Models._ViewModels;
 
 namespace ClientPortal.Controllers.APIs
 {
@@ -399,8 +400,7 @@ namespace ClientPortal.Controllers.APIs
             return Ok(result);
         }
 
-        [HttpPost("updateprofile/{id}")]
-        public async Task<IActionResult> UpdateProfile(string id, [FromBody] ApplicationUser model)
+        private async Task<string> ProcessUserModel(string id, ApplicationUser model)
         {
             model.Id = id;
 
@@ -424,7 +424,23 @@ namespace ClientPortal.Controllers.APIs
                 model.UserName = model.Email;
             }
 
-            switch (user.Role)
+            return user.Role;
+        }
+
+        [HttpPost("clientupdateprofile/{id}")]
+        public async Task<IActionResult> ClientUpdateProfile(string id, [FromBody] ClientEditPostViewModel model)
+        {
+            await ProcessUserModel(id, model);
+            var clientResult = await UpdateClient(model);
+            return Ok(clientResult);
+        }
+
+        [HttpPost("updateprofile/{id}")]
+        public async Task<IActionResult> UpdateProfile(string id, [FromBody] ApplicationUser model)
+        {
+            var role = await ProcessUserModel(id, model);
+
+            switch (role)
             {
                 case "Administrator":
                     var adminResult = await UpdateAdmin(model);
@@ -437,10 +453,6 @@ namespace ClientPortal.Controllers.APIs
                 case "Broker":
                     var brokerResult = await UpdateBroker(model);
                     return Ok(brokerResult);
-
-                case "Client":
-                    var clientResult = await UpdateClient(model);
-                    return Ok(clientResult);
             }
 
             return BadRequest();
@@ -516,7 +528,7 @@ namespace ClientPortal.Controllers.APIs
             return await _context.BrokerUpdate(broker);
         }
 
-        private async Task<ClientViewModel> UpdateClient(ApplicationUser user)
+        private async Task<ClientViewModel> UpdateClient(ClientEditPostViewModel user)
         {
             var client = new ClientViewModel()
             {
@@ -535,6 +547,7 @@ namespace ClientPortal.Controllers.APIs
                 MobilePhone = user.MobilePhone,
                 OfficePhone = user.OfficePhone,
                 Fax = user.Fax,
+                AgentId = user.AssignedAgent == 0 ? (int?)null : user.AssignedAgent
             };
 
             return await _context.ClientUpdate(client);

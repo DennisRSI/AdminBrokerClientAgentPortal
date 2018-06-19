@@ -72,7 +72,8 @@ namespace Codes.Service.Services
             var client = _context.Clients.Single(c => c.ClientId == clientId);
             var model = _mapper.Map<ClientEditViewModel>(client);
 
-            model.Agents = GetAgentsOfBroker(client.BrokerId).Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName });
+            model.Agents = GetAgentsOfBroker(client.BrokerId)
+                .Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName, Selected = (a.Id == client.AgentId) });
 
             return model;
         }
