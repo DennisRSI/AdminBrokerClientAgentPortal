@@ -42,7 +42,7 @@ function AddUser(){
                         maxlength: 255
                     },
                     postal_code: {
-                        required: false,
+                        required: true,
                         minlength: 5,
                         maxlength: 10
                     },
