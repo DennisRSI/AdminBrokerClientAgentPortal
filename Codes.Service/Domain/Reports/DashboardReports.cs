@@ -42,7 +42,19 @@ namespace Codes.Service.Domain
                 PhysicalCardsPurchased = (int)row["PhysicalTotal"],
                 PhysicalCardsActivated = (int)row["PhysicalActivated"],
                 VirtualCardsGenerated = (int)row["VirtualTotal"],
-                VirtualCardsActivated = (int)row["VirtualActivated"]
+                VirtualCardsActivated = (int)row["VirtualActivated"],
+
+                OverviewSavings = (decimal)row["MemberSavings"],
+                OverviewCommisionsPaid = (decimal)row["CommissionsPaid"],
+                OverviewCommisionsOwed = (decimal)row["CommissionsOwed"],
+
+                HotelSavings = (decimal)row["HotelSavings"],
+                HotelCommissionsPaid = (decimal)row["HotelCommissionsPaid"],
+                HotelCommissionsOwed = (decimal)row["HotelCommissionsOwed"],
+
+                CondoSavings = (decimal)row["CondoSavings"],
+                CondoCommissionsPaid = (decimal)row["CondoCommissionsPaid"],
+                CondoCommissionsOwed = (decimal)row["CondoCommissionsOwed"],
             };
 
             return model;
