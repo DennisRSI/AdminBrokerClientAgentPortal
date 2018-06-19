@@ -187,6 +187,8 @@ namespace ClientPortal.Services
 
                 if (user != null && user.Id != null && user.Id.Length > 0)
                 {
+                    model.ApplicationReference = user.Id;
+
                     user.Address = model.Address;
                     user.City = model.City;
                     user.CompanyName = model.CompanyName;
@@ -323,6 +325,8 @@ namespace ClientPortal.Services
 
                 if (user != null && user.Id != null && user.Id.Length > 0)
                 {
+                    model.ApplicationReference = user.Id;
+
                     user.Address = model.Address;
                     user.City = model.City;
                     user.CompanyName = model.CompanyName;
@@ -461,6 +465,8 @@ namespace ClientPortal.Services
 
                 if (user != null && user.Id != null && user.Id.Length > 0)
                 {
+                    model.ApplicationReference = user.Id;
+
                     user.Address = model.Address;
                     user.City = model.City;
                     user.CompanyName = model.CompanyName;
@@ -600,6 +606,8 @@ namespace ClientPortal.Services
 
                 if (user != null && user.Id != null && user.Id.Length > 0)
                 {
+                    model.ApplicationReference = user.Id;
+
                     user.Address = model.Address;
                     user.City = model.City;
                     user.CompanyName = model.CompanyName;
