@@ -3,7 +3,6 @@ using Codes.Service.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 
 namespace ClientPortal.Controllers.APIs
 {
@@ -45,6 +44,13 @@ namespace ClientPortal.Controllers.APIs
         public IActionResult Create(int id, [FromBody] CampaignViewModel model)
         {
             _campaignService.Create(id, model);
+            return Ok();
+        }
+
+        [HttpPost("deactivate/{campaignId}/{reason}")]
+        public IActionResult Deactivate(int campaignId, string reason)
+        {
+            _campaignService.Deactivate(campaignId, reason);
             return Ok();
         }
     }

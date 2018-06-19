@@ -64,7 +64,7 @@ namespace Codes.Service.ViewModels
         public string CustomCssPost { get; set; } = null;
 
         [Display(Name = "Deactivation Reason", Prompt = "Deactivation Reason")]
-        public DateTime? DeactivationReason { get; set; } = null;
+        public string DeactivationReason { get; set; } = null;
 
         [Display(Name = "Broker", Prompt = "Broker")]
         public BrokerViewModel Broker { get; set; } = new BrokerViewModel();

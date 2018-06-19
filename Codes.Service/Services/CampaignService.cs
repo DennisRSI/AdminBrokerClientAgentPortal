@@ -81,6 +81,16 @@ namespace Codes.Service.Services
 
         }
 
+        public void Deactivate(int campaignId, string reason)
+        {
+            var campaign = _context.Campaigns.Single(c => c.CampaignId == campaignId);
+            campaign.DeactivationDate = DateTime.Now;
+            campaign.DeactivationReason = reason;
+
+            _context.Campaigns.Update(campaign);
+            _context.SaveChanges();
+        }
+
         private void CreateCodes(int clientId, int brokerId, CampaignViewModel model)
         {
             int endNumber = model.StartNumber + (model.CardQuantity - 1) * model.Increment;
@@ -132,6 +142,7 @@ namespace Codes.Service.Services
 
             var data = queryResult.Select(q => new CampaignViewModel()
                 {
+                    DeactivationDate = q.DeactivationDate,
                     CampaignId = q.CampaignId,
                     CampaignName = q.CampaignName,
                     CardQuantity = q.CardQuantity,

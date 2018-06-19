@@ -6,6 +6,7 @@ namespace Codes.Service.Interfaces
     {
         void Clone(int campaignId);
         void Create(int clientId, CampaignViewModel viewModel);
+        void Deactivate(int campaignId, string reason);
         DataTableViewModel<CampaignViewModel> GetByClient(int id);
     }
 }

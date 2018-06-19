@@ -23,9 +23,15 @@ function Campaign(){
             self.selectVideo($(this), 'post');
         });
 
-        $('#campaign_tbl').on('click', 'i.clone', function () {
-            var id = $(this).data('clone');
-            self.cloneCampaign(id);
+        $('#campaign_tbl').on('click', 'i.deactivate', function () {
+            var id = $(this).data('deactivate');
+            $('#deactivate').data('id', id);
+            $('#confirmation-modal').modal('show');
+        });
+
+        $(document).on('click', '#deactivate', function () {
+            var id = $(this).data('id');
+            self.deactivateCampaign(id);
         });
 
         $('#addCampaignButton').click(function () {
@@ -128,7 +134,7 @@ function Campaign(){
                 "data": "campaignId",
                 "className": "text-center",
                 "render": function (data, type, row) {
-                    return '<i data-clone="' + data + '" class="clone fa fa-clone fa-sm"></i>';
+                    return '<i data-deactivate="' + data + '" class="deactivate fa fa-archive fa-sm"></i>';
                 }
             },
         ];
@@ -138,9 +144,15 @@ function Campaign(){
         }
     }
 
-    this.cloneCampaign = function (campaignId) {
-        $.post('/api/campaign/clone/' + campaignId,
+    this.deactivateCampaign = function (campaignId) {
+        var reason = $('#reason').val();
+        reason = encodeURIComponent(reason);
+
+        var url = ['/api/campaign/deactivate', campaignId, reason].join('/');
+
+        $.post(url,
             function (data) {
+                $('#confirmation-modal').modal('hide');
                 dataTable.ajax.reload();
             }
         );
