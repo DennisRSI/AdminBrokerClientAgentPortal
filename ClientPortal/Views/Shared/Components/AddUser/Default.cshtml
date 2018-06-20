@@ -136,8 +136,8 @@
                     @if (Model.UserType == "Agent" || Model.UserType == "Client")
                     {
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 offset-lg-4 offset-md-4 offset-sm-6  form-group has-feedback">
-                            <input type="number" class="form-control has-feedback-left" name="commission_rate" placeholder="Commission Rate">
-                            <span class="fa fa-dollar form-control-feedback left" aria-hidden="true"></span>
+                            <input type="number" class="form-control has-feedback-left" name="commission_rate" placeholder="Commission Rate" asp-for="CommissionRate" required>
+                            <span class="fa fa-percent form-control-feedback left" aria-hidden="true"></span>
                         </div>
                     }
                     @if (Model.UserType == "Broker" && Model.UserType != "Agent")
