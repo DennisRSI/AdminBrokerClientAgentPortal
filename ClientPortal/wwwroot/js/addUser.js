@@ -71,8 +71,8 @@ function AddUser(){
                 data: JSON.stringify(data),
                 success: function (result) {
                     if (result.is_success == true) {
-                        var fileInput1 = form.children('.documentW9')[0];
-                        var fileInput2 = form.children('.documentOther')[0];
+                        var fileInput1 = form.find('.documentW9')[0];
+                        var fileInput2; // form.find('.documentOther')[0];
 
                         if (fileInput1 !== undefined) {
                             var file1 = fileInput1.files[0];

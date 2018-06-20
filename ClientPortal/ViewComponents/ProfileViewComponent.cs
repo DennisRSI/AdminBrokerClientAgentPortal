@@ -35,6 +35,12 @@ namespace ClientPortal.ViewComponents
             var user = await _userManager.FindByIdAsync(profileId);
             var model = _mapper.Map<ApplicationUser, ProfileViewModel>(user);
 
+            if (user.Role == "Broker")
+            {
+                var broker = await _context.GetBrokerByAccountId(profileId);
+                model.DocumentW9Id = broker.DocumentW9Id;
+            }
+
             return View(model);
         }
     }

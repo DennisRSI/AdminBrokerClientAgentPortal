@@ -1297,7 +1297,8 @@ namespace Codes.Service.Services
                         VirtualCardCap = b.VirtualCardCap,
                         ApplicationReference = b.ApplicationReference,
                         BrokerMiddleName = b.BrokerMiddleName,
-                        ParentBrokerId = b.ParentBrokerId
+                        ParentBrokerId = b.ParentBrokerId,
+                        DocumentW9Id = b.DocumentW9Id
                     };
                 }
                 else

@@ -3,6 +3,7 @@ using Codes.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace ClientPortal.Controllers.APIs
 {
@@ -22,8 +23,15 @@ namespace ClientPortal.Controllers.APIs
         }
 
         [HttpGet("get/{id}")]
-        public FileResult Get(int id)
+        public async Task<FileResult> Get(int id)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (!user.IsAdmin)
+            {
+                Unauthorized();
+            }
+
             var model = _documentService.Get(id);
             return File(model.Data, model.ContentType);
         }
