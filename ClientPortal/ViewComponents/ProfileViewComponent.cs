@@ -18,16 +18,19 @@ namespace ClientPortal.ViewComponents
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ICodeService _context;
         private readonly IMapper _mapper;
+        private readonly IAccountService _accountService;
 
         public ProfileViewComponent(ICodeService context, 
             SignInManager<ApplicationUser> signInManager, 
             UserManager<ApplicationUser> userManager,
-            IMapper mapper)
+            IMapper mapper,
+            IAccountService accountService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _context = context;
             _mapper = mapper;
+            _accountService = accountService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(string profileId)
@@ -40,6 +43,9 @@ namespace ClientPortal.ViewComponents
                 var broker = await _context.GetBrokerByAccountId(profileId);
                 model.DocumentW9Id = broker.DocumentW9Id;
             }
+
+            var account = _accountService.GetAccountCommon(profileId);
+            model.CommissionRate = account.CommissionRate;
 
             return View(model);
         }

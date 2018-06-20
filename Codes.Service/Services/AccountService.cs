@@ -75,6 +75,8 @@ namespace Codes.Service.Services
             model.Agents = GetAgentsOfBroker(client.BrokerId)
                 .Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName, Selected = (a.Id == client.AgentId) });
 
+            model.CommissionRate = client.CommissionRate.ToString();
+
             return model;
         }
 
@@ -126,6 +128,34 @@ namespace Codes.Service.Services
         public IEnumerable<AccountViewModel> GetCampaignsOfClient(int clientId)
         {
             throw new System.NotImplementedException();
+        }
+
+        public AccountCommonModel GetAccountCommon(string reference)
+        {
+            var model = new AccountCommonModel();
+
+            var agent = _context.Agents.SingleOrDefault(a => a.ApplicationReference == reference);
+            var broker = _context.Brokers.SingleOrDefault(b => b.ApplicationReference == reference);
+            var client = _context.Clients.SingleOrDefault(c => c.ApplicationReference == reference);
+
+            if (agent != null)
+            {
+                model.CommissionRate = (decimal)agent.CommissionRate;
+            }
+
+            if (broker != null)
+            {
+                model.CommissionRate = (decimal)broker.BrokerCommissionPercentage;
+                model.ClientCommissionRate = (decimal)broker.ClientCommissionPercentage;
+                model.AgentCommissionRate = (decimal)broker.AgentCommissionPercentage;
+            }
+
+            if (client != null)
+            {
+                model.CommissionRate = (decimal)client.CommissionRate;
+            }
+
+            return model;
         }
     }
 }

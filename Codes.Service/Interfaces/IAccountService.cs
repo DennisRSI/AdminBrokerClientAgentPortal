@@ -25,5 +25,7 @@ namespace Codes.Service.Interfaces
 
         // Client
         IEnumerable<AccountViewModel> GetCampaignsOfClient(int clientId);
+
+        AccountCommonModel GetAccountCommon(string reference);
     }
 }
