@@ -4,15 +4,17 @@ namespace Codes.Service.ViewModels
     {
         public string Name { get; set; }
         public int PhysicalTotal { get; set; }
+        public int PhysicalAvailableActivations { get; set; }
         public int PhysicalActivated { get; set; }
         public int VirtualTotal { get; set; }
+        public int VirtualAvailableActivations { get; set; }
         public int VirtualActivated { get; set; }
 
         public string PhysicalRate
         {
             get
             {
-                return GetRate(PhysicalTotal, PhysicalActivated);
+                return GetRate(PhysicalAvailableActivations, PhysicalActivated);
             }
         }
 
@@ -20,7 +22,7 @@ namespace Codes.Service.ViewModels
         {
             get
             {
-                return GetRate(VirtualTotal, VirtualActivated);
+                return GetRate(VirtualAvailableActivations, VirtualActivated);
             }
         }
 

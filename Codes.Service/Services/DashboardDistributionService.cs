@@ -62,10 +62,12 @@ namespace Codes.Service.Services
             {
                 var result = new CardDistributionViewModel()
                 {
-                    Name = (string)row["FirstName"] + " " + (string)row["LastName"],
+                    Name = (string)row["FullName"],
                     PhysicalTotal = (int)row["PhysicalTotal"],
+                    PhysicalAvailableActivations = (int)row["PhysicalAvailableActivations"],
                     PhysicalActivated = (int)row["PhysicalActivated"],
                     VirtualTotal = (int)row["VirtualTotal"],
+                    VirtualAvailableActivations = (int)row["VirtualAvailableActivations"],
                     VirtualActivated = (int)row["VirtualActivated"],
                 };
 

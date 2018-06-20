@@ -16,9 +16,11 @@ function Dashboard() {
         var columns = [
             { "data": "name" },
             { "data": "physicalTotal" },
+            { "data": "physicalAvailableActivations" },
             { "data": "physicalActivated" },
             { "data": "physicalRate" },
             { "data": "virtualTotal" },
+            { "data": "virtualAvailableActivations" },
             { "data": "virtualActivated" },
             { "data": "virtualRate" },
         ];
