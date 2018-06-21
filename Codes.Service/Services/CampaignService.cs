@@ -145,18 +145,46 @@ namespace Codes.Service.Services
                     DeactivationDate = q.DeactivationDate,
                     CampaignId = q.CampaignId,
                     CampaignName = q.CampaignName,
-                    CardQuantity = q.CardQuantity,
                     CampaignType = q.CampaignType,
-                    StartNumber = (q.CampaignCodeRange.Count == 0) ? 0 : q.CampaignCodeRange.Max(r => r.CodeRange.StartNumber)
                 });
+
+            var dataArray = data.ToArray();
+            AddCodeInformation(dataArray);
 
             return new DataTableViewModel<CampaignViewModel>
             {
                 NumberOfRows = queryResult.Count(),
                 RecordsFiltered = queryResult.Count(),
-                Data = data.ToArray(),
+                Data = dataArray,
                 Message = "Success"
             };
+        }
+
+        private void AddCodeInformation(IEnumerable<CampaignViewModel> models)
+        {
+            foreach (var model in models)
+            {
+                var codeRanges =
+                    from cr in _context.CodeRanges
+                    join ccr in _context.CampaignCodeRanges on cr.CodeRangeId equals ccr.CodeRangeId
+                    where ccr.CampaignId == model.CampaignId
+                    orderby cr.CreationDate descending
+                    select cr;
+
+                var codeRange = codeRanges.First();
+
+                if (codeRange != null)
+                {
+                    model.StartNumber = codeRange.StartNumber;
+                    model.EndNumber = codeRange.EndNumber;
+                    model.Increment = codeRange.IncrementByNumber;
+                    model.FaceValue = codeRange.Points.ToString();
+                    model.CardPrefix = codeRange.PreAlphaCharacters;
+                    model.CardSuffix = codeRange.PostAlphaCharacters;
+                    model.CardQuantity = codeRange.GetTotalCodes();
+                    model.TotalPossibleActivations = codeRange.GetTotalPossibleActivations();
+                }
+            }
         }
     }
 }

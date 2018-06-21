@@ -4,33 +4,6 @@ function ClientDetails() {
     var self = this;
 
     this.init = function (clientId) {
-        self.initCampaignTable(clientId);
-    }
-
-    // Is this still used?
-    this.initCampaignTable = function (clientId) {
-        var url = "api/campaign/getbyclient/" + clientId;
-
-        var cols = [
-            { "data": "campaignId" },
-            { "data": "campaignName" },
-            { "data": "startNumber" },
-            { "data": "cardQuantity" },
-            { "data": "campaignType" },
-            { "data": "benefitText" },
-            { "data": "statusText" },
-            {
-                "data": "campaignId",
-                "className": "text-center",
-                "render": function (data, type, row) {
-                    return '<i data-clone="' + data + '" class="clone fa fa-clone fa-sm"></i>';
-                }
-            },
-        ];
-
-        if (!$.fn.DataTable.isDataTable("#campaign_tbl")) {
-            dataTable = LIST.generateUpdatableList("#campaign_tbl", url, cols, "GET");
-        }
     }
 
     this.loadChart = function (labelList, dataList) {

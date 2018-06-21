@@ -14,12 +14,15 @@ namespace Codes.Service.ViewModels
 
         public string FaceValue { get; set; }
         public int StartNumber { get; set; }
+        public int EndNumber { get; set; }
 
         [StringLength(50), Display(Name = "Card Type", Prompt = "Card Type")]
         public string CampaignType { get; set; } = "Virtual";
 
         [Display(Name = "Card Quantity", Prompt = "Card Quantity")]
         public int CardQuantity { get; set; }
+
+        public int TotalPossibleActivations { get; set; }
 
         public int ActivationsPerCard { get; set; }
         public string CardPrefix { get; set; }

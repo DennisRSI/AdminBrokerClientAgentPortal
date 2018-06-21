@@ -62,12 +62,13 @@ namespace Codes.Service.Models
     {
         public static int GetTotalCodes(this CodeRangeModel model)
         {
-            if (model.CodeType == CodeType.Virtual)
-            {
-                return model.NumberOfUses;
-            }
+            var totalCodes = (model.EndNumber - model.StartNumber) / model.IncrementByNumber;
+            return ++totalCodes;
+        }
 
-            return (model.EndNumber - model.StartNumber) / model.IncrementByNumber;
+        public static int GetTotalPossibleActivations(this CodeRangeModel model)
+        {
+            return model.GetTotalCodes() * model.NumberOfUses;
         }
     }
 
