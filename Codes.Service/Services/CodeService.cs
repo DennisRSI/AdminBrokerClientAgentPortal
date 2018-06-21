@@ -790,7 +790,7 @@ namespace Codes.Service.Services
 
                 model.RecordsFiltered = ct.Count();
 
-                model.Data = await (from t in tmp
+                var data = await (from t in tmp
                                      select new ClientListViewModel
                                      {
                                          AccountId = t.ApplicationReference,
@@ -808,6 +808,13 @@ namespace Codes.Service.Services
                                          CommissionRate = t.CommissionRate
                                           
                                      }).Skip(startRowIndex).Take(numberOfRows).ToArrayAsync();
+
+                foreach (var item in data)
+                {
+                    item.CardQuantity = await GetCardQuantityByClient(item.ClientId);
+                }
+                    
+                model.Data = data;
                 model.Message = "Success";
             }
             catch (Exception ex)
@@ -820,6 +827,21 @@ namespace Codes.Service.Services
 
             return model;
         }
+
+        private async Task<int> GetCardQuantityByClient(int clientId)
+        {
+            var query =
+                from uc in _context.UnusedCodes
+                join cr in _context.CodeRanges on uc.CodeRangeId equals cr.CodeRangeId
+                join ccr in _context.CampaignCodeRanges on cr.CodeRangeId equals ccr.CodeRangeId
+                join camp in _context.Campaigns on ccr.CampaignId equals camp.CampaignId
+                join c in _context.Clients on camp.ClientId equals c.ClientId
+                where c.ClientId == clientId
+                select uc;
+
+            return await query.CountAsync();
+        }
+
         public async Task<AgentViewModel> GetAgentById(int agentId)
         {
             AgentViewModel agent = new AgentViewModel();
