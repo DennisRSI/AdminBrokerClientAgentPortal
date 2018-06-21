@@ -5,6 +5,7 @@ using Codes.Service.Models;
 using Codes.Service.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -51,7 +52,7 @@ namespace Codes.Service.Services
 
         public IEnumerable<MyClientViewModel> GetClientsByBroker(int brokerId)
         {
-            return _context.Clients.Where(c => c.BrokerId == brokerId)
+            var data = _context.Clients.Where(c => c.BrokerId == brokerId)
                 .Select(c =>
                        new MyClientViewModel()
                        {
@@ -61,10 +62,33 @@ namespace Codes.Service.Services
                            CompanyName = c.CompanyName,
                            ContactName = $"{c.ContactFirstName} {c.ContactLastName}",
                            Email = c.Email,
-                           PhoneNumber = c.OfficePhone,
-                           SalesAgent = "?"
+                           PhoneNumber = !String.IsNullOrWhiteSpace(c.OfficePhone) ? c.OfficePhone : c.MobilePhone,
+                           SalesAgent = $"{c.Agent.AgentFirstName} {c.Agent.AgentLastName}"
                        }
                 );
+
+            var result = data.ToList();
+
+            foreach (var item in result)
+            {
+                item.CardQuantity = GetCardQuantityByClient(item.ClientId);
+            }
+
+            return result;
+        }
+
+        private int GetCardQuantityByClient(int clientId)
+        {
+            var query =
+                from uc in _context.UnusedCodes
+                join cr in _context.CodeRanges on uc.CodeRangeId equals cr.CodeRangeId
+                join ccr in _context.CampaignCodeRanges on cr.CodeRangeId equals ccr.CodeRangeId
+                join camp in _context.Campaigns on ccr.CampaignId equals camp.CampaignId
+                join c in _context.Clients on camp.ClientId equals c.ClientId
+                where c.ClientId == clientId
+                select uc;
+
+            return query.Count();
         }
 
         public ClientEditViewModel GetClientEdit(int clientId)
