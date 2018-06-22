@@ -172,5 +172,6 @@ namespace Codes.Service.Models
         public virtual DocumentModel DocumentOther { get; set; }
 
         public ICollection<CampaignAgentModel> CampaignAgents { get; set; }
+        public ICollection<ClientModel> Clients { get; set; }
     }
 }

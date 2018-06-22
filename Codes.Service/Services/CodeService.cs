@@ -1175,7 +1175,6 @@ namespace Codes.Service.Services
                                 tmp = tmp.OrderByDescending(o => o.AgentFirstName);
                             break;
                     }
-                    //tmp = tmp.OrderBy(search + " " + sortDirection);
                 }
 
                 var ct = tmp;
@@ -1188,7 +1187,7 @@ namespace Codes.Service.Services
                                          AccountId = t.ApplicationReference,
                                          ActivationDate = t.CreationDate,
                                          AgentId = t.AgentId,
-                                         Clients = 0,
+                                         Clients = t.Clients.Count(),
                                          CommissionRate = t.CommissionRate,
                                          Company = t.CompanyName,
                                          DeactivationDate = t.DeactivationDate,
@@ -1199,6 +1198,7 @@ namespace Codes.Service.Services
                                          Extension = t.MobilePhone != null && t.MobilePhone.Length > 0 ? "" : t.OfficeExtension,
                                          Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone.FormatPhone() : t.OfficePhone.FormatPhone()
                                      }).Skip(startRowIndex).Take(numberOfRows).ToArrayAsync();
+
                 model.Message = "Success";
             }
             catch (Exception ex)
@@ -1211,6 +1211,7 @@ namespace Codes.Service.Services
 
             return model;
         }
+
         public async Task<BrokerViewModel> GetBrokerById(int brokerId)
         {
             BrokerViewModel broker = new BrokerViewModel();
