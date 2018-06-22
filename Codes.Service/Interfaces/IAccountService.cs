@@ -27,5 +27,7 @@ namespace Codes.Service.Interfaces
         IEnumerable<AccountViewModel> GetCampaignsOfClient(int clientId);
 
         AccountCommonModel GetAccountCommon(string reference);
+
+        void DeactivateClient(int clientId, string reason);
     }
 }

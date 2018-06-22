@@ -5,6 +5,8 @@ function ClientEdit() {
 
     this.init = function (clientId) {
 
+        $('#deactivate-message').hide();
+
         $('input[type="tel"]').inputmask({
             mask: '(999) 999-9999'
         });
@@ -15,6 +17,10 @@ function ClientEdit() {
 
         $('#zip').inputmask({
             mask: '99999'
+        });
+
+        $('#clientdeactivate').on("click", function (event) {
+            self.deactivateClient();
         });
 
         $("#save").on("click", function (event) {
@@ -51,5 +57,20 @@ function ClientEdit() {
         });
     }
 
+    this.deactivateClient = function (clientId) {
+        var clientId = $('#clientdeactivate').data('id');
+        var reason = $('#reason').val();
+        reason = encodeURIComponent(reason);
+
+        var url = ['/api/user/deactivateclient', clientId, reason].join('/');
+
+        $.post(url,
+            function (data) {
+                $('.modal').modal('hide');
+                $('#deactivate-openmodal').addClass('hidden');
+                $('#deactivate-message').show();
+            }
+        );
+    }
 }
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 
 namespace Codes.Service.ViewModels
@@ -22,6 +23,7 @@ namespace Codes.Service.ViewModels
         public string Email { get; set; }
         public string CommissionRate { get; set; }
         public int AgentId { get; set; }
+        public DateTime? DeactivationDate { get; set; }
 
         public string UserName
         {

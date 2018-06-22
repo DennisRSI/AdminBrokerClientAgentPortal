@@ -174,7 +174,9 @@ function List() {
                 }
             },
             {
-                "data": "deactivation_date"
+                "data": "deactivation_date", "render": function (data) {
+                    return UTILITY.formatDateTime(data);
+                }
             }
         ];
 

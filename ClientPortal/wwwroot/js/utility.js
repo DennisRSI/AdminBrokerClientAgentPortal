@@ -24,6 +24,10 @@ function Utility() {
     }
 
     this.formatDateTime = function (value) {
+        if (value === null || value.length < 8) {
+            return value;
+        }
+
         var date = new Date(value);
         var month = date.getMonth() + 1;
         return (month.toString().length > 1 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();

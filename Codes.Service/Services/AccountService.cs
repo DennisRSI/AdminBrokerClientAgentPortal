@@ -100,6 +100,7 @@ namespace Codes.Service.Services
                 .Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName, Selected = (a.Id == client.AgentId) });
 
             model.CommissionRate = client.CommissionRate.ToString();
+            model.DeactivationDate = client.DeactivationDate;
 
             return model;
         }
@@ -180,6 +181,14 @@ namespace Codes.Service.Services
             }
 
             return model;
+        }
+
+        public void DeactivateClient(int clientId, string reason)
+        {
+            var client = _context.Clients.Single(c => c.ClientId == clientId);
+            client.DeactivationDate = DateTime.Now;
+            client.DeactivationReason = reason;
+            _context.SaveChanges();
         }
     }
 }

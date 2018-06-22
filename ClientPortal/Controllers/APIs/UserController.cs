@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using ClientPortal.Models;
 using ClientPortal.Services._Interfaces;
@@ -23,13 +21,16 @@ namespace ClientPortal.Controllers.APIs
         private readonly ICodeService _codeService;
         private readonly IDocumentService _documentService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IAccountService _accountService;
 
-        public UserController(IUserService context, ICodeService codeService, IDocumentService documentService, UserManager<ApplicationUser> userManager)
+        public UserController(IUserService context, ICodeService codeService, IDocumentService documentService, UserManager<ApplicationUser> userManager,
+            IAccountService accountService)
         {
             _context = context;
             _codeService = codeService;
             _userManager = userManager;
             _documentService = documentService;
+            _accountService = accountService;
         }
 
         [HttpPost("{userType}")]
@@ -456,6 +457,13 @@ namespace ClientPortal.Controllers.APIs
             }
 
             return BadRequest();
+        }
+
+        [HttpPost("deactivateclient/{clientId}/{reason}")]
+        public IActionResult DeactivateClient(int clientId, string reason)
+        {
+            _accountService.DeactivateClient(clientId, reason);
+            return Ok();
         }
 
         private async Task<AdminViewModel> UpdateAdmin(ApplicationUser user)
