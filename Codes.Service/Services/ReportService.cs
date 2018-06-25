@@ -113,6 +113,13 @@ namespace Codes.Service.Services
             var table = _dataAccess.ExecuteDataTable(procedureName, parameters);
             var results = new List<ProductionDetailItemViewModel>();
 
+            int totalNights = 0;
+            decimal totalInternetPrice = 0;
+            decimal totalYouPayPrice = 0;
+            Single totalMemberSavings = 0;
+            Single totalPointsBalance = 0;
+            decimal totalCommission = 0;
+
             foreach (DataRow row in table.Rows)
             {
                 var item = new ProductionDetailItemViewModel()
@@ -131,6 +138,13 @@ namespace Codes.Service.Services
                     PointsBalance = (Single)row["PointsBalance"],
                 };
 
+                totalNights += (item.CheckOutDate - item.CheckInDate).Days;
+                totalInternetPrice += item.InternetPrice;
+                totalYouPayPrice += item.YouPayPrice;
+                totalMemberSavings += item.MemberSavings;
+                totalPointsBalance += item.PointsBalance;
+                totalCommission += 0;
+
                 results.Add(item);
             }
 
@@ -140,7 +154,13 @@ namespace Codes.Service.Services
                 CheckoutEndDate = query.CheckOutEndDate,
                 BookingStartDate = query.BookingStartDate,
                 BookingEndDate = query.BookingEndDate,
-                DetailsTable = results
+                DetailsTable = results,
+                TotalNights = totalNights,
+                TotalInternetPrice = totalInternetPrice,
+                TotalYouPayPrice = totalYouPayPrice,
+                TotalMemberSavings = totalMemberSavings,
+                TotalPointsBalance = totalPointsBalance,
+                TotalCommission = totalCommission
             };
 
             return model;

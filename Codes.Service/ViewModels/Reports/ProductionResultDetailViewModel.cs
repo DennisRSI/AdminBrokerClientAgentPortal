@@ -22,11 +22,21 @@ namespace ClientPortal.Models
         public DateTime BookingEndDate { get; set; }
         
         public int TotalNights { get; set; }
-        public string TotalInternetPrice { get; set; }
-        public string TotalYouPay { get; set; }
-        public string TotalMemberSavings { get; set; }
-        public string TotalCommission { get; set; }
-        public string TotalPointBalance { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:c}")]
+        public decimal TotalInternetPrice { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:c}")]
+        public decimal TotalYouPayPrice { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:c}")]
+        public float TotalMemberSavings { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:c}")]
+        public decimal TotalCommission { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:c}")]
+        public float TotalPointsBalance { get; set; }
 
         public IEnumerable<ProductionDetailItemViewModel> DetailsTable { get; set; }
 
