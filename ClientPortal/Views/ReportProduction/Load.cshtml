@@ -11,25 +11,25 @@
                 <div id="data-filters">
                     <h4>Data Filters</h4>
                     <hr class="card-hr2">
-                    <div id="select-report" class="form-group">
+                    <div class="form-group">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             Select Report
-                            <select class="form-control form-group" asp-items="@Model.ReportType"></select>
+                            <select id="select-report" class="form-control form-group" asp-items="@Model.ReportType"></select>
                         </div>
                     </div>
-                    <div id="select-source" class="hidden filter">
+                    <div id="source" class="hidden filter">
                         <div class="form-group">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 Select Source
-                                <select class="form-control form-group">
+                                <select id="select-source" class="form-control form-group">
                                     <option value="all" selected>Alliance</option>
                                 </select>
                             </div>
                         </div>
-                        <div id="payment-status" class="form-group">
+                        <div id="payment" class="form-group">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 Payment Status
-                                <select class="form-control form-group">
+                                <select id="select-payment" class="form-control form-group">
                                     <option value="all" selected>All</option>
                                     <option value="paid">Paid</option>
                                     <option value="unpaid">Unpaid</option>
@@ -37,34 +37,34 @@
                             </div>
                         </div>
                     </div>
-                    <div id="select-broker" class="form-group filter hidden">
+                    <div id="broker" class="form-group filter hidden">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             Select Broker
-                            <select class="form-control form-group" asp-items="@Model.Brokers">
+                            <select id="select-broker" class="form-control form-group" asp-items="@Model.Brokers">
                                 <option value="0" selected>All Brokers</option>
                             </select>
                         </div>
                     </div>
-                    <div id="select-client" class="form-group filter hidden">
+                    <div id="client" class="form-group filter hidden">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             Select Client
-                            <select class="form-control form-group" asp-items="@Model.Clients">
+                            <select id="select-client" class="form-control form-group" asp-items="@Model.Clients">
                                 <option value="0" selected>All Clients</option>
                             </select>
                         </div>
                     </div>
-                    <div id="select-agent" class="form-group filter hidden">
+                    <div id="agent" class="form-group filter hidden">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             Select Agent
-                            <select class="form-control form-group" asp-items="@Model.Agents">
+                            <select id="select-agent" class="form-control form-group" asp-items="@Model.Agents">
                                 <option value="0" selected>All Agents</option>
                             </select>
                         </div>
                     </div>
-                    <div id="select-campaign" class="form-group filter hidden">
+                    <div id="campaign" class="form-group filter hidden">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             Select Campaign
-                            <select class="form-control form-group" asp-items="@Model.Campaigns">
+                            <select id="select-campaign" class="form-control form-group" asp-items="@Model.Campaigns">
                                 <option value="0" selected>All Campaigns</option>
                             </select>
                         </div>
@@ -137,11 +137,18 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center spacer-60">
+    <div id="start-report" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center spacer-60">
         <span class="h1 text-extra-muted">Select Filters Above and Run Report</span><br /><br /><br />
-        <button type="button" class="btn btn-travgreen runreport">
+        <button id="run-report" type="button" class="btn btn-travgreen runreport">
             <i class="fa fa-bar-chart icon-white purchase-button-icon"></i>Run Report
         </button>
+    </div>
+    <div id="update-report" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center hidden">
+        <button type="button" class="btn btn-travgreen runreport">
+            <i class="fa fa-bar-chart icon-white purchase-button-icon"></i>Update Report
+        </button>
+    </div>
+    <div id="result" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 spacer-10">
     </div>
 </div>
 

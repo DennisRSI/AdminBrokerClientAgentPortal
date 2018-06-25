@@ -1,0 +1,42 @@
+﻿@model ClientPortal.Models.ProductionResultDetailViewModel
+<div class="x_panel">
+    <div class="x_content">
+        <span class="h2 text-muted">Production Report by @Model.Type</span>
+        <div class="pull-right no-print">
+            <button type="button" class="btn btn-default btn-sm hidden"><i class="fa fa-file-pdf-o"></i>&nbsp; Download PDF</button>&nbsp;
+            <button id="export-excel" type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Export Excel</button>
+        </div>
+        <div class="clearfix"></div>
+        <hr class="card-hr">
+        <span class="h4">@Model.Type: @Model.AccountName</span><br />
+        <span class="h4">Check-Out Date Range: @Html.DisplayFor(m => m.CheckoutStartDate) - @Html.DisplayFor(m => m.CheckoutEndDate)</span><br />
+        <span class="h4">Booking Date Range: @Html.DisplayFor(m => m.BookingStartDate) - @Html.DisplayFor(m => m.BookingEndDate)</span>
+        <div class="pull-right spacer-5">Report Ran: @Model.ReportTime</div>
+        <div class="clearfix"></div>
+
+        <hr>
+        <p class="h3"><span class="capitalFirstLetter">@Model.Type</span>: <span class="tableName">@Model.AccountName</span></p>
+        <table id="table-productiondetail" data-type="" data-id="" class="table table-striped table-bordered jambo_table bulk_action">
+            <thead>
+                <tr>
+                    <th class="col-lg-1 col-md-1">Conf #</th>
+                    <th class="col-lg-1 col-md-1">Card #</th>
+                    <th class="col-lg-1 col-md-1">Member</th>
+                    <th class="col-lg-1 col-md-1">Guest</th>
+                    <th class="col-lg-1 col-md-1">Booking Date</th>
+                    <th class="col-lg-1 col-md-1">Check-In</th>
+                    <th class="col-lg-1 col-md-1">Check-Out</th>
+                    <th class="col-lg-1 col-md-1">Canceled</th>
+                    <th class="col-lg-1 col-md-1">Internet Price</th>
+                    <th class="col-lg-1 col-md-1">You Pay Price</th>
+                    <th class="col-lg-1 col-md-1">Member Savings</th>
+                    <th class="col-lg-1 col-md-1">Points Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                @Html.DisplayFor(m => m.DetailsTable)
+            </tbody>
+        </table>
+
+    </div>
+</div>

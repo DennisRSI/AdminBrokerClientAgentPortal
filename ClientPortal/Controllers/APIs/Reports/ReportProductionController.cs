@@ -1,10 +1,12 @@
 ﻿using ClientPortal.Models;
 using Codes.Service.Domain;
 using Codes.Service.Interfaces;
+using Codes.Service.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,6 +51,53 @@ namespace ClientPortal.Controllers.APIs
             };
 
             return PartialView("Load", model);
+        }
+
+        [HttpGet("gethtmldetail/{type}/{id}/{name}/{paymentStatus}/{checkOutStart}/{checkOutEnd}/{bookingStart}/{bookingEnd}")]
+        public async Task<IActionResult> GetHtmlDetail(
+            string type, int id, string name, int paymentStatus,
+            string checkOutStart, string checkOutEnd, string bookingStart, string bookingEnd
+            )
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var accountQuery = _accountQueryFactory.GetAccountQuery(user.BrokerId, user.AgentId, user.ClientId);
+
+            int? brokerId = null;
+            int? agentId = null;
+            int? clientId = null;
+
+            switch (type)
+            {
+                case "broker":
+                    brokerId = id;
+                    break;
+
+                case "agent":
+                    agentId = id;
+                    break;
+
+                case "client":
+                    clientId = id;
+                    break;
+            }
+
+            var query = new ProductionDetailQuery()
+            {
+                BookingStartDate = DateTime.ParseExact(bookingStart, "yyyy-MM-dd", null),
+                BookingEndDate = DateTime.ParseExact(bookingEnd, "yyyy-MM-dd", null),
+                CheckOutStartDate = DateTime.ParseExact(checkOutStart, "yyyy-MM-dd", null),
+                CheckOutEndDate = DateTime.ParseExact(checkOutEnd, "yyyy-MM-dd", null),
+                BrokerId = brokerId,
+                AgentId = agentId,
+                ClientId = clientId
+            };
+
+            var model = _reportService.GetProductionResultDetail(query);
+
+            model.Type = type.First().ToString().ToUpper() + type.Substring(1);
+            model.AccountName = name;
+
+            return PartialView("HtmlDetail", model);
         }
 
         private List<SelectListItem> GetReportType(string type)

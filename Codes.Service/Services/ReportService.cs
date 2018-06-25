@@ -1,4 +1,5 @@
-﻿using Codes.Service.Data;
+﻿using ClientPortal.Models;
+using Codes.Service.Data;
 using Codes.Service.Domain;
 using Codes.Service.Interfaces;
 using Codes.Service.ViewModels;
@@ -80,5 +81,86 @@ namespace Codes.Service.Services
 
             return result;
         }
+
+        public ProductionResultDetailViewModel GetProductionResultDetail(ProductionDetailQuery query)
+        {
+            const string procedureName = "ReportProductionDetails";
+
+            var totalCount = new SqlParameter()
+            {
+                ParameterName = "@TotalCount",
+                Value = 0,
+                Direction = ParameterDirection.Output
+            };
+
+            var parameters = new[]
+            {
+                new SqlParameter("@BookingStartDate", query.BookingStartDate),
+                new SqlParameter("@BookingEndDate", query.BookingEndDate),
+                new SqlParameter("@CheckOutStartDate", query.CheckOutStartDate),
+                new SqlParameter("@CheckOutEndDate", query.CheckOutEndDate),
+                new SqlParameter("@StartRowIndex", Convert.ToInt32(0)),
+                new SqlParameter("@NumberOfRows", 10000),
+                new SqlParameter("@SortColumn", "DEFAULT"),
+                new SqlParameter("@SortDirection", "ASC"),
+                new SqlParameter("@BrokerId", query.BrokerId),
+                new SqlParameter("@AgentId", query.AgentId),
+                new SqlParameter("@ClientId", query.ClientId),
+                new SqlParameter("@Search", ""),
+                totalCount
+            };
+
+            var table = _dataAccess.ExecuteDataTable(procedureName, parameters);
+            var results = new List<ProductionDetailItemViewModel>();
+
+            foreach (DataRow row in table.Rows)
+            {
+                var item = new ProductionDetailItemViewModel()
+                {
+                    ConfirmationNumber = (string)row["ConfirmationNumber"],
+                    CardNumber = (string)row["CardNumber"],
+                    MemberFullName = GetAbbreviatedName((string)row["MemberFirstName"], (string)row["MemberLastName"]),
+                    GuestFullName = String.Empty,
+                    BookingDate = (DateTime)row["BookingDate"],
+                    CheckInDate = (DateTime)row["CheckInDate"],
+                    CheckOutDate = (DateTime)row["CheckOutDate"],
+                    Canceled = (string)row["Canceled"],
+                    InternetPrice = (decimal)row["InternetPrice"],
+                    YouPayPrice = (decimal)row["YouPayPrice"],
+                    MemberSavings = (Single)row["MemberSavings"],
+                    PointsBalance = (Single)row["PointsBalance"],
+                };
+
+                results.Add(item);
+            }
+
+            var model = new ProductionResultDetailViewModel
+            {
+                CheckoutStartDate = query.CheckOutStartDate,
+                CheckoutEndDate = query.CheckOutEndDate,
+                BookingStartDate = query.BookingStartDate,
+                BookingEndDate = query.BookingEndDate,
+                DetailsTable = results
+            };
+
+            return model;
+        }
+
+        private string GetAbbreviatedName(string firstName, string lastName)
+        {
+            var initial = firstName.Substring(0, 1).ToUpper();
+            return $"{initial}. {lastName}";
+        }
+    }
+
+    public class ProductionDetailQuery
+    {
+        public DateTime BookingStartDate { get; set; }
+        public DateTime BookingEndDate { get; set; }
+        public DateTime CheckOutStartDate { get; set; }
+        public DateTime CheckOutEndDate { get; set; }
+        public int? BrokerId { get; set; }
+        public int? AgentId { get; set; }
+        public int? ClientId { get; set; }
     }
 }
