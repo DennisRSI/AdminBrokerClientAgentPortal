@@ -166,6 +166,98 @@ namespace Codes.Service.Services
             return model;
         }
 
+        public ProductionResultSummaryViewModel GetProductionResultSummary(ProductionSummaryQuery query)
+        {
+            string procedureName = "ReportProductionBy" + query.QueryType;
+            string reportGroupName = null;
+            string accountNameColumn = "Client";
+
+            switch (query.QueryType.ToLower())
+            {
+                case "broker":
+                    reportGroupName = "Client";
+                    break;
+
+                case "agent":
+                    reportGroupName = "Client";
+                    break;
+
+                case "client":
+                    reportGroupName = "Campaign";
+                    break;
+            }
+
+            var model = new ProductionResultSummaryViewModel
+            {
+                CheckoutStartDate = query.CheckOutStartDate,
+                CheckoutEndDate = query.CheckOutEndDate,
+                BookingStartDate = query.BookingStartDate,
+                BookingEndDate = query.BookingEndDate,
+                Tables = new List<ProductionSummaryTableViewModel>()
+            };
+
+            foreach (var accountId in query.AccountIds)
+            {
+                var totalCount = new SqlParameter()
+                {
+                    ParameterName = "@TotalCount",
+                    Value = 0,
+                    Direction = ParameterDirection.Output
+                };
+
+                var parameters = new[]
+                {
+                    new SqlParameter("@" + query.QueryType + "Id", accountId),
+                    new SqlParameter("@BookingStartDate", query.BookingStartDate),
+                    new SqlParameter("@BookingEndDate", query.BookingEndDate),
+                    new SqlParameter("@CheckInDate", query.CheckOutStartDate),
+                    new SqlParameter("@CheckOutDate", query.CheckOutEndDate),
+                    new SqlParameter("@StartRowIndex", Convert.ToInt32(0)),
+                    new SqlParameter("@NumberOfRows", 30000),
+                    totalCount
+                };
+
+                var table = _dataAccess.ExecuteDataTable(procedureName, parameters);
+
+                var result = new ProductionSummaryTableViewModel
+                {
+                    ReportGroupName = reportGroupName,
+                    AccountType = query.QueryType,
+                    Items = new List<ProductionSummaryItemViewModel>()
+                };
+
+                model.Tables.Add(result);
+
+                foreach (DataRow row in table.Rows)
+                {
+                    result.AccountName = (string)row[query.QueryType + "FirstName"] + " " + (string)row[query.QueryType + "LastName"];
+
+                    var item = new ProductionSummaryItemViewModel()
+                    {
+                        AccountName = ReadColumn.GetString(row, accountNameColumn),
+                        InternetPrice = ReadColumn.GetDecimal(row, "InternetPrice"),
+                        YouPayPrice = ReadColumn.GetDecimal(row, "YouPayPrice"),
+                        MemberSavings = ReadColumn.GetDouble(row, "MemberSavings"),
+                        CommissionEarned = ReadColumn.GetDecimal(row, "CommissionEarned"),
+                    };
+
+                    result.TotalInternetPrice += item.InternetPrice;
+                    result.TotalYouPayPrice += item.YouPayPrice;
+                    result.TotalMemberSavings += item.MemberSavings;
+                    result.TotalCommissionEarned += 0;
+
+                    model.TotalInternetPrice += item.InternetPrice;
+                    model.TotalYouPayPrice += item.YouPayPrice;
+                    model.TotalMemberSavings += item.MemberSavings;
+                    model.TotalCommissionEarned += 0;
+
+                    result.Items.Add(item);
+                }
+            }
+
+            return model;
+        }
+
         private string GetAbbreviatedName(string firstName, string lastName)
         {
             var initial = firstName.Substring(0, 1).ToUpper();
@@ -182,5 +274,15 @@ namespace Codes.Service.Services
         public int? BrokerId { get; set; }
         public int? AgentId { get; set; }
         public int? ClientId { get; set; }
+    }
+
+    public class ProductionSummaryQuery
+    {
+        public DateTime BookingStartDate { get; set; }
+        public DateTime BookingEndDate { get; set; }
+        public DateTime CheckOutStartDate { get; set; }
+        public DateTime CheckOutEndDate { get; set; }
+        public string QueryType { get; set; }
+        public IEnumerable<int> AccountIds { get; set; }
     }
 }

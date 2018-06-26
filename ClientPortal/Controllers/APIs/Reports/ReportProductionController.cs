@@ -53,6 +53,49 @@ namespace ClientPortal.Controllers.APIs
             return PartialView("Load", model);
         }
 
+        [HttpGet("gethtmlsummary/{type}/{id}/{name}/{paymentStatus}/{checkOutStart}/{checkOutEnd}/{bookingStart}/{bookingEnd}")]
+        public async Task<IActionResult> GetHtmlSummary(
+            string type, int id, string name, int paymentStatus,
+            string checkOutStart, string checkOutEnd, string bookingStart, string bookingEnd
+            )
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var accountQuery = _accountQueryFactory.GetAccountQuery(user.BrokerId, user.AgentId, user.ClientId);
+            IEnumerable<int> accounts = null;
+
+            switch (type)
+            {
+                case "broker":
+                    accounts = accountQuery.GetBrokers().Select(b => b.Id);
+                    break;
+
+                case "agent":
+                    accounts = accountQuery.GetAgents().Select(a => a.Id);
+                    break;
+
+                case "client":
+                    accounts = accountQuery.GetClients().Select(c => c.Id);
+                    break;
+            }
+
+            var query = new ProductionSummaryQuery()
+            {
+                BookingStartDate = DateTime.ParseExact(bookingStart, "yyyy-MM-dd", null),
+                BookingEndDate = DateTime.ParseExact(bookingEnd, "yyyy-MM-dd", null),
+                CheckOutStartDate = DateTime.ParseExact(checkOutStart, "yyyy-MM-dd", null),
+                CheckOutEndDate = DateTime.ParseExact(checkOutEnd, "yyyy-MM-dd", null),
+                QueryType = type,
+                AccountIds = accounts
+            };
+
+            var model = _reportService.GetProductionResultSummary(query);
+
+            model.Type = type.First().ToString().ToUpper() + type.Substring(1);
+            model.AccountName = "All";
+
+            return PartialView("HtmlSummary", model);
+        }
+
         [HttpGet("gethtmldetail/{type}/{id}/{name}/{paymentStatus}/{checkOutStart}/{checkOutEnd}/{bookingStart}/{bookingEnd}")]
         public async Task<IActionResult> GetHtmlDetail(
             string type, int id, string name, int paymentStatus,

@@ -5,6 +5,11 @@ namespace Codes.Service.Domain
 {
     public static class StringExtensions
     {
+        public static string CapitalizeFirstLetter(this String value)
+        {
+            return value.First().ToString().ToUpper() + value.Substring(1);
+        }
+
         public static string FormatPhone(this String phone)
         {
             if (String.IsNullOrWhiteSpace(phone))

@@ -36,7 +36,7 @@ function Production() {
 
         var url = '/api/reportproduction/gethtmldetail';
 
-        if (id === 0) {
+        if (id == 0) {
             url = '/api/reportproduction/gethtmlsummary';
         }
 

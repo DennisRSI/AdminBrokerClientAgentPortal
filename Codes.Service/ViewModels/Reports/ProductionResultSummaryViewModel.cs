@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Codes.Service.ViewModels
+namespace ClientPortal.Models
 {
-    public class ProductionResultDetailViewModel
+    public class ProductionResultSummaryViewModel
     {
         public string Type { get; set; }
         public string AccountName { get; set; }
@@ -21,8 +21,6 @@ namespace Codes.Service.ViewModels
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime BookingEndDate { get; set; }
         
-        public int TotalNights { get; set; }
-
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalInternetPrice { get; set; }
 
@@ -30,15 +28,12 @@ namespace Codes.Service.ViewModels
         public decimal TotalYouPayPrice { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public float TotalMemberSavings { get; set; }
+        public double TotalMemberSavings { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public decimal TotalCommission { get; set; }
+        public float TotalCommissionEarned { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:c}")]
-        public float TotalPointsBalance { get; set; }
-
-        public IEnumerable<ProductionDetailItemViewModel> DetailsTable { get; set; }
+        public List<ProductionSummaryTableViewModel> Tables { get; set; }
 
         public string ReportTime
         {
@@ -46,23 +41,23 @@ namespace Codes.Service.ViewModels
         }
     }
 
-    public class ProductionDetailItemViewModel
+    public class ProductionSummaryTableViewModel
     {
-        public string ConfirmationNumber { get; set; }
-        public string CardNumber { get; set; }
-        public string MemberFullName { get; set; }
-        public string GuestFullName { get; set; }
+        public string AccountType { get; set; }
+        public string AccountName { get; set; }
+        public string ReportGroupName { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime BookingDate { get; set; }
+        public List<ProductionSummaryItemViewModel> Items { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime CheckInDate { get; set; }
+        public decimal TotalInternetPrice { get; set; }
+        public decimal TotalYouPayPrice { get; set; }
+        public double TotalMemberSavings { get; set; }
+        public decimal TotalCommissionEarned { get; set; }
+    }
 
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime CheckOutDate { get; set; }
-
-        public string Canceled { get; set; }
+    public class ProductionSummaryItemViewModel
+    {
+        public string AccountName { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal InternetPrice { get; set; }
@@ -71,9 +66,11 @@ namespace Codes.Service.ViewModels
         public decimal YouPayPrice { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public Single MemberSavings { get; set; }
+        public double MemberSavings { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public Single PointsBalance { get; set; }
+        public decimal CommissionEarned { get; set; }
+
+        public DateTime PaidDate { get; set; }
     }
 }
