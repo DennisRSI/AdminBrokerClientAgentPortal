@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ClientPortal.Models
+namespace Codes.Service.ViewModels
 {
     public class ProductionResultDetailViewModel
     {
