@@ -219,6 +219,11 @@ namespace Codes.Service.Services
 
                 var table = _dataAccess.ExecuteDataTable(procedureName, parameters);
 
+                if (table.Rows.Count == 0)
+                {
+                    continue;
+                }
+
                 var result = new ProductionSummaryTableViewModel
                 {
                     ReportGroupName = reportGroupName,
