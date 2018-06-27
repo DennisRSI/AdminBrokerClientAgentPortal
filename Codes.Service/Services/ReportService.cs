@@ -258,20 +258,6 @@ namespace Codes.Service.Services
 
                     result.Items.Add(item);
                 }
-
-                if (result.Items.Count > 0)
-                {
-                    var totalRow = new ProductionSummaryItemViewModel()
-                    {
-                        AccountName = "Totals:",
-                        InternetPrice = result.TotalInternetPrice,
-                        YouPayPrice = result.TotalYouPayPrice,
-                        MemberSavings = result.TotalMemberSavings,
-                        CommissionEarned = result.TotalCommissionEarned,
-                    };
-
-                    result.Items.Add(totalRow);
-                }
             }
 
             return model;

@@ -49,9 +49,16 @@ namespace ClientPortal.Models
 
         public List<ProductionSummaryItemViewModel> Items { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalInternetPrice { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalYouPayPrice { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:c}")]
         public double TotalMemberSavings { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalCommissionEarned { get; set; }
     }
 

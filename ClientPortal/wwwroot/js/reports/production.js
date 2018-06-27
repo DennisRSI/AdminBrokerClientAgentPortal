@@ -62,6 +62,6 @@ function Production() {
     }
 
     this.initDataTables = function () {
-        $('#table-productiondetail').DataTable();
+        $('.jambo_table').DataTable();
     }
 }
