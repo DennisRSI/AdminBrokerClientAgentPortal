@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Codes.Service.Domain
 {
@@ -43,6 +45,30 @@ namespace Codes.Service.Domain
 
                         return table;
                     }
+                }
+            }
+        }
+
+        public async Task<DataTable> ExecuteDataTableAsync(string procedureName, IEnumerable<SqlParameter> parameters)
+        {
+            var table = new DataTable();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                using (var cmd = new SqlCommand(procedureName, connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddRange(parameters.ToArray());
+
+                    var time = System.DateTime.Now.ToString();
+                    Debug.WriteLine($"Calling: {procedureName} {time}");
+
+                    var reader = await cmd.ExecuteReaderAsync();
+                    table.Load(reader);
+
+                    return table;
                 }
             }
         }

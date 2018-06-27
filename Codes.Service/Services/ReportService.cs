@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace Codes.Service.Services
 {
@@ -166,7 +167,7 @@ namespace Codes.Service.Services
             return model;
         }
 
-        public ProductionResultSummaryViewModel GetProductionResultSummary(ProductionSummaryQuery query)
+        public async Task<ProductionResultSummaryViewModel> GetProductionResultSummaryAsync(ProductionSummaryQuery query)
         {
             string procedureName = "ReportProductionBy" + query.QueryType;
             string reportGroupName = null;
@@ -217,7 +218,7 @@ namespace Codes.Service.Services
                     totalCount
                 };
 
-                var table = _dataAccess.ExecuteDataTable(procedureName, parameters);
+                var table = await _dataAccess.ExecuteDataTableAsync(procedureName, parameters);
 
                 if (table.Rows.Count == 0)
                 {

@@ -88,7 +88,7 @@ namespace ClientPortal.Controllers.APIs
                 AccountIds = accounts
             };
 
-            var model = _reportService.GetProductionResultSummary(query);
+            var model = await _reportService.GetProductionResultSummaryAsync(query);
 
             model.Type = type.First().ToString().ToUpper() + type.Substring(1);
             model.AccountName = "All";
