@@ -153,14 +153,14 @@ namespace ClientPortal.Controllers.APIs
                         new SelectListItem() { Text = "By Source", Value = "source" },
                         new SelectListItem() { Text = "By Broker", Value = "broker" },
                         new SelectListItem() { Text = "By Client", Value = "client" },
-                        new SelectListItem() { Text = "By Agent", Value = "agent" }
+                        //new SelectListItem() { Text = "By Agent", Value = "agent" }
                     };
 
                 case "broker":
                     return new List<SelectListItem>()
                     {
                         new SelectListItem() { Text = "By Client", Value = "client" },
-                        new SelectListItem() { Text = "By Agent", Value = "agent" },
+                        //new SelectListItem() { Text = "By Agent", Value = "agent" },
                         new SelectListItem() { Text = "By Campaign", Value = "campaign" }
                     };
 
