@@ -76,6 +76,10 @@ namespace ClientPortal.Controllers.APIs
                 case "client":
                     accounts = accountQuery.GetClients().Select(c => c.Id);
                     break;
+
+                case "source":
+                    accounts = new List<int> { 0 };
+                    break;
             }
 
             var query = new ProductionSummaryQuery()

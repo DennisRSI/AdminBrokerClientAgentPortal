@@ -172,6 +172,7 @@ namespace Codes.Service.Services
             string procedureName = "ReportProductionBy" + query.QueryType;
             string reportGroupName = null;
             string accountNameColumn = "Client";
+            string columnNamePrefix = query.QueryType;
 
             switch (query.QueryType.ToLower())
             {
@@ -185,6 +186,11 @@ namespace Codes.Service.Services
 
                 case "client":
                     reportGroupName = "Campaign";
+                    break;
+
+                case "source":
+                    reportGroupName = "Broker";
+                    columnNamePrefix = "Broker";
                     break;
             }
 
@@ -206,9 +212,16 @@ namespace Codes.Service.Services
                     Direction = ParameterDirection.Output
                 };
 
+                var idParam = new SqlParameter("@" + query.QueryType + "Id", accountId);
+
+                if (query.QueryType == "source")
+                {
+                    idParam = new SqlParameter("@" + query.QueryType, null);
+                }
+
                 var parameters = new[]
                 {
-                    new SqlParameter("@" + query.QueryType + "Id", accountId),
+                    idParam,
                     new SqlParameter("@BookingStartDate", query.BookingStartDate),
                     new SqlParameter("@BookingEndDate", query.BookingEndDate),
                     new SqlParameter("@CheckInDate", query.CheckOutStartDate),
@@ -236,11 +249,22 @@ namespace Codes.Service.Services
 
                 foreach (DataRow row in table.Rows)
                 {
-                    result.AccountName = (string)row[query.QueryType + "FirstName"] + " " + (string)row[query.QueryType + "LastName"];
+                    var accountName = String.Empty;
+
+                    if (query.QueryType == "source")
+                    {
+                        accountName = (string)row[columnNamePrefix + "FirstName"] + " " + (string)row[columnNamePrefix + "LastName"];
+                        result.AccountName = (string)row["Source"];
+                    }
+                    else
+                    {
+                        accountName = ReadColumn.GetString(row, accountNameColumn);
+                        result.AccountName = (string)row[columnNamePrefix + "FirstName"] + " " + (string)row[columnNamePrefix + "LastName"];
+                    }
 
                     var item = new ProductionSummaryItemViewModel()
                     {
-                        AccountName = ReadColumn.GetString(row, accountNameColumn),
+                        AccountName = accountName,
                         InternetPrice = ReadColumn.GetDecimal(row, "InternetPrice"),
                         YouPayPrice = ReadColumn.GetDecimal(row, "YouPayPrice"),
                         MemberSavings = ReadColumn.GetDouble(row, "MemberSavings"),
