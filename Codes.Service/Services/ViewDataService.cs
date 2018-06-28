@@ -10,11 +10,13 @@ namespace Codes.Service.Services
     {
         private readonly ILogger _logger;
         private readonly CodesDbContext _context;
+        private readonly IAccountService _accountService;
 
-        public ViewDataService(CodesDbContext context, ILoggerFactory loggerFactory)
+        public ViewDataService(CodesDbContext context, ILoggerFactory loggerFactory, IAccountService accountService)
         {
             _context = context;
             _logger = loggerFactory.CreateLogger<CodeService>();
+            _accountService = accountService;
         }
 
         public ClientDetailsViewModel GetClientDetails(int clientId)
@@ -27,7 +29,7 @@ namespace Codes.Service.Services
                 ClientId = client.ClientId,
                 CompanyName = client.CompanyName,
                 PhysicalInCampaigns = 0,
-                VirtualInCampaigns = 0,
+                VirtualInCampaigns = _accountService.GetCardQuantityByClient(clientId)
             };
 
             model.Campaigns = _context.Campaigns

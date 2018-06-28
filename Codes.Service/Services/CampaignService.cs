@@ -48,6 +48,7 @@ namespace Codes.Service.Services
         public void Create(int clientId, CampaignViewModel viewModel)
         {
             var brokerId = _context.Clients.Single(c => c.ClientId == clientId).BrokerId;
+            viewModel.PackageId = PackageCode.GetCode(viewModel.BenefitCondo, viewModel.BenefitShopping, viewModel.BenefitDining);
 
             using (var transaction = _context.Database.BeginTransaction())
             {
@@ -66,7 +67,8 @@ namespace Codes.Service.Services
                     ClientId = clientId,
                     PostLoginVideoId = viewModel.PostLoginVideoId,
                     PreLoginVideoId = viewModel.PreLoginVideoId,
-                    CardQuantity = viewModel.CardQuantity
+                    CardQuantity = viewModel.CardQuantity,
+                    PackageId = viewModel.PackageId
                 };
 
                 _context.Campaigns.Add(model);
@@ -78,7 +80,6 @@ namespace Codes.Service.Services
 
                 transaction.Commit();
             }
-
         }
 
         public void Deactivate(int campaignId, string reason)
@@ -94,7 +95,6 @@ namespace Codes.Service.Services
         private void CreateCodes(int clientId, int brokerId, CampaignViewModel model)
         {
             int endNumber = model.StartNumber + (model.CardQuantity - 1) * model.Increment;
-            int packageId = PackageCode.GetCode(model.BenefitCondo, model.BenefitShopping, model.BenefitDining);
 
             var options = new CodeGeneratorOptions()
             {
@@ -105,7 +105,7 @@ namespace Codes.Service.Services
                 BrokerId = brokerId,
                 ClientId = clientId,
                 CampaignId = model.CampaignId,
-                PackageId = packageId,
+                PackageId = model.PackageId,
                 Padding = model.Padding,
                 StartNumber = model.StartNumber,
                 EndNumber = endNumber,
@@ -146,6 +146,7 @@ namespace Codes.Service.Services
                     CampaignId = q.CampaignId,
                     CampaignName = q.CampaignName,
                     CampaignType = q.CampaignType,
+                    BenefitText = PackageCode.GetText(q.PackageId)
                 });
 
             var dataArray = data.ToArray();
@@ -183,6 +184,7 @@ namespace Codes.Service.Services
                     model.CardSuffix = codeRange.PostAlphaCharacters;
                     model.CardQuantity = codeRange.GetTotalCodes();
                     model.TotalPossibleActivations = codeRange.GetTotalPossibleActivations();
+                    model.ActivationsPerCard = codeRange.NumberOfUses;
                 }
             }
         }

@@ -34,6 +34,8 @@ namespace Codes.Service.ViewModels
         public bool BenefitShopping { get; set; }
         public bool BenefitDining { get; set; }
 
+        public string BenefitText { get; set; }
+
         [Display(Name = "Package Id", Prompt = "Package Id")]
         public int PackageId { get; set; }
 
@@ -74,14 +76,6 @@ namespace Codes.Service.ViewModels
 
         [Display(Name = "Client", Prompt = "Client")]
         public ClientViewModel Client { get; set; } = new ClientViewModel();
-
-        public string BenefitText
-        {
-            get
-            {
-                return String.Empty;
-            }
-        }
 
         public string StatusText
         {

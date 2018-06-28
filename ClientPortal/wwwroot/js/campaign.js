@@ -132,6 +132,7 @@ function Campaign(){
             { "data": "cardPrefix" },
             { "data": "cardSuffix" },
             { "data": "cardQuantity" },
+            { "data": "activationsPerCard" },
             { "data": "campaignType" },
             { "data": "benefitText" },
             { "data": "statusText" },

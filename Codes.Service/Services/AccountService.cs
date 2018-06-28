@@ -77,7 +77,7 @@ namespace Codes.Service.Services
             return result;
         }
 
-        private int GetCardQuantityByClient(int clientId)
+        public int GetCardQuantityByClient(int clientId)
         {
             var query =
                 from uc in _context.UnusedCodes
