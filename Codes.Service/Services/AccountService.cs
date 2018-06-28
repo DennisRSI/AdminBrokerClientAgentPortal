@@ -99,6 +99,8 @@ namespace Codes.Service.Services
             model.Agents = GetAgentsOfBroker(client.BrokerId)
                 .Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName, Selected = (a.Id == client.AgentId) });
 
+            model.FirstName = client.ContactFirstName;
+            model.LastName = client.ContactLastName;
             model.CommissionRate = client.CommissionRate.ToString();
             model.DeactivationDate = client.DeactivationDate;
 

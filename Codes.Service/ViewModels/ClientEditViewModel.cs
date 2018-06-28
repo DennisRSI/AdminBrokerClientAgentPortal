@@ -18,8 +18,8 @@ namespace Codes.Service.ViewModels
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MobilePhone { get; set; }
-        public string ContactPhone { get; set; }
-        public string OfficeFax { get; set; }
+        public string OfficePhone { get; set; }
+        public string Fax { get; set; }
         public string Email { get; set; }
         public string CommissionRate { get; set; }
         public int AgentId { get; set; }
