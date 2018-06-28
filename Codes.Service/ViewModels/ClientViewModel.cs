@@ -125,5 +125,6 @@ namespace Codes.Service.ViewModels
         public BrokerViewModel Broker { get; set; } = new BrokerViewModel();
 
         public int? AgentId { get; set; }
+        public string AgentFullName { get; set; }
     }
 }

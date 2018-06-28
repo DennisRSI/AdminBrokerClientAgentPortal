@@ -1496,13 +1496,16 @@ namespace Codes.Service.Services
 
             try
             {
-                ClientModel c = await _context.Clients.FirstOrDefaultAsync(x => x.ApplicationReference == referenceId);
+                ClientModel c = await _context.Clients
+                    .Include(x => x.Agent)
+                    .FirstOrDefaultAsync(x => x.ApplicationReference == referenceId);
 
                 if (c != null && c.ClientId > 0)
                 {
                     model = new ClientViewModel()
                     {
                         Address = c.Address,
+                        AgentFullName = c.Agent == null ? String.Empty : c.Agent.AgentFirstName + " " + c.Agent.AgentLastName,
                         City = c.City,
                         CompanyName = c.CompanyName,
                         Country = c.Country,
