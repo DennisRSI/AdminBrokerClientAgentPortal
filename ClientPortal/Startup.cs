@@ -102,6 +102,7 @@ namespace ClientPortal
             services.AddTransient<IViewDataService, ViewDataService>();
             services.AddTransient<ICodeGeneratorService, CodeGeneratorService>();
             services.AddTransient<IReportService, ReportService>();
+            services.AddTransient<IReportCommissionService, ReportCommissionService>();
             services.AddTransient<IDashboardDistributionService, DashboardDistributionService>();
             services.AddTransient<IAccountQueryFactory, AccountQueryFactory>();
         }
