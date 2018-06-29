@@ -15,7 +15,6 @@ namespace Codes.Service.Services
     public class ReportService : IReportService
     {
         private readonly CodesDbContext _context;
-        private readonly DashboardReports _dashboardReports;
         private readonly DataAccess _dataAccess;
 
         public ReportService(CodesDbContext context, IConfiguration configuration)
@@ -251,15 +250,22 @@ namespace Codes.Service.Services
                 {
                     var accountName = String.Empty;
 
-                    if (query.QueryType == "source")
+                    switch (query.QueryType)
                     {
-                        accountName = (string)row[columnNamePrefix + "FirstName"] + " " + (string)row[columnNamePrefix + "LastName"];
-                        result.AccountName = (string)row["Source"];
-                    }
-                    else
-                    {
-                        accountName = ReadColumn.GetString(row, accountNameColumn);
-                        result.AccountName = (string)row[columnNamePrefix + "FirstName"] + " " + (string)row[columnNamePrefix + "LastName"];
+                        case "source":
+                            accountName = (string)row[columnNamePrefix + "FirstName"] + " " + (string)row[columnNamePrefix + "LastName"];
+                            result.AccountName = (string)row["Source"];
+                            break;
+
+                        case "client":
+                            accountName = ReadColumn.GetString(row, "Client");
+                            result.AccountName = (string)row["ClientCompanyName"]; // This needs to be changed once added to proc
+                            break;
+
+                        default:
+                            accountName = ReadColumn.GetString(row, accountNameColumn);
+                            result.AccountName = (string)row[columnNamePrefix + "FirstName"] + " " + (string)row[columnNamePrefix + "LastName"];
+                            break;
                     }
 
                     var item = new ProductionSummaryItemViewModel()
