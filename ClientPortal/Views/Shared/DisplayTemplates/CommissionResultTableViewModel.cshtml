@@ -1,0 +1,38 @@
+@using Codes.Service.Domain
+@model Codes.Service.ViewModels.CommissionResultTableViewModel
+<hr>
+<p class="h3"><span class="capitalFirstLetter">@Model.AccountType</span>: <span class="tableName">@Model.AccountName</span></p>
+<table class="table table-striped table-bordered jambo_table bulk_action">
+    <thead>
+        <tr>
+            <th class="col-lg-2 col-md-2">@Model.ReportGroupName</th>
+            <th class="col-lg-2 col-md-2"># Cards</th>
+            <th class="col-lg-2 col-md-2">Transactions</th>
+            <th class="col-lg-2 col-md-2">Internet Price</th>
+            <th class="col-lg-1 col-md-1">You Pay Price</th>
+            <th class="col-lg-1 col-md-1">Member Savings</th>
+            <th class="col-lg-1 col-md-1">Commission Earned</th>
+            <th class="col-lg-1 col-md-1">Paid Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @Html.DisplayFor(m => m.Items)
+    </tbody>
+</table>
+@if (Model.AccountType != "source")
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="text-right col-lg-2 col-md-2"><b>@Model.AccountType.CapitalizeFirstLetter() Totals:</b></th>
+                <th class="col-lg-2 col-md-2"><strong>@Html.DisplayFor(m => m.TotalCards)</strong></th>
+                <th class="col-lg-2 col-md-2"><strong>@Html.DisplayFor(m => m.TotalTransactions)</strong></th>
+                <th class="col-lg-2 col-md-2"><strong>@Html.DisplayFor(m => m.TotalInternetPrice)</strong></th>
+                <th class="col-lg-2 col-md-2"><strong>@Html.DisplayFor(m => m.TotalYouPayPrice)</strong></th>
+                <th class="col-lg-2 col-md-2"><strong>@Html.DisplayFor(m => m.TotalMemberSavings)</strong></th>
+                <th class="col-lg-2 col-md-2"><strong>@Html.DisplayFor(m => m.TotalCommissionEarned)</strong></th>
+                <th class="col-lg-1 col-md-1 text-center"></th>
+            </tr>
+        </thead>
+    </table>
+}
