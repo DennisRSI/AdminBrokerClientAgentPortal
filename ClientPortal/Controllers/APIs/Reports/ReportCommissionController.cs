@@ -105,6 +105,7 @@ namespace ClientPortal.Controllers.APIs
                     break;
 
                 case "client":
+                    model = await _reportCommissionService.GetCommissionResultClientAsync(query);
                     break;
 
                 case "source":

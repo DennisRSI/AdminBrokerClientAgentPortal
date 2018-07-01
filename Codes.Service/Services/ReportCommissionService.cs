@@ -177,7 +177,83 @@ namespace Codes.Service.Services
 
         public async Task<CommissionResultViewModel> GetCommissionResultClientAsync(CommissionQuery query)
         {
-            return null;
+            var model = new CommissionResultViewModel
+            {
+                QueryType = query.QueryType,
+                CheckoutStartDate = query.CheckOutStartDate,
+                CheckoutEndDate = query.CheckOutEndDate,
+                Tables = new List<CommissionResultTableViewModel>()
+            };
+
+            foreach (var accountId in query.AccountIds)
+            {
+                var totalCount = new SqlParameter()
+                {
+                    ParameterName = "@TotalCount",
+                    Value = 0,
+                    Direction = ParameterDirection.Output
+                };
+
+                var parameters = new[]
+                {
+                    new SqlParameter("@ClientId", accountId),
+                    new SqlParameter("@CheckInDate", query.CheckOutStartDate),
+                    new SqlParameter("@CheckOutDate", query.CheckOutEndDate),
+                    new SqlParameter("@StartRowIndex", Convert.ToInt32(0)),
+                    new SqlParameter("@NumberOfRows", 30000),
+                    totalCount
+                };
+
+                var table = await _dataAccess.ExecuteDataTableAsync("ReportCommissionByClient", parameters);
+
+                if (table.Rows.Count == 0)
+                {
+                    continue;
+                }
+
+                var result = new CommissionResultTableViewModel
+                {
+                    ReportGroupName = "Client",
+                    AccountType = "Broker",
+                    Items = new List<CommissionResultItemViewModel>()
+                };
+
+                model.Tables.Add(result);
+
+                foreach (DataRow row in table.Rows)
+                {
+                    result.AccountName = row["BrokerFirstName"] + " " + row["BrokerLastName"];
+
+                    var item = new CommissionResultItemViewModel
+                    {
+                        AccountName = (string)row["FullName"],
+                        NumberCards = (int)row["NumberOfCards"],
+                        NumberTransaction = (int)row["Transactions"],
+                        InternetPrice = (decimal)row["InternetPrice"],
+                        YouPayPrice = (decimal)row["YouPayPrice"],
+                        MemberSavings = (double)row["MemberSavings"],
+                        CommissionEarned = (decimal)row["CommissionEarned"]
+                    };
+
+                    result.Items.Add(item);
+
+                    result.TotalCards += item.NumberCards;
+                    result.TotalTransactions += item.NumberTransaction;
+                    result.TotalInternetPrice += item.InternetPrice;
+                    result.TotalYouPayPrice += item.YouPayPrice;
+                    result.TotalMemberSavings += item.MemberSavings;
+                    result.TotalCommissionEarned += item.CommissionEarned;
+
+                    model.TotalCards += item.NumberCards;
+                    model.TotalTransactions += item.NumberTransaction;
+                    model.TotalInternetPrice += item.InternetPrice;
+                    model.TotalYouPayPrice += item.YouPayPrice;
+                    model.TotalMemberSavings += item.MemberSavings;
+                    model.TotalCommissionEarned += item.CommissionEarned;
+                }
+            }
+
+            return model;
         }
 
         private string GetAbbreviatedName(string firstName, string lastName)
