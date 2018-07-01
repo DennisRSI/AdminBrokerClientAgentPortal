@@ -77,6 +77,10 @@ namespace ClientPortal.Controllers.APIs
                     accounts = accountQuery.GetClients().Select(c => c.Id);
                     break;
 
+                case "campaign":
+                    accounts = accountQuery.GetCampaigns().Select(c => c.Id);
+                    break;
+
                 case "source":
                     accounts = new List<int> { 0 };
                     break;
