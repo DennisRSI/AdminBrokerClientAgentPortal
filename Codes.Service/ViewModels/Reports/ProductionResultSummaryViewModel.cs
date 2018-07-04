@@ -31,7 +31,7 @@ namespace ClientPortal.Models
         public double TotalMemberSavings { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public float TotalCommissionEarned { get; set; }
+        public decimal TotalCommissionEarned { get; set; }
 
         public List<ProductionSummaryTableViewModel> Tables { get; set; }
 

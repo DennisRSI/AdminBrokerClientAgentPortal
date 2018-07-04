@@ -280,12 +280,12 @@ namespace Codes.Service.Services
                     result.TotalInternetPrice += item.InternetPrice;
                     result.TotalYouPayPrice += item.YouPayPrice;
                     result.TotalMemberSavings += item.MemberSavings;
-                    result.TotalCommissionEarned += 0;
+                    result.TotalCommissionEarned += item.CommissionEarned;
 
                     model.TotalInternetPrice += item.InternetPrice;
                     model.TotalYouPayPrice += item.YouPayPrice;
                     model.TotalMemberSavings += item.MemberSavings;
-                    model.TotalCommissionEarned += 0;
+                    model.TotalCommissionEarned += item.CommissionEarned;
 
                     result.Items.Add(item);
                 }
