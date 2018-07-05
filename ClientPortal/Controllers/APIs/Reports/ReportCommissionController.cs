@@ -91,6 +91,7 @@ namespace ClientPortal.Controllers.APIs
             var query = new CommissionQuery
             {
                 QueryType = type,
+                PaymentStatus = paymentStatus,
                 CheckOutStartDate = DateTime.ParseExact(checkOutStart, "yyyy-MM-dd", null),
                 CheckOutEndDate = DateTime.ParseExact(checkOutEnd, "yyyy-MM-dd", null),
                 AccountIds = accounts

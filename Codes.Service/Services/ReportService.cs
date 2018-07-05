@@ -259,7 +259,7 @@ namespace Codes.Service.Services
 
                         case "client":
                             accountName = ReadColumn.GetString(row, "Client");
-                            result.AccountName = (string)row["ClientCompanyName"];
+                            result.AccountName = (string)row["Client"];
                             break;
 
                         case "broker":

@@ -28,9 +28,7 @@ function Commission() {
         var name = $('#select-' + type + ' option:selected').text();
         var checkOutStart = $('#checkOutStart').val();
         var checkOutEnd = $('#checkOutEnd').val();
-
-        // TODO: Fill this in
-        var paymentStatus = "1";
+        var paymentStatus = $('#paymentStatus option:selected').val();
 
         var url = '/api/reportcommission/gethtml';
 

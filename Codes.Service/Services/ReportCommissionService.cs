@@ -49,6 +49,7 @@ namespace Codes.Service.Services
                     new SqlParameter("@BrokerId", accountId),
                     new SqlParameter("@CheckInDate", query.CheckOutStartDate),
                     new SqlParameter("@CheckOutDate", query.CheckOutEndDate),
+                    new SqlParameter("@PaidStatus", query.PaymentStatus),
                     new SqlParameter("@StartRowIndex", Convert.ToInt32(0)),
                     new SqlParameter("@NumberOfRows", 30000),
                     totalCount
@@ -129,7 +130,7 @@ namespace Codes.Service.Services
                 new SqlParameter("@BrokerId", null),
                 new SqlParameter("@CheckInDate", query.CheckOutStartDate),
                 new SqlParameter("@CheckOutDate", query.CheckOutEndDate),
-                new SqlParameter("@PaidStatus", null),
+                new SqlParameter("@PaidStatus", query.PaymentStatus),
                 new SqlParameter("@StartRowIndex", Convert.ToInt32(0)),
                 new SqlParameter("@NumberOfRows", 30000),
                 totalCount
@@ -199,6 +200,7 @@ namespace Codes.Service.Services
                     new SqlParameter("@ClientId", accountId),
                     new SqlParameter("@CheckInDate", query.CheckOutStartDate),
                     new SqlParameter("@CheckOutDate", query.CheckOutEndDate),
+                    new SqlParameter("@PaidStatus", query.PaymentStatus),
                     new SqlParameter("@StartRowIndex", Convert.ToInt32(0)),
                     new SqlParameter("@NumberOfRows", 30000),
                     totalCount
@@ -265,9 +267,10 @@ namespace Codes.Service.Services
 
     public class CommissionQuery
     {
+        public string QueryType { get; set; }
+        public string PaymentStatus { get; set; }
         public DateTime CheckOutStartDate { get; set; }
         public DateTime CheckOutEndDate { get; set; }
-        public string QueryType { get; set; }
         public IEnumerable<int> AccountIds { get; set; }
     }
 }
