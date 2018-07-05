@@ -35,7 +35,7 @@ namespace Codes.Service.ViewModels
         public decimal TotalYouPayPrice { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public double TotalMemberSavings { get; set; }
+        public decimal TotalMemberSavings { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalCommissionEarned { get; set; }
@@ -67,7 +67,7 @@ namespace Codes.Service.ViewModels
         public decimal TotalYouPayPrice { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public double TotalMemberSavings { get; set; }
+        public decimal TotalMemberSavings { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalCommissionEarned { get; set; }
@@ -90,7 +90,7 @@ namespace Codes.Service.ViewModels
         public decimal YouPayPrice { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public double MemberSavings { get; set; }
+        public decimal MemberSavings { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal CommissionEarned { get; set; }

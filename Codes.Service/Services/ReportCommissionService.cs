@@ -81,7 +81,7 @@ namespace Codes.Service.Services
                         NumberTransaction = (int)row["Transactions"],
                         InternetPrice = (decimal)row["InternetPrice"],
                         YouPayPrice = (decimal)row["YouPayPrice"],
-                        MemberSavings = (double)row["MemberSavings"],
+                        MemberSavings = (decimal)row["MemberSavings"],
                         CommissionEarned = (decimal)row["CommissionEarned"]
                     };
 
@@ -129,7 +129,7 @@ namespace Codes.Service.Services
                 new SqlParameter("@BrokerId", null),
                 new SqlParameter("@CheckInDate", query.CheckOutStartDate),
                 new SqlParameter("@CheckOutDate", query.CheckOutEndDate),
-                new SqlParameter("@PaidDate", null),
+                new SqlParameter("@PaidStatus", null),
                 new SqlParameter("@StartRowIndex", Convert.ToInt32(0)),
                 new SqlParameter("@NumberOfRows", 30000),
                 totalCount
@@ -139,8 +139,8 @@ namespace Codes.Service.Services
 
             var result = new CommissionResultTableViewModel
             {
-                ReportGroupName = "Client",
-                AccountType = "Broker",
+                ReportGroupName = "Broker",
+                AccountType = "Source",
                 Items = new List<CommissionResultItemViewModel>()
             };
 
@@ -158,7 +158,7 @@ namespace Codes.Service.Services
                     NumberTransaction = (int)row["Transactions"],
                     InternetPrice = (decimal)row["InternetPrice"],
                     YouPayPrice = (decimal)row["YouPayPrice"],
-                    MemberSavings = (double)row["MemberSavings"],
+                    MemberSavings = (decimal)row["MemberSavings"],
                     CommissionEarned = (decimal)row["CommissionEarned"]
                 };
 
@@ -231,7 +231,7 @@ namespace Codes.Service.Services
                         NumberTransaction = (int)row["Transactions"],
                         InternetPrice = (decimal)row["InternetPrice"],
                         YouPayPrice = (decimal)row["YouPayPrice"],
-                        MemberSavings = (double)row["MemberSavings"],
+                        MemberSavings = (decimal)row["MemberSavings"],
                         CommissionEarned = (decimal)row["CommissionEarned"]
                     };
 
