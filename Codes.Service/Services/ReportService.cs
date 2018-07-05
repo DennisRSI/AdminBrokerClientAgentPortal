@@ -259,7 +259,12 @@ namespace Codes.Service.Services
 
                         case "client":
                             accountName = ReadColumn.GetString(row, "Client");
-                            result.AccountName = (string)row["ClientCompanyName"]; // This needs to be changed once added to proc
+                            result.AccountName = (string)row["ClientCompanyName"];
+                            break;
+
+                        case "broker":
+                            accountName = (string)row["CompanyName"];
+                            result.AccountName = row["BrokerFirstName"] + " " + row["BrokerLastName"];
                             break;
 
                         default:
@@ -273,7 +278,7 @@ namespace Codes.Service.Services
                         AccountName = accountName,
                         InternetPrice = ReadColumn.GetDecimal(row, "InternetPrice"),
                         YouPayPrice = ReadColumn.GetDecimal(row, "YouPayPrice"),
-                        MemberSavings = ReadColumn.GetDouble(row, "MemberSavings"),
+                        MemberSavings = ReadColumn.GetDecimal(row, "MemberSavings"),
                         CommissionEarned = ReadColumn.GetDecimal(row, "CommissionEarned"),
                     };
 
