@@ -113,12 +113,14 @@ namespace Codes.Service.Services
             var table = _dataAccess.ExecuteDataTable(procedureName, parameters);
             var results = new List<ProductionDetailItemViewModel>();
 
-            int totalNights = 0;
-            decimal totalInternetPrice = 0;
-            decimal totalYouPayPrice = 0;
-            Single totalMemberSavings = 0;
-            Single totalPointsBalance = 0;
-            decimal totalCommission = 0;
+            var model = new ProductionResultDetailViewModel
+            {
+                CheckoutStartDate = query.CheckOutStartDate,
+                CheckoutEndDate = query.CheckOutEndDate,
+                BookingStartDate = query.BookingStartDate,
+                BookingEndDate = query.BookingEndDate,
+                DetailsTable = results
+            };
 
             foreach (DataRow row in table.Rows)
             {
@@ -136,32 +138,18 @@ namespace Codes.Service.Services
                     YouPayPrice = (decimal)row["YouPayPrice"],
                     MemberSavings = (Single)row["MemberSavings"],
                     PointsBalance = (Single)row["PointsBalance"],
+                    Commission = (decimal)row["ClubCommissionDue"]
                 };
 
-                totalNights += (item.CheckOutDate - item.CheckInDate).Days;
-                totalInternetPrice += item.InternetPrice;
-                totalYouPayPrice += item.YouPayPrice;
-                totalMemberSavings += item.MemberSavings;
-                totalPointsBalance += item.PointsBalance;
-                totalCommission += 0;
+                model.TotalNights += (item.CheckOutDate - item.CheckInDate).Days;
+                model.TotalInternetPrice += item.InternetPrice;
+                model.TotalYouPayPrice += item.YouPayPrice;
+                model.TotalMemberSavings += item.MemberSavings;
+                model.TotalPointsBalance += item.PointsBalance;
+                model.TotalCommission += item.Commission;
 
                 results.Add(item);
             }
-
-            var model = new ProductionResultDetailViewModel
-            {
-                CheckoutStartDate = query.CheckOutStartDate,
-                CheckoutEndDate = query.CheckOutEndDate,
-                BookingStartDate = query.BookingStartDate,
-                BookingEndDate = query.BookingEndDate,
-                DetailsTable = results,
-                TotalNights = totalNights,
-                TotalInternetPrice = totalInternetPrice,
-                TotalYouPayPrice = totalYouPayPrice,
-                TotalMemberSavings = totalMemberSavings,
-                TotalPointsBalance = totalPointsBalance,
-                TotalCommission = totalCommission
-            };
 
             return model;
         }

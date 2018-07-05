@@ -75,5 +75,8 @@ namespace Codes.Service.ViewModels
 
         [DisplayFormat(DataFormatString = "{0:c}")]
         public Single PointsBalance { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:c}")]
+        public decimal Commission { get; set; }
     }
 }
