@@ -15,22 +15,23 @@
         <div class="clearfix"></div>
 
         @Html.DisplayFor(m => m.Tables)
+
+        @if (Model.AccountName == "All")
+        {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-right col-lg-2 col-md-2"><b class="capitalFirstLetter">All Totals:</b></th>
+                        <th class="col-lg-2 col-md-2"><strong>@Html.DisplayFor(m => m.TotalCards)</strong></th>
+                        <th class="col-lg-2 col-md-2"><strong>@Html.DisplayFor(m => m.TotalTransactions)</strong></th>
+                        <th class="col-lg-2 col-md-2"><strong>@Html.DisplayFor(m => m.TotalInternetPrice)</strong></th>
+                        <th class="col-lg-2 col-md-2"><strong>@Html.DisplayFor(m => m.TotalYouPayPrice)</strong></th>
+                        <th class="col-lg-2 col-md-2"><strong>@Html.DisplayFor(m => m.TotalMemberSavings)</strong></th>
+                        <th class="col-lg-2 col-md-2"><strong>@Html.DisplayFor(m => m.TotalCommissionEarned)</strong></th>
+                        <th class="col-lg-1 col-md-1 text-center"></th>
+                    </tr>
+                </thead>
+            </table>
+        }
     </div>
 </div>
-@if (Model.QueryType != "source")
-{
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th class="text-right col-lg-2 col-md-2"><b class="capitalFirstLetter">@Model.QueryType Totals:</b></th>
-                <th class="col-lg-2 col-md-2"><strong>@Html.DisplayFor(m => m.TotalCards)</strong></th>
-                <th class="col-lg-2 col-md-2"><strong>@Html.DisplayFor(m => m.TotalTransactions)</strong></th>
-                <th class="col-lg-2 col-md-2"><strong>@Html.DisplayFor(m => m.TotalInternetPrice)</strong></th>
-                <th class="col-lg-2 col-md-2"><strong>@Html.DisplayFor(m => m.TotalYouPayPrice)</strong></th>
-                <th class="col-lg-2 col-md-2"><strong>@Html.DisplayFor(m => m.TotalMemberSavings)</strong></th>
-                <th class="col-lg-2 col-md-2"><strong>@Html.DisplayFor(m => m.TotalCommissionEarned)</strong></th>
-                <th class="col-lg-1 col-md-1 text-center"></th>
-            </tr>
-        </thead>
-    </table>
-}
