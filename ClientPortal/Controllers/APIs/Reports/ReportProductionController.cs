@@ -55,7 +55,7 @@ namespace ClientPortal.Controllers.APIs
 
         [HttpGet("gethtmlsummary/{type}/{id}/{name}/{paymentStatus}/{checkOutStart}/{checkOutEnd}/{bookingStart}/{bookingEnd}")]
         public async Task<IActionResult> GetHtmlSummary(
-            string type, int id, string name, int paymentStatus,
+            string type, int id, string name, string paymentStatus,
             string checkOutStart, string checkOutEnd, string bookingStart, string bookingEnd
             )
         {
@@ -88,6 +88,7 @@ namespace ClientPortal.Controllers.APIs
 
             var query = new ProductionSummaryQuery()
             {
+                PaymentStatus = paymentStatus,
                 BookingStartDate = DateTime.ParseExact(bookingStart, "yyyy-MM-dd", null),
                 BookingEndDate = DateTime.ParseExact(bookingEnd, "yyyy-MM-dd", null),
                 CheckOutStartDate = DateTime.ParseExact(checkOutStart, "yyyy-MM-dd", null),
@@ -106,7 +107,7 @@ namespace ClientPortal.Controllers.APIs
 
         [HttpGet("gethtmldetail/{type}/{id}/{name}/{paymentStatus}/{checkOutStart}/{checkOutEnd}/{bookingStart}/{bookingEnd}")]
         public async Task<IActionResult> GetHtmlDetail(
-            string type, int id, string name, int paymentStatus,
+            string type, int id, string name, string paymentStatus,
             string checkOutStart, string checkOutEnd, string bookingStart, string bookingEnd
             )
         {

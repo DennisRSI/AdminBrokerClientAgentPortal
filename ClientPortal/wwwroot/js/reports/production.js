@@ -30,9 +30,7 @@ function Production() {
         var checkOutEnd = $('#checkOutEnd').val();
         var bookingStart = $('#bookingStart').val();
         var bookingEnd = $('#bookingEnd').val();
-
-        // TODO: Fill this in
-        var paymentStatus = "1";
+        var paymentStatus = $('#paymentStatus option:selected').val();
 
         var url = '/api/reportproduction/gethtmldetail';
 

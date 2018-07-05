@@ -221,6 +221,7 @@ namespace Codes.Service.Services
                 var parameters = new[]
                 {
                     idParam,
+                    new SqlParameter("@PaidStatus", query.PaymentStatus),
                     new SqlParameter("@BookingStartDate", query.BookingStartDate),
                     new SqlParameter("@BookingEndDate", query.BookingEndDate),
                     new SqlParameter("@CheckInDate", query.CheckOutStartDate),
@@ -319,11 +320,12 @@ namespace Codes.Service.Services
 
     public class ProductionSummaryQuery
     {
+        public string QueryType { get; set; }
+        public string PaymentStatus { get; set; }
         public DateTime BookingStartDate { get; set; }
         public DateTime BookingEndDate { get; set; }
         public DateTime CheckOutStartDate { get; set; }
         public DateTime CheckOutEndDate { get; set; }
-        public string QueryType { get; set; }
         public IEnumerable<int> AccountIds { get; set; }
     }
 }
