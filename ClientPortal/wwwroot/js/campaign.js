@@ -5,6 +5,10 @@ function Campaign(){
     var dataTable;
 
     this.init = function (clientId) {
+
+        var today = UTILITY.getTodayString();
+        $('#startDate').val(today);
+
         self.initCampaignTable(clientId);
 
         $.get('/api/video/?isPreLogin=true', function (data) {

@@ -32,5 +32,14 @@ function Utility() {
         var month = date.getMonth() + 1;
         return (month.toString().length > 1 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
     }
+
+    this.getTodayString = function () {
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var year = now.getFullYear();
+
+        return year + "-" + (month) + "-" + (day);
+    }
 }
 
