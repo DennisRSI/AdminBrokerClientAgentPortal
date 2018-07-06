@@ -256,6 +256,11 @@ namespace Codes.Service.Services
                             result.AccountName = row["BrokerFirstName"] + " " + row["BrokerLastName"];
                             break;
 
+                        case "campaign":
+                            accountName = (string)row["CampaignName"];
+                            result.AccountName = (string)row["CampaignName"];
+                            break;
+
                         default:
                             accountName = ReadColumn.GetString(row, accountNameColumn);
                             result.AccountName = (string)row[columnNamePrefix + "FirstName"] + " " + (string)row[columnNamePrefix + "LastName"];
