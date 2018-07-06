@@ -247,8 +247,8 @@ namespace Codes.Service.Services
                             break;
 
                         case "client":
-                            accountName = ReadColumn.GetString(row, "Client");
-                            result.AccountName = (string)row["Client"];
+                            accountName = ReadColumn.GetString(row, "CampaignName");
+                            result.AccountName = ReadColumn.GetString(row, "Client");
                             break;
 
                         case "broker":
