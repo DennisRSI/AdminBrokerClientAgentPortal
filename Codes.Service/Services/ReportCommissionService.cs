@@ -224,11 +224,11 @@ namespace Codes.Service.Services
 
                 foreach (DataRow row in table.Rows)
                 {
-                    result.AccountName = (string)row["FullName"];
+                    result.AccountName = (string)row["ClientCompanyName"];
 
                     var item = new CommissionResultItemViewModel
                     {
-                        AccountName = (string)row["FullName"],
+                        AccountName = (string)row["CampaignName"],
                         NumberCards = (int)row["NumberOfCards"],
                         NumberTransaction = (int)row["Transactions"],
                         InternetPrice = (decimal)row["InternetPrice"],
