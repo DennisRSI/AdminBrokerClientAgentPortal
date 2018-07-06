@@ -215,8 +215,8 @@ namespace Codes.Service.Services
 
                 var result = new CommissionResultTableViewModel
                 {
-                    ReportGroupName = "Client",
-                    AccountType = "Broker",
+                    ReportGroupName = "Campaign",
+                    AccountType = "Client",
                     Items = new List<CommissionResultItemViewModel>()
                 };
 
@@ -224,7 +224,7 @@ namespace Codes.Service.Services
 
                 foreach (DataRow row in table.Rows)
                 {
-                    result.AccountName = row["BrokerFirstName"] + " " + row["BrokerLastName"];
+                    result.AccountName = (string)row["FullName"];
 
                     var item = new CommissionResultItemViewModel
                     {
@@ -233,7 +233,7 @@ namespace Codes.Service.Services
                         NumberTransaction = (int)row["Transactions"],
                         InternetPrice = (decimal)row["InternetPrice"],
                         YouPayPrice = (decimal)row["YouPayPrice"],
-                        MemberSavings = (decimal)row["MemberSavings"],
+                        MemberSavings = Convert.ToDecimal(row["MemberSavings"]),
                         CommissionEarned = (decimal)row["CommissionEarned"]
                     };
 
