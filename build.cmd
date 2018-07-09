@@ -1,10 +1,15 @@
 for /f "tokens=2 delims==" %%I in ('wmic os get localdatetime /format:list') do set datetime=%%I
-set datetime=%datetime:~0,8%-%datetime:~8,6%
+set build1=1
+set build2=%datetime:~2,2%
+set build3=%datetime:~4,4%
+set build4=%datetime:~8,4%
 
-del /q publish*.zip
+set buildnum=%build1%.%build2%.%build3%.%build4%
+
+del /q ClientPortal*.zip
 rd /s /q ClientPortal\bin ClientPortal\obj Codes.Service\bin Codes.Service\obj
 
 nuget restore ClientPortal\ClientPortal.sln
-msbuild ClientPortal\ClientPortal.sln /m /t:Build /p:Configuration=Release /p:Platform="Any CPU" /p:DeployOnBuild=true /p:PublishProfile=FolderProfile
+msbuild ClientPortal\ClientPortal.sln /m /t:Build /p:Configuration=Release /p:Platform="Any CPU" /p:DeployOnBuild=true /p:PublishProfile=FolderProfile /p:Version=%buildnum%
 
-powershell Compress-Archive -Path ClientPortal\bin\Publish -Destination publish-%datetime%.zip
+powershell Compress-Archive -Path ClientPortal\bin\Publish -Destination ClientPortal-%buildnum%.zip
