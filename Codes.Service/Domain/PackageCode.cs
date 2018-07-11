@@ -86,5 +86,51 @@
 
             return $"Unknown Package ID: {packageId}";
         }
+
+        public static PackageBenefit GetBenefits(int packageId)
+        {
+            switch (packageId)
+            {
+                case 1026:
+                    return new PackageBenefit(false, false, false);
+
+                case 1080:
+                    return new PackageBenefit(true, false, false);
+
+                case 1081:
+                    return new PackageBenefit(false, true, false);
+
+                case 1082:
+                    return new PackageBenefit(false, false, true);
+
+                case 1033:
+                    return new PackageBenefit(true, true, false);
+
+                case 1083:
+                    return new PackageBenefit(true, false, true);
+
+                case 1084:
+                    return new PackageBenefit(false, true, true);
+
+                case 1085:
+                    return new PackageBenefit(true, true, true);
+            }
+
+            return null;
+        }
+    }
+
+    public class PackageBenefit
+    {
+        public PackageBenefit(bool condoBenefit, bool shoppingBenefit, bool diningBenefit)
+        {
+            CondoBenefit = condoBenefit;
+            ShoppingBenefit = shoppingBenefit;
+            DiningBenefit = diningBenefit;
+        }
+
+        public bool CondoBenefit { get; set; }
+        public bool ShoppingBenefit { get; set; }
+        public bool DiningBenefit { get; set; }
     }
 }
