@@ -18,11 +18,11 @@ namespace ClientPortal.ViewComponents
             _cardService = cardService;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(int id)
+        public async Task<IViewComponentResult> InvokeAsync(string code)
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
-                var model = _cardService.GetDetails(id);
+                var model = await _cardService.GetDetails(code);
                 return await Task.FromResult(View(model));
             }
 

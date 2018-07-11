@@ -1,118 +1,100 @@
 ﻿using Codes.Service.Data;
+using Codes.Service.Domain;
 using Codes.Service.Interfaces;
 using Codes.Service.Models;
 using Codes.Service.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Codes.Service.Services
 {
     public class CardService : ICardService
     {
-        private readonly ILogger _logger;
         private readonly CodesDbContext _context;
+        private readonly DataAccess _dataAccess;
 
-        public CardService(CodesDbContext context, ILoggerFactory loggerFactory)
+        public CardService(CodesDbContext context, IConfiguration configuration)
         {
             _context = context;
-            _logger = loggerFactory.CreateLogger<CodeService>();
+
+            var connectionString = configuration.GetConnectionString("CodeGeneratorConnection");
+            _dataAccess = new DataAccess(connectionString);
         }
 
-        public CardDetailsViewModel GetDetails(int id)
+        public async Task<CardDetailsViewModel> GetDetails(string code)
         {
-            // TODO: How to determine which table to query?
+            var parameters = new[]
+            {
+                new SqlParameter("@Code", code),
+            };
 
-            //var card = _context.UsedCodes.Single(c => c.UsedCodeId == id);
+            var table = await _dataAccess.ExecuteDataTableAsync("GetCardDetails", parameters);
+            var row = table.Rows[0];
 
-            var card = new UsedCodeModel();
+            var packageId = (int)row["PackageId"];
+            var benefits = PackageCode.GetBenefits(packageId);
 
             var model = new CardDetailsViewModel
             {
-                CardNumber = "abc123", // card.Code,
-                BenefitCondo = false,
+                CardNumber = code,
                 BenefitHotel = true,
-                BenefitShopping = false,
-                TotalHotelSavings = 0,
-                TotalCondoSavings = 0,
-                TotalShoppingSavings = 0,
-                ClientName = "ClientName", // card.Campaign.Client.CompanyName,
-                ClientCampaign = "CampaignName", //card.Campaign.CampaignName,
-                ActivationDate = card.CreationDate,
-                BrokerCommissionRate = 0, // (decimal) card.Broker.BrokerCommissionPercentage,
-                ClientCommissionRate = 0, // (decimal) card.Campaign.Client.CommissionRate,
-                AgentCommissionRate = 0, // (decimal)card.Campaign.Ag.CommissionRate,
-                ActivatedBy = "Activated By",
-                TotalCardValue = 200,
-                TotalCardRedeemed = 150,
-                CardType = "Physical", // card.CodeType,
-
-                TotalCommissionPaid = 0,
-                TotalCommissionOwed = 0,
-
-                BenefitsHotelUsage = 75,
-                BenefitsCondoUsage = 25,
-                BenefitsShoppingUsage = 50,
-            };
-
-            var benefitDetail1 = new CardBenefitDetailViewModel
-            {
-                CheckInDate = new DateTime(2018, 2, 20),
-                CheckOutDate = new DateTime(2018, 2, 23),
-                MemberSavings = 20.19M,
-                CommissionTotal = 5.50M,
-                CommisionBroker = 5.50M,
-                CommisionClient = 5.50M,
-                CommisionAgent = 5.50M,
-                RemainingBalance = 5.50M,
-                PaymentDate = new DateTime(2018, 2, 23),
-                Confirmation = "T123456",
-                Status = "Pending",
-                Chargeback = "Chargeback",
-            };
-
-            var benefitDetail2 = new CardBenefitDetailViewModel
-            {
-                CheckInDate = new DateTime(2017, 2, 20),
-                CheckOutDate = new DateTime(2017, 2, 23),
-                MemberSavings = 120.19M,
-                CommissionTotal = 75.50M,
-                CommisionBroker = 5.50M,
-                CommisionClient = 5.50M,
-                CommisionAgent = 5.50M,
-                RemainingBalance = 5.50M,
-                PaymentDate = new DateTime(2018, 2, 23),
-                Confirmation = "R123456",
-                Status = "Pending",
-                Chargeback = "Chargeback",
-            };
-
-            var benefitDetail3 = new CardBenefitDetailViewModel
-            {
-                CheckInDate = new DateTime(2016, 2, 20),
-                CheckOutDate = new DateTime(2016, 2, 23),
-                MemberSavings = 220.19M,
-                CommissionTotal = 15.50M,
-                CommisionBroker = 5.50M,
-                CommisionClient = 5.50M,
-                CommisionAgent = 5.50M,
-                RemainingBalance = 5.50M,
-                PaymentDate = new DateTime(2018, 2, 23),
-                Confirmation = "S123456",
-                Status = "Pending",
-                Chargeback = "Chargeback",
-            };
-
-            model.BenefitDetails = new List<CardBenefitDetailViewModel>
-            {
-                benefitDetail1,
-                benefitDetail2,
-                benefitDetail3
+                BenefitCondo = benefits.CondoBenefit,
+                BenefitShopping = benefits.ShoppingBenefit,
+                BenefitDining = benefits.DiningBenefit,
+                ClientName = (string)row["ClientName"],
+                ClientCampaign = (string)row["CampaignName"],
+                ActivationDate = (DateTime)row["ActivationDate"],
+                BrokerCommission = Convert.ToDecimal(row["BrokerCommission"]),
+                ClientCommission = Convert.ToDecimal(row["ClientCommission"]),
+                AgentCommission = Convert.ToDecimal(row["AgentCommission"]),
+                ActivatedBy = (string)row["ActivatedBy"],
+                FaceValue = Convert.ToDecimal(row["FaceValue"]),
+                CardType = (string)row["CardType"],
+                BenefitDetails = GetCardUsage(code)
             };
 
             return model;
+        }
+
+        private List<CardBenefitDetailViewModel> GetCardUsage(string code)
+        {
+            var usageList = new List<CardBenefitDetailViewModel>();
+
+            var parameters = new[]
+            {
+                new SqlParameter("@Code", code),
+            };
+
+            var table = _dataAccess.ExecuteDataTable("GetCardUsage", parameters);
+
+            foreach (DataRow row in table.Rows)
+            {
+                var item = new CardBenefitDetailViewModel
+                {
+                    CheckInDate = (DateTime)row["CheckInDate"],
+                    CheckOutDate = (DateTime)row["CheckOutDate"],
+                    MemberSavings = Convert.ToDecimal(row["MemberSavings"]),
+                    CommissionTotal = Convert.ToDecimal(row["CommissionTotal"]),
+                    CommissionBroker = Convert.ToDecimal(row["CommissionBroker"]),
+                    CommissionClient = Convert.ToDecimal(row["CommissionClient"]),
+                    CommissionAgent = Convert.ToDecimal(row["CommissionAgent"]),
+                    RemainingBalance = Convert.ToDecimal(row["RemainingBalance"]),
+                    PaymentDate = (DateTime)row["PaymentDate"],
+                    Confirmation = (string)row["Confirmation"],
+                    Status = (string)row["Status"]
+                };
+
+                usageList.Add(item);
+            }
+
+            return usageList;
         }
     }
 }

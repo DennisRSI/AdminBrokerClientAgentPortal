@@ -41,6 +41,11 @@
                                 @Html.CheckBoxFor(m => m.BenefitShopping, new { @class = "flat", disabled = "disabled" }) Shopping Benefit
                             </label>
                         </div>
+                        <div>
+                            <label>
+                                @Html.CheckBoxFor(m => m.BenefitDining, new { @class = "flat", disabled = "disabled" }) Dining Benefit
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -83,15 +88,15 @@
                         </tr>
                         <tr>
                             <td class="col-md-6 col-sm-6 col-xs-7">Broker Commission Rate</td>
-                            <td class="col-md-6 col-sm-6 col-xs-5">@Html.DisplayFor(m => m.BrokerCommissionRate)</td>
+                            <td class="col-md-6 col-sm-6 col-xs-5">@Html.DisplayFor(m => m.BrokerCommission)</td>
                         </tr>
                         <tr>
                             <td class="col-md-6 col-sm-6 col-xs-7">Client Commission Rate</td>
-                            <td class="col-md-6 col-sm-6 col-xs-5">@Html.DisplayFor(m => m.ClientCommissionRate)</td>
+                            <td class="col-md-6 col-sm-6 col-xs-5">@Html.DisplayFor(m => m.ClientCommission)</td>
                         </tr>
                         <tr>
                             <td class="col-md-6 col-sm-6 col-xs-7">Agent Commission Rate</td>
-                            <td class="col-md-6 col-sm-6 col-xs-5">@Html.DisplayFor(m => m.AgentCommissionRate)</td>
+                            <td class="col-md-6 col-sm-6 col-xs-5">@Html.DisplayFor(m => m.AgentCommission)</td>
                         </tr>
                         <tr>
                             <td class="">Activated By</td>
@@ -99,7 +104,7 @@
                         </tr>
                         <tr>
                             <td class="">Card Face Value</td>
-                            <td class="">@Html.DisplayFor(m => m.TotalCardValue)</td>
+                            <td class="">@Html.DisplayFor(m => m.FaceValue)</td>
                         </tr>
                         <tr>
                             <td class="">Card Type</td>
@@ -115,17 +120,17 @@
             <table id="table-benefits" class="table table-striped table-bordered jambo_table bulk_action">
                 <thead>
                     <tr>
-                        <th class="">Check<br />In</th>
-                        <th class="">Check<br />Out *</th>
-                        <th class="">Member<br />Savings</th>
-                        <th class="">Commissionable &nbsp;<a href="#" data-toggle="tooltip" title="Commissionable amount is total member savings above a $0 Remaining Balance"><i class="fa fa-info-circle icon-white"></i></a></th>
-                        <th class="">Broker<br />Commission</th>
-                        <th class="">Client<br />Commission</th>
-                        <th class="">Agent<br />Commission</th>
-                        <th class="">Remaining<br />Balance</th>
-                        <th class="">Payment<br />Date</th>
-                        <th class="">Confirmation</th>
-                        <th class="">Status</th>
+                        <th>Check<br />In</th>
+                        <th>Check<br />Out *</th>
+                        <th>Member<br />Savings</th>
+                        <th>Commissionable &nbsp;<a href="#" data-toggle="tooltip" title="Commissionable amount is total member savings above a $0 Remaining Balance"><i class="fa fa-info-circle icon-white"></i></a></th>
+                        <th>Broker<br />Commission</th>
+                        <th>Client<br />Commission</th>
+                        <th>Agent<br />Commission</th>
+                        <th>Remaining<br />Balance</th>
+                        <th>Payment<br />Date</th>
+                        <th>Confirmation</th>
+                        <th>Status</th>
                         <th class="text-center">Chargeback</th>
                     </tr>
                 </thead>
@@ -133,10 +138,11 @@
                     @Html.DisplayFor(m => m.BenefitDetails)
                 </tbody>
             </table>
+            <br />
+            Hotel Savings: <b>$209.39</b> &nbsp; &nbsp;|&nbsp; &nbsp; Commission Paid: <b>$9.22</b> &nbsp; &nbsp;|&nbsp; &nbsp; Commission Owed: <b>$90.79</b>
+            <p class="pull-right disclaimer-text">* Projected</p>
+            <div class="clearfix"></div>
         </div>
-        Hotel Savings: <b>$209.39</b> &nbsp; &nbsp;|&nbsp; &nbsp; Commission Paid: <b>$9.22</b> &nbsp; &nbsp;|&nbsp; &nbsp; Commission Owed: <b>$90.79</b>
-        <p class="pull-right disclaimer-text">* Projected</p>
-        <div class="clearfix"></div>
     </div>
 </div>
 <!-- end card details panel -->
@@ -223,7 +229,7 @@
 <script>
     MENU.init();
     CARDDETAILS.init();
-    CARDDETAILS.loadChartCardValue('@Html.DisplayFor(m => m.TotalCardValue)', @Model.TotalCardAvailable, @Model.TotalCardRedeemed);
+    CARDDETAILS.loadChartCardValue('@Html.DisplayFor(m => m.FaceValue)', @Model.TotalCardAvailable, @Model.TotalCardRedeemed);
     CARDDETAILS.loadChartBenefitUsage(@Model.BenefitsHotelPercent, @Model.BenefitsCondoPercent, @Model.BenefitsShoppingPercent);
     CARDDETAILS.loadChartMonthlyUsage();
 </script>

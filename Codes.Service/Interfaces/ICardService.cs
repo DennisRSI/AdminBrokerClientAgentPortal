@@ -1,9 +1,10 @@
 ﻿using Codes.Service.ViewModels;
+using System.Threading.Tasks;
 
 namespace Codes.Service.Interfaces
 {
     public interface ICardService
     {
-        CardDetailsViewModel GetDetails(int id);
+        Task<CardDetailsViewModel> GetDetails(string code);
     }
 }

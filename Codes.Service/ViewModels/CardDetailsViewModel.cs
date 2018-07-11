@@ -11,6 +11,7 @@ namespace Codes.Service.ViewModels
         public bool BenefitHotel { get; set; }
         public bool BenefitCondo { get; set; }
         public bool BenefitShopping { get; set; }
+        public bool BenefitDining { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalHotelSavings { get; set; }
@@ -27,19 +28,19 @@ namespace Codes.Service.ViewModels
         [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}")]
         public DateTime ActivationDate { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:p1}")]
-        public decimal BrokerCommissionRate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:c}")]
+        public decimal BrokerCommission { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:p1}")]
-        public decimal ClientCommissionRate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:c}")]
+        public decimal ClientCommission { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:p1}")]
-        public decimal AgentCommissionRate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:c}")]
+        public decimal AgentCommission { get; set; }
 
         public string ActivatedBy { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public decimal TotalCardValue { get; set; }
+        public decimal FaceValue { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalCardRedeemed { get; set; }
@@ -57,11 +58,18 @@ namespace Codes.Service.ViewModels
         public decimal BenefitsShoppingUsage { get; set; }
 
         public IEnumerable<CardBenefitDetailViewModel> BenefitDetails { get; set; }
+        public Dictionary<string, CardMonthlyUsage> MonthlyUsage { get; set; } = new Dictionary<string, CardMonthlyUsage>();
+
+        [DisplayFormat(DataFormatString = "{0:c}")]
+        public decimal TotalCommission
+        {
+            get { return BrokerCommission + ClientCommission + AgentCommission; }
+        }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalCardAvailable
         {
-            get { return TotalCardValue - TotalCardRedeemed;  }
+            get { return FaceValue - TotalCardRedeemed;  }
         }
 
         [DisplayFormat(DataFormatString = "{0:0.00}")]
@@ -108,13 +116,13 @@ namespace Codes.Service.ViewModels
         public decimal CommissionTotal { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public decimal CommisionBroker { get; set; }
+        public decimal CommissionBroker { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public decimal CommisionClient { get; set; }
+        public decimal CommissionClient { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public decimal CommisionAgent { get; set; }
+        public decimal CommissionAgent { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal RemainingBalance { get; set; }
@@ -125,5 +133,13 @@ namespace Codes.Service.ViewModels
         public string Confirmation { get; set; }
         public string Status { get; set; }
         public string Chargeback { get; set; }
+    }
+
+    public class CardMonthlyUsage
+    {
+        public decimal Hotel { get; set; }
+        public decimal Condo { get; set; }
+        public decimal Shopping { get; set; }
+        public decimal Dining { get; set; }
     }
 }
