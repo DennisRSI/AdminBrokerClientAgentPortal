@@ -29,7 +29,7 @@ function Menu() {
             }
         });
 
-        $('body').on('click', '.nav-page-id', function () {
+        $('body').off('click').on('click', '.nav-page-id', function () {
             $('#sidebar-menu .nav-item, #sidebar-menu .nav-page-id').removeClass('last-clicked');
             $(this).addClass('last-clicked');
 
