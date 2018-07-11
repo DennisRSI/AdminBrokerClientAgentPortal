@@ -179,6 +179,10 @@ namespace Codes.Service.Services
                     reportGroupName = "Broker";
                     columnNamePrefix = "Broker";
                     break;
+
+                case "campaign":
+                    reportGroupName = "Member Name";
+                    break;
             }
 
             var model = new ProductionResultSummaryViewModel
@@ -257,7 +261,7 @@ namespace Codes.Service.Services
                             break;
 
                         case "campaign":
-                            accountName = (string)row["CampaignName"];
+                            accountName = row["MemberFirstName"] + " " + row["MemberLastName"];
                             result.AccountName = (string)row["CampaignName"];
                             break;
 
