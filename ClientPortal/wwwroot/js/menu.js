@@ -4,7 +4,7 @@ function Menu() {
     var self = this;
     
     this.init = function () {
-        $('body').on('click', '.nav-item', function () {
+        $('html').off('click').on('click', '.nav-item', function () {
             $('#sidebar-menu .nav-item, #sidebar-menu .nav-page-id').removeClass('last-clicked');
             $(this).addClass('last-clicked');
 
