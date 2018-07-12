@@ -123,12 +123,10 @@ namespace ClientPortal.Controllers.APIs
             string checkOutStart, string checkOutEnd, string bookingStart, string bookingEnd
             )
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var accountQuery = _accountQueryFactory.GetAccountQuery(user.BrokerId, user.AgentId, user.ClientId);
-
             int? brokerId = null;
             int? agentId = null;
             int? clientId = null;
+            int? campaignId = null;
 
             switch (type)
             {
@@ -143,6 +141,10 @@ namespace ClientPortal.Controllers.APIs
                 case "client":
                     clientId = id;
                     break;
+
+                case "campaign":
+                    campaignId = id;
+                    break;
             }
 
             var query = new ProductionDetailQuery()
@@ -153,10 +155,11 @@ namespace ClientPortal.Controllers.APIs
                 CheckOutEndDate = DateTime.ParseExact(checkOutEnd, "yyyy-MM-dd", null),
                 BrokerId = brokerId,
                 AgentId = agentId,
-                ClientId = clientId
+                ClientId = clientId,
+                CampaignId = campaignId
             };
 
-            var model = _reportService.GetProductionResultDetail(query);
+            var model = await _reportService.GetProductionResultDetail(query);
 
             model.Type = type.First().ToString().ToUpper() + type.Substring(1);
             model.AccountName = name;

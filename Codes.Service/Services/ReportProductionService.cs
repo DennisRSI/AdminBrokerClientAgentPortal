@@ -81,7 +81,7 @@ namespace Codes.Service.Services
 
                 foreach (DataRow row in table.Rows)
                 {
-                    result.AccountName = "Campaign Name Goes Here";
+                    result.AccountName = (string)row["CampaignName"];
 
                     var item = new ProductionSummaryItemViewModel()
                     {

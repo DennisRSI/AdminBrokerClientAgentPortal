@@ -8,7 +8,7 @@ namespace Codes.Service.Interfaces
     public interface IReportService
     {
         DataTableViewModel<ActivationCardViewModel> GetDataActivation(ActivationReportViewModel model);
-        ProductionResultDetailViewModel GetProductionResultDetail(ProductionDetailQuery query);
+        Task<ProductionResultDetailViewModel> GetProductionResultDetail(ProductionDetailQuery query);
         Task<ProductionResultSummaryViewModel> GetProductionResultSummaryAsync(ProductionSummaryQuery query);
     }
 }
