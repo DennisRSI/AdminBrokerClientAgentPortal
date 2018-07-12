@@ -85,9 +85,17 @@ function Activation() {
                     }
             },
             { "data": "memberName" },
-            { "data": "denomination" },
+            {
+                "data": "denomination",
+                "render":
+                    function (data) {
+                        return UTILITY.formatCurrency(data, false);
+                    }
+            },
+
             { "data": "cardType" },
             { "data": "isCardUsed" },
+            { "data": "loginCount" },
             { "data": "campaignName" },
             { "data": "cardStatus" },
             { "data": "phone", "visible": false },

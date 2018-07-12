@@ -71,7 +71,8 @@ namespace Codes.Service.Services
                     CardStatus = (string)row["Status"],
                     Phone = (string)row["Phone"],
                     Email = (string)row["Email"],
-                    PostalCode = (string)row["PostalCode"]
+                    PostalCode = (string)row["PostalCode"],
+                    LoginCount = (int)row["LoginCount"]
                 };
 
                 resultData.Add(activation);
