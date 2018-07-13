@@ -517,6 +517,7 @@ namespace ClientPortal.Controllers.APIs
         {
             var broker = new BrokerViewModel()
             {
+                ApplicationReference = user.Id,
                 BrokerId = user.BrokerId,
                 Email = user.UserName,
                 BrokerFirstName = user.FirstName,
