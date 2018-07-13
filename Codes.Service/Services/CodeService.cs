@@ -92,7 +92,7 @@ namespace Codes.Service.Services
                     model.Message = "Success";
                 }
                 else
-                    model.Message = "Error: Broker not found";
+                    model.Message = $"Error (CodeService/BrokerUpdate): Broker not found: {model.BrokerId}";
             }
             catch (Exception ex)
             {
@@ -882,7 +882,7 @@ namespace Codes.Service.Services
                     agent.Broker.BrokerId = a.BrokerId;
                 }
                 else
-                    agent.Message = "Error: Broker not found";
+                    agent.Message = $"Error (GetAgentById): Agent not found: {agentId}";
             }
             catch (Exception ex)
             {
@@ -934,7 +934,7 @@ namespace Codes.Service.Services
                     agent.Broker.BrokerId = a.BrokerId;
                 }
                 else
-                    agent.Message = "Error: Broker not found";
+                    agent.Message = $"Error (GetAgentByAccountId): Agent not found {accountId}";
             }
             catch (Exception ex)
             {
@@ -1262,7 +1262,7 @@ namespace Codes.Service.Services
                     };
                 }
                 else
-                    broker.Message = "Error: Broker not found";
+                    broker.Message = $"Error (GetBrokerById): Broker not found: {brokerId}";
             }
             catch (Exception ex)
             {
@@ -1325,7 +1325,7 @@ namespace Codes.Service.Services
                     };
                 }
                 else
-                    broker.Message = "Error: Broker not found";
+                    broker.Message = $"Error (GetBrokerByAccountId): Broker not found: {accountId}";
             }
             catch (Exception ex)
             {
@@ -1425,7 +1425,7 @@ namespace Codes.Service.Services
                     };
                 }
                 else
-                    model.Message = "Error: Broker not found";
+                    model.Message = $"Error (GetBrokerByReference): Broker not found: {referenceId}";
             }
             catch (Exception ex)
             {
@@ -1617,9 +1617,8 @@ namespace Codes.Service.Services
                 }
                 else
                 {
-                    message = "Error: Broker not found";
+                    message = $"Error (BrokerAddAppReference): Broker not found: {brokerId}";
                 }
-                
             }
             catch (Exception ex)
             {

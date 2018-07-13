@@ -498,7 +498,7 @@ namespace ClientPortal.Services
                 }
                 else
                 {
-                    model.Message = "Error: Broker not found";
+                    model.Message = $"Error (UserService/BrokerUpdate): Broker not found: {model.Email}";
                 }
             }
             catch (Exception ex)
