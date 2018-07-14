@@ -30,11 +30,5 @@ namespace ClientPortal.Controllers.APIs
             _accountService = accountService;
             _context = context;
         }
-
-        [HttpGet("load/{type}")]
-        public async Task<IActionResult> LoadAsync(string type)
-        {
-            return PartialView("Load");
-        }
     }
 }
