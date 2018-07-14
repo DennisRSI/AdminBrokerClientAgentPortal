@@ -19,9 +19,8 @@ namespace ClientPortal
     {
         public static void Main(string[] args)
         {
-            //BuildWebHost(args).Run();
-
-            var host = BuildWebHost(args);
+            var hostBuilder = CreateWebHostBuilder(args);
+            var host = hostBuilder.Build();
 
             using (var scope = host.Services.CreateScope())
             {
@@ -45,14 +44,13 @@ namespace ClientPortal
             host.Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseKestrel(options => {
                     options.Limits.MaxRequestLineSize = 100_000_000;
                     options.Limits.MaxRequestBufferSize = 100_000_000;
                     options.Limits.MaxRequestHeadersTotalSize = 100_000_000;
-                })
-                .Build();
+                });
     }
 }
