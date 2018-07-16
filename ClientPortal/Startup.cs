@@ -47,6 +47,11 @@ namespace ClientPortal
 
             services.AddMvc();
 
+            services.AddHttpsRedirection(options =>
+            {
+                options.HttpsPort = 443;
+            });
+
             // Extra if statement needed because of this issue:
             // https://github.com/AutoMapper/AutoMapper.Extensions.Microsoft.DependencyInjection/issues/49
             if (!IsAutoMapperInitialized)
