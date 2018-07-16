@@ -30,9 +30,9 @@ namespace ClientPortal.Controllers
             _roleManager = roleManager;
         }
 
-        public async Task<IActionResult> Index()
+        public Task<IActionResult> Index()
         {
-            throw new NotImplementedException("See source code on using this method");
+            throw new NotImplementedException("See source code");
 
             // Uncomment code below and run on dev system to use this method:
 
