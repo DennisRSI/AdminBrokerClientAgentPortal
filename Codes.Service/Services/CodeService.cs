@@ -720,7 +720,7 @@ namespace Codes.Service.Services
                     }
                 }
                 model.Draw = draw;
-                var tmp = from a in _context.Clients where a.BrokerId == brokerId select a;
+                var tmp = from a in _context.Clients where a.BrokerId == brokerId && a.IsActive select a;
                 model.NumberOfRows = await tmp.CountAsync();
 
                 if (!string.IsNullOrEmpty(searchValue))
