@@ -139,7 +139,6 @@ namespace Codes.Service.Services
                     Canceled = (string)row["Canceled"],
                     InternetPrice = Convert.ToDecimal(row["InternetPrice"]),
                     YouPayPrice = Convert.ToDecimal(row["YouPayPrice"]),
-                    MemberSavings = Convert.ToSingle(row["MemberSavings"]),
                     PointsBalance = Convert.ToSingle(row["PointsBalance"]),
                     Commission = Convert.ToDecimal(row["ClubCommissionDue"])
                 };
@@ -147,7 +146,6 @@ namespace Codes.Service.Services
                 model.TotalNights += (item.CheckOutDate - item.CheckInDate).Days;
                 model.TotalInternetPrice += item.InternetPrice;
                 model.TotalYouPayPrice += item.YouPayPrice;
-                model.TotalMemberSavings += item.MemberSavings;
                 model.TotalPointsBalance += item.PointsBalance;
                 model.TotalCommission += item.Commission;
 
@@ -279,18 +277,15 @@ namespace Codes.Service.Services
                         AccountName = accountName,
                         InternetPrice = ReadColumn.GetDecimal(row, "InternetPrice"),
                         YouPayPrice = ReadColumn.GetDecimal(row, "YouPayPrice"),
-                        MemberSavings = ReadColumn.GetDecimal(row, "MemberSavings"),
                         CommissionEarned = ReadColumn.GetDecimal(row, "CommissionEarned"),
                     };
 
                     result.TotalInternetPrice += item.InternetPrice;
                     result.TotalYouPayPrice += item.YouPayPrice;
-                    result.TotalMemberSavings += item.MemberSavings;
                     result.TotalCommissionEarned += item.CommissionEarned;
 
                     model.TotalInternetPrice += item.InternetPrice;
                     model.TotalYouPayPrice += item.YouPayPrice;
-                    model.TotalMemberSavings += item.MemberSavings;
                     model.TotalCommissionEarned += item.CommissionEarned;
 
                     result.Items.Add(item);

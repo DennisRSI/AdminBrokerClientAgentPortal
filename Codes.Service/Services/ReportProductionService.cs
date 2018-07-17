@@ -88,19 +88,16 @@ namespace Codes.Service.Services
                         AccountName = row["MemberFirstName"] + " " + row["MemberLastName"],
                         InternetPrice = Convert.ToDecimal(row["InternetPrice"]),
                         YouPayPrice = Convert.ToDecimal(row["YouPayPrice"]),
-                        MemberSavings = Convert.ToDecimal(row["MemberSavings"]),
                         CommissionEarned = Convert.ToDecimal(row["ClubCommissionDue"]),
                         TransactionDate = (DateTime?)row["BookingDate"]
                     };
 
                     result.TotalInternetPrice += item.InternetPrice;
                     result.TotalYouPayPrice += item.YouPayPrice;
-                    result.TotalMemberSavings += item.MemberSavings;
                     result.TotalCommissionEarned += item.CommissionEarned;
 
                     model.TotalInternetPrice += item.InternetPrice;
                     model.TotalYouPayPrice += item.YouPayPrice;
-                    model.TotalMemberSavings += item.MemberSavings;
                     model.TotalCommissionEarned += item.CommissionEarned;
 
                     result.Items.Add(item);

@@ -28,12 +28,15 @@ namespace ClientPortal.Models
         public decimal TotalYouPayPrice { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public decimal TotalMemberSavings { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalCommissionEarned { get; set; }
 
         public List<ProductionSummaryTableViewModel> Tables { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:c}")]
+        public decimal TotalMemberSavings
+        {
+            get { return TotalInternetPrice - TotalYouPayPrice; }
+        }
 
         public string ReportTime
         {
@@ -57,10 +60,13 @@ namespace ClientPortal.Models
         public decimal TotalYouPayPrice { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public decimal TotalMemberSavings { get; set; }
+        public decimal TotalCommissionEarned { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public decimal TotalCommissionEarned { get; set; }
+        public decimal TotalMemberSavings
+        {
+            get { return TotalInternetPrice - TotalYouPayPrice; }
+        }
 
         public string FinalColumnName
         {
@@ -87,14 +93,17 @@ namespace ClientPortal.Models
         public decimal YouPayPrice { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public decimal MemberSavings { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal CommissionEarned { get; set; }
 
         public DateTime PaidDate { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? TransactionDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:c}")]
+        public decimal MemberSavings
+        {
+            get { return InternetPrice - YouPayPrice; }
+        }
     }
 }

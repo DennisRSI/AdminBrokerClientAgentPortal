@@ -30,15 +30,18 @@ namespace Codes.Service.ViewModels
         public decimal TotalYouPayPrice { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public float TotalMemberSavings { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalCommission { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
         public float TotalPointsBalance { get; set; }
 
         public IEnumerable<ProductionDetailItemViewModel> DetailsTable { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:c}")]
+        public decimal TotalMemberSavings
+        {
+            get { return TotalInternetPrice - TotalYouPayPrice; }
+        }
 
         public string ReportTime
         {
@@ -71,12 +74,15 @@ namespace Codes.Service.ViewModels
         public decimal YouPayPrice { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public Single MemberSavings { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:c}")]
         public Single PointsBalance { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal Commission { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:c}")]
+        public decimal MemberSavings
+        {
+            get { return InternetPrice - YouPayPrice; }
+        }
     }
 }
