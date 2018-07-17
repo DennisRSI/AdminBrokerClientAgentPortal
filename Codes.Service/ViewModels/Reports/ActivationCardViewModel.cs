@@ -16,6 +16,7 @@ namespace Codes.Service.ViewModels
         public string Phone { get; set; }
         public string Email { get; set; }
         public string PostalCode { get; set; }
+        public int LoginCount { get; set; }
 
         public string MemberName
         {

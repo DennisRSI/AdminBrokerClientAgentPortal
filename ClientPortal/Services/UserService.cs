@@ -461,7 +461,7 @@ namespace ClientPortal.Services
         {
             try
             {
-                ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
+                var user = await _userManager.FindByIdAsync(model.ApplicationReference);
 
                 if (user != null && user.Id != null && user.Id.Length > 0)
                 {
@@ -498,7 +498,7 @@ namespace ClientPortal.Services
                 }
                 else
                 {
-                    model.Message = "Error: Broker not found";
+                    model.Message = $"Error (UserService/BrokerUpdate): Broker not found: {model.Email}";
                 }
             }
             catch (Exception ex)

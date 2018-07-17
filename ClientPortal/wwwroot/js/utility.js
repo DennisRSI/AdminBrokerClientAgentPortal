@@ -3,8 +3,16 @@ var UTILITY = new Utility();
 function Utility() {
     var self = this;
 
-    this.formatCurrency = function (value) {
-        return value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    this.formatCurrency = function (value, displayCents) {
+        displayCents = typeof displayCents !== 'undefined' ? displayCents : true;
+
+        var digits = 2;
+
+        if (!displayCents) {
+            digits = 0;
+        }
+
+        return '$' + value.toLocaleString(undefined, { minimumFractionDigits: digits, maximumFractionDigits: digits });
     }
 
     this.serializeFormJSON = function (form) {

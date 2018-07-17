@@ -71,7 +71,8 @@ namespace Codes.Service.Services
                     CardStatus = (string)row["Status"],
                     Phone = (string)row["Phone"],
                     Email = (string)row["Email"],
-                    PostalCode = (string)row["PostalCode"]
+                    PostalCode = (string)row["PostalCode"],
+                    LoginCount = (int)row["LoginCount"]
                 };
 
                 resultData.Add(activation);
@@ -82,7 +83,7 @@ namespace Codes.Service.Services
             return result;
         }
 
-        public ProductionResultDetailViewModel GetProductionResultDetail(ProductionDetailQuery query)
+        public async Task<ProductionResultDetailViewModel> GetProductionResultDetail(ProductionDetailQuery query)
         {
             const string procedureName = "ReportProductionDetails";
 
@@ -106,11 +107,13 @@ namespace Codes.Service.Services
                 new SqlParameter("@BrokerId", query.BrokerId),
                 new SqlParameter("@AgentId", query.AgentId),
                 new SqlParameter("@ClientId", query.ClientId),
-                new SqlParameter("@Search", ""),
+                new SqlParameter("@CampaignId", query.CampaignId),
+                new SqlParameter("@Search", String.Empty),
                 totalCount
             };
 
-            var table = _dataAccess.ExecuteDataTable(procedureName, parameters);
+            var table = await _dataAccess.ExecuteDataTableAsync(procedureName, parameters);
+
             var results = new List<ProductionDetailItemViewModel>();
 
             var model = new ProductionResultDetailViewModel
@@ -178,6 +181,10 @@ namespace Codes.Service.Services
                 case "source":
                     reportGroupName = "Broker";
                     columnNamePrefix = "Broker";
+                    break;
+
+                case "campaign":
+                    reportGroupName = "Member Name";
                     break;
             }
 
@@ -257,7 +264,7 @@ namespace Codes.Service.Services
                             break;
 
                         case "campaign":
-                            accountName = (string)row["CampaignName"];
+                            accountName = row["MemberFirstName"] + " " + row["MemberLastName"];
                             result.AccountName = (string)row["CampaignName"];
                             break;
 
@@ -309,6 +316,7 @@ namespace Codes.Service.Services
         public int? BrokerId { get; set; }
         public int? AgentId { get; set; }
         public int? ClientId { get; set; }
+        public int? CampaignId { get; set; }
     }
 
     public class ProductionSummaryQuery

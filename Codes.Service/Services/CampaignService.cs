@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 
 namespace Codes.Service.Services
 {
@@ -17,7 +16,6 @@ namespace Codes.Service.Services
     {
         private readonly ILogger _logger;
         private readonly CodesDbContext _context;
-        private readonly IMapper _mapper;
         private readonly ICodeGeneratorService _codeGeneratorService;
 
         public CampaignService(CodesDbContext context, ILoggerFactory loggerFactory, IMapper mapper, ICodeGeneratorService codeGeneratorService)

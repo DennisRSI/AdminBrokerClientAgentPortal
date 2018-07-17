@@ -23,15 +23,18 @@ namespace ClientPortal.Controllers.APIs
         private readonly IAccountService _accountService;
         private readonly ICodeService _context;
         private readonly IAccountQueryFactory _accountQueryFactory;
+        private readonly IReportProductionService _reportProductionService;
 
         public ReportProductionController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager,
-                                            IReportService reportService, IAccountService accountService, ICodeService context, IAccountQueryFactory accountQueryFactory)
+                                            IReportService reportService, IAccountService accountService, ICodeService context,
+                                            IReportProductionService reportProductionService, IAccountQueryFactory accountQueryFactory)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _reportService = reportService;
             _accountService = accountService;
             _context = context;
+            _reportProductionService = reportProductionService;
             _accountQueryFactory = accountQueryFactory;
         }
 
@@ -97,9 +100,18 @@ namespace ClientPortal.Controllers.APIs
                 AccountIds = accounts
             };
 
-            var model = await _reportService.GetProductionResultSummaryAsync(query);
+            ProductionResultSummaryViewModel model = null;
 
-            model.Type = type.First().ToString().ToUpper() + type.Substring(1);
+            if (type == "campaign")
+            {
+                model = await _reportProductionService.GetProductionResultCampaignAsync(query);
+            }
+            else
+            {
+                model = await _reportService.GetProductionResultSummaryAsync(query);
+            }
+
+            model.Type = type.CapitalizeFirstLetter();
             model.AccountName = "All";
 
             return PartialView("HtmlSummary", model);
@@ -111,12 +123,10 @@ namespace ClientPortal.Controllers.APIs
             string checkOutStart, string checkOutEnd, string bookingStart, string bookingEnd
             )
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var accountQuery = _accountQueryFactory.GetAccountQuery(user.BrokerId, user.AgentId, user.ClientId);
-
             int? brokerId = null;
             int? agentId = null;
             int? clientId = null;
+            int? campaignId = null;
 
             switch (type)
             {
@@ -131,6 +141,10 @@ namespace ClientPortal.Controllers.APIs
                 case "client":
                     clientId = id;
                     break;
+
+                case "campaign":
+                    campaignId = id;
+                    break;
             }
 
             var query = new ProductionDetailQuery()
@@ -141,10 +155,11 @@ namespace ClientPortal.Controllers.APIs
                 CheckOutEndDate = DateTime.ParseExact(checkOutEnd, "yyyy-MM-dd", null),
                 BrokerId = brokerId,
                 AgentId = agentId,
-                ClientId = clientId
+                ClientId = clientId,
+                CampaignId = campaignId
             };
 
-            var model = _reportService.GetProductionResultDetail(query);
+            var model = await _reportService.GetProductionResultDetail(query);
 
             model.Type = type.First().ToString().ToUpper() + type.Substring(1);
             model.AccountName = name;

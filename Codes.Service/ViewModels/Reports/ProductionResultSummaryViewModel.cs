@@ -46,6 +46,7 @@ namespace ClientPortal.Models
         public string AccountType { get; set; }
         public string AccountName { get; set; }
         public string ReportGroupName { get; set; }
+        public bool IsCampaignReport { get; set; }
 
         public List<ProductionSummaryItemViewModel> Items { get; set; }
 
@@ -60,6 +61,19 @@ namespace ClientPortal.Models
 
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalCommissionEarned { get; set; }
+
+        public string FinalColumnName
+        {
+            get
+            {
+                if (IsCampaignReport)
+                {
+                    return "Transaction Date";
+                }
+
+                return "Paid Date";
+            }
+        }
     }
 
     public class ProductionSummaryItemViewModel
@@ -79,5 +93,8 @@ namespace ClientPortal.Models
         public decimal CommissionEarned { get; set; }
 
         public DateTime PaidDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime? TransactionDate { get; set; }
     }
 }

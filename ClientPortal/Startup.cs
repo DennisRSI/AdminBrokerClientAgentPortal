@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
@@ -51,6 +47,11 @@ namespace ClientPortal
 
             services.AddMvc();
 
+            services.AddHttpsRedirection(options =>
+            {
+                options.HttpsPort = 443;
+            });
+
             // Extra if statement needed because of this issue:
             // https://github.com/AutoMapper/AutoMapper.Extensions.Microsoft.DependencyInjection/issues/49
             if (!IsAutoMapperInitialized)
@@ -66,7 +67,6 @@ namespace ClientPortal
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
                 app.UseDatabaseErrorPage();
             }
             else
@@ -75,7 +75,7 @@ namespace ClientPortal
             }
 
             app.UseStaticFiles();
-
+            app.UseHttpsRedirection();
             app.UseAuthentication();
 
             app.UseMvc(routes =>
@@ -103,6 +103,7 @@ namespace ClientPortal
             services.AddTransient<ICodeGeneratorService, CodeGeneratorService>();
             services.AddTransient<IReportService, ReportService>();
             services.AddTransient<IReportCommissionService, ReportCommissionService>();
+            services.AddTransient<IReportProductionService, ReportProductionService>();
             services.AddTransient<IDashboardDistributionService, DashboardDistributionService>();
             services.AddTransient<IAccountQueryFactory, AccountQueryFactory>();
         }

@@ -5,7 +5,6 @@ using ClientPortal.Models;
 using Codes.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq.Dynamic;
 using Codes.Service.Interfaces;
 
 namespace ClientPortal.Controllers.APIs
