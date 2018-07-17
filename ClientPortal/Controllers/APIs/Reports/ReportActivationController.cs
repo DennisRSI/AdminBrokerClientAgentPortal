@@ -43,6 +43,7 @@ namespace ClientPortal.Controllers.APIs
 
             switch (type.ToLower())
             {
+                case "super admin":
                 case "admin":
                     model = LoadAdmin();
                     break;
@@ -137,58 +138,69 @@ namespace ClientPortal.Controllers.APIs
         [HttpGet("getjson/{type}/{id}/{status}/{used}/{start}/{end}")]
         public async Task<DataTableViewModel<ActivationCardViewModel>> GetJson(string type, int id, string status, string used, string start, string end)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
+            DataTableViewModel<ActivationCardViewModel> result = null;
 
-            int? agentId = null;
-            int? brokerId = null;
-            int? clientId = null;
-
-            switch (type)
+            try
             {
-                case "broker":
-                    brokerId = id;
-                    break;
+                var user = await _userManager.GetUserAsync(HttpContext.User);
 
-                case "agent":
-                    agentId = id;
-                    break;
+                int? agentId = null;
+                int? brokerId = null;
+                int? clientId = null;
 
-                case "client":
-                    clientId = id;
-                    break;
+                switch (type)
+                {
+                    case "broker":
+                        brokerId = id;
+                        break;
+
+                    case "agent":
+                        agentId = id;
+                        break;
+
+                    case "client":
+                        clientId = id;
+                        break;
+                }
+
+                var startDate = DateTime.ParseExact(start, "yyyy-MM-dd", null);
+                var endDate = DateTime.ParseExact(end, "yyyy-MM-dd", null);
+
+                bool? isCardUsed = null;
+
+                if (used == "Y")
+                {
+                    isCardUsed = true;
+                }
+
+                if (used == "N")
+                {
+                    isCardUsed = false;
+                }
+
+                var query = new ActivationReportViewModel()
+                {
+                    AgentId = agentId,
+                    BrokerId = brokerId,
+                    ClientId = clientId,
+                    CampaignStatus = status,
+                    IsCardUsed = isCardUsed,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                };
+
+                result = _reportService.GetDataActivation(query);
+
+                if (!user.IsAdmin)
+                {
+                    result.Data.ToList().ForEach(a => { a.Phone = String.Empty; a.Email = String.Empty; });
+                }
+
+                
             }
-
-            var startDate = DateTime.ParseExact(start, "yyyy-MM-dd", null);
-            var endDate = DateTime.ParseExact(end, "yyyy-MM-dd", null);
-
-            bool? isCardUsed = null;
-
-            if (used == "Y")
+            catch (Exception ex)
             {
-                isCardUsed = true;
-            }
-
-            if (used == "N")
-            {
-                isCardUsed = false;
-            }
-
-            var query = new ActivationReportViewModel()
-            {
-                AgentId = agentId,
-                BrokerId = brokerId,
-                ClientId = clientId,
-                CampaignStatus = status,
-                IsCardUsed = isCardUsed,
-                StartDate = startDate,
-                EndDate = endDate,
-            };
-
-            var result = _reportService.GetDataActivation(query);
-
-            if (!user.IsAdmin)
-            {
-                result.Data.ToList().ForEach(a => { a.Phone = String.Empty; a.Email = String.Empty; });
+                string message = ex.Message;
             }
 
             return result;

@@ -399,6 +399,105 @@ namespace Codes.Service.Services
 
             return message;
         }
+
+        public async Task<CampaignViewModel> GetCampaignById(int campaignId)
+        {
+            CampaignViewModel campaign = new CampaignViewModel();
+
+            try
+            {
+                CampaignModel c = await _context.Campaigns.FirstOrDefaultAsync(x => x.CampaignId == campaignId);
+                if (c != null && c.CampaignId > 0)
+                {
+                    campaign.Broker.BrokerId = c.BrokerId;
+                    campaign.CreationDate = c.CreationDate;
+                    campaign.CreatorIP = c.CreatorIP;
+                    campaign.DeactivationDate = c.DeactivationDate;
+                    campaign.DeactivationReason = c.DeactivationReason;
+                    campaign.IsActive = c.IsActive;
+                    campaign.Message = "Success";
+                    campaign.CampaignDescription = c.CampaignDescription;
+                    campaign.CampaignId = c.CampaignId;
+                    campaign.CampaignName = c.CampaignName;
+                    campaign.CampaignType = c.CampaignType;
+                    //campaign.CardQuantity = c.q
+                    campaign.Client.ClientId = c.ClientId.GetValueOrDefault(0);
+                    campaign.CreationDate = c.CreationDate;
+                    campaign.CreatorIP = c.CreatorIP;
+                    campaign.CustomCSS = c.CustomCSS;
+                    campaign.DeactivationDate = c.DeactivationDate;
+                    campaign.DeactivationReason = c.DeactivationReason;
+                    campaign.EndDateTime = c.EndDateTime;
+                    campaign.GoogleAnalyticsCode = c.GoogleAnalyticsCode;
+                    campaign.PackageId = c.PackageId;
+                    campaign.StartDateTime = c.StartDateTime;
+
+                }
+                else
+                    c.Message = "Error: Campaign not found";
+            }
+            catch (Exception ex)
+            {
+                if (campaign == null)
+                    campaign = new CampaignViewModel();
+
+                campaign.Message = $"Error: {ex.Message}";
+            }
+
+            return campaign;
+        }
+
+        public async Task<ListViewModel<CampaignViewModel>> GetCampaigns(int brokerId, int startRowIndex = 0, int numberOfRows = 10, string sortColumn = "DEFAULT")
+        {
+            ListViewModel<CampaignViewModel> items = new ListViewModel<CampaignViewModel>();
+
+            try
+            {
+                var tmp = from c in _context.Campaigns where c.BrokerId == brokerId select c;
+
+                switch (sortColumn)
+                {
+                    case "AgentFirstName":
+                        tmp = tmp.OrderBy(o => o.CampaignName);
+                        break;
+                    default:
+                        tmp = tmp.OrderBy(o => o.CreationDate);
+                        break;
+                }
+
+                var ct = tmp;
+
+                items.TotalCount = ct.Count();
+
+                items.Items = await (from t in tmp
+                                     select new CampaignViewModel
+                                     {
+                                         CreationDate = t.CreationDate,
+                                         CreatorIP = t.CreatorIP,
+                                         DeactivationDate = t.DeactivationDate,
+                                         IsActive = t.IsActive,
+                                         Message = t.Message,
+                                         CampaignDescription = t.CampaignDescription,
+                                         CampaignId = t.CampaignId,
+                                         CampaignName = t.CampaignName,
+                                         CampaignType = t.CampaignType,
+                                         CustomCSS = t.CustomCSS,
+                                         DeactivationReason = t.DeactivationReason,
+                                         EndDateTime = t.EndDateTime,
+                                         GoogleAnalyticsCode = t.GoogleAnalyticsCode,
+                                         PackageId = t.PackageId,
+                                         StartDateTime = t.StartDateTime
+                                     }).Skip(startRowIndex).Take(numberOfRows).ToListAsync();
+                items.Message = "Success";
+            }
+            catch (Exception ex)
+            {
+                items.Message = $"Error: {ex.Message}";
+            }
+
+            return items;
+        }
+
         /*public async Task<(bool isSuccess, int codeRangeId, int codeActivationId, string message)> IsCodeInRange(int rsiOrgId, string preAlpha, string postAlpha, int numericValue)
         {
             (bool isSuccess, int codeRangeId, int codeActivationId, string message) model = (false, 0, 0, "");
@@ -1336,6 +1435,113 @@ namespace Codes.Service.Services
             }
 
             return broker;
+        }
+
+        public async Task<DataTableViewModel<BrokerListViewModel>> GetBrokers(int draw, int startRowIndex = 0, int numberOfRows = 10, string searchValue = null, string sortColumn = "DEFAULT", string sortDirection = "ASC", bool onlyActive = false)
+        {
+            DataTableViewModel<BrokerListViewModel> model = new DataTableViewModel<BrokerListViewModel>();
+
+            try
+            {
+                model.RoleName = "Broker";
+
+                model.Draw = draw;
+                var tmp = from b in _context.Brokers select b;
+                model.NumberOfRows = tmp.Count();
+                if (!string.IsNullOrEmpty(searchValue))
+                {
+                    int? c = null;
+
+                    int c1 = 0;
+                    if (int.TryParse(searchValue, out c1))
+                        c = c1;
+
+                    tmp = tmp.Where(x => x.BrokerId == c
+                        || x.CompanyName.Contains(searchValue)
+                        || x.Email.Contains(searchValue)
+                        || x.BrokerFirstName.Contains(searchValue)
+                        || x.BrokerLastName.Contains(searchValue)
+                        || x.MobilePhone.Contains(searchValue)
+                        || x.OfficePhone.Contains(searchValue)
+                        || x.Fax.Contains(searchValue)
+                        || x.ApplicationReference.Contains(searchValue));
+
+                    if (onlyActive)
+                        tmp = tmp.Where(x => x.IsActive);
+                }
+                model.RecordsFiltered = tmp.Count();
+                if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortDirection)))
+                {
+                    switch (sortColumn)
+                    {
+                        case "company_name":
+                            if (sortDirection.ToUpper() == "ASC")
+                                tmp = tmp.OrderBy(o => o.CompanyName);
+                            else
+                                tmp = tmp.OrderByDescending(o => o.CompanyName);
+                            break;
+                        case "email":
+                            if (sortDirection.ToUpper() == "ASC")
+                                tmp = tmp.OrderBy(o => o.Email);
+                            else
+                                tmp = tmp.OrderByDescending(o => o.Email);
+                            break;
+                        case "phone":
+                            if (sortDirection.ToUpper() == "ASC")
+                                tmp = tmp.OrderBy(o => o.OfficePhone);
+                            else
+                                tmp = tmp.OrderByDescending(o => o.OfficePhone);
+                            break;
+                        case "activation_date":
+                            if (sortDirection.ToUpper() == "ASC")
+                                tmp = tmp.OrderBy(o => o.CreationDate);
+                            else
+                                tmp = tmp.OrderByDescending(o => o.CreationDate);
+                            break;
+                        case "deactivation_date":
+                            if (sortDirection.ToUpper() == "ASC")
+                                tmp = tmp.OrderBy(o => o.DeactivationDate);
+                            else
+                                tmp = tmp.OrderByDescending(o => o.DeactivationDate);
+                            break;
+                        default:
+                            if (sortDirection.ToUpper() == "ASC")
+                                tmp = tmp.OrderBy(o => o.BrokerFirstName);
+                            else
+                                tmp = tmp.OrderByDescending(o => o.BrokerFirstName);
+                            break;
+                    }
+                    //tmp = tmp.OrderBy(search + " " + sortDirection);
+                }
+
+                var ct = tmp;
+
+                model.RecordsFiltered = ct.Count();
+
+                model.Data = await (from t in tmp
+                                    select new BrokerListViewModel
+                                    {
+                                        AccountId = t.ApplicationReference,
+                                        ActivationDate = t.CreationDate,
+                                        BrokerId = t.BrokerId,
+                                        CommissionRate = t.BrokerCommissionPercentage,
+                                        Company = t.CompanyName,
+                                        DeactivationDate = t.DeactivationDate,
+                                        Email = t.Email,
+                                        FirstName = t.BrokerFirstName,
+                                        LastName = t.BrokerLastName,
+                                        MiddleName = t.BrokerMiddleName,
+                                        Extension = t.MobilePhone != null && t.MobilePhone.Length > 0 ? "" : t.OfficeExtension,
+                                        Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone : t.OfficePhone
+                                    }).Skip(startRowIndex).Take(numberOfRows).ToArrayAsync();
+                model.Message = "Success";
+            }
+            catch (Exception ex)
+            {
+                model.Message = $"Error: {ex.Message}";
+            }
+
+            return model;
         }
 
         public async Task<DataTableViewModel<BrokerListViewModel>> GetBrokers()

@@ -38,18 +38,13 @@ namespace Codes.Service.ViewModels
 
         [Display(Name = "Package Id", Prompt = "Package Id")]
         public int PackageId { get; set; }
-
-        public DateTime? StartDateTime
-        {
-            get { return GetDateTime(StartDate); }
-        }
-
-        public DateTime? EndDateTime
-        {
-            get { return GetDateTime(EndDate); }
-        }
-
+        [Display(Name = "Start Date", Prompt = "Start Date")]
+        public DateTime? StartDateTime { get; set; } = null;
+        [Display(Name = "End Date", Prompt = "End Date")]
+        public DateTime? EndDateTime { get; set; } = null;
+        [Display(Name = "Start Date", Prompt = "Start Date")]
         public string StartDate { get; set; }
+        [Display(Name = "End Date", Prompt = "End Date")]
         public string EndDate { get; set; }
 
         [Display(Name = "Campaign Description", Prompt = "Campaign Description")]
