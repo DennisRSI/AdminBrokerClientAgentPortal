@@ -137,11 +137,11 @@ namespace Codes.Service.Services
                     CheckInDate = (DateTime)row["CheckInDate"],
                     CheckOutDate = (DateTime)row["CheckOutDate"],
                     Canceled = (string)row["Canceled"],
-                    InternetPrice = (decimal)row["InternetPrice"],
-                    YouPayPrice = (decimal)row["YouPayPrice"],
-                    MemberSavings = (Single)row["MemberSavings"],
-                    PointsBalance = (Single)row["PointsBalance"],
-                    Commission = (decimal)row["ClubCommissionDue"]
+                    InternetPrice = Convert.ToDecimal(row["InternetPrice"]),
+                    YouPayPrice = Convert.ToDecimal(row["YouPayPrice"]),
+                    MemberSavings = Convert.ToSingle(row["MemberSavings"]),
+                    PointsBalance = Convert.ToSingle(row["PointsBalance"]),
+                    Commission = Convert.ToDecimal(row["ClubCommissionDue"])
                 };
 
                 model.TotalNights += (item.CheckOutDate - item.CheckInDate).Days;
