@@ -104,10 +104,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Country</label>
                     <div class="col-lg-3 col-md-3 col-sm-9 col-xs-12">
-                        <select name="Country" class="form-control" asp-for="Country">
-                            <option>Select Country</option>
-                            <option value="USA">USA</option>
-                            <option value="CAN">CAN</option>
+                        <select name="Country" class="form-control" asp-for="Country" asp-items="@Model.Countries">
                         </select>
                     </div>
                 </div>
