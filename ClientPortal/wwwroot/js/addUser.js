@@ -5,12 +5,18 @@ function AddUser(){
 
     this.init = function () {
 
-        $('input.ein').inputmask({
-            mask: '99-9999999'
-        });
+        self.initDefaultCountry();
 
-        $('input[type="tel"]').inputmask({
-            mask: '(999) 999-9999'
+        $('select.country').unbind('change').change(function () {
+            var value = $(this).val();
+
+            if (value === 'USA' || value === 'CAN') {
+                self.initDefaultCountry();
+            }
+            else {
+                self.initOtherCountry();
+            }
+
         });
 
         $('button.add-user-open-modal').unbind('click').click(function (event) {
@@ -49,6 +55,30 @@ function AddUser(){
                     email: {
                         required: true,
                         email: true
+                    },
+                    mobile_phone: {
+                        required: function (element) {
+                            var val = $(element).parent().parent().find('.workPhone').val();
+                            var required = val.length === 0;
+
+                            if (!required) {
+                                $(element).removeClass('error');
+                            }
+
+                            return required;
+                        }
+                    },
+                    work_phone: {
+                        required: function (element) {
+                            var val = $(element).parent().parent().find('.mobilePhone').val();
+                            var required = val.length === 0;
+
+                            if (!required) {
+                                $(element).removeClass('error');
+                            }
+
+                            return required;
+                        }
                     }
                 }
             });
@@ -97,6 +127,24 @@ function AddUser(){
                 }
             })
         });
+    }
+
+    this.initDefaultCountry = function () {
+        $('input.ein').inputmask({
+            mask: '99-9999999'
+        });
+
+        $('input[type="tel"]').removeAttr('maxlength');
+
+        $('input[type="tel"]').inputmask({
+            mask: '(999) 999-9999'
+        });
+    }
+
+    this.initOtherCountry = function () {
+        $('input.ein').inputmask('remove');
+        $('input[type="tel"]').inputmask('remove');
+        $('input[type="tel"]').attr('maxlength', '20');
     }
 
     this.uploadFile = function (fileType, file1, file2, role, id) {

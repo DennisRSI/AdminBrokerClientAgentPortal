@@ -23,7 +23,7 @@
             <div id="myTabContent" class="tab-content">
                 <div id="addUserTab1" role="tabpanel" class="tab-pane active in" aria-labelledby="profile-tab">
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group">
-                        <select name="country" class="form-control" asp-items="@Model.Countries" required>
+                        <select name="country" class="form-control country" asp-items="@Model.Countries" required>
                         </select>
                     </div>
                     @if (!Model.UserType.Contains("Administrator"))
@@ -33,7 +33,7 @@
                             <span class="fa fa-building form-control-feedback left" aria-hidden="true"></span>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                            <input type="text" class="form-control has-feedback-left ein" name="ein" placeholder="EIN/FEIN" required>
+                            <input type="text" class="form-control has-feedback-left ein" name="ein" placeholder="EIN/FEIN">
                             <span class="fa fa-info-circle form-control-feedback left" aria-hidden="true"></span>
                         </div>
                     }
@@ -118,11 +118,11 @@
                         <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="tel" class="form-control has-feedback-left" name="mobile_phone" placeholder="Mobile Phone" required>
+                        <input type="tel" class="form-control has-feedback-left mobilePhone" name="mobile_phone" placeholder="Mobile Phone">
                         <span class="fa fa-mobile-phone form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-                        <input type="tel" class="form-control has-feedback-left" name="work_phone" placeholder="Office Phone" required>
+                        <input type="tel" class="form-control has-feedback-left workPhone" name="work_phone" placeholder="Office Phone">
                         <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
