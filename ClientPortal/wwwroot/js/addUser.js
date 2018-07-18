@@ -2,6 +2,7 @@ var ADDUSER = new AddUser();
 
 function AddUser(){
     var self = this;
+    var defaultCountry = true;
 
     this.init = function () {
 
@@ -16,7 +17,6 @@ function AddUser(){
             else {
                 self.initOtherCountry();
             }
-
         });
 
         $('button.add-user-open-modal').unbind('click').click(function (event) {
@@ -48,9 +48,7 @@ function AddUser(){
                         maxlength: 255
                     },
                     postal_code: {
-                        required: true,
-                        minlength: 5,
-                        maxlength: 10
+                        required: true
                     },
                     email: {
                         required: true,
@@ -79,7 +77,17 @@ function AddUser(){
 
                             return required;
                         }
-                    }
+                    },
+                    state: {
+                        required: function (element) {
+                            return self.defaultCountry;
+                        }
+                    },
+                    state_freeform: {
+                        required: function (element) {
+                            return !self.defaultCountry;
+                        }
+                    },
                 }
             });
 
@@ -90,6 +98,11 @@ function AddUser(){
             }
 
             var data = UTILITY.serializeFormJSON(form);
+
+            if (!self.defaultCountry) {
+                data.state = data.state_freeform;
+            }
+
             var role = form.children('.userType').val();
             var url = '/api/user/' + role;
 
@@ -130,6 +143,10 @@ function AddUser(){
     }
 
     this.initDefaultCountry = function () {
+        self.defaultCountry = true;
+        $('.state').removeClass('hidden');
+        $('.stateFreeForm').addClass('hidden');
+
         $('input.ein').inputmask({
             mask: '99-9999999'
         });
@@ -142,6 +159,10 @@ function AddUser(){
     }
 
     this.initOtherCountry = function () {
+        self.defaultCountry = false;
+        $('.state').addClass('hidden');
+        $('.stateFreeForm').removeClass('hidden');
+
         $('input.ein').inputmask('remove');
         $('input[type="tel"]').inputmask('remove');
         $('input[type="tel"]').attr('maxlength', '20');
