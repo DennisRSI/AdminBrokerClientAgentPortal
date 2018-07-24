@@ -10,7 +10,7 @@ namespace Codes.Service.Models
     [Table("Clients")]
     public class ClientModel : _BaseModel
     {
-        private string _mobilePhone = "", _officePhone = "", _fax = "", _officeExtension = "", _faxExtension = "";
+        private string _fax = "", _officeExtension = "", _faxExtension = "";
 
         public ClientModel()
         {
@@ -79,38 +79,10 @@ namespace Codes.Service.Models
         public string Country { get; set; } = "USA";
 
         [StringLength(50), Phone]
-        public string MobilePhone
-        {
-            get
-            {
-                return _mobilePhone;
-            }
-            set
-            {
-                if (value != null)
-                {
-
-                    _mobilePhone = new String(value.Where(Char.IsDigit).ToArray());
-                }
-            }
-        }
+        public string MobilePhone { get; set; }
 
         [StringLength(50), Phone]
-        public string OfficePhone
-        {
-            get
-            {
-                return _officePhone;
-            }
-            set
-            {
-                if (value != null)
-                {
-
-                    _officePhone = new String(value.Where(Char.IsDigit).ToArray());
-                }
-            }
-        }
+        public string OfficePhone { get; set; }
 
         [StringLength(50)]
         public string OfficeExtension

@@ -92,6 +92,20 @@
                             <option value="WI">WI</option>
                             <option value="WV">WV</option>
                             <option value="WY">WY</option>
+                            <option value="">-------------</option>
+                            <option value="AB">AB</option>
+                            <option value="BC">BC</option>
+                            <option value="MB">MB</option>
+                            <option value="NB">NB</option>
+                            <option value="NL">NL</option>
+                            <option value="NT">NT</option>
+                            <option value="NS">NS</option>
+                            <option value="NU">NU</option>
+                            <option value="ON">ON</option>
+                            <option value="PE">PE</option>
+                            <option value="QC">QC</option>
+                            <option value="SK">SK</option>
+                            <option value="YT">YT</option>
                         </select>
                     </div>
                 </div>
@@ -104,10 +118,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Country</label>
                     <div class="col-lg-3 col-md-3 col-sm-9 col-xs-12">
-                        <select name="Country" class="form-control" asp-for="Country">
-                            <option>Select Country</option>
-                            <option value="USA">USA</option>
-                            <option value="CAN">CAN</option>
+                        <select name="Country" class="form-control" asp-for="Country" asp-items="@Model.Countries">
                         </select>
                     </div>
                 </div>

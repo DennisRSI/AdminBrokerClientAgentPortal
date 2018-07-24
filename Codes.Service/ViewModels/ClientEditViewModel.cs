@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Codes.Service.Domain;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 
@@ -31,6 +32,14 @@ namespace Codes.Service.ViewModels
         }
 
         public IEnumerable<SelectListItem> Agents { get; set; }
+
+        public IEnumerable<SelectListItem> Countries
+        {
+            get
+            {
+                return CountryList.GetSelectList();
+            }
+        }
     }
 }
 
