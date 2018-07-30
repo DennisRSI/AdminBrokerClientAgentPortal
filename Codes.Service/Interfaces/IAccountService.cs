@@ -26,7 +26,7 @@ namespace Codes.Service.Interfaces
         // Client
         IEnumerable<AccountViewModel> GetCampaignsOfClient(int clientId);
         void DeactivateClient(int clientId, string reason);
-        int GetCardQuantityByClient(int clientId);
+        int GetCardQuantityByClient(int clientId, string cardType = "");
 
         AccountCommonModel GetAccountCommon(string reference);
     }

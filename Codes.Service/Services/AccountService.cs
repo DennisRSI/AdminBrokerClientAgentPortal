@@ -77,7 +77,7 @@ namespace Codes.Service.Services
             return result;
         }
 
-        public int GetCardQuantityByClient(int clientId)
+        public int GetCardQuantityByClient(int clientId, string cardType = "")
         {
             var query =
                 from uc in _context.UnusedCodes
@@ -85,7 +85,7 @@ namespace Codes.Service.Services
                 join ccr in _context.CampaignCodeRanges on cr.CodeRangeId equals ccr.CodeRangeId
                 join camp in _context.Campaigns on ccr.CampaignId equals camp.CampaignId
                 join c in _context.Clients on camp.ClientId equals c.ClientId
-                where c.ClientId == clientId
+                where c.ClientId == clientId && (cardType == uc.CodeType || cardType == "")
                 select uc;
 
             return query.Count();

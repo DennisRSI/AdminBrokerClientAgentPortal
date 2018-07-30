@@ -28,8 +28,8 @@ namespace Codes.Service.Services
                 ApplicationReference = client.ApplicationReference,
                 ClientId = client.ClientId,
                 CompanyName = client.CompanyName,
-                PhysicalInCampaigns = 0,
-                VirtualInCampaigns = _accountService.GetCardQuantityByClient(clientId)
+                PhysicalInCampaigns = _accountService.GetCardQuantityByClient(clientId, "Physical"),
+                VirtualInCampaigns = _accountService.GetCardQuantityByClient(clientId, "Virtual")
             };
 
             model.Campaigns = _context.Campaigns
