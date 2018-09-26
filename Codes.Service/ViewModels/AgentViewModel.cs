@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 
 namespace Codes.Service.ViewModels
 {
@@ -12,26 +10,40 @@ namespace Codes.Service.ViewModels
 
         [Display(Name = "Agent Id", Prompt = "Agent Id")]
         public int AgentId { get; set; } = 0;
+
+        [Display(Name = "Broker Id", Prompt = "Broker Id")]
+        public int BrokerId { get; set; }
+
         [StringLength(500), Display(Name = "Company", Prompt = "Company")]
         public string CompanyName { get; set; }
+
         [StringLength(255), Display(Name = "Agent First Name", Prompt = "Agent First Name")]
         public string AgentFirstName { get; set; }
+
         [StringLength(255)]
         public string AgentMiddleName { get; set; } = "";
+
         [StringLength(255), Display(Name = "Agent Last Name", Prompt = "Agent Last Name")]
         public string AgentLastName { get; set; }
+
         [StringLength(500), Display(Name = "EIN/FEIN", Prompt = "EIN/FEIN")]
         public string EIN { get; set; } = "";
+
         [StringLength(255), Display(Name = "Office Address", Prompt = "Office Address")]
         public string Address { get; set; } = "";
+
         [StringLength(100), Display(Name = "City", Prompt = "City")]
         public string City { get; set; } = "";
+
         [StringLength(100), Display(Name = "State", Prompt = "State")]
         public string State { get; set; } = "";
+
         [StringLength(50), Display(Name = "Postal Code", Prompt = "Postal Code")]
         public string PostalCode { get; set; }
+
         [StringLength(100), Display(Name = "Country", Prompt = "Country")]
         public string Country { get; set; }
+
         [StringLength(50), Display(Name = "Mobile Phone", Prompt = "Mobile Phone")]
         public string MobilePhone
         {

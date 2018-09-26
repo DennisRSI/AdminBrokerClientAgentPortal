@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Codes.Service.ViewModels
 {
@@ -15,9 +13,11 @@ namespace Codes.Service.ViewModels
         public string CreatorIP { get; set; }
         [Display(Name = "Deactivation Date", Prompt = "Deactivation Date")]
         public DateTime? DeactivationDate { get; set; }
+
         [Display(Name = "Message", Prompt = "Message")]
-        public string Message { get; set; }
+        public string Message { get; set; } = String.Empty;
+
         [Display(Name = "Is Success", Prompt = "Is Success")]
-        public bool IsSuccess { get { return Message.ToUpper().IndexOf("ERROR") == -1 ? true : false; } }
+        public bool IsSuccess { get { return Message.ToUpper().IndexOf("ERROR") == -1; } }
     }
 }

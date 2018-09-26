@@ -146,10 +146,7 @@ namespace Codes.Service.ViewModels
         public int ParentBrokerId { get; set; } = 0;
         [Display(Name = "Agents", Prompt = "Agents")]
         public ICollection<AgentViewModel> Agents { get; set; } = new List<AgentViewModel>();
-        //[Display(Name = "Clients", Prompt = "Clients")]
-        //public ICollection<ClientModel> Clients { get; set; } = null;
-        //[Display(Name = "Campaigns", Prompt = "Campaigns")]
-        //public ICollection<CampaignModel> Campaigns { get; set; } = null;
 
+        public int? DocumentW9Id { get; set; }
     }
 }

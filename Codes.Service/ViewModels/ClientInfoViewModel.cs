@@ -86,25 +86,10 @@ namespace Codes.Service.ViewModels
             }
         }
         public string Email { get; set; } = "";
-        public List<(int agentId, string agentName)> AgentsAssigned { get; set; } = new List<(int agentId, string agentName)>();
-        public string AgentsFormatted
-        {
-            get
-            {
-                string agents = "";
-
-                foreach(var row in AgentsAssigned)
-                {
-                    agents += $"<a href='#' data-id='{row.agentId}'>{row.agentName}</a>";
-                }
-
-                return agents;
-            }
-        }
+        public string AgentFullName { get; set; }
         public int CampaignCount { get; set; } = 0;
         public string ClientNotes { get; set; } = "";
         public string Message { get; set; } = "";
         public bool IsSuccess { get { return Message.ToUpper().IndexOf("ERROR") == -1 ? true : false; } }
-
     }
 }

@@ -44,6 +44,7 @@ namespace Codes.Service.Models
             BrokerId = model.Broker != null && model.Broker.BrokerId > 0 ? model.Broker.BrokerId : 0;
             ApplicationReference = model.ApplicationReference;
             AgentMiddleName = model.AgentMiddleName;
+            CommissionRate = model.CommissionRate;
         }
 
         [Key, Required]
@@ -160,8 +161,17 @@ namespace Codes.Service.Models
         [ForeignKey("BrokerId")]
         public BrokerModel Broker { get; set; }
 
-        public ICollection<CampaignAgentModel> CampaignAgents { get; set; }
-        
+        public int? DocumentW9Id { get; set; }
 
+        [ForeignKey("DocumentW9Id")]
+        public virtual DocumentModel DocumentW9 { get; set; }
+
+        public int? DocumentOtherId { get; set; }
+
+        [ForeignKey("DocumentOtherId")]
+        public virtual DocumentModel DocumentOther { get; set; }
+
+        public ICollection<CampaignAgentModel> CampaignAgents { get; set; }
+        public ICollection<ClientModel> Clients { get; set; }
     }
 }

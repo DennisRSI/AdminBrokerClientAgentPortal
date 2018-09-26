@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ClientPortal.Models;
-using ClientPortal.Models._ViewModels;
 using Codes.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq.Dynamic;
 using Codes.Service.Interfaces;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ClientPortal.Controllers.APIs
 {
@@ -25,96 +20,28 @@ namespace ClientPortal.Controllers.APIs
             _context = context;
         }
 
-        private async Task<DataTableViewModel<AdminListViewModel>> _GetAdminData(int startRowIndex, int numberOfRows, int draw, string sortColumn, string sortDirection, string searchValue, string role)
+        private async Task<DataTableViewModel<AdminListViewModel>> _GetAdminData(string role)
         {
-            DataTableViewModel<AdminListViewModel> model = new DataTableViewModel<AdminListViewModel>();
-            try
-            {
-                model.Draw = draw;
+            var model = new DataTableViewModel<AdminListViewModel>();
+            var users = (await _userManager.GetUsersInRoleAsync(role));
 
-                IEnumerable<ApplicationUser> tmp = (await _userManager.GetUsersInRoleAsync(role)) as IEnumerable<ApplicationUser>;
-
-                model.RecordsTotal = tmp.Count();
-
-                if (!string.IsNullOrEmpty(searchValue))
-                {
-                    tmp = tmp.Where(x => x.Id == searchValue
-                        || x.CompanyName.Contains(searchValue)
-                        || x.Email.Contains(searchValue)
-                        || x.FirstName.Contains(searchValue)
-                        || x.LastName.Contains(searchValue)
-                        || x.PhoneNumber.Contains(searchValue)
-                        || x.OfficePhone.Contains(searchValue)
-                        || x.Fax.Contains(searchValue));
-                }
-
-                if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortDirection)))
-                {
-                    switch (sortColumn)
-                    {
-                        case "company_name":
-                            if (sortDirection.ToUpper() == "ASC")
-                                tmp = tmp.OrderBy(o => o.CompanyName);
-                            else
-                                tmp = tmp.OrderByDescending(o => o.CompanyName);
-                            break;
-                        case "email":
-                            if (sortDirection.ToUpper() == "ASC")
-                                tmp = tmp.OrderBy(o => o.Email);
-                            else
-                                tmp = tmp.OrderByDescending(o => o.Email);
-                            break;
-                        case "phone":
-                            if (sortDirection.ToUpper() == "ASC")
-                                tmp = tmp.OrderBy(o => o.PhoneNumber);
-                            else
-                                tmp = tmp.OrderByDescending(o => o.PhoneNumber);
-                            break;
-                        case "activation_date":
-                            if (sortDirection.ToUpper() == "ASC")
-                                tmp = tmp.OrderBy(o => o.CreationDate);
-                            else
-                                tmp = tmp.OrderByDescending(o => o.CreationDate);
-                            break;
-                        case "deactivation_date":
-                            if (sortDirection.ToUpper() == "ASC")
-                                tmp = tmp.OrderBy(o => o.DeactivationDate);
-                            else
-                                tmp = tmp.OrderByDescending(o => o.DeactivationDate);
-                            break;
-                        default:
-                            if (sortDirection.ToUpper() == "ASC")
-                                tmp = tmp.OrderBy(o => o.FirstName);
-                            else
-                                tmp = tmp.OrderByDescending(o => o.FirstName);
-                            break;
-                    }
-                    //tmp = tmp.OrderBy(search + " " + sortDirection);
-                }
-
-                model.RecordsFiltered = tmp.Count();
-
-                model.Data = (from t in tmp
-                              select new AdminListViewModel
-                              {
-                                  Company = t.CompanyName,
-                                  AccountId = t.Id,
-                                  ActivationDate = t.CreationDate,
-                                  DeactivationDate = t.DeactivationDate,
-                                  Email = t.Email,
-                                  FirstName = t.FirstName,
-                                  LastName = t.LastName,
-                                  Extension = t.MobilePhone != null && t.MobilePhone.Length > 0 ? "" : t.OfficeExtension,
-                                  Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone : t.OfficePhone
-                              }).Skip(startRowIndex).Take(numberOfRows).ToArray();
-            }
-            catch (Exception ex)
-            {
-                model.Message = $"Error: {ex.Message}";
-            }
+            model.Data = (from t in users
+                            select new AdminListViewModel
+                            {
+                                Company = t.CompanyName,
+                                AccountId = t.Id,
+                                ActivationDate = t.CreationDate,
+                                DeactivationDate = t.DeactivationDate,
+                                Email = t.Email,
+                                FirstName = t.FirstName,
+                                LastName = t.LastName,
+                                Extension = t.MobilePhone != null && t.MobilePhone.Length > 0 ? "" : t.OfficeExtension,
+                                Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone : t.OfficePhone
+                            }).ToArray();
 
             return model;
         }
+
         private (int draw, int startRowIndex, int numberOfRows, string sortColumn, string sortDirection, string searchValue) _ParseForm(Microsoft.AspNetCore.Http.IFormCollection form)
         {
             (int draw, int startRowIndex, int numberOfRows, string sortColumn, string sortDirection, string searchValue) model = (0, 0, 10, "DEFAULT", "ASC", "");
@@ -140,40 +67,13 @@ namespace ClientPortal.Controllers.APIs
         [HttpPost("sa")]
         public async Task<DataTableViewModel<AdminListViewModel>> Sa()
         {
-            DataTableViewModel<AdminListViewModel> model = new DataTableViewModel<AdminListViewModel>();
-
-            try
-            {
-                (int draw, int startRowIndex, int numberOfRows, string sortColumn, string sortDirection, string searchValue) = _ParseForm(Request.Form);
-                
-                model = await _GetAdminData(startRowIndex, numberOfRows, draw, sortColumn, sortDirection, searchValue, "Super Administrator");
-            }
-            catch (Exception ex)
-            {
-                model.Message = $"Error: {ex.Message}";
-            }
-
-            return model;
+            return await _GetAdminData("Super Administrator");
         }
-        // GET: api/<controller>
+
         [HttpPost("admin")]
         public async Task<DataTableViewModel<AdminListViewModel>> Admin()
         {
-            DataTableViewModel<AdminListViewModel> model = new DataTableViewModel<AdminListViewModel>();
-
-            try
-            {
-                (int draw, int startRowIndex, int numberOfRows, string sortColumn, string sortDirection, string searchValue) = _ParseForm(Request.Form);
-
-                model = await _GetAdminData(startRowIndex, numberOfRows, draw, sortColumn, sortDirection, searchValue, "Administrator");
-                
-            }
-            catch (Exception ex)
-            {
-                model.Message = $"Error: {ex.Message}";
-            }
-
-            return model;
+            return await _GetAdminData("Administrator");
         }
 
         [HttpPost("client/{brokerId}/{campaignId}")]
@@ -221,9 +121,7 @@ namespace ClientPortal.Controllers.APIs
 
             try
             {
-                (int draw, int startRowIndex, int numberOfRows, string sortColumn, string sortDirection, string searchValue) = _ParseForm(Request.Form);
-
-                model = await _context.GetBrokers(draw, startRowIndex, numberOfRows, searchValue, sortColumn, sortDirection);
+                model = await _context.GetBrokers();
             }
             catch (Exception ex)
             {

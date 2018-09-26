@@ -49,43 +49,11 @@ namespace ClientPortal.Helpers
         {
             List<(string password, string role, ApplicationUser user)> users = new List<(string password, string role, ApplicationUser user)>()
             {
-                ("Evan0707!", "Super Administrator", new ApplicationUser()
+                ("asdfasdf1", "Super Administrator", new ApplicationUser()
                     {
-                            CompanyName = "Reservation Services Intl",
-                            Address = "1000 Parnell Ct",
-                            City = "Deltona",
-                            ParentId = "",
-                            Country = "USA",
-                            CreationDate = DateTime.Now,
-                            CreatorIP = "127.0.0.1",
-                            DeactivationDate = null,
-                            DeactivationReason = "",
-                            EIN = "",
-                            Email = "dennis@accessrsi.com",
-                            Fax = "",
-                            FaxExtension = "",
-                            FirstName = "Dennis",
-                            LastName = "Chipps",
-                            MiddleName = "E",
-                            MobilePhone = "4074273755",
-                            OfficeExtension = "",
-                            OfficePhone = "4074273755",
-                            PhoneNumber = "+4074273755",
-                            NormalizedEmail = "DENNIS@ACCESSRSI.COM",
-                            EmailConfirmed = true,
-                            UserName = "dennis@accessrsi.com",
-                            NormalizedUserName = "DENNIS@ACCESSRSI.COM",
-                            PostalCode = "32738",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = Guid.NewGuid().ToString("D"),
-                            State = "FL"
-                    }
-                ),
-                ("Changeme123!", "Administrator", new ApplicationUser()
-                    {
-                        CompanyName = "Reservation Services Intl",
-                        Address = "501 N Wymore Rd",
-                        City = "Winter Park",
+                        CompanyName = "SuperAdmin Company",
+                        Address = "1 Main St",
+                        City = "Seattle",
                         ParentId = "",
                         Country = "USA",
                         CreationDate = DateTime.Now,
@@ -93,24 +61,24 @@ namespace ClientPortal.Helpers
                         DeactivationDate = null,
                         DeactivationReason = "",
                         EIN = "",
-                        Email = "jec361@me.com",
+                        Email = "superadministrator@example.com",
                         Fax = "",
                         FaxExtension = "",
-                        FirstName = "Jim",
-                        LastName = "Carey",
+                        FirstName = "DbInitializer",
+                        LastName = "LastName",
                         MiddleName = "",
-                        MobilePhone = "8636609597",
+                        MobilePhone = "1234567890",
                         OfficeExtension = "",
-                        OfficePhone = "8634504288",
-                        PhoneNumber = "+8634504288",
-                        NormalizedEmail = "JEC361@ME.COM",
+                        OfficePhone = "1234567890",
+                        PhoneNumber = "+1234567890",
+                        NormalizedEmail = "SUPERADMINISTRATOR@EXAMPLE.COM",
                         EmailConfirmed = true,
-                        UserName = "jec361@me.com",
-                        NormalizedUserName = "JEC361@ME.COM",
-                        PostalCode = "32789",
+                        UserName = "superadministrator@example.com",
+                        NormalizedUserName = "SUPERADMINISTRATOR@EXAMPLE.COM",
+                        PostalCode = "98052",
                         PhoneNumberConfirmed = true,
                         SecurityStamp = Guid.NewGuid().ToString("D"),
-                        State = "FL"
+                        State = "WA"
                     }
                 )
             };

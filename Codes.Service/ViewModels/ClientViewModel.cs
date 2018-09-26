@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 
 namespace Codes.Service.ViewModels
 {
     public class ClientViewModel : _BaseViewModel
     {
-        private string _mobilePhone = "", _officePhone = "", _fax = "", _officeExtension = "", _faxExtension = "";
+        private string _fax = "", _officeExtension = "", _faxExtension = "";
 
         [Display(Name = "Client Id", Prompt = "Client Id")]
         public int ClientId { get; set; } = 0;
@@ -32,38 +30,13 @@ namespace Codes.Service.ViewModels
         public string PostalCode { get; set; }
         [StringLength(100), Display(Name = "Country", Prompt = "Country")]
         public string Country { get; set; }
+
         [StringLength(50), Display(Name = "Mobile Phone", Prompt = "Mobile Phone")]
-        public string MobilePhone
-        {
-            get
-            {
-                return _mobilePhone;
-            }
-            set
-            {
-                if (value != null)
-                {
+        public string MobilePhone { get; set; }
 
-                    _mobilePhone = new String(value.Where(Char.IsDigit).ToArray());
-                }
-            }
-        }
         [StringLength(50), Display(Name = "Office Phone", Prompt = "Office Phone")]
-        public string OfficePhone
-        {
-            get
-            {
-                return _officePhone;
-            }
-            set
-            {
-                if (value != null)
-                {
+        public string OfficePhone { get; set; }
 
-                    _officePhone = new String(value.Where(Char.IsDigit).ToArray());
-                }
-            }
-        }
         [StringLength(50), Display(Name = "Ext", Prompt = "Ext")]
         public string OfficeExtension
         {
@@ -123,5 +96,8 @@ namespace Codes.Service.ViewModels
         public string ApplicationReference { get; set; } = "";
         [Display(Name = "Broker", Prompt = "Broker")]
         public BrokerViewModel Broker { get; set; } = new BrokerViewModel();
+
+        public int? AgentId { get; set; }
+        public string AgentFullName { get; set; }
     }
 }

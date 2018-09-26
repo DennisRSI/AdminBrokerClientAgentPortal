@@ -67,8 +67,8 @@ namespace ClientPortal.ViewComponents
                         model = new ClientInfoViewModel()
                         {
                             Address = res.Address,
+                            AgentFullName = res.AgentFullName,
                             CampaignCount = count,
-                            AgentsAssigned = agents,
                             City = res.City,
                             ClientId = res.ClientId,
                             ClientNotes = "",
@@ -87,7 +87,6 @@ namespace ClientPortal.ViewComponents
                             State = res.State,
                             BrokerId = brokerId,
                             BrokerName = brokerName
-                            
                         };
 
                         return View(model);

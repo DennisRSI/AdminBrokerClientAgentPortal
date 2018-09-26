@@ -1,20 +1,13 @@
 ﻿html, body {
     height: 100%;
 }
-/*Datatables styling*/
-/*div.dataTables_processing {
-    background-color: aliceblue;
-    border: 1px solid #000;
-    border-radius: 25px;
-    padding:10px;
-    height:500px;
-    width:500px;
-    z-index:999;
-}*/
-/*End Datatables styling*/
-/*Start Loading*/
+
 .table-select {
     cursor: pointer;
+}
+
+div.error {
+    border: solid 1px red;
 }
 
 #loader-container {
@@ -1046,7 +1039,7 @@ a {
     width: 100%
 }
 
-    .top_nav .dropdown-menu li a {
+    .top_nav .dropdown-menu li a, .top_nav .dropdown-menu li button {
         width: 100%;
         padding: 12px 20px
     }
@@ -2082,8 +2075,17 @@ ul.msg_list li {
     border-top-right-radius: 0
 }
 
-    .dropdown-menu > li > a {
-        color: #5A738E
+    .dropdown-menu > li > a, .dropdown-menu > li > form > button
+    {
+        color: #5A738E;
+        font-size: 12px;
+        text-align: left;
+    }
+
+    .dropdown-menu > li > form > button:hover
+    {
+        text-decoration: none;
+        background-color: #f5f5f5;
     }
 
 .navbar-nav .open .dropdown-menu {
@@ -2866,13 +2868,12 @@ span.section {
     width: 100%
 }
 
-.form-horizontal .control-label {
-    padding-top: 8px
+.form-control.error {
+    border-color: red;
 }
 
-.form-control:focus {
-    border-color: #CCD0D7;
-    box-shadow: none !important
+.form-horizontal .control-label {
+    padding-top: 8px
 }
 
 legend {
@@ -4518,6 +4519,11 @@ form:after {
                 outline: none
             }
 
+.leftalign section
+{
+    text-align: left;
+}
+
 #username {
     background-position: 10px 10px !important
 }
@@ -5724,4 +5730,16 @@ hr.thicc-hr {
 
 .checkbox-adjust {
     line-height: 3;
+}
+
+#search-results caption {
+    margin-bottom: 0;
+}
+
+.capitalFirstLetter {
+    display: inline-block;
+}
+
+.capitalFirstLetter:first-letter {
+    text-transform: uppercase;
 }

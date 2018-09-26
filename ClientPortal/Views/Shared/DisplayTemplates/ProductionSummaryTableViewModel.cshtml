@@ -1,0 +1,34 @@
+@using Codes.Service.Domain
+@model ProductionSummaryTableViewModel
+<hr>
+<p class="h3"><span class="capitalFirstLetter">@Model.AccountType</span>: <span class="tableName">@Model.AccountName</span></p>
+<table class="table table-striped table-bordered jambo_table bulk_action">
+    <thead>
+        <tr>
+            <th class="col-md-2">@Model.ReportGroupName</th>
+            <th class="col-md-1">Internet Price</th>
+            <th class="col-md-1">You Pay Price</th>
+            <th class="col-md-1">Member Savings</th>
+            <th class="col-md-1">Commission Earned</th>
+            <th class="col-md-1">@Model.FinalColumnName</th>
+        </tr>
+    </thead>
+    <tbody>
+        @Html.DisplayFor(m => m.Items)
+    </tbody>
+</table>
+@if (Model.AccountType != "source")
+{
+    <table class="table table-bordered reportTableSummary">
+        <thead>
+            <tr>
+                <th class="text-right col-md-2"><b>@Model.AccountType.CapitalizeFirstLetter() Totals:</b></th>
+                <th class="col-md-1"><strong>@Html.DisplayFor(m => m.TotalInternetPrice)</strong></th>
+                <th class="col-md-1"><strong>@Html.DisplayFor(m => m.TotalYouPayPrice)</strong></th>
+                <th class="col-md-1"><strong>@Html.DisplayFor(m => m.TotalMemberSavings)</strong></th>
+                <th class="col-md-1"><strong>@Html.DisplayFor(m => m.TotalCommissionEarned)</strong></th>
+                <th class="col-md-1"></th>
+            </tr>
+        </thead>
+    </table>
+}

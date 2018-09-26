@@ -1,10 +1,10 @@
 ﻿using ClientPortal.Models;
+using ClientPortal.Extensions;
+using Codes.Service.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Codes.Service.ViewModels;
 
 namespace ClientPortal.ViewComponents
 {
@@ -12,18 +12,67 @@ namespace ClientPortal.ViewComponents
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IDashboardService _dashboardService;
+        private readonly IAccountService _accountService;
 
-        public DashboardViewComponent(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public DashboardViewComponent(SignInManager<ApplicationUser> signInManager,
+                                        UserManager<ApplicationUser> userManager,
+                                        IDashboardService dashboardService,
+                                        IAccountService accountService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _dashboardService = dashboardService;
+            _accountService = accountService;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(string role, int id)
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
-                return await Task.FromResult(View());
+                bool simulating = true;
+
+                if (role == string.Empty)
+                {
+                    role = HttpContext.User.GetRole().GetName();
+
+                    var reference = _userManager.GetUserId(HttpContext.User);
+                    id = _accountService.GetIdFromReference(reference);
+                    simulating = false;
+                }
+
+                DashboardViewModel model;
+
+                switch (role.ToLower())
+                {
+                    case "super administrator":
+                    case "administrator":
+                        model = _dashboardService.GetAdmin();
+                        break;
+
+                    case "broker":
+                        model = _dashboardService.GetBroker(id);
+                        break;
+
+                    case "agent":
+                        model = _dashboardService.GetAgent(id);
+                        break;
+
+                    case "client":
+                        model = _dashboardService.GetClient(id);
+                        break;
+
+                    default:
+                        model = _dashboardService.GetAdmin();
+                        break;
+                }
+
+                model.Role = role;
+                model.Id = id;
+                model.IsSimulating = simulating;
+
+                ViewData["Role"] = role;
+                return await Task.FromResult(View(model));
             }
 
             return null;

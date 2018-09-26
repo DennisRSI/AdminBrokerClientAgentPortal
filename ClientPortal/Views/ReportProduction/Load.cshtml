@@ -1,0 +1,162 @@
+﻿@model ProductionLoadViewModel
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <br />
+    <div class="x_panel no-print">
+        <div class="x_title no-print">
+            <h2>Production Report</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 no-print">
+            <div class="x_panel">
+                <div id="data-filters">
+                    <h4>Data Filters</h4>
+                    <hr class="card-hr2">
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            Select Report
+                            <select id="select-report" class="form-control form-group" asp-items="@Model.ReportType"></select>
+                        </div>
+                    </div>
+                    <div id="source" class="hidden filter">
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                Select Source
+                                <select id="select-source" class="form-control form-group">
+                                    <option value="0" selected>Alliance</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="payment" class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                Payment Status
+                                <select id="paymentStatus" class="form-control form-group">
+                                    <option value="all" selected>All</option>
+                                    <option value="paid">Paid</option>
+                                    <option value="unpaid">Unpaid</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="broker" class="form-group filter hidden">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            Select Broker
+                            <select id="select-broker" class="form-control form-group" asp-items="@Model.Brokers">
+                                <option value="0" selected>All Brokers</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="client" class="form-group filter hidden">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            Select Client
+                            <select id="select-client" class="form-control form-group" asp-items="@Model.Clients">
+                                <option value="0" selected>All Clients</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="agent" class="form-group filter hidden">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            Select Agent
+                            <select id="select-agent" class="form-control form-group" asp-items="@Model.Agents">
+                                <option value="0" selected>All Agents</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="campaign" class="form-group filter hidden">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            Select Campaign
+                            <select id="select-campaign" class="form-control form-group" asp-items="@Model.Campaigns">
+                                <option value="0" selected>All Campaigns</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 no-print">
+            <div class="x_panel">
+                <div class="">
+                    <h4>Filter By Check-Out Date</h4>
+                    <hr class="card-hr2">
+                    <form class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            From Check-Out
+                            <div class="form-group">
+                                <div class='input-group date'>
+                                    <input id="checkOutStart" type="date" class="form-control startQuery" placeholder="MM/DD/YYYY" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            To Check-Out
+                            <div class="form-group">
+                                <div class='input-group date'>
+                                    <input id="checkOutEnd" type="date" class="form-control endQuery" placeholder="MM/DD/YYYY" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 no-print">
+            <div class="x_panel">
+                <div class="">
+                    <h4>Filter by Booking Date</h4>
+                    <hr class="card-hr2">
+                    <form class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            Start Date
+                            <div class="form-group">
+                                <div class='input-group date'>
+                                    <input id="bookingStart" type="date" class="form-control startQuery" placeholder="MM/DD/YYYY" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            End Date
+                            <div class="form-group">
+                                <div class='input-group date'>
+                                    <input id="bookingEnd" type="date" class="form-control endQuery" placeholder="MM/DD/YYYY" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="start-report" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center spacer-60">
+        <span class="h1 text-extra-muted">Select Filters Above and Run Report</span><br /><br /><br />
+        <button id="run-report" type="button" class="btn btn-travgreen runreport">
+            <i class="fa fa-bar-chart icon-white purchase-button-icon"></i>Run Report
+        </button>
+    </div>
+    <div id="update-report" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center hidden">
+        <button type="button" class="btn btn-travgreen runreport">
+            <i class="fa fa-bar-chart icon-white purchase-button-icon"></i>Update Report
+        </button>
+    </div>
+    <div id="result" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 spacer-10">
+    </div>
+</div>
+
+<script src="~/js/vendors/papaparse/papaparse.min.js" asp-append-version="true"></script>
+<script src="~/js/list.js" asp-append-version="true"></script>
+<script src="~/js/reports/report.js" asp-append-version="true"></script>
+<script src="~/js/reports/production.js" asp-append-version="true"></script>
+<script>
+    PRODUCTION.init();
+    REPORT.init();
+</script>

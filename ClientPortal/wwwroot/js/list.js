@@ -4,7 +4,6 @@ function List() {
     var self = this;
     
     this.init = function (role, brokerId, clientId) {
-        //alert(role);
         switch (role) {
             case "Super Administrator":
             case "Administrator":
@@ -25,24 +24,36 @@ function List() {
         }
     }
 
-   
     this.purchasesList = function(brokerId){
-        var url = "api/list/purchase/" + brokerId.toString();
-        //alert(brokerId);
+        var url = "api/purchase/list/" + brokerId;
         var cols = [
-            { "data": "creation_date" },
-            { "data": "code_range_id" },
-            { "data": "card_type" },
-            { "data": "amount_on_card" },
-            { "data": "quantity" },
-            { "data": "start_code" },
-            { "data": "end_code" },
-            { "data": "charge_amount" },
-            { "data": null, defaultContent: '<a href="#"><i class="fa fa-file-pdf-o pdf-icon-red"></i> Download</a>' },
+            { "data": "purchaseDateString" },
+            { "data": "orderId" },
+            { "data": "physicalValueString" },
+            { "data": "physicalQuantity" },
+            { "data": "virtualValueString" },
+            { "data": "virtualQuantity" },
+            { "data": "sequenceStart" },
+            { "data": "sequenceEnd" },
+            { "data": "totalValue" },
+            { "data": null, defaultContent: '<a href="#" class="pdf"><i class="fa fa-file-pdf-o pdf-icon-red"></i> Download</a>' },
         ];
 
-        $dt = self.generateList("purchase_tbl", url, cols);
+        var selector = '#purchase_tbl';
+        var tableSettings = this.getDataTableDefaults(url, cols, 'GET', 'orderId');
+        tableSettings.ajax.dataSrc = '';
+
+        if (!$.fn.DataTable.isDataTable(selector)) {
+            $(selector).DataTable(tableSettings);
+            $(selector).css('width', '100%');
+
+            $(selector).on('click', 'a.pdf', function () {
+                var id = $(this).closest('tr').attr('id');
+                PDF.getPurchasePdf(id);
+            });
+        }
     }
+
     this.adminList = function (role) {
         var $dt;
         url = "/api/list/";
@@ -68,17 +79,25 @@ function List() {
             }
         ];
 
-        $dt = self.generateList("admin_tbl", url, cols);
+        $dt = self.generateUpdatableList('#admin_tbl', url, cols, 'POST');
 
         $dt.on('click', 'tr', function () {
             var data = $dt.row(this).id();
             self.redirectToPage('/api/menu/my-account/' + data);
         });
     }
+
     this.brokerList = function () {
         var url = "api/list/broker";
         var cols = [
-            { "data": "full_name" },
+            {
+                "data": "full_name",
+                "createdCell": function (td, cellData, rowData, row, col) {
+                    $(td).attr('title', 'Click to view details');
+                    $(td).attr('data-toggle', 'tooltip');
+                    $(td).attr('data-container', 'body');
+                }
+            },
             { "data": "company" },
             { "data": "email" },
             { "data": "phone" },
@@ -95,13 +114,19 @@ function List() {
             }
         ];
 
-        $dt = self.generateList("broker_tbl", url, cols);
+        var selector = '#broker_tbl';
+        var tableSettings = this.getDataTableDefaults(url, cols, 'POST');
 
-        $dt.on('click', 'tr', function () {
-            var data = $dt.row(this).id();
-            self.redirectToPage('/api/menu/my-account/' + data);
-        });
+        if (!$.fn.DataTable.isDataTable(selector)) {
+            var table = $(selector).DataTable(tableSettings);
+
+            $(selector).on('click', 'tr', function () {
+                var data = $(this).attr('id');
+                self.redirectToPage('/api/menu/my-account/' + data);
+            });
+        }
     }
+
     this.agentList = function (brokerId, clientId) {
         var url = "api/list/agent/" + brokerId.toString() + "/" + clientId.toString();
         var cols = [
@@ -130,6 +155,7 @@ function List() {
             self.redirectToPage('/api/menu/my-account/' + data);
         });
     }
+
     this.clientList = function (brokerId, clientId) {
         var url = "api/list/client/" + brokerId.toString() + "/" + clientId.toString();
 
@@ -148,7 +174,9 @@ function List() {
                 }
             },
             {
-                "data": "deactivation_date"
+                "data": "deactivation_date", "render": function (data) {
+                    return UTILITY.formatDateTime(data);
+                }
             }
         ];
 
@@ -159,7 +187,17 @@ function List() {
             self.redirectToPage('/api/menu/client-details/' + data);
         });
     }
-    this.generateList = function (tableName, url, columns) {
+
+    this.generateList = function (tableName, url, columns, method, serverSide) {
+
+        if (typeof method === 'undefined') {
+            method = 'POST';
+        }
+
+        if (typeof serverSide === 'undefined') {
+            serverSide = true;
+        }
+
         var tblParsed = '#' + tableName;
         var $dt;
         if (!$.fn.DataTable.isDataTable(tblParsed)) {
@@ -169,12 +207,12 @@ function List() {
                     "loadingRecords": "&nbsp;",
                     "processing": "<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i><span> Loading...</span>"
                 },
-                "serverSide": true, // for process server side  
+                "serverSide": serverSide, // for process server side  
                 "filter": true, // this is for disable filter (search box)  
                 "orderMulti": false, // for disable multiple column at once  
                 "ajax": $.fn.dataTable.pipeline({
                     url: url,
-                    method: "POST",
+                    method: method,
                     pages: 5
                 }),
                 "columnDefs":
@@ -183,27 +221,84 @@ function List() {
                     "visible": true,
                     "searchable": true
                 }],
-                "columns": columns
-                
+                "columns": columns,
+                "initComplete": function (settings, json) {
+                    $('[data-toggle="tooltip"]').tooltip();
+                }
             });
         } else {
             $dt = $(tblParsed);
         }
+
+        $('table.dataTable').css('width', '100%');
+
         return $dt;
     }
-    
-    this.downloadCodes = function (codeRangeId) {
 
+    // generateList() doesn't work with ajax.reload(), this method can be used instead
+    this.generateUpdatableList = function (tableSelector, url, columns, method) {
+        var table = $(tableSelector).DataTable({
+            "processing": true,
+            "language": {
+                "loadingRecords": "&nbsp;",
+                "processing": "<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i><span> Loading...</span>"
+            },
+            "serverSide": false,
+            "filter": true,
+            "orderMulti": false,
+            "ajax": {
+                url: url,
+                method: method
+            },
+            "columnDefs":
+            [{
+                "targets": [0],
+                "visible": true,
+                "searchable": true
+            }],
+            "columns": columns
+        });
+
+        $(tableSelector).css('width', '100%');
+
+        return table;
     }
 
     this.redirectToPage = function (url) {
         $("#loader-container").show();
-        //alert(url);
         $.get(url, function (data, status) {
             $('#main_panel').html(data);
             $("#loader-container").hide();
             ACCOUNT.init();
-            //alert("Data: " + data + "\nStatus: " + status);
         });
+    }
+
+    this.getDataTableDefaults = function (url, columns, method, identifier) {
+        return {
+            "processing": true,
+            "language": {
+                "loadingRecords": "&nbsp;",
+                "processing": "<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i><span> Loading...</span>"
+            },
+            "serverSide": false,
+            "filter": true,
+            "orderMulti": false,
+            "ajax": {
+                url: url,
+                method: method
+            },
+            "columnDefs":
+                [{
+                    "targets": [0],
+                    "visible": true,
+                    "searchable": true
+                }],
+            "columns": columns,
+            "createdRow": function (row, data, index) {
+                if (data.hasOwnProperty(identifier)) {
+                    row.id = data[identifier];
+                }
+            }
+        };
     }
 }

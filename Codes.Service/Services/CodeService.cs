@@ -1,4 +1,5 @@
 ﻿using Codes.Service.Data;
+using Codes.Service.Domain;
 using Codes.Service.Interfaces;
 using Codes.Service.Models;
 using Codes.Service.ViewModels;
@@ -10,7 +11,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
 
 namespace Codes.Service.Services
 {
@@ -92,7 +92,7 @@ namespace Codes.Service.Services
                     model.Message = "Success";
                 }
                 else
-                    model.Message = "Error: Broker not found";
+                    model.Message = $"Error (CodeService/BrokerUpdate): Broker not found: {model.BrokerId}";
             }
             catch (Exception ex)
             {
@@ -128,15 +128,15 @@ namespace Codes.Service.Services
         {
             try
             {
-                AgentModel agent = await _context.Agents.FirstOrDefaultAsync(x => x.AgentId == model.AgentId);
+                var agent = await _context.Agents.FirstOrDefaultAsync(x => x.AgentId == model.AgentId);
 
-                if(agent != null && agent.AgentId > 0)
+                if (agent != null && agent.AgentId > 0)
                 {
                     agent.AgentId = model.AgentId;
+                    agent.BrokerId = model.BrokerId;
                     agent.Address = model.Address;
                     agent.AgentFirstName = model.AgentFirstName;
                     agent.AgentLastName = model.AgentLastName;
-                    agent.BrokerId = model.Broker != null && model.Broker.BrokerId > 0 ? model.Broker.BrokerId : 0;
                     agent.City = model.City;
                     agent.CompanyName = model.CompanyName;
                     agent.Country = model.Country;
@@ -216,7 +216,7 @@ namespace Codes.Service.Services
                     client.OfficePhone = model.OfficePhone;
                     client.PostalCode = model.PostalCode;
                     client.State = model.State;
-                    client.ApplicationReference = model.ApplicationReference;
+                    client.AgentId = model.AgentId;
 
                     await _context.SaveChangesAsync();
                     model.Message = "Success";
@@ -399,6 +399,105 @@ namespace Codes.Service.Services
 
             return message;
         }
+
+        public async Task<CampaignViewModel> GetCampaignById(int campaignId)
+        {
+            CampaignViewModel campaign = new CampaignViewModel();
+
+            try
+            {
+                CampaignModel c = await _context.Campaigns.FirstOrDefaultAsync(x => x.CampaignId == campaignId);
+                if (c != null && c.CampaignId > 0)
+                {
+                    campaign.Broker.BrokerId = c.BrokerId;
+                    campaign.CreationDate = c.CreationDate;
+                    campaign.CreatorIP = c.CreatorIP;
+                    campaign.DeactivationDate = c.DeactivationDate;
+                    campaign.DeactivationReason = c.DeactivationReason;
+                    campaign.IsActive = c.IsActive;
+                    campaign.Message = "Success";
+                    campaign.CampaignDescription = c.CampaignDescription;
+                    campaign.CampaignId = c.CampaignId;
+                    campaign.CampaignName = c.CampaignName;
+                    campaign.CampaignType = c.CampaignType;
+                    //campaign.CardQuantity = c.q
+                    campaign.Client.ClientId = c.ClientId.GetValueOrDefault(0);
+                    campaign.CreationDate = c.CreationDate;
+                    campaign.CreatorIP = c.CreatorIP;
+                    campaign.CustomCSS = c.CustomCSS;
+                    campaign.DeactivationDate = c.DeactivationDate;
+                    campaign.DeactivationReason = c.DeactivationReason;
+                    campaign.EndDateTime = c.EndDateTime;
+                    campaign.GoogleAnalyticsCode = c.GoogleAnalyticsCode;
+                    campaign.PackageId = c.PackageId;
+                    campaign.StartDateTime = c.StartDateTime;
+
+                }
+                else
+                    c.Message = "Error: Campaign not found";
+            }
+            catch (Exception ex)
+            {
+                if (campaign == null)
+                    campaign = new CampaignViewModel();
+
+                campaign.Message = $"Error: {ex.Message}";
+            }
+
+            return campaign;
+        }
+
+        public async Task<ListViewModel<CampaignViewModel>> GetCampaigns(int brokerId, int startRowIndex = 0, int numberOfRows = 10, string sortColumn = "DEFAULT")
+        {
+            ListViewModel<CampaignViewModel> items = new ListViewModel<CampaignViewModel>();
+
+            try
+            {
+                var tmp = from c in _context.Campaigns where c.BrokerId == brokerId select c;
+
+                switch (sortColumn)
+                {
+                    case "AgentFirstName":
+                        tmp = tmp.OrderBy(o => o.CampaignName);
+                        break;
+                    default:
+                        tmp = tmp.OrderBy(o => o.CreationDate);
+                        break;
+                }
+
+                var ct = tmp;
+
+                items.TotalCount = ct.Count();
+
+                items.Items = await (from t in tmp
+                                     select new CampaignViewModel
+                                     {
+                                         CreationDate = t.CreationDate,
+                                         CreatorIP = t.CreatorIP,
+                                         DeactivationDate = t.DeactivationDate,
+                                         IsActive = t.IsActive,
+                                         Message = t.Message,
+                                         CampaignDescription = t.CampaignDescription,
+                                         CampaignId = t.CampaignId,
+                                         CampaignName = t.CampaignName,
+                                         CampaignType = t.CampaignType,
+                                         CustomCSS = t.CustomCSS,
+                                         DeactivationReason = t.DeactivationReason,
+                                         EndDateTime = t.EndDateTime,
+                                         GoogleAnalyticsCode = t.GoogleAnalyticsCode,
+                                         PackageId = t.PackageId,
+                                         StartDateTime = t.StartDateTime
+                                     }).Skip(startRowIndex).Take(numberOfRows).ToListAsync();
+                items.Message = "Success";
+            }
+            catch (Exception ex)
+            {
+                items.Message = $"Error: {ex.Message}";
+            }
+
+            return items;
+        }
+
         /*public async Task<(bool isSuccess, int codeRangeId, int codeActivationId, string message)> IsCodeInRange(int rsiOrgId, string preAlpha, string postAlpha, int numericValue)
         {
             (bool isSuccess, int codeRangeId, int codeActivationId, string message) model = (false, 0, 0, "");
@@ -461,6 +560,8 @@ namespace Codes.Service.Services
 
             return model;
         }*/
+
+        /* Not Used
         public async Task<CampaignViewModel> GetCampaignById(int campaignId)
         {
             CampaignViewModel campaign = new CampaignViewModel();
@@ -507,6 +608,9 @@ namespace Codes.Service.Services
 
             return campaign;
         }
+        */
+
+        /* Not used
         public async Task<ListViewModel<CampaignViewModel>> GetCampaigns(int brokerId, int startRowIndex = 0, int numberOfRows = 10, string sortColumn = "DEFAULT")
         {
             ListViewModel<CampaignViewModel> items = new ListViewModel<CampaignViewModel>();
@@ -557,6 +661,8 @@ namespace Codes.Service.Services
 
             return items;
         }
+        */
+
         public async Task<ClientViewModel> GetClientByAccountId(string accountId)
         {
             ClientViewModel client = new ClientViewModel();
@@ -713,7 +819,7 @@ namespace Codes.Service.Services
                     }
                 }
                 model.Draw = draw;
-                var tmp = from a in _context.Clients where a.BrokerId == brokerId select a;
+                var tmp = from a in _context.Clients where a.BrokerId == brokerId && a.IsActive select a;
                 model.NumberOfRows = await tmp.CountAsync();
 
                 if (!string.IsNullOrEmpty(searchValue))
@@ -783,7 +889,7 @@ namespace Codes.Service.Services
 
                 model.RecordsFiltered = ct.Count();
 
-                model.Data = await (from t in tmp
+                var data = await (from t in tmp
                                      select new ClientListViewModel
                                      {
                                          AccountId = t.ApplicationReference,
@@ -797,10 +903,17 @@ namespace Codes.Service.Services
                                          LastName = t.ContactLastName,
                                          MiddleName = t.ContactMiddleName,
                                          Extension = t.MobilePhone != null && t.MobilePhone.Length > 0 ? "" : t.OfficeExtension,
-                                         Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone : t.OfficePhone,
+                                         Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone.FormatPhone() : t.OfficePhone.FormatPhone(),
                                          CommissionRate = t.CommissionRate
                                           
                                      }).Skip(startRowIndex).Take(numberOfRows).ToArrayAsync();
+
+                foreach (var item in data)
+                {
+                    item.CardQuantity = await GetCardQuantityByClient(item.ClientId);
+                }
+                    
+                model.Data = data;
                 model.Message = "Success";
             }
             catch (Exception ex)
@@ -813,6 +926,21 @@ namespace Codes.Service.Services
 
             return model;
         }
+
+        private async Task<int> GetCardQuantityByClient(int clientId)
+        {
+            var query =
+                from uc in _context.UnusedCodes
+                join cr in _context.CodeRanges on uc.CodeRangeId equals cr.CodeRangeId
+                join ccr in _context.CampaignCodeRanges on cr.CodeRangeId equals ccr.CodeRangeId
+                join camp in _context.Campaigns on ccr.CampaignId equals camp.CampaignId
+                join c in _context.Clients on camp.ClientId equals c.ClientId
+                where c.ClientId == clientId
+                select uc;
+
+            return await query.CountAsync();
+        }
+
         public async Task<AgentViewModel> GetAgentById(int agentId)
         {
             AgentViewModel agent = new AgentViewModel();
@@ -853,7 +981,7 @@ namespace Codes.Service.Services
                     agent.Broker.BrokerId = a.BrokerId;
                 }
                 else
-                    agent.Message = "Error: Broker not found";
+                    agent.Message = $"Error (GetAgentById): Agent not found: {agentId}";
             }
             catch (Exception ex)
             {
@@ -905,7 +1033,7 @@ namespace Codes.Service.Services
                     agent.Broker.BrokerId = a.BrokerId;
                 }
                 else
-                    agent.Message = "Error: Broker not found";
+                    agent.Message = $"Error (GetAgentByAccountId): Agent not found {accountId}";
             }
             catch (Exception ex)
             {
@@ -1146,7 +1274,6 @@ namespace Codes.Service.Services
                                 tmp = tmp.OrderByDescending(o => o.AgentFirstName);
                             break;
                     }
-                    //tmp = tmp.OrderBy(search + " " + sortDirection);
                 }
 
                 var ct = tmp;
@@ -1159,7 +1286,7 @@ namespace Codes.Service.Services
                                          AccountId = t.ApplicationReference,
                                          ActivationDate = t.CreationDate,
                                          AgentId = t.AgentId,
-                                         Clients = 0,
+                                         Clients = t.Clients.Count(),
                                          CommissionRate = t.CommissionRate,
                                          Company = t.CompanyName,
                                          DeactivationDate = t.DeactivationDate,
@@ -1168,8 +1295,9 @@ namespace Codes.Service.Services
                                          LastName = t.AgentLastName,
                                          MiddleName = t.AgentMiddleName,
                                          Extension = t.MobilePhone != null && t.MobilePhone.Length > 0 ? "" : t.OfficeExtension,
-                                         Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone : t.OfficePhone
+                                         Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone.FormatPhone() : t.OfficePhone.FormatPhone()
                                      }).Skip(startRowIndex).Take(numberOfRows).ToArrayAsync();
+
                 model.Message = "Success";
             }
             catch (Exception ex)
@@ -1182,6 +1310,7 @@ namespace Codes.Service.Services
 
             return model;
         }
+
         public async Task<BrokerViewModel> GetBrokerById(int brokerId)
         {
             BrokerViewModel broker = new BrokerViewModel();
@@ -1232,7 +1361,7 @@ namespace Codes.Service.Services
                     };
                 }
                 else
-                    broker.Message = "Error: Broker not found";
+                    broker.Message = $"Error (GetBrokerById): Broker not found: {brokerId}";
             }
             catch (Exception ex)
             {
@@ -1290,11 +1419,12 @@ namespace Codes.Service.Services
                         VirtualCardCap = b.VirtualCardCap,
                         ApplicationReference = b.ApplicationReference,
                         BrokerMiddleName = b.BrokerMiddleName,
-                        ParentBrokerId = b.ParentBrokerId
+                        ParentBrokerId = b.ParentBrokerId,
+                        DocumentW9Id = b.DocumentW9Id
                     };
                 }
                 else
-                    broker.Message = "Error: Broker not found";
+                    broker.Message = $"Error (GetBrokerByAccountId): Broker not found: {accountId}";
             }
             catch (Exception ex)
             {
@@ -1306,6 +1436,7 @@ namespace Codes.Service.Services
 
             return broker;
         }
+
         public async Task<DataTableViewModel<BrokerListViewModel>> GetBrokers(int draw, int startRowIndex = 0, int numberOfRows = 10, string searchValue = null, string sortColumn = "DEFAULT", string sortDirection = "ASC", bool onlyActive = false)
         {
             DataTableViewModel<BrokerListViewModel> model = new DataTableViewModel<BrokerListViewModel>();
@@ -1313,7 +1444,7 @@ namespace Codes.Service.Services
             try
             {
                 model.RoleName = "Broker";
-                
+
                 model.Draw = draw;
                 var tmp = from b in _context.Brokers select b;
                 model.NumberOfRows = tmp.Count();
@@ -1388,6 +1519,41 @@ namespace Codes.Service.Services
                 model.RecordsFiltered = ct.Count();
 
                 model.Data = await (from t in tmp
+                                    select new BrokerListViewModel
+                                    {
+                                        AccountId = t.ApplicationReference,
+                                        ActivationDate = t.CreationDate,
+                                        BrokerId = t.BrokerId,
+                                        CommissionRate = t.BrokerCommissionPercentage,
+                                        Company = t.CompanyName,
+                                        DeactivationDate = t.DeactivationDate,
+                                        Email = t.Email,
+                                        FirstName = t.BrokerFirstName,
+                                        LastName = t.BrokerLastName,
+                                        MiddleName = t.BrokerMiddleName,
+                                        Extension = t.MobilePhone != null && t.MobilePhone.Length > 0 ? "" : t.OfficeExtension,
+                                        Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone : t.OfficePhone
+                                    }).Skip(startRowIndex).Take(numberOfRows).ToArrayAsync();
+                model.Message = "Success";
+            }
+            catch (Exception ex)
+            {
+                model.Message = $"Error: {ex.Message}";
+            }
+
+            return model;
+        }
+
+        public async Task<DataTableViewModel<BrokerListViewModel>> GetBrokers()
+        {
+            DataTableViewModel<BrokerListViewModel> model = new DataTableViewModel<BrokerListViewModel>();
+
+            try
+            {
+                model.RoleName = "Broker";
+                var brokers = _context.Brokers.Where(b => b.IsActive && b.ApplicationReference != null);
+
+                model.Data = await (from t in brokers
                                      select new BrokerListViewModel
                                      {
                                          AccountId = t.ApplicationReference,
@@ -1401,8 +1567,9 @@ namespace Codes.Service.Services
                                          LastName = t.BrokerLastName,
                                          MiddleName = t.BrokerMiddleName,
                                          Extension = t.MobilePhone != null && t.MobilePhone.Length > 0 ? "" : t.OfficeExtension,
-                                         Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone : t.OfficePhone
-                                     }).Skip(startRowIndex).Take(numberOfRows).ToArrayAsync();
+                                         Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone.FormatPhone() : t.OfficePhone.FormatPhone()
+                                     }).ToArrayAsync();
+
                 model.Message = "Success";
             }
             catch (Exception ex)
@@ -1412,6 +1579,7 @@ namespace Codes.Service.Services
 
             return model;
         }
+
         public async Task<BrokerViewModel> GetBrokerByReference(string referenceId)
         {
             BrokerViewModel model = new BrokerViewModel();
@@ -1463,7 +1631,7 @@ namespace Codes.Service.Services
                     };
                 }
                 else
-                    model.Message = "Error: Broker not found";
+                    model.Message = $"Error (GetBrokerByReference): Broker not found: {referenceId}";
             }
             catch (Exception ex)
             {
@@ -1534,13 +1702,16 @@ namespace Codes.Service.Services
 
             try
             {
-                ClientModel c = await _context.Clients.FirstOrDefaultAsync(x => x.ApplicationReference == referenceId);
+                ClientModel c = await _context.Clients
+                    .Include(x => x.Agent)
+                    .FirstOrDefaultAsync(x => x.ApplicationReference == referenceId);
 
                 if (c != null && c.ClientId > 0)
                 {
                     model = new ClientViewModel()
                     {
                         Address = c.Address,
+                        AgentFullName = c.Agent == null ? String.Empty : c.Agent.AgentFirstName + " " + c.Agent.AgentLastName,
                         City = c.City,
                         CompanyName = c.CompanyName,
                         Country = c.Country,
@@ -1652,9 +1823,8 @@ namespace Codes.Service.Services
                 }
                 else
                 {
-                    message = "Error: Broker not found";
+                    message = $"Error (BrokerAddAppReference): Broker not found: {brokerId}";
                 }
-                
             }
             catch (Exception ex)
             {

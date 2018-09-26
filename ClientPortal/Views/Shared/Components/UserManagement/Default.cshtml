@@ -3,7 +3,7 @@
     <br />
     <div class="x_panel">
         <div class="x_title">
-            <h2>@Model.Role<span>s</span></h2>
+            <h2>@(Model.Role)s</h2>
             <div class="title-right pull-right">
                 <button type="button" class="btn btn-travgreen btn-sm" data-toggle="modal" data-target=".new-broker-modal-lg">
                     <i class="fa fa-user-plus icon-white purchase-button-icon"></i>Add New @Model.Role
@@ -11,9 +11,7 @@
                 <div class="modal fade new-broker-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
-                            
-                                <vc:add-user user-type="@Model.Role"></vc:add-user>
-                            
+                            <vc:add-user broker-id="@Model.BrokerId" user-type="@Model.Role"></vc:add-user>
                         </div>
                     </div>
                 </div>

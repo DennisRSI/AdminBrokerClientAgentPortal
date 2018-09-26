@@ -1,5 +1,5 @@
 ﻿@model Codes.Service.ViewModels.ClientInfoViewModel
-<table class="table table-responsive table-condensed table-bordered">
+<table id="id-store" data-clientid="@Model.ClientId" class="table table-responsive table-condensed table-bordered">
     <tbody>
         <tr>
             <td class="col-lg-3 col-md-4 col-sm-6 col-xs-6 bold-table-text larger-table-text">Company:</td>
@@ -35,7 +35,7 @@
         </tr>
         <tr>
             <td class="col-lg-3 col-md-4 col-sm-6 col-xs-6">Agent Assigned:</td>
-            <td class="col-lg-9 col-md-8 col-sm-6 col-xs-6">@Model.AgentsFormatted</td>
+            <td class="col-lg-9 col-md-8 col-sm-6 col-xs-6">@Model.AgentFullName</td>
         </tr>
         <tr>
             <td class="col-lg-3 col-md-4 col-sm-6 col-xs-6">Campaign Count:</td>

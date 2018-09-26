@@ -1,0 +1,45 @@
+﻿@model ApplicationUser
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <br />
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>My Clients</h2>
+            <div class="title-right pull-right">
+                <button type="button" class="btn btn-travgreen btn-sm" data-toggle="modal" data-target=".new-client-modal-lg">
+                    <i class="fa fa-user-plus icon-white purchase-button-icon"></i>Add New Client
+                </button>
+                <div class="modal fade new-client-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <vc:add-user broker-id="@Model.BrokerId" user-type="Client"></vc:add-user>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <p class="text-muted font-13 m-b-30">
+                Data table of clients assigned to your organization
+            </p>
+            <table id="myclients_tbl" class="table-select table table-striped table-bordered jambo_table bulk_action">
+                <thead>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Contact Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Card QTY</th>
+                        <th>Sales Agent</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="~/js/utility.js" asp-append-version="true"></script>
+<script src="~/js/list.js" asp-append-version="true"></script>
+<script src="~/js/myclients.js" asp-append-version="true"></script>
+<script>
+    MYCLIENTS.init();
+</script>

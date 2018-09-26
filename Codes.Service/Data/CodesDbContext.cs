@@ -33,9 +33,17 @@ namespace Codes.Service.Data
         public DbSet<UnusedCodeModel> UnusedCodes { get; set; }
         public DbSet<PendingCodeModel> PendingCodes { get; set; }
         public DbSet<VideoModel> Videos { get; set; }
+        public DbSet<PurchaseModel> Purchases { get; set; }
+        public DbSet<DocumentModel> Documents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Remove the cascade delete default
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+
             modelBuilder.Entity<CodeActivityModel>()
                 .HasIndex(b => b.RSIId);
             modelBuilder.Entity<CodeModel>()

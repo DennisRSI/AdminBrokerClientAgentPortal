@@ -1,4 +1,4 @@
-﻿@model ApplicationUser
+﻿@model ProfileViewModel
 
 <form class="form-horizontal form-label-left">
     <div class="modal fade change-password-modal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -14,17 +14,17 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <div class="col-lg-12 col-sm-12 col-xs-12">
-                            <input type="text" class="form-control" placeholder="Enter New Password">
+                            <input id="password1" type="password" class="form-control" placeholder="Enter New Password">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-lg-12 col-sm-12 col-xs-12">
-                            <input type="text" class="form-control" placeholder="Re-Enter Password">
+                            <input id="password2" type="password" class="form-control" placeholder="Re-Enter Password">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save Changes</button>
+                    <button id="password-save" type="button" class="btn btn-primary">Save Changes</button>
                 </div>
                 <div class="clearfix"></div>
 
@@ -51,30 +51,23 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Username</label>
                         <div class="form-inline col-lg-7 col-md-9 col-sm-9 col-xs-12">
                             <div class="input-group" style="width:66%">
-                                <input style="width:100%" asp-for="UserName" class="form-control">
+                                <input style="width:100%" asp-for="UserName" class="form-control" required>
                             </div>
                             <div class="input-group pull-right" style="width:33%">
                                 <button type="button" class="btn btn-travnow" data-toggle="modal" data-target=".change-password-modal"><i class="fa fa-lock icon-white purchase-button-icon"> Click To Change Password</i></button>
                             </div>
-                            <!--input-group-addon-->
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
                         <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
-                            <input asp-for="FirstName" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
-                        <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
-                            <input asp-for="MiddleName" class="form-control">
+                            <input asp-for="FirstName" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
                         <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
-                            <input asp-for="LastName " class="form-control">
+                            <input asp-for="LastName" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -86,7 +79,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">EIN/FEIN</label>
                         <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
-                            <input asp-for="EIN" class="form-control">
+                            <input asp-for="EIN" class="form-control ein">
                         </div>
                     </div>
                     <div class="form-group">
@@ -97,81 +90,104 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">City</label>
-                        <div class="form-inline col-lg-7 col-md-9 col-sm-9 col-xs-12">
-                            <div class="input-group" style="width:66%">
-                                <input asp-for="City" class="form-control">
-                            </div>
-                            <div class="input-group" style="width:33%">
-                                <span class="input-group-addon" id="basic-addon1">State</span>
-                                <select style="width:245px" asp-for="State" class="form-control">
-                                    <option value="AL">AL</option>
-                                    <option value="AK">AK</option>
-                                    <option value="AR">AR</option>
-                                    <option value="AZ">AZ</option>
-                                    <option value="CA">CA</option>
-                                    <option value="CO">CO</option>
-                                    <option value="CT">CT</option>
-                                    <option value="DC">DC</option>
-                                    <option value="DE">DE</option>
-                                    <option value="FL">FL</option>
-                                    <option value="GA">GA</option>
-                                    <option value="HI">HI</option>
-                                    <option value="IA">IA</option>
-                                    <option value="ID">ID</option>
-                                    <option value="IL">IL</option>
-                                    <option value="IN">IN</option>
-                                    <option value="KS">KS</option>
-                                    <option value="KY">KY</option>
-                                    <option value="LA">LA</option>
-                                    <option value="MA">MA</option>
-                                    <option value="MD">MD</option>
-                                    <option value="ME">ME</option>
-                                    <option value="MI">MI</option>
-                                    <option value="MN">MN</option>
-                                    <option value="MO">MO</option>
-                                    <option value="MS">MS</option>
-                                    <option value="MT">MT</option>
-                                    <option value="NC">NC</option>
-                                    <option value="NE">NE</option>
-                                    <option value="NH">NH</option>
-                                    <option value="NJ">NJ</option>
-                                    <option value="NM">NM</option>
-                                    <option value="NV">NV</option>
-                                    <option value="NY">NY</option>
-                                    <option value="ND">ND</option>
-                                    <option value="OH">OH</option>
-                                    <option value="OK">OK</option>
-                                    <option value="OR">OR</option>
-                                    <option value="PA">PA</option>
-                                    <option value="RI">RI</option>
-                                    <option value="SC">SC</option>
-                                    <option value="SD">SD</option>
-                                    <option value="TN">TN</option>
-                                    <option value="TX">TX</option>
-                                    <option value="UT">UT</option>
-                                    <option value="VT">VT</option>
-                                    <option value="VA">VA</option>
-                                    <option value="WA">WA</option>
-                                    <option value="WI">WI</option>
-                                    <option value="WV">WV</option>
-                                    <option value="WY">WY</option>
-                                </select>
-                            </div>
+                        <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
+                            <input asp-for="City" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">State</label>
+                        <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
+                            <select style="width:245px" asp-for="State" class="form-control">
+                                <option>Select State</option>
+                                <option value="AL">AL</option>
+                                <option value="AK">AK</option>
+                                <option value="AR">AR</option>
+                                <option value="AZ">AZ</option>
+                                <option value="CA">CA</option>
+                                <option value="CO">CO</option>
+                                <option value="CT">CT</option>
+                                <option value="DC">DC</option>
+                                <option value="DE">DE</option>
+                                <option value="FL">FL</option>
+                                <option value="GA">GA</option>
+                                <option value="HI">HI</option>
+                                <option value="IA">IA</option>
+                                <option value="ID">ID</option>
+                                <option value="IL">IL</option>
+                                <option value="IN">IN</option>
+                                <option value="KS">KS</option>
+                                <option value="KY">KY</option>
+                                <option value="LA">LA</option>
+                                <option value="MA">MA</option>
+                                <option value="MD">MD</option>
+                                <option value="ME">ME</option>
+                                <option value="MI">MI</option>
+                                <option value="MN">MN</option>
+                                <option value="MO">MO</option>
+                                <option value="MS">MS</option>
+                                <option value="MT">MT</option>
+                                <option value="NC">NC</option>
+                                <option value="NE">NE</option>
+                                <option value="NH">NH</option>
+                                <option value="NJ">NJ</option>
+                                <option value="NM">NM</option>
+                                <option value="NV">NV</option>
+                                <option value="NY">NY</option>
+                                <option value="ND">ND</option>
+                                <option value="OH">OH</option>
+                                <option value="OK">OK</option>
+                                <option value="OR">OR</option>
+                                <option value="PA">PA</option>
+                                <option value="RI">RI</option>
+                                <option value="SC">SC</option>
+                                <option value="SD">SD</option>
+                                <option value="TN">TN</option>
+                                <option value="TX">TX</option>
+                                <option value="UT">UT</option>
+                                <option value="VT">VT</option>
+                                <option value="VA">VA</option>
+                                <option value="WA">WA</option>
+                                <option value="WI">WI</option>
+                                <option value="WV">WV</option>
+                                <option value="WY">WY</option>
+                                <option value="">-------------</option>
+                                <option value="AB">AB</option>
+                                <option value="BC">BC</option>
+                                <option value="MB">MB</option>
+                                <option value="NB">NB</option>
+                                <option value="NL">NL</option>
+                                <option value="NT">NT</option>
+                                <option value="NS">NS</option>
+                                <option value="NU">NU</option>
+                                <option value="ON">ON</option>
+                                <option value="PE">PE</option>
+                                <option value="QC">QC</option>
+                                <option value="SK">SK</option>
+                                <option value="YT">YT</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Postal Code</label>
-                        <div class="form-inline col-lg-7 col-md-9 col-sm-9 col-xs-12">
-                            <div class="input-group" style="width:66%">
-                                <input asp-for="PostalCode" class="form-control">
-                            </div>
-                            <div class="input-group" style="width:33%">
-                                <span class="input-group-addon" id="basic-addon1">Country</span>
-                                <select style="width:227px" asp-for="Country" class="form-control">
-                                    <option value="USA">USA</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
+                        <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
+                            <input asp-for="PostalCode" class="form-control zip">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Country</label>
+                        <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
+                            <select style="width:227px" asp-for="Country" class="form-control">
+                                <option>Select Country</option>
+                                <option value="USA">USA</option>
+                                <option value="CAN">CAN</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Commission Rate</label>
+                        <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
+                            <input asp-for="CommissionRate" class="form-control" disabled>
                         </div>
                     </div>
 
@@ -179,7 +195,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Mobile Phone</label>
                         <div class="form-inline col-lg-7 col-md-9 col-sm-9 col-xs-12">
                             <div class="input-group" style="width:66%">
-                                <input type="tel" asp-for="MobilePhone" class="form-control" data-inputmask="'mask' : '999-999-9999'">
+                                <input type="tel" asp-for="MobilePhone" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -187,142 +203,60 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Office Phone</label>
                         <div class="form-inline col-lg-7 col-md-9 col-sm-9 col-xs-12">
                             <div class="input-group" style="width:66%">
-                                <input type="tel" asp-for="OfficePhone" class="form-control" data-inputmask="'mask' : '999-999-9999'">
-                            </div>
-                            <div class="input-group" style="width:33%">
-                                <span class="input-group-addon" id="basic-addon1">Ext</span>
-                                <input asp-for="OfficeExtension" class="form-control">
+                                <input type="tel" asp-for="OfficePhone" class="form-control">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Fax</label>
-                        <!--<div class="col-lg-7 col-md-9 col-sm-9 col-xs-12 form-inline">-->
                         <div class="form-inline col-lg-7 col-md-9 col-sm-9 col-xs-12">
                             <div class="input-group" style="width:66%">
-                                <input type="tel" asp-for="Fax" class="form-control"  data-inputmask="'mask' : '999-999-9999'">
-                            </div>
-                            <div class="input-group" style="width:33%">
-                                <span class="input-group-addon" id="basic-addon1">Ext</span>
-                                <input asp-for="FaxExtension" class="form-control">
+                                <input type="tel" asp-for="Fax" class="form-control">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingTwo">
-                <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                        Document Repository
-                    </a>
-                </h4>
-            </div>
-            <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
-                <div class="panel-body">
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">W9 Upload</label>
-                        <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
-                            <a href="#"><i class="fa fa-file-pdf-o pdf-icon"></i></a>
+        @if (Model.Role == "Broker" && Model.DocumentW9Id.HasValue && Model.DocumentW9Id > 0)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            Document Repository
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">W9 Document</label>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                <a target="_blank" href="@Url.Action("Get", "Document", new { id = Model.DocumentW9Id })"><i class="fa fa-file-pdf-o pdf-icon"></i></a>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 hidden">
+                                <a href="#" class="checkbox-adjust">Replace Document</a>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 hidden">
+                                <input type="file" name="documentW9" class="custom-file-input">
+                                <button type="button">
+                                    Replace
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
     <div class="col-md-3 col-sm-3 col-xs-12">&nbsp;</div>
     <div class="form-group col-lg-7 col-md-9 col-sm-9 col-xs-12">
-        <button class="btn btn-primary pull-right" id="profile-submit">Update</button>
+        <button type="button" class="btn btn-primary pull-right" id="profile-submit">Update</button>
     </div>
-
-
-    <!--<br />
-    <div class="form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-        <div class="col-md-9 col-sm-9 col-xs-12">
-            <span class="shipping-text"></span><input type="checkbox" class="js-switch" checked />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-        <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
-            <input type="text" class="form-control" value="883 West Crestwood St" disabled>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-        <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
-            <input type="text" class="form-control" value="Tampa" disabled>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-        <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
-            <select class="form-control" disabled>
-                <option value="AL"></option>
-                <option value="AK"></option>
-                <option value="AR"></option>
-                <option value="AZ"></option>
-                <option value="CA"></option>
-                <option value="CO"></option>
-                <option value="CT"></option>
-                <option value="DC"></option>
-                <option value="DE"></option>
-                <option selected="FL"></option>
-                <option value="GA"></option>
-                <option value="HI"></option>
-                <option value="IA"></option>
-                <option value="ID"></option>
-                <option value="IL"></option>
-                <option value="IN"></option>
-                <option value="KS"></option>
-                <option value="KY"></option>
-                <option value="LA"></option>
-                <option value="MA"></option>
-                <option value="MD"></option>
-                <option value="ME"></option>
-                <option value="MI"></option>
-                <option value="MN"></option>
-                <option value="MO"></option>
-                <option value="MS"></option>
-                <option value="MT"></option>
-                <option value="NC"></option>
-                <option value="NE"></option>
-                <option value="NH"></option>
-                <option value="NJ"></option>
-                <option value="NM"></option>
-                <option value="NV"></option>
-                <option value="NY"></option>
-                <option value="ND"></option>
-                <option value="OH"></option>
-                <option value="OK"></option>
-                <option value="OR"></option>
-                <option value="PA"></option>
-                <option value="RI"></option>
-                <option value="SC"></option>
-                <option value="SD"></option>
-                <option value="TN"></option>
-                <option value="TX"></option>
-                <option value="UT"></option>
-                <option value="VT"></option>
-                <option value="VA"></option>
-                <option value="WA"></option>
-                <option value="WI"></option>
-                <option value="WV"></option>
-                <option value="WY"></option>
-            </select>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-        <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
-            <input type="number" class="form-control" value="33605" disabled>
-        </div>
-    </div>-->
-
 </form>
 
+<script src="~/js/utility.js" asp-append-version="true"></script>
 <script type="text/javascript">
-    PROFILE.init();
+    PROFILE.init('@Model.Id');
 </script>

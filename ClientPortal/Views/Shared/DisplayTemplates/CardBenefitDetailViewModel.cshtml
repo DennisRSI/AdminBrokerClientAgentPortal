@@ -1,0 +1,15 @@
+@model Codes.Service.ViewModels.CardBenefitDetailViewModel
+<tr>
+    <td>@Html.DisplayFor(m => m.CheckInDate)</td>
+    <td>@Html.DisplayFor(m => m.CheckOutDate)</td>
+    <td>@Html.DisplayFor(m => m.MemberSavings)</td>
+    <td>@Html.DisplayFor(m => m.CommissionTotal)</td>
+    <td>@Html.DisplayFor(m => m.CommissionBroker)</td>
+    <td>@Html.DisplayFor(m => m.CommissionClient)</td>
+    <td>@Html.DisplayFor(m => m.CommissionAgent)</td>
+    <td>@Html.DisplayFor(m => m.RemainingBalance)</td>
+    <td>@Html.DisplayFor(m => m.PaymentDate)</td>
+    <td>@Model.Confirmation</td>
+    <td>@Model.Status</td>
+    <td><a class="hidden" data-toggle="modal" data-target="#chargeback-modal1">Chargeback</a></td>
+</tr>

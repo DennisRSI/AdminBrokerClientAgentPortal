@@ -17,23 +17,27 @@
 }
 
 <vc:home></vc:home>
-@section ScriptLinks{
 
-    <!-- Switchery -->
-    <script src="~/js/vendors/switchery/dist/switchery.js"></script>
-    <!-- jquery.inputmask -->
-    <script src="~/js/vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
-    <script src="~/js/dadatableajax.js"></script>
-    <script src="~/js/account.js"></script>
-    <script src="~/js/menu.js"></script>
-    <script src="~/js/profile.js"></script>
-    <script src="~/js/pagination.js"></script>
-    <script src="~/js/addUser.js"></script>
-    <script src="~/js/list.js"></script>
-    <script src="~/js/campaign.js"></script>
+@section ScriptLinks{
+    <script src="~/js/vendors/switchery/dist/switchery.js" asp-append-version="true"></script>
+    <script src="~/js/vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js" asp-append-version="true"></script>
+    <script src="~/js/dadatableajax.js" asp-append-version="true"></script>
+    <script src="~/js/utility.js" asp-append-version="true"></script>
+    <script src="~/js/account.js" asp-append-version="true"></script>
+    <script src="~/js/menu.js" asp-append-version="true"></script>
+    <script src="~/js/profile.js" asp-append-version="true"></script>
+    <script src="~/js/pagination.js" asp-append-version="true"></script>
+    <script src="~/js/addUser.js" asp-append-version="true"></script>
+    <script src="~/js/list.js" asp-append-version="true"></script>
+    <script src="~/js/campaign.js" asp-append-version="true"></script>
+    <script src="~/js/dashboard.js" asp-append-version="true"></script>
+    <script src="~/js/search.js" asp-append-version="true"></script>
 }
 
 @section Scripts{
-    MENU.init();
+    <script type="text/javascript">
+        $(document).ready(function () {
+            MENU.init();
+        });
+    </script>
 }
-

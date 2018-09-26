@@ -85,6 +85,7 @@ namespace Codes.Service.Interfaces
         Task<BrokerViewModel> GetBrokerById(int brokerId);
         Task<BrokerViewModel> GetBrokerByAccountId(string accountId);
         Task<DataTableViewModel<BrokerListViewModel>> GetBrokers(int draw, int startRowIndex = 0, int numberOfRows = 10, string searchValue = null, string sortColumn = "DEFAULT", string sortDirection = "ASC", bool onlyActive = false);
+        Task<DataTableViewModel<BrokerListViewModel>> GetBrokers();
         Task<AgentViewModel> GetAgentById(int agentId);
         Task<AgentViewModel> GetAgentByAccountId(string accountId);
         Task<DataTableViewModel<AgentListViewModel>> GetAgents(int draw, int brokerId, int startRowIndex = 0, int numberOfRows = 10, string searchValue = null, int? campaignId = null, string sortColumn = "DEFAULT", string sortDirection = "ASC");
@@ -93,8 +94,10 @@ namespace Codes.Service.Interfaces
         Task<List<(int agentId, string agentName)>> GetAgentsAssignedToClient(int clientId);
         Task<ClientViewModel> GetClientByAccountId(string accountId);
         Task<DataTableViewModel<ClientListViewModel>> GetClients(int draw, int brokerId, int startRowIndex = 0, int numberOfRows = 10, string searchValue = null, string sortColumn = "DEFAULT", string sortDirection = "ASC");
-        Task<CampaignViewModel> GetCampaignById(int brokerId);
+        //Task<CampaignViewModel> GetCampaignById(int brokerId);
+        //Task<ListViewModel<CampaignViewModel>> GetCampaigns(int brokerId, int startRowIndex = 0, int numberOfRows = 10, string sortColumn = "DEFAULT");
         Task<ListViewModel<CampaignViewModel>> GetCampaigns(int brokerId, int startRowIndex = 0, int numberOfRows = 10, string sortColumn = "DEFAULT");
+        Task<CampaignViewModel> GetCampaignById(int brokerId);
         Task<BrokerViewModel> GetBrokerByReference(string referenceId);
         Task<AgentViewModel> GetAgentByReference(string referenceId);
         Task<ClientViewModel> GetClientByReference(string referenceId);

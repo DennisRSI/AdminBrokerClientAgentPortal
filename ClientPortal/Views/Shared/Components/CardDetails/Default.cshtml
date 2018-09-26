@@ -1,0 +1,235 @@
+﻿@model Codes.Service.ViewModels.CardDetailsViewModel
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Card Details</h2>
+            <div class="title_right">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input id="search-query" type="text" class="form-control" placeholder="Find Another Card">
+                        <span class="input-group-btn">
+                            <button id="search" class="btn btn-default" type="button" data-page="card-details"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="x_panel text-center">
+                        <h5>Card Number</h5>
+                        <hr class="card-hr">
+                        <h4>@Html.DisplayFor(m => m.CardNumber)</h4>
+                    </div>
+                    <div class="x_panel">
+                        <span class="h5 text-center">Card Benefits Assigned</span>
+                        <hr class="card-hr2">
+                        <div>
+                            <label>
+                                @Html.CheckBoxFor(m => m.BenefitHotel, new { @class = "flat", disabled = "disabled" }) Hotel Benefit
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                @Html.CheckBoxFor(m => m.BenefitCondo, new { @class = "flat", disabled = "disabled" }) Condo Benefit
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                @Html.CheckBoxFor(m => m.BenefitShopping, new { @class = "flat", disabled = "disabled" }) Shopping Benefit
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                @Html.CheckBoxFor(m => m.BenefitDining, new { @class = "flat", disabled = "disabled" }) Dining Benefit
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="x_panel text-center">
+                        <div class="x_content">
+                            <a href="#">
+                                <h5>Total Hotel Savings</h5>
+                                <h4>@Html.DisplayFor(m => m.TotalHotelSavings)</h4>
+                            </a>
+                            <hr class="card-hr2">
+                            <a href="#">
+                                <h5>Total Condo Savings</h5>
+                                <h4>@Html.DisplayFor(m => m.TotalCondoSavings)</h4>
+                            </a>
+                            <hr class="card-hr2">
+                            <a href="#">
+                                <h5>Total Shopping Savings</h5>
+                                <h4>@Html.DisplayFor(m => m.TotalShoppingSavings)</h4>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <td class="col-md-6 col-sm-6 col-xs-7 bold-table-text">Client:</td>
+                            <td class="col-md-6 col-sm-6 col-xs-7 bold-table-text">@Model.ClientName</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="col-md-6 col-sm-6 col-xs-7">Client Campaign</td>
+                            <td class="col-md-6 col-sm-6 col-xs-7">@Model.ClientCampaign</td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-6 col-sm-6 col-xs-7">Activation Date</td>
+                            <td class="col-md-6 col-sm-6 col-xs-5">@Html.DisplayFor(m => m.ActivationDate)</td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-6 col-sm-6 col-xs-7">Broker Commission Rate</td>
+                            <td class="col-md-6 col-sm-6 col-xs-5">@Html.DisplayFor(m => m.BrokerCommission)</td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-6 col-sm-6 col-xs-7">Client Commission Rate</td>
+                            <td class="col-md-6 col-sm-6 col-xs-5">@Html.DisplayFor(m => m.ClientCommission)</td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-6 col-sm-6 col-xs-7">Agent Commission Rate</td>
+                            <td class="col-md-6 col-sm-6 col-xs-5">@Html.DisplayFor(m => m.AgentCommission)</td>
+                        </tr>
+                        <tr>
+                            <td class="">Activated By</td>
+                            <td class="">@Model.ActivatedBy</td>
+                        </tr>
+                        <tr>
+                            <td class="">Card Face Value</td>
+                            <td class="">@Html.DisplayFor(m => m.FaceValue)</td>
+                        </tr>
+                        <tr>
+                            <td class="">Card Type</td>
+                            <td class="">@Model.CardType</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="x_panel">
+            <h3>Hotel &amp; Condo Benefits Detail View</h3>
+            <hr class="card-hr2">
+            <table id="table-benefits" class="table table-striped table-bordered jambo_table bulk_action">
+                <thead>
+                    <tr>
+                        <th>Check<br />In</th>
+                        <th>Check<br />Out *</th>
+                        <th>Member<br />Savings</th>
+                        <th>Commissionable &nbsp;<a href="#" data-toggle="tooltip" title="Commissionable amount is total member savings above a $0 Remaining Balance"><i class="fa fa-info-circle icon-white"></i></a></th>
+                        <th>Broker<br />Commission</th>
+                        <th>Client<br />Commission</th>
+                        <th>Agent<br />Commission</th>
+                        <th>Remaining<br />Balance</th>
+                        <th>Payment<br />Date</th>
+                        <th>Confirmation</th>
+                        <th>Status</th>
+                        <th class="text-center">Chargeback</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @Html.DisplayFor(m => m.BenefitDetails)
+                </tbody>
+            </table>
+            <br />
+            Hotel Savings: <b>$209.39</b> &nbsp; &nbsp;|&nbsp; &nbsp; Commission Paid: <b>$9.22</b> &nbsp; &nbsp;|&nbsp; &nbsp; Commission Owed: <b>$90.79</b>
+            <p class="pull-right disclaimer-text">* Projected</p>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<!-- end card details panel -->
+<!-- Chargeback Modal -->
+<div class="modal fade chargeback-modal1" tabindex="-1" role="dialog" aria-hidden="true" id="chargeback-modal1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">Mark as Chargeback</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                    <label class="control-label">Chargeback Amount</label>
+                    <div class="">
+                        <input type="text" class="form-control" placeholder="ex. $9.00" required>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                    <label class="control-label">Disposition</label>
+                    <select class="form-control form-group" name="chargebackDisposition" required>
+                        <option disabled selected></option>
+                        <option value="customerChargeback">Customer Chargeback</option>
+                        <option value="commissionReversed">Commission reversed by supplier</option>
+                    </select>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                    <label class="control-label">Credit Back to Card?</label>
+                    <select class="form-control form-group" name="chargebackDisposition" required>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                    <label class="control-label">Chargeback Note (Optional)</label>
+                    <textarea class="form-control" id="chargebackDescription" placeholder="" rows="6"></textarea><br />
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-travgreen" data-dismiss="modal">Mark Chargeback</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Chargeback Modal -->
+<!-- Chart Assigned vs Unassigned Donut -->
+<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+    <div class="x_panel">
+        <div class="x_content">
+            <canvas id="availableBalance"></canvas>
+        </div>
+        <div class="x_content">
+        </div>
+    </div>
+</div>
+<!-- Chart Benefits by Type Donut -->
+<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+    <div class="x_panel">
+        <div class="x_content">
+            <canvas id="benefitsByType"></canvas>
+        </div>
+        <div class="x_content">
+        </div>
+    </div>
+</div>
+<!-- Chart Member Monthly Activations -->
+<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_content">
+            <canvas id="activationsMonthly"></canvas>
+        </div>
+        <div class="x_content">
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+<script src="~/js/card-details.js" asp-append-version="true"></script>
+<script>
+    MENU.init();
+    CARDDETAILS.init();
+    CARDDETAILS.loadChartCardValue('@Html.DisplayFor(m => m.FaceValue)', @Model.TotalCardAvailable, @Model.TotalCardRedeemed);
+    CARDDETAILS.loadChartBenefitUsage(@Model.BenefitsHotelPercent, @Model.BenefitsCondoPercent, @Model.BenefitsShoppingPercent);
+    CARDDETAILS.loadChartMonthlyUsage();
+</script>

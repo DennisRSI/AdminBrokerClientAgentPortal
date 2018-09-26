@@ -183,7 +183,43 @@ namespace ClientPortal.Services
         {
             try
             {
-                ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
+                var user = await _userManager.FindByEmailAsync(model.Email);
+
+                if (user != null && user.Id != null && user.Id.Length > 0)
+                {
+                    model.ApplicationReference = user.Id;
+
+                    user.Address = model.Address;
+                    user.City = model.City;
+                    user.CompanyName = model.CompanyName;
+                    user.Country = model.Country;
+                    user.DeactivationDate = model.DeactivationDate;
+                    user.DeactivationReason = model.DeactivationReason;
+                    user.EIN = model.EIN;
+                    user.Email = model.Email;
+                    user.EmailConfirmed = true;
+                    user.Fax = model.Fax;
+                    user.FaxExtension = model.FaxExtension;
+                    user.FirstName = model.FirstName;
+                    user.MiddleName = model.MiddleName;
+                    user.LastName = model.LastName;
+                    user.MobilePhone = model.MobilePhone;
+                    user.NormalizedEmail = model.Email.ToUpper();
+                    user.NormalizedUserName = model.Email.ToUpper();
+                    user.OfficeExtension = model.OfficeExtension;
+                    user.OfficePhone = model.OfficePhone;
+                    user.PhoneNumberConfirmed = true;
+                    user.PostalCode = model.PostalCode;
+                    user.State = model.State;
+                    user.UserName = model.Email;
+
+                    await _userManager.UpdateAsync(user);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    model.Message = "Error: Admin not found";
+                }
             }
             catch (Exception ex)
             {
@@ -285,10 +321,12 @@ namespace ClientPortal.Services
         {
             try
             {
-                ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
+                var user = await _userManager.FindByIdAsync(model.ApplicationReference);
 
                 if (user != null && user.Id != null && user.Id.Length > 0)
                 {
+                    model.ApplicationReference = user.Id;
+
                     user.Address = model.Address;
                     user.City = model.City;
                     user.CompanyName = model.CompanyName;
@@ -423,10 +461,12 @@ namespace ClientPortal.Services
         {
             try
             {
-                ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
+                var user = await _userManager.FindByIdAsync(model.ApplicationReference);
 
                 if (user != null && user.Id != null && user.Id.Length > 0)
                 {
+                    model.ApplicationReference = user.Id;
+
                     user.Address = model.Address;
                     user.City = model.City;
                     user.CompanyName = model.CompanyName;
@@ -458,7 +498,7 @@ namespace ClientPortal.Services
                 }
                 else
                 {
-                    model.Message = "Error: Broker not found";
+                    model.Message = $"Error (UserService/BrokerUpdate): Broker not found: {model.Email}";
                 }
             }
             catch (Exception ex)
@@ -562,10 +602,12 @@ namespace ClientPortal.Services
         {
             try
             {
-                ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
+                var user = await _userManager.FindByIdAsync(model.ApplicationReference);
 
                 if (user != null && user.Id != null && user.Id.Length > 0)
                 {
+                    model.ApplicationReference = user.Id;
+
                     user.Address = model.Address;
                     user.City = model.City;
                     user.CompanyName = model.CompanyName;
@@ -609,6 +651,20 @@ namespace ClientPortal.Services
             }
 
             return model;
+        }
+
+        public async Task<ResultViewModel> ChangePassword(string id, string password)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var passwordResult = await _userManager.ResetPasswordAsync(user, token, password);
+
+            var result = new ResultViewModel
+            {
+                Messages = passwordResult.Errors.Select(e => e.Description).ToList()
+            };
+
+            return result;
         }
     }
 }

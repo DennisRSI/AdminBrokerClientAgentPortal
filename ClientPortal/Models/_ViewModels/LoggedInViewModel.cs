@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ClientPortal.Models._ViewModels
 {
@@ -11,17 +8,19 @@ namespace ClientPortal.Models._ViewModels
         public string FirstName { get; set; } = "";
         public string MiddleName { get; set; } = "";
         public string LastName { get; set; } = "";
+
         public string FullName
         {
             get
             {
-                string name = FirstName;
-                if (MiddleName.Length > 0)
-                    name += $" {MiddleName}";
-                name += $" {LastName}";
+                var middle = " ";
 
-                return name;
+                if (!String.IsNullOrWhiteSpace(MiddleName))
+                {
+                    middle = $" {MiddleName} ";
+                }
 
+                return $"{FirstName}{middle}{LastName}";
             }
         }
 
