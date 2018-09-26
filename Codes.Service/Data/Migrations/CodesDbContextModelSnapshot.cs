@@ -392,7 +392,7 @@ namespace Codes.Service.Data.Migrations
 
                     b.Property<DateTime?>("DeactivationDate");
 
-                    b.Property<DateTime?>("DeactivationReason");
+                    b.Property<string>("DeactivationReason");
 
                     b.Property<DateTime?>("EndDate");
 
