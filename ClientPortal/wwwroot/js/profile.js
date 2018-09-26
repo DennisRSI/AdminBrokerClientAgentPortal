@@ -5,13 +5,13 @@ function Profile() {
 
     this.init = function (id) {
 
-        $('.ein').inputmask({
-            mask: '99-9999999'
-        });
+        //$('.ein').inputmask({
+            //mask: '99-9999999'
+        //});
 
-        $('.zip').inputmask({
-            mask: '99999'
-        });
+        //$('.zip').inputmask({
+            //mask: '99999'
+        //});
 
         $(".toggle-accordion").on("click", function () {
 

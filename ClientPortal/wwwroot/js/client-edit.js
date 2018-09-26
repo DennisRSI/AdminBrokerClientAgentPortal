@@ -86,19 +86,19 @@ function ClientEdit() {
         $('.state').removeClass('hidden');
         $('.stateFreeForm').addClass('hidden');
 
-        $('input.ein').inputmask({
-            mask: '99-9999999'
-        });
+        //$('input.ein').inputmask({
+            //mask: '99-9999999'
+        //});
 
-        $('input#zip').inputmask({
-            mask: '99999'
-        });
+        //$('input#zip').inputmask({
+           // mask: '99999'
+        //});
 
         $('input[type="tel"]').removeAttr('maxlength');
 
-        $('input[type="tel"]').inputmask({
-            mask: '(999) 999-9999'
-        });
+        //$('input[type="tel"]').inputmask({
+            //mask: '(999) 999-9999'
+        //});
     }
 
     this.initOtherCountry = function () {

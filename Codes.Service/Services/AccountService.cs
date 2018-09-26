@@ -88,7 +88,9 @@ namespace Codes.Service.Services
                 where c.ClientId == clientId && (cardType == uc.CodeType || cardType == "")
                 select uc;
 
-            return query.Count();
+            int ct =  query.Count();
+
+            return ct;
         }
 
         public ClientEditViewModel GetClientEdit(int clientId)

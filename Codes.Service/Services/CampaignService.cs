@@ -170,7 +170,7 @@ namespace Codes.Service.Services
                     orderby cr.CreationDate descending
                     select cr;
 
-                var codeRange = codeRanges.First();
+                var codeRange = codeRanges.FirstOrDefault();
 
                 if (codeRange != null)
                 {

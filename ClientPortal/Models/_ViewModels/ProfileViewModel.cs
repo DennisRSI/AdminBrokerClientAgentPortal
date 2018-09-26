@@ -4,5 +4,6 @@
     {
         public int? DocumentW9Id { get; set; }
         public decimal CommissionRate { get; set; }
+        public bool IsDisabled { get; set; } = true;
     }
 }

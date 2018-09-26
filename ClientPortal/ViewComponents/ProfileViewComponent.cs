@@ -44,6 +44,11 @@ namespace ClientPortal.ViewComponents
                 model.DocumentW9Id = broker.DocumentW9Id;
             }
 
+            if (User.IsInRole("Administrator") || User.IsInRole("Super Administrator"))
+            {
+                model.IsDisabled = false;
+            }
+
             var account = _accountService.GetAccountCommon(profileId);
             model.CommissionRate = account.CommissionRate;
 
