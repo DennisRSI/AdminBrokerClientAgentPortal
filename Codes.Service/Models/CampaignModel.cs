@@ -51,7 +51,7 @@ namespace Codes.Service.Models
         public string CampaignDescription { get; set; }
         public string GoogleAnalyticsCode { get; set; } = null;
         public string CustomCSS { get; set; } = null;
-        public DateTime? DeactivationReason { get; set; } = null;
+        public string DeactivationReason { get; set; } = null;
 
         [Required]
         public int PackageId { get; set; }

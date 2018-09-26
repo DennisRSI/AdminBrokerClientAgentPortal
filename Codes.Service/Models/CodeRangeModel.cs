@@ -27,7 +27,7 @@ namespace Codes.Service.Models
         public int Padding { get; set; } = 5;
         [Required, StringLength(50)]
         public string CodeType { get; set; } = "Virtual";
-        public DateTime? DeactivationReason { get; set; } = null;
+        public string DeactivationReason { get; set; } = null;
         [Required]
         public float Points { get; set; } = 0;
         [Required]

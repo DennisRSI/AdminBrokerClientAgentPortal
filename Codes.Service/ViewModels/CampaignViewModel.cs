@@ -28,7 +28,7 @@ namespace Codes.Service.ViewModels
         [Display(Name = "Custom CSS", Prompt = "Custom CSS")]
         public string CustomCSS { get; set; } = null;
         [Display(Name = "Deactivation Reason", Prompt = "Deactivation Reason")]
-        public DateTime? DeactivationReason { get; set; } = null;
+        public string DeactivationReason { get; set; } = null;
         [Display(Name = "Broker", Prompt = "Broker")]
         public BrokerViewModel Broker { get; set; } = new BrokerViewModel();
         [Display(Name = "Client", Prompt = "Client")]
