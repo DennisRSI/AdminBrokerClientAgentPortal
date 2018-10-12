@@ -60,6 +60,16 @@ function Production() {
     }
 
     this.initDataTables = function () {
-        $('.jambo_table').DataTable();
+        var sortColumn = $('.jambo_table').data('sortcolumn');
+        var sortOrder = $('.jambo_table').data('sortorder');
+
+        if (sortColumn === undefined) {
+            $('.jambo_table').DataTable();
+        }
+        else {
+            $('.jambo_table').DataTable({
+                "order": [[sortColumn, sortOrder]]
+            });
+        }
     }
 }
