@@ -66,12 +66,14 @@ function Campaign(){
                 contentType: 'application/json',
                 data: JSON.stringify(data),
                 success: function (result) {
+                    alert(result);
                     self.hideLoader();
                     $('.new-campaign-modal-lg').modal('hide');
                     dataTable.ajax.reload();
                 },
                 error: function (xhr, resp, text) {
                     self.hideLoader();
+                    alert('Error creating campaign');
                     console.log(xhr, resp, text);
                 }
             })

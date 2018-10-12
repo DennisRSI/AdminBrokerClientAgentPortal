@@ -44,7 +44,7 @@ namespace ClientPortal.Controllers.APIs
         public IActionResult Create(int id, [FromBody] CampaignViewModel model)
         {
             _campaignService.Create(id, model);
-            return Ok();
+            return Ok("Campaign Created Successfully");
         }
 
         [HttpPost("deactivate/{campaignId}/{reason}")]
