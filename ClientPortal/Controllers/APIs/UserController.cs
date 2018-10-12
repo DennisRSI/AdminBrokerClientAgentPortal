@@ -473,6 +473,13 @@ namespace ClientPortal.Controllers.APIs
             return Ok();
         }
 
+        [HttpPost("deactivateagent/{agentId}/{reason}")]
+        public IActionResult DeactivateAgent(int agentId, string reason)
+        {
+            _accountService.DeactivateAgent(agentId, reason);
+            return Ok();
+        }
+
         private async Task<AdminViewModel> UpdateAdmin(ApplicationUser user)
         {
             var admin = new AdminViewModel()

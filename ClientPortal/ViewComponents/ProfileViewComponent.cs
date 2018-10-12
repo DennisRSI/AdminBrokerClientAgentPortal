@@ -49,6 +49,13 @@ namespace ClientPortal.ViewComponents
                 model.IsDisabled = false;
             }
 
+            if (user.Role == "Agent")
+            {
+                var agent = await _context.GetAgentByAccountId(profileId);
+                model.DeactivationDate = agent.DeactivationDate;
+                model.DeactivationReason = agent.DeactivationReason;
+            }
+
             var account = _accountService.GetAccountCommon(profileId);
             model.CommissionRate = account.CommissionRate;
 

@@ -194,5 +194,13 @@ namespace Codes.Service.Services
             client.DeactivationReason = reason;
             _context.SaveChanges();
         }
+
+        public void DeactivateAgent(int agentId, string reason)
+        {
+            var agent = _context.Agents.Single(a => a.AgentId == agentId);
+            agent.DeactivationDate = DateTime.Now;
+            agent.DeactivationReason = reason;
+            _context.SaveChanges();
+        }
     }
 }

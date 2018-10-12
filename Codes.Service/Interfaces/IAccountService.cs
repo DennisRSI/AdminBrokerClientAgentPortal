@@ -22,6 +22,7 @@ namespace Codes.Service.Interfaces
         // Agent
         IEnumerable<AccountViewModel> GetClientsOfAgent(int agentId);
         IEnumerable<AccountViewModel> GetCampaignsOfAgent(int agentId);
+        void DeactivateAgent(int agentId, string reason);
 
         // Client
         IEnumerable<AccountViewModel> GetCampaignsOfClient(int clientId);
