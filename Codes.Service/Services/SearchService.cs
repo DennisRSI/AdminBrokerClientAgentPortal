@@ -3,6 +3,7 @@ using Codes.Service.Interfaces;
 using Codes.Service.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Linq;
 
 namespace Codes.Service.Services
@@ -20,6 +21,19 @@ namespace Codes.Service.Services
 
         public SearchViewModel GetAdmin(string query)
         {
+            query = query.Trim();
+
+            string firstName = String.Empty;
+            string lastName = String.Empty;
+            var split = query.Split(' ');
+
+            // Check if the query string might be in "FIRSTNAME LASTNAME" format
+            if (split.Length == 2)
+            {
+                firstName = split[0];
+                lastName = split[1];
+            }
+
             var model = new SearchViewModel
             {
                 Query = query
@@ -32,7 +46,14 @@ namespace Codes.Service.Services
                                     EF.Functions.Like(a.AgentFirstName, query) ||
                                     EF.Functions.Like(a.AgentLastName, query) ||
                                     EF.Functions.Like(a.CompanyName, query) ||
-                                    EF.Functions.Like(a.Email, query)
+                                    EF.Functions.Like(a.Email, query) ||
+                                    (
+                                        !String.IsNullOrWhiteSpace(firstName) &&
+                                        !String.IsNullOrWhiteSpace(lastName) &&
+                                        EF.Functions.Like(a.AgentFirstName, firstName) &&
+                                        EF.Functions.Like(a.AgentLastName, lastName)
+                                    )
+
                                 )
                                 .Select(a => new SearchUserViewModel()
                                 {
@@ -41,7 +62,7 @@ namespace Codes.Service.Services
                                     LastName = a.AgentLastName,
                                     CompanyName = a.CompanyName,
                                     Email = a.Email,
-                                    PhoneNumber = string.IsNullOrWhiteSpace(a.OfficePhone) ? a.MobilePhone : a.OfficePhone
+                                    PhoneNumber = String.IsNullOrWhiteSpace(a.OfficePhone) ? a.MobilePhone : a.OfficePhone
                                 }
                                 );
 
@@ -50,7 +71,13 @@ namespace Codes.Service.Services
                                     EF.Functions.Like(b.BrokerFirstName, query) ||
                                     EF.Functions.Like(b.BrokerLastName, query) ||
                                     EF.Functions.Like(b.CompanyName, query) ||
-                                    EF.Functions.Like(b.Email, query)
+                                    EF.Functions.Like(b.Email, query) ||
+                                    (
+                                        !String.IsNullOrWhiteSpace(firstName) &&
+                                        !String.IsNullOrWhiteSpace(lastName) &&
+                                        EF.Functions.Like(b.BrokerFirstName, firstName) &&
+                                        EF.Functions.Like(b.BrokerLastName, lastName)
+                                    )
                                 )
                                 .Select(b => new SearchUserViewModel()
                                 {
@@ -68,7 +95,14 @@ namespace Codes.Service.Services
                                     EF.Functions.Like(c.ContactFirstName, query) ||
                                     EF.Functions.Like(c.ContactLastName, query) ||
                                     EF.Functions.Like(c.CompanyName, query) ||
-                                    EF.Functions.Like(c.Email, query)
+                                    EF.Functions.Like(c.Email, query) ||
+                                    (
+                                        !String.IsNullOrWhiteSpace(firstName) &&
+                                        !String.IsNullOrWhiteSpace(lastName) &&
+                                        EF.Functions.Like(c.ContactFirstName, firstName) &&
+                                        EF.Functions.Like(c.ContactLastName, lastName)
+                                    )
+
                                 )
                                 .Select(c => new SearchUserViewModel()
                                 {
