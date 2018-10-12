@@ -401,6 +401,13 @@ namespace ClientPortal.Controllers.APIs
             return Ok(result);
         }
 
+        [HttpPost("changepasswordclient/{id}/{password}")]
+        public async Task<IActionResult> ChangePasswordClient(string id, string password)
+        {
+            var result = await _context.ChangePassword(id, password);
+            return Ok(result);
+        }
+
         private async Task<string> ProcessUserModel(string id, ApplicationUser model)
         {
             model.Id = id;
