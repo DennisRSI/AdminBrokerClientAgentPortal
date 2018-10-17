@@ -83,9 +83,7 @@ namespace ClientPortal.Controllers.APIs
 
             try
             {
-                (int draw, int startRowIndex, int numberOfRows, string sortColumn, string sortDirection, string searchValue) = _ParseForm(Request.Form);
-
-                model = await _context.GetClients(draw, brokerId, startRowIndex, numberOfRows, searchValue, sortColumn, sortDirection);
+                model = await _context.GetClients(brokerId);
             }
             catch (Exception ex)
             {

@@ -129,7 +129,13 @@ function AddUser(){
                         }
 
                         $('.modal').removeClass('fade').modal('hide');
-                        $('#sidebar-menu .last-clicked').click();
+
+                        if (role.toLowerCase() === 'client') {
+                            window.clientTable.ajax.reload();
+                        }
+                        else {
+                            $('#sidebar-menu .last-clicked').click();
+                        }
                     }
                     else {
                         alert('Error: ' + result.message);

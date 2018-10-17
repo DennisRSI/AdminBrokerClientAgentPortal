@@ -93,7 +93,7 @@ namespace Codes.Service.Interfaces
         Task<(int count, string message, bool isSuccess)> GetClientCampaignCount(int clientId);
         Task<List<(int agentId, string agentName)>> GetAgentsAssignedToClient(int clientId);
         Task<ClientViewModel> GetClientByAccountId(string accountId);
-        Task<DataTableViewModel<ClientListViewModel>> GetClients(int draw, int brokerId, int startRowIndex = 0, int numberOfRows = 10, string searchValue = null, string sortColumn = "DEFAULT", string sortDirection = "ASC");
+        Task<DataTableViewModel<ClientListViewModel>> GetClients(int brokerId);
         //Task<CampaignViewModel> GetCampaignById(int brokerId);
         //Task<ListViewModel<CampaignViewModel>> GetCampaigns(int brokerId, int startRowIndex = 0, int numberOfRows = 10, string sortColumn = "DEFAULT");
         Task<ListViewModel<CampaignViewModel>> GetCampaigns(int brokerId, int startRowIndex = 0, int numberOfRows = 10, string sortColumn = "DEFAULT");
