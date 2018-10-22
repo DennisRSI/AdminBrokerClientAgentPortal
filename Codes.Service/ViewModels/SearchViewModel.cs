@@ -5,6 +5,11 @@ namespace Codes.Service.ViewModels
     public class SearchViewModel
     {
         public string Query { get; set; }
+
+        public bool ShowBroker { get; set; }
+        public bool ShowAgent { get; set; }
+        public bool ShowClient { get; set; }
+
         public IEnumerable<SearchUserViewModel> Agents { get; set; }
         public IEnumerable<SearchUserViewModel> Brokers { get; set; }
         public IEnumerable<SearchUserViewModel> Clients { get; set; }

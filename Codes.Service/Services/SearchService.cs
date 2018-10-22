@@ -19,7 +19,7 @@ namespace Codes.Service.Services
             _logger = loggerFactory.CreateLogger<CodeService>();
         }
 
-        public SearchViewModel GetAdmin(string query)
+        public SearchViewModel Search(string query, string accountType, int accountId)
         {
             query = query.Trim();
 
@@ -34,9 +34,33 @@ namespace Codes.Service.Services
                 lastName = split[1];
             }
 
+            switch (accountType.ToLower())
+            {
+                case "superadministrator":
+                case "administrator":
+                    return GetAdmin(query, firstName, lastName);
+
+                case "broker":
+                    return GetBroker(query, firstName, lastName, accountId);
+
+                case "agent":
+                    return GetAgent(query, firstName, lastName, accountId);
+
+                case "client":
+                    return GetClient(query, accountId);
+            }
+
+            throw new ArgumentException("Invalid accountType: " + accountType);
+        }
+
+        public SearchViewModel GetAdmin(string query, string firstName, string lastName)
+        {
             var model = new SearchViewModel
             {
-                Query = query
+                Query = query,
+                ShowAgent = true,
+                ShowBroker = true,
+                ShowClient = true
             };
 
             query += "%";
@@ -128,7 +152,100 @@ namespace Codes.Service.Services
                                 }
                                 );
 
-            var codes = _context.Codes
+            model.Cards = _context.Codes
+                                .Where(c =>
+                                    EF.Functions.Like(c.Code, query)
+                                )
+                                .Select(c => new SearchCardViewModel()
+                                    {
+                                        Id = c.CodeId,
+                                        CardNumber = c.Code,
+                                        Status = "Purchased"
+                                    }
+                                );
+
+            return model;
+        }
+
+        public SearchViewModel GetBroker(string query, string firstName, string lastName, int brokerId)
+        {
+            var model = new SearchViewModel
+            {
+                Query = query,
+                ShowAgent = true,
+                ShowBroker = false,
+                ShowClient = true
+            };
+
+            query += "%";
+
+            model.Agents = _context.Agents
+                                .Where(a => a.BrokerId == brokerId)
+                                .Where(a =>
+                                    EF.Functions.Like(a.AgentFirstName, query) ||
+                                    EF.Functions.Like(a.AgentLastName, query) ||
+                                    EF.Functions.Like(a.CompanyName, query) ||
+                                    EF.Functions.Like(a.Email, query) ||
+                                    (
+                                        !String.IsNullOrWhiteSpace(firstName) &&
+                                        !String.IsNullOrWhiteSpace(lastName) &&
+                                        EF.Functions.Like(a.AgentFirstName, firstName) &&
+                                        EF.Functions.Like(a.AgentLastName, lastName)
+                                    )
+                                )
+                                .Select(a => new SearchUserViewModel()
+                                {
+                                    Id = a.BrokerId,
+                                    FirstName = a.AgentFirstName,
+                                    LastName = a.AgentLastName,
+                                    CompanyName = a.CompanyName,
+                                    Email = a.Email,
+                                    PhoneNumber = String.IsNullOrWhiteSpace(a.OfficePhone) ? a.MobilePhone : a.OfficePhone
+                                }
+                                );
+
+            model.Clients = _context.Clients
+                                .Where(c => c.BrokerId == brokerId)
+                                .Where(c =>
+                                    EF.Functions.Like(c.ContactFirstName, query) ||
+                                    EF.Functions.Like(c.ContactLastName, query) ||
+                                    EF.Functions.Like(c.CompanyName, query) ||
+                                    EF.Functions.Like(c.Email, query) ||
+                                    (
+                                        !String.IsNullOrWhiteSpace(firstName) &&
+                                        !String.IsNullOrWhiteSpace(lastName) &&
+                                        EF.Functions.Like(c.ContactFirstName, firstName) &&
+                                        EF.Functions.Like(c.ContactLastName, lastName)
+                                    )
+
+                                )
+                                .Select(c => new SearchUserViewModel()
+                                {
+                                    Id = c.BrokerId,
+                                    FirstName = c.ContactFirstName,
+                                    LastName = c.ContactLastName,
+                                    CompanyName = c.CompanyName,
+                                    Email = c.Email,
+                                    PhoneNumber = string.IsNullOrWhiteSpace(c.OfficePhone) ? c.MobilePhone : c.OfficePhone
+                                }
+                                );
+
+            model.Campaigns = _context.Campaigns
+                                .Where(c => c.BrokerId == brokerId)
+                                .Where(c =>
+                                    EF.Functions.Like(c.CampaignDescription, query) ||
+                                    EF.Functions.Like(c.CampaignName, query)
+                                )
+                                .Select(c => new SearchCampaignViewModel()
+                                {
+                                    Id = c.CampaignId,
+                                    Description = c.CampaignDescription,
+                                    Name = c.CampaignName,
+                                }
+                                );
+
+            model.Cards = _context.Codes
+                                .Where(c => c.Campaign.BrokerId == brokerId)
                                 .Where(c =>
                                     EF.Functions.Like(c.Code, query)
                                 )
@@ -140,43 +257,110 @@ namespace Codes.Service.Services
                                 }
                                 );
 
-            var unusedCodes = _context.UnusedCodes
+            return model;
+        }
+
+        public SearchViewModel GetAgent(string query, string firstName, string lastName, int agentId)
+        {
+            var model = new SearchViewModel
+            {
+                Query = query,
+                ShowClient = true
+            };
+
+            query += "%";
+
+            model.Clients = _context.Clients
+                                .Where(c => c.AgentId == agentId)
+                                .Where(c =>
+                                    EF.Functions.Like(c.ContactFirstName, query) ||
+                                    EF.Functions.Like(c.ContactLastName, query) ||
+                                    EF.Functions.Like(c.CompanyName, query) ||
+                                    EF.Functions.Like(c.Email, query) ||
+                                    (
+                                        !String.IsNullOrWhiteSpace(firstName) &&
+                                        !String.IsNullOrWhiteSpace(lastName) &&
+                                        EF.Functions.Like(c.ContactFirstName, firstName) &&
+                                        EF.Functions.Like(c.ContactLastName, lastName)
+                                    )
+
+                                )
+                                .Select(c => new SearchUserViewModel()
+                                {
+                                    Id = c.BrokerId,
+                                    FirstName = c.ContactFirstName,
+                                    LastName = c.ContactLastName,
+                                    CompanyName = c.CompanyName,
+                                    Email = c.Email,
+                                    PhoneNumber = string.IsNullOrWhiteSpace(c.OfficePhone) ? c.MobilePhone : c.OfficePhone
+                                }
+                                );
+
+            model.Campaigns = _context.Campaigns
+                                .Where(c => c.Client.AgentId == agentId)
+                                .Where(c =>
+                                    EF.Functions.Like(c.CampaignDescription, query) ||
+                                    EF.Functions.Like(c.CampaignName, query)
+                                )
+                                .Select(c => new SearchCampaignViewModel()
+                                {
+                                    Id = c.CampaignId,
+                                    Description = c.CampaignDescription,
+                                    Name = c.CampaignName,
+                                }
+                                );
+
+            model.Cards = _context.Codes
+                                .Where(c => c.Campaign.Client.AgentId == agentId)
                                 .Where(c =>
                                     EF.Functions.Like(c.Code, query)
                                 )
                                 .Select(c => new SearchCardViewModel()
                                 {
-                                    Id = c.UnusedCodeId,
+                                    Id = c.CodeId,
                                     CardNumber = c.Code,
-                                    Status = "In Campaign"
+                                    Status = "Purchased"
                                 }
                                 );
 
-            var pendingCodes = _context.PendingCodes
+            return model;
+        }
+
+        public SearchViewModel GetClient(string query, int clientId)
+        {
+            var model = new SearchViewModel
+            {
+                Query = query
+            };
+
+            query += "%";
+
+            model.Campaigns = _context.Campaigns
+                                .Where(c => c.ClientId == clientId)
+                                .Where(c =>
+                                    EF.Functions.Like(c.CampaignDescription, query) ||
+                                    EF.Functions.Like(c.CampaignName, query)
+                                )
+                                .Select(c => new SearchCampaignViewModel()
+                                {
+                                    Id = c.CampaignId,
+                                    Description = c.CampaignDescription,
+                                    Name = c.CampaignName,
+                                }
+                                );
+
+            model.Cards = _context.Codes
+                                .Where(c => c.Campaign.ClientId == clientId)
                                 .Where(c =>
                                     EF.Functions.Like(c.Code, query)
                                 )
                                 .Select(c => new SearchCardViewModel()
                                 {
-                                    Id = c.PendingCodeId,
+                                    Id = c.CodeId,
                                     CardNumber = c.Code,
-                                    Status = "Registered"
+                                    Status = "Purchased"
                                 }
                                 );
-
-            var usedCodes = _context.UsedCodes
-                                .Where(c =>
-                                    EF.Functions.Like(c.Code, query)
-                                )
-                                .Select(c => new SearchCardViewModel()
-                                {
-                                    Id = c.UsedCodeId,
-                                    CardNumber = c.Code,
-                                    Status = "Activated"
-                                }
-                                );
-
-            model.Cards = codes.Concat(unusedCodes).Concat(pendingCodes).Concat(usedCodes);
 
             return model;
         }

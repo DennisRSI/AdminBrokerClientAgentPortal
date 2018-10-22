@@ -167,5 +167,17 @@ namespace ClientPortal.Models
                 return "Administrator";
             }
         }
+
+        public int AccountId
+        {
+            get
+            {
+                if (AgentId > 0) { return AgentId; }
+                if (ClientId > 0) { return ClientId; }
+                if (BrokerId > 0) { return BrokerId; }
+
+                return 0;
+            }
+        }
     }
 }
