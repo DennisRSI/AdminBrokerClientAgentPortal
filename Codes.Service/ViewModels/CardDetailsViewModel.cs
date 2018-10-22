@@ -28,13 +28,13 @@ namespace Codes.Service.ViewModels
         [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}")]
         public DateTime ActivationDate { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:c}")]
+        [DisplayFormat(DataFormatString = "{0:f2}")]
         public decimal BrokerCommission { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:c}")]
+        [DisplayFormat(DataFormatString = "{0:f2}")]
         public decimal ClientCommission { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:c}")]
+        [DisplayFormat(DataFormatString = "{0:f2}")]
         public decimal AgentCommission { get; set; }
 
         public string ActivatedBy { get; set; }
