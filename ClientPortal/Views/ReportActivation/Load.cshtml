@@ -35,6 +35,12 @@
                                     <option value="0">All</option>
                                 </select>
                             </div>
+                            <div id="campaign" class="col-lg-6 col-md-6 col-sm-6 col-xs-12 filter">
+                                Select Campaign
+                                <select id="select-campaign" name="campaign" asp-items="@Model.Campaigns" class="form-control form-group">
+                                    <option value="0">All</option>
+                                </select>
+                            </div>
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 Campaign Status
                                 <select id="select-status" name="status" class="form-control form-group">
