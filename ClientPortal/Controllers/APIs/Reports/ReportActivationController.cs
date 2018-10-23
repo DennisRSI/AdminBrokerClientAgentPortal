@@ -55,6 +55,10 @@ namespace ClientPortal.Controllers.APIs
                 case "client":
                     model = await LoadClient();
                     break;
+
+                case "agent":
+                    model = await LoadAgent();
+                    break;
             };
 
             return PartialView("Load", model);
@@ -106,6 +110,23 @@ namespace ClientPortal.Controllers.APIs
                     new SelectListItem() { Text = "By Campaign", Value = "campaign" }
                 },
                 Campaigns = accountQuery.GetCampaigns().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName }),
+            };
+
+            return model;
+        }
+
+        private async Task<ActivationLoadViewModel> LoadAgent()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var accountQuery = _accountQueryFactory.GetAccountQuery(user.BrokerId, user.AgentId, user.ClientId);
+
+            var model = new ActivationLoadViewModel
+            {
+                ReportType = new List<SelectListItem>
+                {
+                    new SelectListItem() { Text = "By Client", Value = "client" },
+                },
+                Clients = accountQuery.GetClients().Select(c => new SelectListItem() { Value = c.Id.ToString(), Text = c.CompanyName }),
             };
 
             return model;
