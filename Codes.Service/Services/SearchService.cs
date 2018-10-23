@@ -81,7 +81,8 @@ namespace Codes.Service.Services
                                 )
                                 .Select(a => new SearchUserViewModel()
                                 {
-                                    Id = a.BrokerId,
+                                    Id = a.AgentId,
+                                    ApplicationReference = a.ApplicationReference,
                                     FirstName = a.AgentFirstName,
                                     LastName = a.AgentLastName,
                                     CompanyName = a.CompanyName,
@@ -106,6 +107,7 @@ namespace Codes.Service.Services
                                 .Select(b => new SearchUserViewModel()
                                 {
                                     Id = b.BrokerId,
+                                    ApplicationReference = b.ApplicationReference,
                                     FirstName = b.BrokerFirstName,
                                     LastName = b.BrokerLastName,
                                     CompanyName = b.CompanyName,
@@ -130,7 +132,8 @@ namespace Codes.Service.Services
                                 )
                                 .Select(c => new SearchUserViewModel()
                                 {
-                                    Id = c.BrokerId,
+                                    Id = c.ClientId,
+                                    ApplicationReference = c.ApplicationReference,
                                     FirstName = c.ContactFirstName,
                                     LastName = c.ContactLastName,
                                     CompanyName = c.CompanyName,
@@ -147,6 +150,7 @@ namespace Codes.Service.Services
                                 .Select(c => new SearchCampaignViewModel()
                                 {
                                     Id = c.CampaignId,
+                                    ApplicationReference = c.Client.ApplicationReference,
                                     Description = c.CampaignDescription,
                                     Name = c.CampaignName,
                                 }
@@ -195,7 +199,8 @@ namespace Codes.Service.Services
                                 )
                                 .Select(a => new SearchUserViewModel()
                                 {
-                                    Id = a.BrokerId,
+                                    Id = a.AgentId,
+                                    ApplicationReference = a.ApplicationReference,
                                     FirstName = a.AgentFirstName,
                                     LastName = a.AgentLastName,
                                     CompanyName = a.CompanyName,
@@ -221,7 +226,8 @@ namespace Codes.Service.Services
                                 )
                                 .Select(c => new SearchUserViewModel()
                                 {
-                                    Id = c.BrokerId,
+                                    Id = c.ClientId,
+                                    ApplicationReference = c.ApplicationReference,
                                     FirstName = c.ContactFirstName,
                                     LastName = c.ContactLastName,
                                     CompanyName = c.CompanyName,
@@ -239,6 +245,7 @@ namespace Codes.Service.Services
                                 .Select(c => new SearchCampaignViewModel()
                                 {
                                     Id = c.CampaignId,
+                                    ApplicationReference = c.Client.ApplicationReference,
                                     Description = c.CampaignDescription,
                                     Name = c.CampaignName,
                                 }
@@ -287,7 +294,8 @@ namespace Codes.Service.Services
                                 )
                                 .Select(c => new SearchUserViewModel()
                                 {
-                                    Id = c.BrokerId,
+                                    Id = c.ClientId,
+                                    ApplicationReference = c.ApplicationReference,
                                     FirstName = c.ContactFirstName,
                                     LastName = c.ContactLastName,
                                     CompanyName = c.CompanyName,
@@ -305,6 +313,7 @@ namespace Codes.Service.Services
                                 .Select(c => new SearchCampaignViewModel()
                                 {
                                     Id = c.CampaignId,
+                                    ApplicationReference = c.Client.ApplicationReference,
                                     Description = c.CampaignDescription,
                                     Name = c.CampaignName,
                                 }
@@ -344,6 +353,7 @@ namespace Codes.Service.Services
                                 .Select(c => new SearchCampaignViewModel()
                                 {
                                     Id = c.CampaignId,
+                                    ApplicationReference = c.Client.ApplicationReference,
                                     Description = c.CampaignDescription,
                                     Name = c.CampaignName,
                                 }
