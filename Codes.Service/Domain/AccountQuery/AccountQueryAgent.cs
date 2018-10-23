@@ -1,25 +1,25 @@
 ﻿using Codes.Service.Data;
 using Codes.Service.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Codes.Service.Domain
 {
-    public class AccountQueryBroker : IAccountQuery
+    public class AccountQueryAgent : IAccountQuery
     {
-        private readonly int _brokerId;
+        private readonly int _agentId;
         private readonly CodesDbContext _context;
 
-        public AccountQueryBroker(CodesDbContext context, int brokerId)
+        public AccountQueryAgent(CodesDbContext context, int agentId)
         {
             _context = context;
-            _brokerId = brokerId;
+            _agentId = agentId;
         }
 
         public IEnumerable<AccountViewModel> GetAgents()
         {
-            return _context.Agents.Where(a => a.BrokerId == _brokerId)
-                    .Select(a => new AccountViewModel() { Id = a.AgentId, FirstName = a.AgentFirstName, LastName = a.AgentLastName, CompanyName = a.CompanyName });
+            return Enumerable.Empty<AccountViewModel>();
         }
 
         public IEnumerable<AccountViewModel> GetBrokers()
@@ -29,13 +29,13 @@ namespace Codes.Service.Domain
 
         public IEnumerable<AccountViewModel> GetCampaigns()
         {
-            return _context.Campaigns.Where(c => c.BrokerId == _brokerId)
+            return _context.Campaigns.Where(c => c.Client.AgentId == _agentId)
                 .Select(c => new AccountViewModel() { Id = c.CampaignId, CompanyName = c.CampaignName });
         }
 
         public IEnumerable<AccountViewModel> GetClients()
         {
-            return _context.Clients.Where(c => c.BrokerId == _brokerId)
+            return _context.Clients.Where(c => c.AgentId == _agentId)
                     .Select(c => new AccountViewModel() { Id = c.ClientId, FirstName = c.ContactFirstName, LastName = c.ContactLastName, CompanyName = c.CompanyName });
         }
     }
