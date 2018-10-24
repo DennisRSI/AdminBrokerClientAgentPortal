@@ -45,6 +45,11 @@ namespace Codes.Service.Models
             ApplicationReference = model.ApplicationReference;
             AgentMiddleName = model.AgentMiddleName;
             CommissionRate = model.CommissionRate;
+
+            if (model.ParentAgentId > 0)
+            {
+                ParentAgentId = model.ParentAgentId;
+            }
         }
 
         [Key, Required]

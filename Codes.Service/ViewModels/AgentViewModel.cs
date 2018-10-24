@@ -136,5 +136,6 @@ namespace Codes.Service.ViewModels
         [Display(Name = "Commission Rate", Prompt = "Commission Rate")]
         public float CommissionRate { get; set; } = 0;
 
+        public int ParentAgentId { get; set; }
     }
 }

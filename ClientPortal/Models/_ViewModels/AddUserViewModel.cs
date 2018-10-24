@@ -18,6 +18,8 @@ namespace ClientPortal.Models._ViewModels
             }
         }
 
+        public IEnumerable<SelectListItem> Agents { get; set; }
+
         [DisplayFormat(DataFormatString = "{0:0.00}", ApplyFormatInEditMode = true)]
         public decimal CommissionRate { get; set; }
     }
