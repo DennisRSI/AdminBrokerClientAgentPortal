@@ -54,6 +54,15 @@ namespace ClientPortal.ViewComponents
                 var agent = await _context.GetAgentByAccountId(profileId);
                 model.DeactivationDate = agent.DeactivationDate;
                 model.DeactivationReason = agent.DeactivationReason;
+
+                if (String.IsNullOrWhiteSpace(agent.ParentAgentName))
+                {
+                    model.ParentAgentName = "N/A";
+                }
+                else
+                {
+                    model.ParentAgentName = agent.ParentAgentName;
+                }
             }
 
             var account = _accountService.GetAccountCommon(profileId);

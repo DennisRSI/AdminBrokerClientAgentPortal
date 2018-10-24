@@ -137,5 +137,6 @@ namespace Codes.Service.ViewModels
         public float CommissionRate { get; set; } = 0;
 
         public int ParentAgentId { get; set; }
+        public string ParentAgentName { get; set; }
     }
 }

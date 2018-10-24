@@ -936,7 +936,10 @@ namespace Codes.Service.Services
 
             try
             {
-                AgentModel a = await _context.Agents.FirstOrDefaultAsync(x => x.ApplicationReference == accountId);
+                var a = await _context.Agents
+                    .Include(x => x.ParentAgent)
+                    .FirstOrDefaultAsync(x => x.ApplicationReference == accountId);
+
                 if (a != null && a.AgentId > 0)
                 {
                     agent = new AgentViewModel()
@@ -966,6 +969,11 @@ namespace Codes.Service.Services
                         ApplicationReference = a.ApplicationReference,
                         CommissionRate = a.CommissionRate
                     };
+
+                    if (a.ParentAgent != null)
+                    {
+                        agent.ParentAgentName = $"{a.ParentAgent.AgentFirstName} {a.ParentAgent.AgentLastName}";
+                    }
 
                     agent.Broker.BrokerId = a.BrokerId;
                 }
