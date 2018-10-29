@@ -222,7 +222,7 @@
 <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_content">
-            <canvas id="activationsMonthly"></canvas>
+            <canvas id="chartMonthlyUsage"></canvas>
         </div>
         <div class="x_content">
         </div>
@@ -235,6 +235,6 @@
     MENU.init();
     CARDDETAILS.init();
     CARDDETAILS.loadChartCardValue('@Html.DisplayFor(m => m.FaceValue)', @Model.TotalCardAvailable, @Model.TotalCardRedeemed);
-    CARDDETAILS.loadChartBenefitUsage(@Model.BenefitsHotelPercent, @Model.BenefitsCondoPercent, @Model.BenefitsShoppingPercent);
+    CARDDETAILS.loadChartBenefitUsage(@Html.DisplayFor(m => m.BenefitsHotelPercent), @Html.DisplayFor(m => m.BenefitsCondoPercent), @Html.DisplayFor(m => m.BenefitsShoppingPercent));
     CARDDETAILS.loadChartMonthlyUsage();
 </script>

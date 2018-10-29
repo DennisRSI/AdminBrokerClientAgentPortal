@@ -68,22 +68,22 @@ function CardDetails() {
     }
 
     this.loadChartMonthlyUsage = function () {
-        new Chart(document.getElementById("activationsMonthly"), {
+        new Chart(document.getElementById("chartMonthlyUsage"), {
             type: 'bar',
             data: {
                 labels: ["Jun", "Jul", "Aug", "Sept", "Oct", "Nov"],
                 datasets: [
                     {
-                        label: "Hotel $",
+                        label: "Hotel",
                         backgroundColor: ["#f2a707", "#f2a707", "#f2a707", "#f2a707", "#f2a707", "#f2a707"],
                         data: [0, 18.43, 32.74, 121.98, 36.24, 0]
                     }, {
-                        label: "Condo $",
+                        label: "Condo",
                         backgroundColor:
                         ["#00A4DE", "#00A4DE", "#00A4DE", "#00A4DE", "#00A4DE", "#00A4DE"],
                         data: [0, 0, 0, 0, 0, 0]
                     }, {
-                        label: "Shopping $",
+                        label: "Shopping",
                         backgroundColor:
                         ["#3c763d", "#3c763d", "#3c763d", "#3c763d", "#3c763d", "#3c763d"],
                         data: [0, 0, 0, 0, 0, 0]
@@ -91,7 +91,7 @@ function CardDetails() {
                 ]
             },
             options: {
-                legend: { display: false },
+                legend: { display: true },
                 title: {
                     display: true,
                     text: 'Monthly Card Usage by Type ($)'
