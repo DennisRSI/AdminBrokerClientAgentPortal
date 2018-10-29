@@ -48,6 +48,7 @@ namespace Codes.Service.Services
                 new SqlParameter("@BrokerId", model.BrokerId),
                 new SqlParameter("@AgentId", model.AgentId),
                 new SqlParameter("@ClientId", model.ClientId),
+                new SqlParameter("@CampaignId", model.CampaignId),
                 new SqlParameter("@CampaignStatus", model.CampaignStatus),
                 new SqlParameter("@IsCardUsed", model.IsCardUsed),
                 totalCount

@@ -9,6 +9,7 @@ namespace Codes.Service.ViewModels
         public int? AgentId { get; set; }
         public int? ClientId { get; set; }
         public int? BrokerId { get; set; }
+        public int? CampaignId { get; set; }
         public string CampaignStatus { get; set; }
         public bool? IsCardUsed { get; set; }
     }

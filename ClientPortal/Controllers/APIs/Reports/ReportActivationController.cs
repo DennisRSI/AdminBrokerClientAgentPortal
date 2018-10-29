@@ -196,6 +196,7 @@ namespace ClientPortal.Controllers.APIs
                 int? agentId = null;
                 int? brokerId = null;
                 int? clientId = null;
+                int? campaignId = null;
 
                 switch (type)
                 {
@@ -209,6 +210,10 @@ namespace ClientPortal.Controllers.APIs
 
                     case "client":
                         clientId = id;
+                        break;
+
+                    case "campaign":
+                        campaignId = id;
                         break;
                 }
 
@@ -232,6 +237,7 @@ namespace ClientPortal.Controllers.APIs
                     AgentId = agentId,
                     BrokerId = brokerId,
                     ClientId = clientId,
+                    CampaignId = campaignId,
                     CampaignStatus = status,
                     IsCardUsed = isCardUsed,
                     StartDate = startDate,
