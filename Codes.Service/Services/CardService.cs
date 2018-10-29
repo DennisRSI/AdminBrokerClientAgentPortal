@@ -86,7 +86,7 @@ namespace Codes.Service.Services
                     CommissionClient = Convert.ToDecimal(row["CommissionClient"]),
                     CommissionAgent = Convert.ToDecimal(row["CommissionAgent"]),
                     RemainingBalance = Convert.ToDecimal(row["RemainingBalance"]),
-                    PaymentDate = (DateTime)row["PaymentDate"],
+                    PaymentDate = Convert.IsDBNull(row["PaymentDate"]) ? null : (DateTime?)row["PaymentDate"],
                     Confirmation = (string)row["Confirmation"],
                     Status = (string)row["Status"]
                 };
