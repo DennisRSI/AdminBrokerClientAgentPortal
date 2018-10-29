@@ -61,7 +61,6 @@ namespace Codes.Service.ViewModels
         public decimal TotalCommissionOwed { get; set; }
 
         public IEnumerable<CardBenefitDetailViewModel> BenefitDetails { get; set; }
-        public Dictionary<string, CardMonthlyUsage> MonthlyUsage { get; set; } = new Dictionary<string, CardMonthlyUsage>();
 
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalCommission
@@ -89,6 +88,12 @@ namespace Codes.Service.ViewModels
         {
             get { return GetPercentage(TotalShoppingSavings); }
         }
+
+        public string ChartMonthlyLabel { get; set; }
+        public string ChartMonthlyHotel { get; set; }
+        public string ChartMonthlyCondo { get; set; }
+        public string ChartMonthlyShopping { get; set; }
+        public string ChartMonthlyDining { get; set; }
 
         private decimal GetPercentage(decimal usage)
         {
@@ -134,13 +139,5 @@ namespace Codes.Service.ViewModels
         public string Status { get; set; }
         public string Chargeback { get; set; }
         public string UsageType { get; set; }
-    }
-
-    public class CardMonthlyUsage
-    {
-        public decimal Hotel { get; set; }
-        public decimal Condo { get; set; }
-        public decimal Shopping { get; set; }
-        public decimal Dining { get; set; }
     }
 }

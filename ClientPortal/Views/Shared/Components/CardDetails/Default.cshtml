@@ -236,5 +236,5 @@
     CARDDETAILS.init();
     CARDDETAILS.loadChartCardValue('@Html.DisplayFor(m => m.FaceValue)', @Model.TotalCardAvailable, @Model.TotalCardRedeemed);
     CARDDETAILS.loadChartBenefitUsage(@Html.DisplayFor(m => m.BenefitsHotelPercent), @Html.DisplayFor(m => m.BenefitsCondoPercent), @Html.DisplayFor(m => m.BenefitsShoppingPercent));
-    CARDDETAILS.loadChartMonthlyUsage();
+    CARDDETAILS.loadChartMonthlyUsage('@Model.ChartMonthlyLabel', '@Model.ChartMonthlyHotel', '@Model.ChartMonthlyCondo', '@Model.ChartMonthlyShopping', '@Model.ChartMonthlyDining');
 </script>

@@ -67,26 +67,30 @@ function CardDetails() {
         });
     }
 
-    this.loadChartMonthlyUsage = function () {
+    this.loadChartMonthlyUsage = function (labelParam, hotelParam, condoParam, shoppingParam, diningParam) {
+        var label = labelParam.split('|');
+        var hotel = hotelParam.split('|');
+        var condo = condoParam.split('|');
+        var shopping = shoppingParam.split('|');
+        var dining = diningParam.split('|');
+
         new Chart(document.getElementById("chartMonthlyUsage"), {
             type: 'bar',
             data: {
-                labels: ["Jun", "Jul", "Aug", "Sept", "Oct", "Nov"],
+                labels: label,
                 datasets: [
                     {
                         label: "Hotel",
-                        backgroundColor: ["#f2a707", "#f2a707", "#f2a707", "#f2a707", "#f2a707", "#f2a707"],
-                        data: [0, 18.43, 32.74, 121.98, 36.24, 0]
+                        backgroundColor: self.getColorArray(label.length, "#f2a707"),
+                        data: hotel
                     }, {
                         label: "Condo",
-                        backgroundColor:
-                        ["#00A4DE", "#00A4DE", "#00A4DE", "#00A4DE", "#00A4DE", "#00A4DE"],
-                        data: [0, 0, 0, 0, 0, 0]
+                        backgroundColor: self.getColorArray(label.length, "#00a4de"),
+                        data: condo
                     }, {
                         label: "Shopping",
-                        backgroundColor:
-                        ["#3c763d", "#3c763d", "#3c763d", "#3c763d", "#3c763d", "#3c763d"],
-                        data: [0, 0, 0, 0, 0, 0]
+                        backgroundColor: self.getColorArray(label.length, "#3c763d"),
+                        data: shopping
                     }
                 ]
             },
@@ -98,5 +102,15 @@ function CardDetails() {
                 }
             }
         });
+    }
+
+    this.getColorArray = function (length, color) {
+        var data = [];
+
+        for (var i = 0; i < length; i++) {
+            data.push(color);
+        }
+
+        return data;
     }
 }
