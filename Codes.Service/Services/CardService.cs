@@ -61,6 +61,8 @@ namespace Codes.Service.Services
                 BenefitDetails = GetCardUsage(code)
             };
 
+            var remainingBalance = model.FaceValue;
+
             foreach (var benefit in model.BenefitDetails)
             {
                 switch (benefit.UsageType.ToLower())
@@ -81,7 +83,14 @@ namespace Codes.Service.Services
                         model.TotalDiningSavings += benefit.MemberSavings;
                         break;
                 }
+
+                if (benefit.RemainingBalance < remainingBalance)
+                {
+                    remainingBalance = benefit.RemainingBalance;
+                }
             }
+
+            model.TotalCardAvailable = remainingBalance;
 
             return model;
         }

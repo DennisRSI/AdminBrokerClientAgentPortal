@@ -47,7 +47,10 @@ namespace Codes.Service.ViewModels
         public decimal FaceValue { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public decimal TotalCardRedeemed { get; set; }
+        public decimal TotalCardRedeemed
+        {
+            get { return FaceValue - TotalCardAvailable; }
+        }
 
         public string CardType { get; set; }
 
@@ -71,10 +74,7 @@ namespace Codes.Service.ViewModels
         }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public decimal TotalCardAvailable
-        {
-            get { return FaceValue - TotalCardRedeemed;  }
-        }
+        public decimal TotalCardAvailable { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:0.00}")]
         public decimal BenefitsHotelPercent
