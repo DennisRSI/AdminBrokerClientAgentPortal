@@ -60,10 +60,6 @@ namespace Codes.Service.ViewModels
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalCommissionOwed { get; set; }
 
-        public decimal BenefitsHotelUsage { get; set; }
-        public decimal BenefitsCondoUsage { get; set; }
-        public decimal BenefitsShoppingUsage { get; set; }
-
         public IEnumerable<CardBenefitDetailViewModel> BenefitDetails { get; set; }
         public Dictionary<string, CardMonthlyUsage> MonthlyUsage { get; set; } = new Dictionary<string, CardMonthlyUsage>();
 
@@ -76,22 +72,22 @@ namespace Codes.Service.ViewModels
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalCardAvailable { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:0.00}")]
+        [DisplayFormat(DataFormatString = "{0:0.0}")]
         public decimal BenefitsHotelPercent
         {
-            get { return GetPercentage(BenefitsHotelUsage); }
+            get { return GetPercentage(TotalHotelSavings); }
         }
 
-        [DisplayFormat(DataFormatString = "{0:0.00}")]
+        [DisplayFormat(DataFormatString = "{0:0.0}")]
         public decimal BenefitsCondoPercent
         {
-            get { return GetPercentage(BenefitsCondoUsage); }
+            get { return GetPercentage(TotalCondoSavings); }
         }
 
-        [DisplayFormat(DataFormatString = "{0:0.00}")]
+        [DisplayFormat(DataFormatString = "{0:0.0}")]
         public decimal BenefitsShoppingPercent
         {
-            get { return GetPercentage(BenefitsShoppingUsage); }
+            get { return GetPercentage(TotalShoppingSavings); }
         }
 
         private decimal GetPercentage(decimal usage)
@@ -101,7 +97,7 @@ namespace Codes.Service.ViewModels
                 return 0;
             }
 
-            return usage / TotalCardRedeemed;
+            return usage / TotalCardRedeemed * 100;
         }
     }
 
