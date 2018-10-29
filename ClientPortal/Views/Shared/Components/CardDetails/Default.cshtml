@@ -53,17 +53,22 @@
                         <div class="x_content">
                             <a href="#">
                                 <h5>Total Hotel Savings</h5>
-                                <h4>? @Html.DisplayFor(m => m.TotalHotelSavings)</h4>
+                                <h4>@Html.DisplayFor(m => m.TotalHotelSavings)</h4>
                             </a>
                             <hr class="card-hr2">
                             <a href="#">
                                 <h5>Total Condo Savings</h5>
-                                <h4>? @Html.DisplayFor(m => m.TotalCondoSavings)</h4>
+                                <h4>@Html.DisplayFor(m => m.TotalCondoSavings)</h4>
                             </a>
                             <hr class="card-hr2">
                             <a href="#">
                                 <h5>Total Shopping Savings</h5>
-                                <h4>? @Html.DisplayFor(m => m.TotalShoppingSavings)</h4>
+                                <h4>@Html.DisplayFor(m => m.TotalShoppingSavings)</h4>
+                            </a>
+                            <hr class="card-hr2">
+                            <a href="#">
+                                <h5>Total Dining Savings</h5>
+                                <h4>@Html.DisplayFor(m => m.TotalDiningSavings)</h4>
                             </a>
                         </div>
                     </div>
@@ -74,7 +79,7 @@
                     <thead>
                         <tr>
                             <td class="col-md-6 col-sm-6 col-xs-7 bold-table-text">Client:</td>
-                            <td class="col-md-6 col-sm-6 col-xs-7 bold-table-text">@Model.ClientName</td>
+                            <td class="col-md-6 col-sm-6 col-xs-7 bold-table-text">@Model.ClientCompanyName</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -139,7 +144,7 @@
                 </tbody>
             </table>
             <br />
-            Hotel Savings: <b>?</b> &nbsp; &nbsp;|&nbsp; &nbsp; Commission Paid: <b>?</b> &nbsp; &nbsp;|&nbsp; &nbsp; Commission Owed: <b>?</b>
+            Hotel Savings: <b>@Html.DisplayFor(m => m.TotalHotelSavings)</b> &nbsp; &nbsp;|&nbsp; &nbsp; Commission Paid: <b>?</b> &nbsp; &nbsp;|&nbsp; &nbsp; Commission Owed: <b>?</b>
             <p class="pull-right disclaimer-text">* Projected</p>
             <div class="clearfix"></div>
         </div>

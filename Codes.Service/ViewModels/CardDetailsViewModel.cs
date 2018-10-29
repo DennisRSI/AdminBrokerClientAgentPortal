@@ -22,7 +22,11 @@ namespace Codes.Service.ViewModels
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalShoppingSavings { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:c}")]
+        public decimal TotalDiningSavings { get; set; }
+
         public string ClientName { get; set; }
+        public string ClientCompanyName { get; set; }
         public string ClientCampaign { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}")]
@@ -133,6 +137,7 @@ namespace Codes.Service.ViewModels
         public string Confirmation { get; set; }
         public string Status { get; set; }
         public string Chargeback { get; set; }
+        public string UsageType { get; set; }
     }
 
     public class CardMonthlyUsage

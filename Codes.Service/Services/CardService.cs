@@ -49,6 +49,7 @@ namespace Codes.Service.Services
                 BenefitShopping = benefits.ShoppingBenefit,
                 BenefitDining = benefits.DiningBenefit,
                 ClientName = (string)row["ClientName"],
+                ClientCompanyName = (string)row["ClientCompanyName"],
                 ClientCampaign = (string)row["CampaignName"],
                 ActivationDate = (DateTime)row["ActivationDate"],
                 BrokerCommission = Convert.ToDecimal(row["BrokerCommission"]),
@@ -59,6 +60,28 @@ namespace Codes.Service.Services
                 CardType = (string)row["CardType"],
                 BenefitDetails = GetCardUsage(code)
             };
+
+            foreach (var benefit in model.BenefitDetails)
+            {
+                switch (benefit.UsageType.ToLower())
+                {
+                    case "hotel":
+                        model.TotalHotelSavings += benefit.MemberSavings;
+                        break;
+
+                    case "condo":
+                        model.TotalCondoSavings += benefit.MemberSavings;
+                        break;
+
+                    case "shopping":
+                        model.TotalShoppingSavings += benefit.MemberSavings;
+                        break;
+
+                    case "dining":
+                        model.TotalDiningSavings += benefit.MemberSavings;
+                        break;
+                }
+            }
 
             return model;
         }
@@ -88,7 +111,8 @@ namespace Codes.Service.Services
                     RemainingBalance = Convert.ToDecimal(row["RemainingBalance"]),
                     PaymentDate = Convert.IsDBNull(row["PaymentDate"]) ? null : (DateTime?)row["PaymentDate"],
                     Confirmation = (string)row["Confirmation"],
-                    Status = (string)row["Status"]
+                    Status = (string)row["Status"],
+                    UsageType = (string)row["UsageType"]
                 };
 
                 usageList.Add(item);
