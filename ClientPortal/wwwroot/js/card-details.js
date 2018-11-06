@@ -40,6 +40,15 @@ function CardDetails() {
                 title: {
                     display: true,
                     text: 'Total Card Value: ' + total
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            var label = data.labels[tooltipItem.index];
+                            var dollarAmount = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            return label + ': $' + (+dollarAmount).toFixed(2);
+                        }
+                    }
                 }
             }
         });
@@ -49,12 +58,12 @@ function CardDetails() {
         new Chart(document.getElementById("benefitsByType"), {
             type: 'doughnut',
             data: {
-                labels: ["Hotel", "Condos", "Shopping"],
+                labels: ["Hotel", "Condos"],
                 datasets: [
                     {
                         label: "Card Usage",
-                        backgroundColor: ["#f2a707", "#00A4DE", "#3c763d"],
-                        data: [hotelPercent, condoPercent, shoppingPercent]
+                        backgroundColor: ["#f2a707", "#00A4DE"], // Shopping: "#3c763d"
+                        data: [hotelPercent, condoPercent]
                     }
                 ]
             },
@@ -62,6 +71,15 @@ function CardDetails() {
                 title: {
                     display: true,
                     text: 'Benefits Usage Breakdown (%)'
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            var label = data.labels[tooltipItem.index];
+                            var dollarAmount = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            return label + ': ' + dollarAmount + '%';
+                        }
+                    }
                 }
             }
         });
@@ -87,10 +105,6 @@ function CardDetails() {
                         label: "Condo",
                         backgroundColor: self.getColorArray(label.length, "#00a4de"),
                         data: condo
-                    }, {
-                        label: "Shopping",
-                        backgroundColor: self.getColorArray(label.length, "#3c763d"),
-                        data: shopping
                     }
                 ]
             },
@@ -99,6 +113,15 @@ function CardDetails() {
                 title: {
                     display: true,
                     text: 'Monthly Card Usage by Type ($)'
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            var label = data.labels[tooltipItem.index];
+                            var dollarAmount = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            return label + ': $' + (+dollarAmount).toFixed(2);
+                        }
+                    }
                 }
             }
         });

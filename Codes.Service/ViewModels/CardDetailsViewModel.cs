@@ -20,6 +20,12 @@ namespace Codes.Service.ViewModels
         public decimal TotalCondoSavings { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
+        public decimal TotalHotelAndCondoSavings
+        {
+            get { return TotalHotelSavings + TotalCondoSavings; }
+        }
+
+        [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalShoppingSavings { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
