@@ -24,7 +24,7 @@ function MyAgents() {
 
             table.on('click', 'tr', function () {
                 var id = $(this).attr('id');
-                MENU.loadPage('view', 'clientdetails', id);
+                MENU.loadPage('menu', 'my-account', id);
             });
         }
     }
