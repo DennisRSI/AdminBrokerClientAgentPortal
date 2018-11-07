@@ -32,5 +32,23 @@ namespace ClientPortal.Controllers.APIs
             var user = await _userManager.GetUserAsync(HttpContext.User);
             return _accountService.GetClientsByBroker(user.BrokerId);
         }
+
+        [HttpGet("agents")]
+        public async Task<IEnumerable<MyAgentViewModel>> GetAgents()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (user.BrokerId > 0)
+            {
+                return _accountService.GetAgentsByBroker(user.BrokerId);
+            }
+
+            if (user.AgentId > 0)
+            {
+                return _accountService.GetAgentsByAgent(user.AgentId);
+            }
+
+            return null;
+        }
     }
 }

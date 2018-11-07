@@ -202,5 +202,33 @@ namespace Codes.Service.Services
             agent.DeactivationReason = reason;
             _context.SaveChanges();
         }
+
+        public IEnumerable<MyAgentViewModel> GetAgentsByAgent(int agentId)
+        {
+            return _context.Agents.Where(a => a.ParentAgentId == agentId)
+                            .Select(a => new MyAgentViewModel()
+                            {
+                                AgentId = a.AgentId,
+                                ApplicationReference = a.ApplicationReference,
+                                Name = a.AgentFirstName + " " + a.AgentLastName,
+                                Email = a.Email,
+                                PhoneNumber = a.OfficePhone
+                            }
+                        );
+        }
+
+        public IEnumerable<MyAgentViewModel> GetAgentsByBroker(int brokerId)
+        {
+            return _context.Agents.Where(a => a.BrokerId == brokerId && a.ParentAgent == null)
+                            .Select(a => new MyAgentViewModel()
+                            {
+                                AgentId = a.AgentId,
+                                ApplicationReference = a.ApplicationReference,
+                                Name = a.AgentFirstName + " " + a.AgentLastName,
+                                Email = a.Email,
+                                PhoneNumber = a.OfficePhone
+                            }
+                        );
+        }
     }
 }

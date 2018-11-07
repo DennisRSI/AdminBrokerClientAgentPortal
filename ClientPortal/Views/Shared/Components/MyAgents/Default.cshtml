@@ -1,0 +1,30 @@
+﻿@model ApplicationUser
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <br />
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>My Agents</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <p class="text-muted font-13 m-b-30">
+                Agents assigned to your organization
+            </p>
+            <table id="myagents_tbl" class="table-select table table-striped table-bordered jambo_table bulk_action">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="~/js/utility.js" asp-append-version="true"></script>
+<script src="~/js/list.js" asp-append-version="true"></script>
+<script src="~/js/myagents.js" asp-append-version="true"></script>
+<script>
+    MYAGENTS.init();
+</script>

@@ -9,6 +9,9 @@ namespace Codes.Service.Interfaces
         IEnumerable<MyClientViewModel> GetClientsByBroker(int brokerId);
         ClientEditViewModel GetClientEdit(int clientId);
 
+        IEnumerable<MyAgentViewModel> GetAgentsByAgent(int agentId);
+        IEnumerable<MyAgentViewModel> GetAgentsByBroker(int brokerId);
+
         // Admin
         IEnumerable<AccountViewModel> GetAllBrokers();
         IEnumerable<AccountViewModel> GetAllClients();
