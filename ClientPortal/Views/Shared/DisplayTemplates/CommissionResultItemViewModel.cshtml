@@ -1,11 +1,14 @@
 @model Codes.Service.ViewModels.CommissionResultItemViewModel
-<tr>
-    <td>@Html.DisplayFor(m => m.AccountName)</td>
-    <td>@Html.DisplayFor(m => m.NumberCards)</td>
-    <td>@Html.DisplayFor(m => m.NumberTransaction)</td>
-    <td>@Html.DisplayFor(m => m.InternetPrice)</td>
-    <td>@Html.DisplayFor(m => m.YouPayPrice)</td>
-    <td>@Html.DisplayFor(m => m.MemberSavings)</td>
-    <td>@Html.DisplayFor(m => m.CommissionEarned)</td>
-    <td></td>
-</tr>
+@if (Model.CommissionType == "Company")
+{
+    <tr data-children="@Html.DisplayFor(m => m.DisplayChildren)">
+        <td>@Html.DisplayFor(m => m.AccountName)</td>
+        <td>@Html.DisplayFor(m => m.NumberCards)</td>
+        <td>@Html.DisplayFor(m => m.NumberTransaction)</td>
+        <td>@Html.DisplayFor(m => m.InternetPrice)</td>
+        <td>@Html.DisplayFor(m => m.YouPayPrice)</td>
+        <td>@Html.DisplayFor(m => m.MemberSavings)</td>
+        <td>@Html.DisplayFor(m => m.CommissionEarned)</td>
+        <td></td>
+    </tr>
+}

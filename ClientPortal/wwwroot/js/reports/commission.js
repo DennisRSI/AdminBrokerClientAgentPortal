@@ -14,13 +14,13 @@ function Commission() {
         $('button.runreport').click(function () {
             self.getHtml();
         });
-    }
+    };
 
     this.updateControls = function () {
         $('.filter').addClass('hidden');
         var value = $('#select-report option:selected').val();
         $('#' + value).removeClass('hidden');
-    }
+    };
 
     this.getHtml = function () {
         var type = $('#select-report').val();
@@ -32,7 +32,7 @@ function Commission() {
 
         var url = '/api/reportcommission/gethtml';
 
-        var url = [url, type, id, name, paymentStatus, checkOutStart, checkOutEnd].join('/');
+        url = [url, type, id, name, paymentStatus, checkOutStart, checkOutEnd].join('/');
         url = encodeURI(url);
 
         $("#loader-container").show();
@@ -50,10 +50,37 @@ function Commission() {
             error: function (xhr, resp, text) {
                 console.log(xhr, resp, text);
             }
-        })
-    }
+        });
+    };
 
     this.initDataTables = function () {
         $('.jambo_table').DataTable();
-    }
+
+        $('.jambo_table tr').on('click', function () {
+            var tr = $(this);
+            var childrenData = tr.data('children');
+            var row = tr.parents('table').DataTable().row(tr);
+
+            if (row.child.isShown()) {
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                var template = '<tr><td colspan="4"></td><td colspan="2"><strong>[NAME]</strong></td><td>[EARNED]</td><td></td></tr>';
+                var split = childrenData.split(';');
+                var total = '';
+
+                split.forEach(function (childData) {
+                    if (childData.length > 2) {
+                        var child = childData.split('|');
+                        var result = template.replace('[NAME]', child[0]).replace('[EARNED]', child[1])
+                        total += result;
+                    }
+                });
+
+                row.child($(total)).show();
+                tr.addClass('shown');
+            }
+        });
+    };
 }

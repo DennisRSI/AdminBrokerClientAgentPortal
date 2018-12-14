@@ -71,36 +71,70 @@ namespace Codes.Service.Services
 
                 model.Tables.Add(result);
 
+                CommissionResultItemViewModel company = null;
+
                 foreach (DataRow row in table.Rows)
                 {
-                    result.AccountName = row["BrokerFirstName"] + " " + row["BrokerLastName"];
+                    var commissionType = (string)row["CommissionType"];
+
+                    if (commissionType == "Broker")
+                    {
+                        result.AccountName = row["FirstName"] + " " + row["LastName"];
+                    }
 
                     var item = new CommissionResultItemViewModel
                     {
-                        AccountName = (string)row["FullName"],
+                        AccountName = (string)row["CompanyName"],
+                        FirstName = (string)row["FirstName"],
+                        LastName = (string)row["LastName"],
+                        CommissionType = (string)row["CommissionType"],
                         NumberCards = (int)row["NumberOfCards"],
-                        NumberTransaction = (int)row["Transactions"],
+                        NumberTransaction = (int)row["NumberOfTransactions"],
                         InternetPrice = (decimal)row["InternetPrice"],
                         YouPayPrice = (decimal)row["YouPayPrice"],
                         MemberSavings = (decimal)row["MemberSavings"],
-                        CommissionEarned = (decimal)row["CommissionEarned"]
+                        CommissionEarned = (decimal)row["CommissionEarned"],
+                        TotalCommissionEarned = (decimal)row["TotalCommissionEarned"]
                     };
 
-                    result.Items.Add(item);
+                    if (commissionType == "Company")
+                    {
+                        company = item;
+                        company.CommissionEarned = company.TotalCommissionEarned;
 
-                    result.TotalCards += item.NumberCards;
-                    result.TotalTransactions += item.NumberTransaction;
-                    result.TotalInternetPrice += item.InternetPrice;
-                    result.TotalYouPayPrice += item.YouPayPrice;
-                    result.TotalMemberSavings += item.MemberSavings;
-                    result.TotalCommissionEarned += item.CommissionEarned;
+                        result.Items.Add(item);
 
-                    model.TotalCards += item.NumberCards;
-                    model.TotalTransactions += item.NumberTransaction;
-                    model.TotalInternetPrice += item.InternetPrice;
-                    model.TotalYouPayPrice += item.YouPayPrice;
-                    model.TotalMemberSavings += item.MemberSavings;
-                    model.TotalCommissionEarned += item.CommissionEarned;
+                        result.TotalCards += item.NumberCards;
+                        result.TotalTransactions += item.NumberTransaction;
+                        result.TotalInternetPrice += item.InternetPrice;
+                        result.TotalYouPayPrice += item.YouPayPrice;
+                        result.TotalMemberSavings += item.MemberSavings;
+                        result.TotalCommissionEarned += item.TotalCommissionEarned;
+
+                        model.TotalCards += item.NumberCards;
+                        model.TotalTransactions += item.NumberTransaction;
+                        model.TotalInternetPrice += item.InternetPrice;
+                        model.TotalYouPayPrice += item.YouPayPrice;
+                        model.TotalMemberSavings += item.MemberSavings;
+                        model.TotalCommissionEarned += item.TotalCommissionEarned;
+                    }
+                    else
+                    {
+                        var name = $"({item.FirstName} {item.LastName})";
+
+                        if (item.CommissionType == "Client")
+                        {
+                            name = String.Empty;
+                        }
+
+                        var child = new CommissionResultChildViewModel
+                        {
+                            CommissionEarned = item.CommissionEarned,
+                            Name = $"{item.CommissionType} {name}"
+                        };
+
+                        company.Children.Add(child);
+                    }
                 }
             }
 
