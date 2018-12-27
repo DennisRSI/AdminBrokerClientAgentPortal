@@ -45,6 +45,11 @@ namespace Codes.Service.Models
             ApplicationReference = model.ApplicationReference;
             AgentMiddleName = model.AgentMiddleName;
             CommissionRate = model.CommissionRate;
+
+            if (model.ParentAgentId > 0)
+            {
+                ParentAgentId = model.ParentAgentId;
+            }
         }
 
         [Key, Required]
@@ -170,6 +175,11 @@ namespace Codes.Service.Models
 
         [ForeignKey("DocumentOtherId")]
         public virtual DocumentModel DocumentOther { get; set; }
+
+        public int? ParentAgentId { get; set; }
+
+        [ForeignKey("ParentAgentId")]
+        public virtual AgentModel ParentAgent { get; set; }
 
         public ICollection<CampaignAgentModel> CampaignAgents { get; set; }
         public ICollection<ClientModel> Clients { get; set; }

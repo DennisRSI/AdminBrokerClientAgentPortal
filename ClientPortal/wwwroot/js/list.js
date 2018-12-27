@@ -180,7 +180,12 @@ function List() {
             }
         ];
 
-        $dt = self.generateList("client_tbl", url, cols);
+        if ($.fn.DataTable.isDataTable('#client_tbl')) {
+            window.clientTable.destroy();
+        }
+
+        $dt = self.generateUpdatableList('#client_tbl', url, cols, 'POST');
+        window.clientTable = $dt;
 
         $dt.on('click', 'tr', function () {
             var data = $dt.row(this).id();

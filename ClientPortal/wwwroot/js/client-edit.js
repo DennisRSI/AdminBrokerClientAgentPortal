@@ -18,6 +18,10 @@ function ClientEdit() {
             self.deactivateClient();
         });
 
+        $("#password-save").on("click", function () {
+            self.changePassword(clientId);
+        });
+
         $("#save").on("click", function (event) {
 
             var form = $('#edit');
@@ -111,4 +115,41 @@ function ClientEdit() {
         $('input[type="tel"]').inputmask('remove');
         $('input[type="tel"]').attr('maxlength', '20');
     }
+
+    this.changePassword = function (clientId) {
+        var password1 = $('#password1').val();
+        var password2 = $('#password2').val();
+
+        if (password1 !== password2) {
+            alert('Passwords do not match');
+            return;
+        }
+
+        var url = '/api/user/changepasswordclient/' + clientId + '/' + password1;
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (result) {
+                if (result.isSuccess == true) {
+                    $('.modal').modal('hide');
+                    alert('Password successfully changed');
+                }
+                else {
+                    var alertMessage = "";
+
+                    for (var i = 0; i < result.messages.length; i++) {
+                        alertMessage += result.messages[i] + "\n";
+                    }
+
+                    alert(alertMessage);
+                }
+            },
+            error: function (xhr, resp, text) {
+                console.log(xhr, resp, text);
+            }
+        })
+    };
 }

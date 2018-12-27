@@ -76,6 +76,9 @@ namespace Codes.Service.ViewModels
     public class CommissionResultItemViewModel
     {
         public string AccountName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string CommissionType { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:N0}")]
         public int NumberCards { get; set; }
@@ -95,7 +98,32 @@ namespace Codes.Service.ViewModels
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal CommissionEarned { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:c}")]
+        public decimal TotalCommissionEarned { get; set; }
+
         public DateTime PaidDate { get; set; }
+
+        public string DisplayChildren
+        {
+            get
+            {
+                string result = String.Empty;
+
+                foreach (var child in Children)
+                {
+                    result += $@"{child.Name}|{child.CommissionEarned.ToString("C")};";
+                }
+
+                return result;
+            }
+        }
+
+        public IList<CommissionResultChildViewModel> Children { get; set; } = new List<CommissionResultChildViewModel>();
     }
 
+    public class CommissionResultChildViewModel
+    {
+        public string Name { get; set; }
+        public decimal CommissionEarned { get; set; }
+    }
 }

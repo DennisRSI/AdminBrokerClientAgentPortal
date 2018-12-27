@@ -246,6 +246,7 @@ namespace ClientPortal.Controllers.APIs
                         returnObj.is_success = brokerReturn.IsSuccess;
                         returnObj.message = brokerReturn.Message;
                         break;
+
                     case "Client":
                     case "Agent":
                         int brokerId = 0;
@@ -313,6 +314,19 @@ namespace ClientPortal.Controllers.APIs
                             }
                             else
                             {
+                                int parentAgentId = 0;
+                                var parentAgentIdField = obj.parentAgentId;
+
+                                if (parentAgentIdField != null)
+                                {
+                                    string val = parentAgentIdField.ToString();
+
+                                    if (!val.Contains("Select"))
+                                    {
+                                        parentAgentId = Convert.ToInt32(val);
+                                    }
+                                }
+
                                 AgentViewModel agentModel = new AgentViewModel()
                                 {
                                     Address = address,
@@ -339,7 +353,8 @@ namespace ClientPortal.Controllers.APIs
                                     PostalCode = postalCode,
                                     State = state,
                                     CommissionRate = commissionRate,
-                                    AgentId = 0
+                                    AgentId = 0,
+                                    ParentAgentId = parentAgentId
                                 };
 
                                 agentModel.Broker.BrokerId = brokerId;
@@ -398,6 +413,13 @@ namespace ClientPortal.Controllers.APIs
         {
             var result = await _context.ChangePassword(id, password);
 
+            return Ok(result);
+        }
+
+        [HttpPost("changepasswordclient/{id}/{password}")]
+        public async Task<IActionResult> ChangePasswordClient(string id, string password)
+        {
+            var result = await _context.ChangePassword(id, password);
             return Ok(result);
         }
 
@@ -463,6 +485,13 @@ namespace ClientPortal.Controllers.APIs
         public IActionResult DeactivateClient(int clientId, string reason)
         {
             _accountService.DeactivateClient(clientId, reason);
+            return Ok();
+        }
+
+        [HttpPost("deactivateagent/{agentId}/{reason}")]
+        public IActionResult DeactivateAgent(int agentId, string reason)
+        {
+            _accountService.DeactivateAgent(agentId, reason);
             return Ok();
         }
 

@@ -60,11 +60,18 @@
                                 <h5>Total Condo Savings</h5>
                                 <h4>@Html.DisplayFor(m => m.TotalCondoSavings)</h4>
                             </a>
+                            <!--
                             <hr class="card-hr2">
                             <a href="#">
                                 <h5>Total Shopping Savings</h5>
                                 <h4>@Html.DisplayFor(m => m.TotalShoppingSavings)</h4>
                             </a>
+                            <hr class="card-hr2">
+                            <a href="#">
+                                <h5>Total Dining Savings</h5>
+                                <h4>@Html.DisplayFor(m => m.TotalDiningSavings)</h4>
+                            </a>
+                            -->
                         </div>
                     </div>
                 </div>
@@ -74,7 +81,7 @@
                     <thead>
                         <tr>
                             <td class="col-md-6 col-sm-6 col-xs-7 bold-table-text">Client:</td>
-                            <td class="col-md-6 col-sm-6 col-xs-7 bold-table-text">@Model.ClientName</td>
+                            <td class="col-md-6 col-sm-6 col-xs-7 bold-table-text">@Model.ClientCompanyName</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,15 +95,15 @@
                         </tr>
                         <tr>
                             <td class="col-md-6 col-sm-6 col-xs-7">Broker Commission Rate</td>
-                            <td class="col-md-6 col-sm-6 col-xs-5">@Html.DisplayFor(m => m.BrokerCommission)</td>
+                            <td class="col-md-6 col-sm-6 col-xs-5">@Html.DisplayFor(m => m.BrokerCommission)%</td>
                         </tr>
                         <tr>
                             <td class="col-md-6 col-sm-6 col-xs-7">Client Commission Rate</td>
-                            <td class="col-md-6 col-sm-6 col-xs-5">@Html.DisplayFor(m => m.ClientCommission)</td>
+                            <td class="col-md-6 col-sm-6 col-xs-5">@Html.DisplayFor(m => m.ClientCommission)%</td>
                         </tr>
                         <tr>
                             <td class="col-md-6 col-sm-6 col-xs-7">Agent Commission Rate</td>
-                            <td class="col-md-6 col-sm-6 col-xs-5">@Html.DisplayFor(m => m.AgentCommission)</td>
+                            <td class="col-md-6 col-sm-6 col-xs-5">@Html.DisplayFor(m => m.AgentCommission)%</td>
                         </tr>
                         <tr>
                             <td class="">Activated By</td>
@@ -139,7 +146,7 @@
                 </tbody>
             </table>
             <br />
-            Hotel Savings: <b>$209.39</b> &nbsp; &nbsp;|&nbsp; &nbsp; Commission Paid: <b>$9.22</b> &nbsp; &nbsp;|&nbsp; &nbsp; Commission Owed: <b>$90.79</b>
+            Hotel &amp; Condo Savings: <b>@Html.DisplayFor(m => m.TotalHotelAndCondoSavings)</b>
             <p class="pull-right disclaimer-text">* Projected</p>
             <div class="clearfix"></div>
         </div>
@@ -217,7 +224,7 @@
 <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_content">
-            <canvas id="activationsMonthly"></canvas>
+            <canvas id="chartMonthlyUsage"></canvas>
         </div>
         <div class="x_content">
         </div>
@@ -230,6 +237,6 @@
     MENU.init();
     CARDDETAILS.init();
     CARDDETAILS.loadChartCardValue('@Html.DisplayFor(m => m.FaceValue)', @Model.TotalCardAvailable, @Model.TotalCardRedeemed);
-    CARDDETAILS.loadChartBenefitUsage(@Model.BenefitsHotelPercent, @Model.BenefitsCondoPercent, @Model.BenefitsShoppingPercent);
-    CARDDETAILS.loadChartMonthlyUsage();
+    CARDDETAILS.loadChartBenefitUsage(@Html.DisplayFor(m => m.BenefitsHotelPercent), @Html.DisplayFor(m => m.BenefitsCondoPercent), @Html.DisplayFor(m => m.BenefitsShoppingPercent));
+    CARDDETAILS.loadChartMonthlyUsage('@Model.ChartMonthlyLabel', '@Model.ChartMonthlyHotel', '@Model.ChartMonthlyCondo', '@Model.ChartMonthlyShopping', '@Model.ChartMonthlyDining');
 </script>

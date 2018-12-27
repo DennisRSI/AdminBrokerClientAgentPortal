@@ -138,51 +138,59 @@
                         </select>
                         <!--<span class="fa fa-map-marker form-control-feedback left" aria-hidden="true"></span>-->
                     </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                            <input type="email" class="form-control has-feedback-left" name="email" placeholder="Email" maxlength="100" required>
-                            <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-                            <input type="tel" class="form-control has-feedback-left mobilePhone" name="mobile_phone" placeholder="Mobile Phone">
-                            <span class="fa fa-mobile-phone form-control-feedback left" aria-hidden="true"></span>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-                            <input type="tel" class="form-control has-feedback-left workPhone" name="work_phone" placeholder="Office Phone">
-                            <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
-                            <input type="tel" class="form-control has-feedback-left" name="fax" placeholder="Office Fax">
-                            <span class="fa fa-fax form-control-feedback left" aria-hidden="true"></span>
-                        </div>
-                        @if (Model.UserType == "Agent" || Model.UserType == "Client")
-                        {
-                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 offset-lg-4 offset-md-4 offset-sm-6  form-group has-feedback">
-                                <input type="number" class="form-control has-feedback-left" name="commission_rate" placeholder="Commission Rate" asp-for="CommissionRate" required>
-                                <span class="fa fa-percent form-control-feedback left" aria-hidden="true"></span>
-                            </div>
-                        }
-                        @if (Model.UserType == "Broker" && Model.UserType != "Agent")
-                        {
-                            <div class="form-group">
-                                <br /><br />
-                                <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Upload W9:</label><br />
-                                <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custom-file">
-                                    <input type="file" class="documentW9 custom-file-input">
-                                    <span class="custom-file-control"></span>
-                                </label>
-                            </div>
-                            <div class="form-group hidden">
-                                <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Upload Other Documents:</label><br />
-                                <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custom-file">
-                                    <input type="file" class="documentOther custom-file-input">
-                                    <span class="custom-file-control"></span>
-                                </label>
-                            </div>
-                        }
-                        <input type="hidden" name="broker_id" value="@Model.BrokerId" />
-
-                        <!-- End Tab 1 Content -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                        <input type="email" class="form-control has-feedback-left" name="email" placeholder="Email" maxlength="100" required>
+                        <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
                     </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input type="tel" class="form-control has-feedback-left mobilePhone" name="mobile_phone" placeholder="Mobile Phone">
+                        <span class="fa fa-mobile-phone form-control-feedback left" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input type="tel" class="form-control has-feedback-left workPhone" name="work_phone" placeholder="Office Phone">
+                        <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input type="tel" class="form-control has-feedback-left" name="fax" placeholder="Office Fax">
+                        <span class="fa fa-fax form-control-feedback left" aria-hidden="true"></span>
+                    </div>
+                    @if (Model.UserType == "Agent" || Model.UserType == "Client")
+                    {
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 offset-lg-4 offset-md-4 offset-sm-6  form-group has-feedback">
+                            <input type="number" class="form-control has-feedback-left" name="commission_rate" placeholder="Commission Rate" asp-for="CommissionRate" required>
+                            <span class="fa fa-percent form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+                    }
+                    @if (Model.UserType == "Agent")
+                    {
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 offset-lg-4 offset-md-4 offset-sm-6  form-group has-feedback">
+                            <select class="form-control form-group" name="parentAgentId" asp-items="@Model.Agents">
+                                <option value="0">Select Parent Agent</option>
+                            </select>
+                        </div>
+                    }
+                    @if (Model.UserType == "Broker" && Model.UserType != "Agent")
+                    {
+                        <div class="form-group">
+                            <br /><br />
+                            <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Upload W9:</label><br />
+                            <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custom-file">
+                                <input type="file" class="documentW9 custom-file-input">
+                                <span class="custom-file-control"></span>
+                            </label>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Upload Other Documents:</label><br />
+                            <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custom-file">
+                                <input type="file" class="documentOther custom-file-input">
+                                <span class="custom-file-control"></span>
+                            </label>
+                        </div>
+                    }
+                    <input type="hidden" name="broker_id" value="@Model.BrokerId" />
+
+                    <!-- End Tab 1 Content -->
+                </div>
                     @if (Model.UserType == "Broker")
                     {
                         <div id="addUserTab2" role="tabpanel" class="tab-pane fade" aria-labelledby="commission-tab">

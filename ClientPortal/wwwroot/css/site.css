@@ -5743,3 +5743,7 @@ hr.thicc-hr {
 .capitalFirstLetter:first-letter {
     text-transform: uppercase;
 }
+
+.jambo_table td[colspan="8"] {
+    display: none;
+}

@@ -792,14 +792,15 @@ namespace Codes.Service.Services
         }
 #pragma warning restore 1998
 
-        public async Task<DataTableViewModel<ClientListViewModel>> GetClients(int draw, int brokerId, int startRowIndex = 0, int numberOfRows = 10, string searchValue = null, string sortColumn = "DEFAULT", string sortDirection = "ASC")
+        public async Task<DataTableViewModel<ClientListViewModel>> GetClients(int brokerId)
         {
-            DataTableViewModel<ClientListViewModel> model = new DataTableViewModel<ClientListViewModel>();
+            var model = new DataTableViewModel<ClientListViewModel>();
             
             try
             {
                 model.RoleName = "Client";
                 var broker = await GetBrokerById(brokerId);
+
                 if(broker != null && broker.BrokerId > 0)
                 {
                     if((broker.BrokerFirstName != null && broker.BrokerFirstName.Length > 0) || (broker.BrokerLastName != null && broker.BrokerLastName.Length > 0))
@@ -818,76 +819,12 @@ namespace Codes.Service.Services
                             model.HeaderValue = broker.CompanyName;
                     }
                 }
-                model.Draw = draw;
+
                 var tmp = from a in _context.Clients where a.BrokerId == brokerId && a.IsActive select a;
                 model.NumberOfRows = await tmp.CountAsync();
-
-                if (!string.IsNullOrEmpty(searchValue))
-                {
-                    int? c = null;
-
-                    int c1 = 0;
-                    if (int.TryParse(searchValue, out c1))
-                        c = c1;
-
-                    tmp = tmp.Where(x => x.ClientId == c
-                        || x.CompanyName.Contains(searchValue)
-                        || x.Email.Contains(searchValue)
-                        || x.ContactFirstName.Contains(searchValue)
-                        || x.ContactLastName.Contains(searchValue)
-                        || x.MobilePhone.Contains(searchValue)
-                        || x.OfficePhone.Contains(searchValue)
-                        || x.Fax.Contains(searchValue)
-                        || x.ApplicationReference.Contains(searchValue));
-                }
-                model.RecordsFiltered = tmp.Count();
-                if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortDirection)))
-                {
-                    switch (sortColumn)
-                    {
-                        case "company_name":
-                            if (sortDirection.ToUpper() == "ASC")
-                                tmp = tmp.OrderBy(o => o.CompanyName);
-                            else
-                                tmp = tmp.OrderByDescending(o => o.CompanyName);
-                            break;
-                        case "email":
-                            if (sortDirection.ToUpper() == "ASC")
-                                tmp = tmp.OrderBy(o => o.Email);
-                            else
-                                tmp = tmp.OrderByDescending(o => o.Email);
-                            break;
-                        case "phone":
-                            if (sortDirection.ToUpper() == "ASC")
-                                tmp = tmp.OrderBy(o => o.OfficePhone);
-                            else
-                                tmp = tmp.OrderByDescending(o => o.OfficePhone);
-                            break;
-                        case "activation_date":
-                            if (sortDirection.ToUpper() == "ASC")
-                                tmp = tmp.OrderBy(o => o.CreationDate);
-                            else
-                                tmp = tmp.OrderByDescending(o => o.CreationDate);
-                            break;
-                        case "deactivation_date":
-                            if (sortDirection.ToUpper() == "ASC")
-                                tmp = tmp.OrderBy(o => o.DeactivationDate);
-                            else
-                                tmp = tmp.OrderByDescending(o => o.DeactivationDate);
-                            break;
-                        default:
-                            if (sortDirection.ToUpper() == "ASC")
-                                tmp = tmp.OrderBy(o => o.ContactFirstName);
-                            else
-                                tmp = tmp.OrderByDescending(o => o.ContactFirstName);
-                            break;
-                    }
-                    //tmp = tmp.OrderBy(search + " " + sortDirection);
-                }
+                model.RecordsFiltered = model.NumberOfRows;
 
                 var ct = tmp;
-
-                model.RecordsFiltered = ct.Count();
 
                 var data = await (from t in tmp
                                      select new ClientListViewModel
@@ -906,7 +843,7 @@ namespace Codes.Service.Services
                                          Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone.FormatPhone() : t.OfficePhone.FormatPhone(),
                                          CommissionRate = t.CommissionRate
                                           
-                                     }).Skip(startRowIndex).Take(numberOfRows).ToArrayAsync();
+                                     }).ToArrayAsync();
 
                 foreach (var item in data)
                 {
@@ -999,7 +936,10 @@ namespace Codes.Service.Services
 
             try
             {
-                AgentModel a = await _context.Agents.FirstOrDefaultAsync(x => x.ApplicationReference == accountId);
+                var a = await _context.Agents
+                    .Include(x => x.ParentAgent)
+                    .FirstOrDefaultAsync(x => x.ApplicationReference == accountId);
+
                 if (a != null && a.AgentId > 0)
                 {
                     agent = new AgentViewModel()
@@ -1029,6 +969,11 @@ namespace Codes.Service.Services
                         ApplicationReference = a.ApplicationReference,
                         CommissionRate = a.CommissionRate
                     };
+
+                    if (a.ParentAgent != null)
+                    {
+                        agent.ParentAgentName = $"{a.ParentAgent.AgentFirstName} {a.ParentAgent.AgentLastName}";
+                    }
 
                     agent.Broker.BrokerId = a.BrokerId;
                 }

@@ -222,41 +222,102 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        @if (Model.Role == "Broker" && Model.DocumentW9Id.HasValue && Model.DocumentW9Id > 0)
-        {
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingTwo">
-                    <h4 class="panel-title">
-                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                            Document Repository
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
-                    <div class="panel-body">
+                    @if (Model.Role == "Agent")
+                    {
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">W9 Document</label>
-                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                                <a target="_blank" href="@Url.Action("Get", "Document", new { id = Model.DocumentW9Id })"><i class="fa fa-file-pdf-o pdf-icon"></i></a>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Parent Agent</label>
+                            <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
+                                <div style="padding-top: 8px">@Model.ParentAgentName</div>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 hidden">
-                                <a href="#" class="checkbox-adjust">Replace Document</a>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">&nbsp;</label>
+                            <div class="form-inline col-lg-7 col-md-9 col-sm-9 col-xs-12">
+                                <div class="input-group" style="width:66%">
+
+                                    @if (!Model.DeactivationDate.HasValue)
+                                    {
+                                        <button id="deactivate-agent-openmodal" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target=".deactivate-agent-modal">
+                                            <i class="fa fa-times icon-white purchase-button-icon"></i>Deactivate Agent
+                                        </button>
+                                        <span id="deactivate-agent-message" style="display: none; padding-top: 5px">Agent is deactivated.</span>
+                                    }
+                                    else
+                                    {
+                                        <span id="deactivate-message" style="display: block; padding-top: 5px">Agent is deactivated.</span>
+                                    }
+                                    <div class="modal fade deactivate-agent-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-sm">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">x</span>
+                                                    </button>
+                                                    <h4 class="modal-title">Deactivate Agent?</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                                                            <span class="">To deactivate an agent, you must submit a deactivation explanation below. Once we review, we will process your deactivation request.</span>
+                                                        </div>
+                                                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                                                            <br />
+                                                            <textarea id="reason" class="form-control" placeholder="Please describe the reason for deactivating this agent." rows=5></textarea>
+                                                            <br />
+                                                        </div>
+                                                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                                                            <br />
+                                                            <span class=""><em>Agents can be reactivated at any time by contact us at 770-854-1077 or emailing: <a href="mailto:brokersupport@travnow.com">brokersupport@travnow.com</a>.</em></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-bottom: 5px">Cancel</button>
+                                                    <button id="agentdeactivate" type="button" class="btn btn-travnow" data-id="@Model.AgentId" data-toggle="modal" data-target=".deactivate-agent-modal">Submit</button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 hidden">
-                                <input type="file" name="documentW9" class="custom-file-input">
-                                <button type="button">
-                                    Replace
-                                </button>
+                        </div>
+                    }
+                </div>
+                </div>
+             </div>
+            @if (Model.Role == "Broker" && Model.DocumentW9Id.HasValue && Model.DocumentW9Id > 0)
+            {
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                Document Repository
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">W9 Document</label>
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                    <a target="_blank" href="@Url.Action("Get", "Document", new { id = Model.DocumentW9Id })"><i class="fa fa-file-pdf-o pdf-icon"></i></a>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 hidden">
+                                    <a href="#" class="checkbox-adjust">Replace Document</a>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 hidden">
+                                    <input type="file" name="documentW9" class="custom-file-input">
+                                    <button type="button">
+                                        Replace
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
+            }
+        </div>
     <div class="col-md-3 col-sm-3 col-xs-12">&nbsp;</div>
     <div class="form-group col-lg-7 col-md-9 col-sm-9 col-xs-12">
         <button type="button" class="btn btn-primary pull-right" id="profile-submit">Update</button>

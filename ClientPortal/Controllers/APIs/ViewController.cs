@@ -30,6 +30,12 @@ namespace ClientPortal.Controllers.APIs
             return ViewComponent("MyClients");
         }
 
+        [HttpGet("myagents")]
+        public IActionResult MyAgents()
+        {
+            return ViewComponent("MyAgents");
+        }
+
         [HttpGet("clientdetails/{applicationReference}")]
         public IActionResult ClientDetails(string applicationReference)
         {

@@ -96,15 +96,33 @@ function Profile() {
                 }
             });
         });
+
+        $("#agentdeactivate").on("click", function (event) {
+            self.deactivateAgent();
+        });
     }
 
     this.openAllPanels = function (aId) {
-        console.log("setAllPanelOpen");
         $(aId + ' .panel-collapse:not(".in")').collapse('show');
     }
 
     this.closeAllPanels = function (aId) {
-        console.log("setAllPanelclose");
         $(aId + ' .panel-collapse.in').collapse('hide');
+    }
+
+    this.deactivateAgent = function () {
+        var agentId = $('#agentdeactivate').data('id');
+        var reason = $('#reason').val();
+        reason = encodeURIComponent(reason);
+
+        var url = ['/api/user/deactivateagent', agentId, reason].join('/');
+
+        $.post(url,
+            function (data) {
+                $('.modal').modal('hide');
+                $('#deactivate-agent-openmodal').addClass('hidden');
+                $('#deactivate-agent-message').show();
+            }
+        );
     }
 }

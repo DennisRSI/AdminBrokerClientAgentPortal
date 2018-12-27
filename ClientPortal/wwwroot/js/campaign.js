@@ -57,6 +57,8 @@ function Campaign(){
 
             var data = UTILITY.serializeFormJSON($('#addCampaignForm'));
 
+            self.showLoader();
+
             $.ajax({
                 url: '/api/campaign/create/' + clientId,
                 type: 'POST',
@@ -64,10 +66,14 @@ function Campaign(){
                 contentType: 'application/json',
                 data: JSON.stringify(data),
                 success: function (result) {
+                    alert(result);
+                    self.hideLoader();
                     $('.new-campaign-modal-lg').modal('hide');
                     dataTable.ajax.reload();
                 },
                 error: function (xhr, resp, text) {
+                    self.hideLoader();
+                    alert('Error creating campaign');
                     console.log(xhr, resp, text);
                 }
             })
@@ -166,5 +172,17 @@ function Campaign(){
                 dataTable.ajax.reload();
             }
         );
+    }
+
+    this.showLoader = function () {
+        $('#addCampaignButton').prop('disabled', true);
+        $('#loader-container').css('z-index', 9999);
+        $("#loader-container").show();
+    }
+
+    this.hideLoader = function () {
+        $('#addCampaignButton').prop('disabled', false);
+        $('#loader-container').css('z-index', '');
+        $("#loader-container").hide();
     }
 }

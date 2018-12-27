@@ -666,5 +666,19 @@ namespace ClientPortal.Services
 
             return result;
         }
+
+        public async Task<ResultViewModel> ChangePasswordClient(string id, string password)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var passwordResult = await _userManager.ResetPasswordAsync(user, token, password);
+
+            var result = new ResultViewModel
+            {
+                Messages = passwordResult.Errors.Select(e => e.Description).ToList()
+            };
+
+            return result;
+        }
     }
 }

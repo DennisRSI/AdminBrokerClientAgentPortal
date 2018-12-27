@@ -9,6 +9,9 @@ namespace Codes.Service.Interfaces
         IEnumerable<MyClientViewModel> GetClientsByBroker(int brokerId);
         ClientEditViewModel GetClientEdit(int clientId);
 
+        IEnumerable<MyAgentViewModel> GetAgentsByAgent(int agentId);
+        IEnumerable<MyAgentViewModel> GetAgentsByBroker(int brokerId);
+
         // Admin
         IEnumerable<AccountViewModel> GetAllBrokers();
         IEnumerable<AccountViewModel> GetAllClients();
@@ -22,6 +25,7 @@ namespace Codes.Service.Interfaces
         // Agent
         IEnumerable<AccountViewModel> GetClientsOfAgent(int agentId);
         IEnumerable<AccountViewModel> GetCampaignsOfAgent(int agentId);
+        void DeactivateAgent(int agentId, string reason);
 
         // Client
         IEnumerable<AccountViewModel> GetCampaignsOfClient(int clientId);

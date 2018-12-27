@@ -1,4 +1,5 @@
-﻿using ClientPortal.Models;
+﻿using ClientPortal.Extensions;
+using ClientPortal.Models;
 using Codes.Service.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,11 +10,15 @@ namespace ClientPortal.ViewComponents
     public class SearchViewComponent : ViewComponent
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ISearchService _searchService;
 
-        public SearchViewComponent(SignInManager<ApplicationUser> signInManager, ISearchService searchService)
+        public SearchViewComponent(SignInManager<ApplicationUser> signInManager,
+                                    UserManager<ApplicationUser> userManager,
+                                    ISearchService searchService)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _searchService = searchService;
         }
 
@@ -21,7 +26,10 @@ namespace ClientPortal.ViewComponents
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
-                var model = _searchService.GetAdmin(query);
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+                var role = HttpContext.User.GetRole().GetName();
+                var model = _searchService.Search(query, role, user.AccountId);
+
                 return await Task.FromResult(View(model));
             }
 

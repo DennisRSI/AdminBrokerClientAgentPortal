@@ -5,6 +5,11 @@ namespace Codes.Service.ViewModels
     public class SearchViewModel
     {
         public string Query { get; set; }
+
+        public bool ShowBroker { get; set; }
+        public bool ShowAgent { get; set; }
+        public bool ShowClient { get; set; }
+
         public IEnumerable<SearchUserViewModel> Agents { get; set; }
         public IEnumerable<SearchUserViewModel> Brokers { get; set; }
         public IEnumerable<SearchUserViewModel> Clients { get; set; }
@@ -15,6 +20,7 @@ namespace Codes.Service.ViewModels
     public class SearchUserViewModel
     {
         public int Id { get; set; }
+        public string ApplicationReference { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string CompanyName { get; set; }
@@ -30,6 +36,7 @@ namespace Codes.Service.ViewModels
     public class SearchCampaignViewModel
     {
         public int Id { get; set; }
+        public string ApplicationReference { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
     }

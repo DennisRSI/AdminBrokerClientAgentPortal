@@ -4,6 +4,6 @@ namespace Codes.Service.Interfaces
 {
     public interface ISearchService
     {
-        SearchViewModel GetAdmin(string query);
+        SearchViewModel Search(string query, string accountType, int accountId);
     }
 }

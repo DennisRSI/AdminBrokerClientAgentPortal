@@ -18,6 +18,16 @@ namespace Codes.Service.Domain
                 return new AccountQueryBroker(_context, brokerId);
             }
 
+            if (agentId > 0)
+            {
+                return new AccountQueryAgent(_context, agentId);
+            }
+
+            if (clientId > 0)
+            {
+                return new AccountQueryClient(_context, clientId);
+            }
+
             return new AccountQueryAdmin(_context);
         }
     }
