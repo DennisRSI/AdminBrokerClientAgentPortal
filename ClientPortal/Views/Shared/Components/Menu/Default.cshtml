@@ -27,7 +27,7 @@
             </li>
             <li asp-authorize asp-roles="Broker,Agent">
                 <a class="nav-page-id" href="#" data-controller="view" data-page="myclients"><i class="fa fa-users nav-icons-blue"></i> Clients &amp; Campaigns </a>
-                <a class="nav-page-id" href="#" data-controller="view" data-page="myagents"><i class="fa fa-users nav-icons-blue"></i> Agents </a>
+                <a class="nav-item" href="#" data-page="my-account" data-id="@Model.AccountId"><i class="fa fa-users nav-icons-blue"></i> Agents </a>
             </li>
             <li asp-authorize asp-roles="Client">
                 <a class="nav-item" href="#" data-page="campaign-list"><i class="fa fa-users nav-icons-blue"></i> Campaigns </a>
@@ -44,4 +44,3 @@
         </ul>
     </div>
 </div>
-<!-- /sidebar menu -->
