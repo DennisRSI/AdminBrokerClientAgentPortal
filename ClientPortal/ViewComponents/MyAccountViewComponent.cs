@@ -20,7 +20,7 @@ namespace ClientPortal.ViewComponents
             _mapper = mapper;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(string accountId)
+        public async Task<IViewComponentResult> InvokeAsync(string accountId, string message = "")
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
@@ -28,7 +28,7 @@ namespace ClientPortal.ViewComponents
                 var viewUser = await _userManager.FindByIdAsync(accountId);
                 var model = _mapper.Map<ApplicationUser, MyAccountViewModel>(viewUser);
 
-                model.ShowProfileTab = loggedInUser.Role.Contains("Administrator");
+                model.ShowProfileTab = loggedInUser.Role.Contains("Administrator") || message == "profile";
 
                 return View(model);
             }

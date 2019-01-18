@@ -1,5 +1,4 @@
 ﻿@model LoggedInViewModel
-<!-- top navigation -->
 <div class="top_nav">
     <div class="nav_menu">
         <nav>
@@ -14,7 +13,7 @@
                         <span class="fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
-                        <li><a class="nav-item" href="#" data-page="my-account" data-id="@Model.Id"> Profile</a></li>
+                        <li><a class="nav-item" href="#" data-page="my-account" data-id="@Model.Id" data-src="profile"> Profile</a></li>
                         <li><a href="javascript:;">Help</a></li>
                         <li>
                             <form method="post">
@@ -29,4 +28,3 @@
         </nav>
     </div>
 </div>
-<!-- /top navigation -->

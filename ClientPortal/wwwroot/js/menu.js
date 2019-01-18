@@ -25,7 +25,8 @@ function Menu() {
 
             if (page === "my-account") {
                 id = $(this).data('id');
-                self.loadPage('menu', page, id);
+                var src = $(this).data('src');
+                self.loadPage('menu', page, id, src);
             }
         });
 
