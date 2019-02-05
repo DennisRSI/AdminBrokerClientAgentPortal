@@ -8,6 +8,7 @@ namespace ClientPortal.Services._Interfaces
 {
     public interface IUserService
     {
+        
         Task<BrokerViewModel> BrokerAdd(BrokerViewModel model, string password);
         Task<BrokerViewModel> BrokerUpdate(BrokerViewModel model);
         Task<AgentViewModel> AgentAdd(AgentViewModel model, string password);

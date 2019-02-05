@@ -4,8 +4,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientPortal", "ClientPortal.csproj", "{3841D9DD-E5D7-4AD3-ABE8-8E74B4242676}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3F248564-4BE8-42D0-B21C-383BC4641F94} = {3F248564-4BE8-42D0-B21C-383BC4641F94}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codes.Service", "..\Codes.Service\Codes.Service.csproj", "{90C24395-E396-410E-971C-A873A72DE8A9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FTP.Service", "..\FTP.Service\FTP.Service.csproj", "{362FC726-8B32-4035-BABD-7110B20070D6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Excel.Service", "Excel.Service\Excel.Service.csproj", "{3F248564-4BE8-42D0-B21C-383BC4641F94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,26 +28,19 @@ Global
 		{90C24395-E396-410E-971C-A873A72DE8A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90C24395-E396-410E-971C-A873A72DE8A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90C24395-E396-410E-971C-A873A72DE8A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{362FC726-8B32-4035-BABD-7110B20070D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{362FC726-8B32-4035-BABD-7110B20070D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{362FC726-8B32-4035-BABD-7110B20070D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{362FC726-8B32-4035-BABD-7110B20070D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F248564-4BE8-42D0-B21C-383BC4641F94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F248564-4BE8-42D0-B21C-383BC4641F94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F248564-4BE8-42D0-B21C-383BC4641F94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F248564-4BE8-42D0-B21C-383BC4641F94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C2C56BE-F46F-4FD2-AE2F-5084A742EDC3}
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://rsidev.visualstudio.com/defaultcollection
-		SccProjectUniqueName0 = ClientPortal.csproj
-		SccProjectName0 = .
-		SccAuxPath0 = https://rsidev.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccProjectUniqueName1 = ..\\Codes.Service\\Codes.Service.csproj
-		SccProjectName1 = ../Codes.Service
-		SccAuxPath1 = https://rsidev.visualstudio.com/defaultcollection
-		SccLocalPath1 = ..\\Codes.Service
-		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 	EndGlobalSection
 EndGlobal

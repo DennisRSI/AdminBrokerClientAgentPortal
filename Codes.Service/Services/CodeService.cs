@@ -104,15 +104,50 @@ namespace Codes.Service.Services
 
             return model;
         }
+
+        public async Task<TotalCommissionPercentagesViewModel> GetBrokerPercentage(int brokerId)
+        {
+            TotalCommissionPercentagesViewModel model = new TotalCommissionPercentagesViewModel();
+
+            try
+            {
+                model.TotalCommissionPercentage = (await _context.Brokers.FirstOrDefaultAsync(b => b.BrokerId == brokerId && b.IsActive)).BrokerCommissionPercentage;
+                model.TotalClientCommissionPercentage = await _context.Clients.Where(w => w.BrokerId == brokerId && w.IsActive).SumAsync(s => s.CommissionRate);
+                model.TotalAgentCommissionPercentage = await _context.Agents.Where(w => w.BrokerId == brokerId && w.ParentAgentId == null && w.IsActive).SumAsync(s => s.CommissionRate);
+            }
+            catch (Exception ex)
+            {
+                if (model == null)
+                    model = new TotalCommissionPercentagesViewModel();
+
+                model.Message = ex.Message;
+                model.IsSuccess = false;
+            }
+
+            return model;
+        }
+
         public async Task<AgentViewModel> AgentAdd(AgentViewModel model)
         {
             try
             {
-                AgentModel agent = new AgentModel(model);
-                await _context.AddAsync(agent);
-                await _context.SaveChangesAsync();
-                model.Message = "Success";
-                model.AgentId = agent.AgentId;
+                TotalCommissionPercentagesViewModel percentages = await GetBrokerPercentage(model.BrokerId);
+
+                if (percentages.TotalBrokerCommissionPercentage - model.CommissionRate > 0)
+                {
+
+
+                    AgentModel agent = new AgentModel(model);
+                    await _context.AddAsync(agent);
+                    await _context.SaveChangesAsync();
+                    model.Message = "Success";
+                    model.AgentId = agent.AgentId;
+                }
+                else
+                {
+                    model.AgentId = 0;
+                    model.Message = "Error: The commission rate for this agent would be above the total commission you are getting for your company.";
+                }
             }
             catch (Exception ex)
             {
@@ -132,30 +167,39 @@ namespace Codes.Service.Services
 
                 if (agent != null && agent.AgentId > 0)
                 {
-                    agent.AgentId = model.AgentId;
-                    agent.BrokerId = model.BrokerId;
-                    agent.Address = model.Address;
-                    agent.AgentFirstName = model.AgentFirstName;
-                    agent.AgentLastName = model.AgentLastName;
-                    agent.City = model.City;
-                    agent.CompanyName = model.CompanyName;
-                    agent.Country = model.Country;
-                    agent.DeactivationDate = model.DeactivationDate;
-                    agent.DeactivationReason = model.DeactivationReason;
-                    agent.EIN = model.EIN;
-                    agent.Email = model.Email;
-                    agent.Fax = model.Fax;
-                    agent.FaxExtension = model.FaxExtension;
-                    agent.IsActive = model.IsActive;
-                    agent.MobilePhone = model.MobilePhone;
-                    agent.OfficeExtension = model.OfficeExtension;
-                    agent.OfficePhone = model.OfficePhone;
-                    agent.PostalCode = model.PostalCode;
-                    agent.State = model.State;
-                    agent.ApplicationReference = model.ApplicationReference;
+                    TotalCommissionPercentagesViewModel percentages = await GetBrokerPercentage(model.BrokerId);
 
-                    await _context.SaveChangesAsync();
-                    model.Message = "Success";
+                    if (percentages.TotalBrokerCommissionPercentage - model.CommissionRate > 0)
+                    {
+                        agent.AgentId = model.AgentId;
+                        agent.BrokerId = model.BrokerId;
+                        agent.Address = model.Address;
+                        agent.AgentFirstName = model.AgentFirstName;
+                        agent.AgentLastName = model.AgentLastName;
+                        agent.City = model.City;
+                        agent.CompanyName = model.CompanyName;
+                        agent.Country = model.Country;
+                        agent.DeactivationDate = model.DeactivationDate;
+                        agent.DeactivationReason = model.DeactivationReason;
+                        agent.EIN = model.EIN;
+                        agent.Email = model.Email;
+                        agent.Fax = model.Fax;
+                        agent.FaxExtension = model.FaxExtension;
+                        agent.IsActive = model.IsActive;
+                        agent.MobilePhone = model.MobilePhone;
+                        agent.OfficeExtension = model.OfficeExtension;
+                        agent.OfficePhone = model.OfficePhone;
+                        agent.PostalCode = model.PostalCode;
+                        agent.State = model.State;
+                        agent.ApplicationReference = model.ApplicationReference;
+
+                        await _context.SaveChangesAsync();
+                        model.Message = "Success";
+                    }
+                    else
+                        model.Message = "Error: The commission rate for this agent would be above the total commission you are getting for your company.";
+                    
+
                 }
                 else
                     model.Message = "Error: Agent not found";
@@ -175,10 +219,21 @@ namespace Codes.Service.Services
             try
             {
                 ClientModel client = new ClientModel(model);
-                await _context.Clients.AddAsync(client);
-                await _context.SaveChangesAsync();
-                model.ClientId = client.ClientId;
-                model.Message = "Success";
+                
+                TotalCommissionPercentagesViewModel percentages = await GetBrokerPercentage(model.BrokerId);
+
+                if (percentages.TotalBrokerCommissionPercentage - model.CommissionRate > 0)
+                {
+                    await _context.Clients.AddAsync(client);
+                    await _context.SaveChangesAsync();
+                    model.ClientId = client.ClientId;
+                    model.Message = "Success";
+                }
+                else
+                {
+                    model.ClientId = 0;
+                    model.Message = "Error: The commission rate for this client would be above the total commission you are getting for your company.";
+                }
             }
             catch (Exception ex)
             {
@@ -197,29 +252,37 @@ namespace Codes.Service.Services
 
                 if(client != null && client.ClientId > 0)
                 {
-                    client.Address = model.Address;
-                    client.City = model.City;
-                    client.CommissionRate = model.CommissionRate;
-                    client.CompanyName = model.CompanyName;
-                    client.ContactFirstName = model.ContactFirstName;
-                    client.ContactLastName = model.ContactLastName;
-                    client.Country = model.Country;
-                    client.DeactivationDate = model.DeactivationDate;
-                    client.DeactivationReason = model.DeactivationReason;
-                    client.EIN = model.EIN;
-                    client.Email = model.Email;
-                    client.Fax = model.Fax;
-                    client.FaxExtension = model.FaxExtension;
-                    client.IsActive = model.IsActive;
-                    client.MobilePhone = model.MobilePhone;
-                    client.OfficeExtension = model.OfficeExtension;
-                    client.OfficePhone = model.OfficePhone;
-                    client.PostalCode = model.PostalCode;
-                    client.State = model.State;
-                    client.AgentId = model.AgentId;
+                    TotalCommissionPercentagesViewModel percentages = await GetBrokerPercentage(model.BrokerId);
 
-                    await _context.SaveChangesAsync();
-                    model.Message = "Success";
+                    if (percentages.TotalBrokerCommissionPercentage - model.CommissionRate > 0)
+                    {
+                        client.Address = model.Address;
+                        client.City = model.City;
+                        client.CommissionRate = model.CommissionRate;
+                        client.CompanyName = model.CompanyName;
+                        client.ContactFirstName = model.ContactFirstName;
+                        client.ContactLastName = model.ContactLastName;
+                        client.Country = model.Country;
+                        client.DeactivationDate = model.DeactivationDate;
+                        client.DeactivationReason = model.DeactivationReason;
+                        client.EIN = model.EIN;
+                        client.Email = model.Email;
+                        client.Fax = model.Fax;
+                        client.FaxExtension = model.FaxExtension;
+                        client.IsActive = model.IsActive;
+                        client.MobilePhone = model.MobilePhone;
+                        client.OfficeExtension = model.OfficeExtension;
+                        client.OfficePhone = model.OfficePhone;
+                        client.PostalCode = model.PostalCode;
+                        client.State = model.State;
+                        client.AgentId = model.AgentId;
+
+                        await _context.SaveChangesAsync();
+                        model.Message = "Success";
+                    }
+                    else
+                        model.Message = "Error: The commission rate for this client would be above the total commission you are getting for your company.";
+                    
                 }
                 else
                     model.Message = "Error: Client not found";

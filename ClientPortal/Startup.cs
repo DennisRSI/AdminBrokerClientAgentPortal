@@ -13,6 +13,8 @@ using Codes.Service.Data;
 using ClientPortal.Services._Interfaces;
 using AutoMapper;
 using Codes.Service.Domain;
+using Excel.Service.Services.Interfaces;
+using Excel.Service.Services;
 
 namespace ClientPortal
 {
@@ -106,6 +108,7 @@ namespace ClientPortal
             services.AddTransient<IReportProductionService, ReportProductionService>();
             services.AddTransient<IDashboardDistributionService, DashboardDistributionService>();
             services.AddTransient<IAccountQueryFactory, AccountQueryFactory>();
+            services.AddTransient<IExportService, ExportService>();
         }
     }
 }

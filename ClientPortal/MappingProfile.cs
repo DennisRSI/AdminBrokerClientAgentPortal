@@ -15,11 +15,11 @@ namespace ClientPortal
                 .ForMember(c => c.PostLoginVideoId, opt => opt.MapFrom(src => src.PostLoginVideo.VideoId));
 
             CreateMap<CampaignViewModel, CampaignModel>(MemberList.Source)
-                .ForSourceMember(src => src.PreLoginVideoId, opt => opt.Ignore())
-                .ForSourceMember(src => src.PostLoginVideoId, opt => opt.Ignore())
-                .ForSourceMember(src => src.BenefitText, opt => opt.Ignore())
-                .ForSourceMember(src => src.StatusText, opt => opt.Ignore())
-                .ForSourceMember(src => src.IsSuccess, opt => opt.Ignore());
+                .ForSourceMember(src => src.PreLoginVideoId, opt => opt.DoNotValidate())
+                .ForSourceMember(src => src.PostLoginVideoId, opt => opt.DoNotValidate())
+                .ForSourceMember(src => src.BenefitText, opt => opt.DoNotValidate())
+                .ForSourceMember(src => src.StatusText, opt => opt.DoNotValidate())
+                .ForSourceMember(src => src.IsSuccess, opt => opt.DoNotValidate());
 
             CreateMap<ApplicationUser, ProfileViewModel>(MemberList.Source);
             CreateMap<ClientModel, ClientEditViewModel>();

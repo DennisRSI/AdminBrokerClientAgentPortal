@@ -371,7 +371,7 @@ namespace ClientPortal.Services
 
             return model;
         }
-
+        
         public async Task<BrokerViewModel> BrokerAdd(BrokerViewModel model, string password)
         {
             try
@@ -521,6 +521,7 @@ namespace ClientPortal.Services
                 if (user == null || user.Id == null || user.Id.Length < 1)
                 {
                     model = await _codeService.ClientAdd(model);
+
                     if (model.Message == "Success")
                     {
                         user = new ApplicationUser()
@@ -579,8 +580,8 @@ namespace ClientPortal.Services
                         }
                         
                         await _codeService.ClientAddAppReference(model.ClientId, user.Id);
-
                     }
+                    
                 }
                 else
                 {

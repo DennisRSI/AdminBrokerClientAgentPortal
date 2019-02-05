@@ -9,6 +9,7 @@ namespace Codes.Service.Interfaces
 {
     public interface ICodeService
     {
+        Task<TotalCommissionPercentagesViewModel> GetBrokerPercentage(int brokerId);
         Task<(CardsTotalViewModel model, string message, bool isSuccess)> GetCardTotalsForBroker(int brokerId);
         Task<CodeActivityModel> GetActivityByRSIId(int rsiId);
         Task<string> GetCodeByRSIId(int rsiId);

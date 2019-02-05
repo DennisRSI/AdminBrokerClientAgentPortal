@@ -33,9 +33,9 @@ function Menu() {
             $('#sidebar-menu .nav-item, #sidebar-menu .nav-page-id').removeClass('last-clicked');
             $(this).addClass('last-clicked');
 
-            var controller = $(this).data('controller')
-            var page = $(this).data('page')
-            var id = $(this).data('id')
+            var controller = $(this).data('controller');
+            var page = $(this).data('page');
+            var id = $(this).data('id');
 
             if (!controller) {
                 controller = 'menu';

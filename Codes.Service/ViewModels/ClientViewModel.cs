@@ -10,6 +10,8 @@ namespace Codes.Service.ViewModels
 
         [Display(Name = "Client Id", Prompt = "Client Id")]
         public int ClientId { get; set; } = 0;
+        [Display(Name = "Broker Id", Prompt = "Broker Id")]
+        public int BrokerId { get; set; }
         [StringLength(500), Display(Name = "Company", Prompt = "Company")]
         public string CompanyName { get; set; }
         [StringLength(255), Display(Name = "Contact First Name", Prompt = "Contact First Name")]

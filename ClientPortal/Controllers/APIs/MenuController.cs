@@ -62,5 +62,11 @@ namespace ClientPortal.Controllers.APIs
         {
             return ViewComponent("CardDetails", code);
         }
+
+        [HttpGet("importexcel/")]
+        public IActionResult ImportExcel()
+        {
+            return ViewComponent("ImportExcel");
+        }
     }
 }
