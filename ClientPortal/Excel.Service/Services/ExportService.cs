@@ -298,7 +298,7 @@ namespace Excel.Service.Services
 
         private async Task<bool> ParseInventoryTable()
         {
-
+            throw new NotImplementedException();
         }
 
         public async Task<(bool isSuccess, string message)> ImportFile(IFormFile file)
