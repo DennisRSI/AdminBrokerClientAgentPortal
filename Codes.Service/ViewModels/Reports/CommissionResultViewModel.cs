@@ -98,9 +98,6 @@ namespace Codes.Service.ViewModels
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal CommissionEarned { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:c}")]
-        public decimal TotalCommissionEarned { get; set; }
-
         public DateTime PaidDate { get; set; }
 
         public string DisplayChildren

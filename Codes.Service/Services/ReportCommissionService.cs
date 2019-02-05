@@ -94,13 +94,12 @@ namespace Codes.Service.Services
                         YouPayPrice = (decimal)row["YouPayPrice"],
                         MemberSavings = (decimal)row["MemberSavings"],
                         CommissionEarned = (decimal)row["CommissionEarned"],
-                        TotalCommissionEarned = (decimal)row["TotalCommissionEarned"]
                     };
 
                     if (commissionType == "Company")
                     {
                         company = item;
-                        company.CommissionEarned = company.TotalCommissionEarned;
+                        company.CommissionEarned = company.CommissionEarned;
 
                         result.Items.Add(item);
 
@@ -109,14 +108,14 @@ namespace Codes.Service.Services
                         result.TotalInternetPrice += item.InternetPrice;
                         result.TotalYouPayPrice += item.YouPayPrice;
                         result.TotalMemberSavings += item.MemberSavings;
-                        result.TotalCommissionEarned += item.TotalCommissionEarned;
+                        result.TotalCommissionEarned += item.CommissionEarned;
 
                         model.TotalCards += item.NumberCards;
                         model.TotalTransactions += item.NumberTransaction;
                         model.TotalInternetPrice += item.InternetPrice;
                         model.TotalYouPayPrice += item.YouPayPrice;
                         model.TotalMemberSavings += item.MemberSavings;
-                        model.TotalCommissionEarned += item.TotalCommissionEarned;
+                        model.TotalCommissionEarned += item.CommissionEarned;
                     }
                     else
                     {
