@@ -28,7 +28,7 @@
             </li>
             <li asp-authorize asp-roles="Broker,Agent">
                 <a class="nav-page-id" href="#" data-controller="view" data-page="myclients"><i class="fa fa-users nav-icons-blue"></i> Clients &amp; Campaigns </a>
-                <a class="nav-page-id" href="#" data-controller="view" data-page="myagents"><i class="fa fa-users nav-icons-blue"></i> Agents </a>
+                <a class="nav-item" href="#" data-page="my-account" data-id="@Model.AccountId"><i class="fa fa-users nav-icons-blue"></i> Agents </a>
             </li>
             <li asp-authorize asp-roles="Client">
                 <a class="nav-item" href="#" data-page="campaign-list"><i class="fa fa-users nav-icons-blue"></i> Campaigns </a>
@@ -36,7 +36,7 @@
             <li asp-authorize asp-roles="Administrator,Super Administrator,Broker,Client,Agent">
                 <a><i class="fa fa-bar-chart nav-icons-blue"></i> Reports <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
-                    <li><a class="nav-item nav-page-id" href="#" data-controller="reportcommission" data-page="load" data-id="@Model.RoleName">Commission Report</a></li>
+                    <li asp-authorize asp-roles="Super Administrator,Administrator,Broker"><a class="nav-item nav-page-id" href="#" data-controller="reportcommission" data-page="load" data-id="@Model.RoleName">Commission Report</a></li>
                     <li class="hidden"><a class="nav-item nav-page-id" href="#" data-controller="reportchargeback" data-page="load" data-id="@Model.RoleName">Chargeback Report</a></li>
                     <li><a class="nav-item nav-page-id" href="#" data-controller="reportproduction" data-page="load" data-id="@Model.RoleName">Production Report</a></li>
                     <li><a class="nav-item nav-page-id" href="#" data-controller="reportactivation" data-page="load" data-id="@Model.RoleName">Activation Report</a></li>
@@ -45,4 +45,3 @@
         </ul>
     </div>
 </div>
-<!-- /sidebar menu -->

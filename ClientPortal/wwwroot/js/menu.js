@@ -25,7 +25,8 @@ function Menu() {
 
             if (page === "my-account") {
                 id = $(this).data('id');
-                self.loadPage('menu', page, id);
+                var src = $(this).data('src');
+                self.loadPage('menu', page, id, src);
             }
         });
 
@@ -43,7 +44,7 @@ function Menu() {
 
             self.loadPage(controller, page, id);
         });
-    }
+    };
 
     this.get_page = function (page, cmd, id) {
         var url = "/api/menu/" + page + "/" + cmd;
@@ -54,7 +55,7 @@ function Menu() {
             $("#loader-container").hide();
             self.after_load(page, cmd, id);
         });
-    }
+    };
 
     this.after_load = function (page, cmd, id) {
         if (page === "user-list") {
@@ -62,9 +63,9 @@ function Menu() {
             var clientId = 0;
             LIST.init(cmd, brokerId, clientId);
         }
-    }
+    };
 
-    this.loadPage = function(controller, page, param1, param2) {
+    this.loadPage = function (controller, page, param1, param2) {
         var url = '/api/' + controller + '/' + page;
 
         if (param1 !== undefined) {
@@ -81,5 +82,5 @@ function Menu() {
             $('#loader-container').hide();
             ACCOUNT.init();
         });
-    }
+    };
 }
