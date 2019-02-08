@@ -33,6 +33,8 @@ namespace Codes.Service.ViewModels
 
         public IEnumerable<SelectListItem> Agents { get; set; }
 
+        public IEnumerable<AgentViewModel> AssignedAgents { get; set; }
+
         public IEnumerable<SelectListItem> Countries
         {
             get
@@ -42,4 +44,3 @@ namespace Codes.Service.ViewModels
         }
     }
 }
-

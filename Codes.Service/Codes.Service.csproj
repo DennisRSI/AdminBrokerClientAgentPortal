@@ -21,6 +21,7 @@
     <Compile Remove="Data\Migrations\20171218203109_CampaignInitial.cs" />
     <Compile Remove="Data\Migrations\20171219182859_CodeActivations.cs" />
     <Compile Remove="Data\Migrations\20171221205357_StartEndNullable.cs" />
+    <Compile Remove="Data\Migrations\20190208221714_AgentClientManyToMany.cs" />
   </ItemGroup>
 
   <ItemGroup>

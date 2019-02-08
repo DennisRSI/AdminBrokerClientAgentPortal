@@ -35,6 +35,7 @@ namespace Codes.Service.Data
         public DbSet<VideoModel> Videos { get; set; }
         public DbSet<PurchaseModel> Purchases { get; set; }
         public DbSet<DocumentModel> Documents { get; set; }
+        public DbSet<ClientAgentModel> ClientAgents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,11 +47,12 @@ namespace Codes.Service.Data
 
             modelBuilder.Entity<CodeActivityModel>()
                 .HasIndex(b => b.RSIId);
+
             modelBuilder.Entity<CodeModel>()
                 .HasIndex(b => b.Issuer);
 
             modelBuilder.Entity<CampaignAgentModel>()
-            .HasKey(t => new { t.CampaignId, t.AgentId });
+                .HasKey(t => new { t.CampaignId, t.AgentId });
 
             modelBuilder.Entity<CampaignAgentModel>()
                 .HasOne(pt => pt.Campaign)

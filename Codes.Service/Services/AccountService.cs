@@ -93,6 +93,23 @@ namespace Codes.Service.Services
             return ct;
         }
 
+        public void AddAgentToClient(int clientId, int agentId)
+        {
+            var link = new ClientAgentModel()
+            {
+                ClientId = clientId,
+                AgentId = agentId
+            };
+
+            _context.ClientAgents.Add(link);
+        }
+
+        public void RemoveAgentFromClient(int clientAgentId)
+        {
+            var link = _context.ClientAgents.Single(ca => ca.ClientAgentId == clientAgentId);
+            _context.ClientAgents.Remove(link);
+        }
+
         public ClientEditViewModel GetClientEdit(int clientId)
         {
             var client = _context.Clients.Single(c => c.ClientId == clientId);
@@ -100,6 +117,8 @@ namespace Codes.Service.Services
 
             model.Agents = GetAgentsOfBroker(client.BrokerId)
                 .Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName, Selected = (a.Id == client.AgentId) });
+
+            model.AssignedAgents = GetAgentsOfClient(client.ClientId);
 
             model.FirstName = client.ContactFirstName;
             model.LastName = client.ContactLastName;
@@ -119,6 +138,14 @@ namespace Codes.Service.Services
         {
             return _context.Agents.Where(a => a.BrokerId == brokerId)
                     .Select(a => new AccountViewModel() { Id = a.AgentId, FirstName = a.AgentFirstName, LastName = a.AgentLastName, CompanyName = a.CompanyName });
+        }
+
+        public IEnumerable<AgentViewModel> GetAgentsOfClient(int clientId)
+        {
+            // Join through many-to-many table
+
+            return _context.Agents
+                .Select(a => new AgentViewModel() { AgentId = a.AgentId, AgentFirstName = a.AgentFirstName, AgentLastName = a.AgentLastName });
         }
 
         public IEnumerable<AccountViewModel> GetAllBrokers()
