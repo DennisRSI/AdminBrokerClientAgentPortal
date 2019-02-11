@@ -131,13 +131,11 @@ namespace Codes.Service.Services
         {
             try
             {
-                TotalCommissionPercentagesViewModel percentages = await GetBrokerPercentage(model.BrokerId);
+                var percentages = await GetBrokerPercentage(model.Broker.BrokerId);
 
                 if (percentages.TotalBrokerCommissionPercentage - model.CommissionRate > 0)
                 {
-
-
-                    AgentModel agent = new AgentModel(model);
+                    var agent = new AgentModel(model);
                     await _context.AddAsync(agent);
                     await _context.SaveChangesAsync();
                     model.Message = "Success";
@@ -159,6 +157,7 @@ namespace Codes.Service.Services
 
             return model;
         }
+
         public async Task<AgentViewModel> AgentUpdate(AgentViewModel model)
         {
             try
