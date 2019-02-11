@@ -1,5 +1,5 @@
 @model Codes.Service.ViewModels.CommissionResultItemViewModel
-@if (Model.CommissionType == "Company")
+@if (Model.CommissionType == null || Model.CommissionType == "Company")
 {
     <tr data-children="@Html.DisplayFor(m => m.DisplayChildren)">
         <td>@Html.DisplayFor(m => m.AccountName)</td>
