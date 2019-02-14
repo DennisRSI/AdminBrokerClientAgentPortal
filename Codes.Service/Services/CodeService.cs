@@ -251,41 +251,32 @@ namespace Codes.Service.Services
 
                 if(client != null && client.ClientId > 0)
                 {
-                    TotalCommissionPercentagesViewModel percentages = await GetBrokerPercentage(model.BrokerId);
+                    client.Address = model.Address;
+                    client.City = model.City;
+                    // client.CommissionRate = model.CommissionRate;  // Commission Rate is disabled in UI so not passed here
+                    client.CompanyName = model.CompanyName;
+                    client.ContactFirstName = model.ContactFirstName;
+                    client.ContactLastName = model.ContactLastName;
+                    client.Country = model.Country;
+                    client.DeactivationDate = model.DeactivationDate;
+                    client.DeactivationReason = model.DeactivationReason;
+                    client.EIN = model.EIN;
+                    client.Email = model.Email;
+                    client.Fax = model.Fax;
+                    client.FaxExtension = model.FaxExtension;
+                    client.IsActive = model.IsActive;
+                    client.MobilePhone = model.MobilePhone;
+                    client.OfficeExtension = model.OfficeExtension;
+                    client.OfficePhone = model.OfficePhone;
+                    client.PostalCode = model.PostalCode;
+                    client.State = model.State;
+                    client.AgentId = model.AgentId;
 
-                    if (percentages.TotalBrokerCommissionPercentage - model.CommissionRate > 0)
-                    {
-                        client.Address = model.Address;
-                        client.City = model.City;
-                        client.CommissionRate = model.CommissionRate;
-                        client.CompanyName = model.CompanyName;
-                        client.ContactFirstName = model.ContactFirstName;
-                        client.ContactLastName = model.ContactLastName;
-                        client.Country = model.Country;
-                        client.DeactivationDate = model.DeactivationDate;
-                        client.DeactivationReason = model.DeactivationReason;
-                        client.EIN = model.EIN;
-                        client.Email = model.Email;
-                        client.Fax = model.Fax;
-                        client.FaxExtension = model.FaxExtension;
-                        client.IsActive = model.IsActive;
-                        client.MobilePhone = model.MobilePhone;
-                        client.OfficeExtension = model.OfficeExtension;
-                        client.OfficePhone = model.OfficePhone;
-                        client.PostalCode = model.PostalCode;
-                        client.State = model.State;
-                        client.AgentId = model.AgentId;
-
-                        await _context.SaveChangesAsync();
-                        model.Message = "Success";
-                    }
-                    else
-                        model.Message = "Error: The commission rate for this client would be above the total commission you are getting for your company.";
-                    
+                    await _context.SaveChangesAsync();
+                    model.Message = "Success";                  
                 }
                 else
                     model.Message = "Error: Client not found";
-
             }
             catch (Exception ex)
             {
