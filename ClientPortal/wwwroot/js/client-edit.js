@@ -4,7 +4,7 @@ function ClientEdit() {
     var self = this;
     var defaultCountry = true;
 
-    this.init = function (clientId) {
+    this.init = function (applicationId, clientId) {
 
         $('#deactivate-message').hide();
 
@@ -19,7 +19,21 @@ function ClientEdit() {
         });
 
         $("#password-save").on("click", function () {
-            self.changePassword(clientId);
+            self.changePassword(applicationId);
+        });
+
+        $('#assignedAgent').on('change', function (e) {
+            var agentId = this.value;
+
+            if (agentId > 0) {
+                var agentName = $(this).children('option').filter(':selected').text();
+                self.assignAgent(clientId, agentId, agentName);
+            }
+        });
+
+        $('button.agent').on('click', function () {
+            var clientId = $(this).data('clientid');
+            var agentId = $(this).data('agentid');
         });
 
         $("#save").on("click", function (event) {
@@ -38,7 +52,7 @@ function ClientEdit() {
             }
 
             $.ajax({
-                url: '/api/user/clientupdateprofile/' + clientId,
+                url: '/api/user/clientupdateprofile/' + applicationId,
                 type: 'POST',
                 dataType: 'json',
                 contentType: 'application/json',
@@ -151,5 +165,21 @@ function ClientEdit() {
                 console.log(xhr, resp, text);
             }
         });
+    };
+
+    this.assignAgent = function (clientId, agentId, agentName) {
+        var url = ['/api/client/addagent', clientId, agentId].join('/');
+
+        var html = '<button type="button" class="btn btn-primary btn-sm agent" data-clientid="#CLIENTID#" data-agentid="#AGENTID#">';
+        html += '<i class="fa fa-times icon-white"></i> <span>#AGENTNAME#</span></button>';
+        html = html.replace('#CLIENTID#', clientId);
+        html = html.replace('#AGENTID#', agentId);
+        html = html.replace('#AGENTNAME#', agentName);
+
+        $.post(url,
+            function (data) {
+                $('#agents').append(html);
+            }
+        );
     };
 }

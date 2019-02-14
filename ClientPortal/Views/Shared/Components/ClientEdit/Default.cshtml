@@ -180,11 +180,21 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Agent Assigned</label>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Agents Assigned</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <select id="assignedAgent" name="assignedAgent" class="form-control" asp-items="@Model.Agents">
                             <option value="0">Select Agent</option>
                         </select>
+                        <div id="agents" class="spacer-10">
+                            @foreach (var agent in Model.AssignedAgents)
+                            {
+                                <button type="button" class="btn btn-primary btn-sm agent" data-clientid="@Model.ClientId" data-agentid="@agent.AgentId">
+                                    <i class="fa fa-times icon-white"></i>
+                                    <span>@agent.AgentFirstName @agent.AgentLastName</span>
+                                </button>
+                            }
+                        </div>
+                        <hr style="margin-bottom: 0" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -279,5 +289,5 @@
 <script src="~/js/client-edit.js" asp-append-version="true"></script>
 <script>
     MENU.init();
-    CLIENTEDIT.init('@Model.ApplicationReference');
+    CLIENTEDIT.init('@Model.ApplicationReference', '@Model.ClientId');
 </script>

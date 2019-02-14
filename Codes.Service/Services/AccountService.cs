@@ -102,6 +102,7 @@ namespace Codes.Service.Services
             };
 
             _context.ClientAgents.Add(link);
+            _context.SaveChanges();
         }
 
         public void RemoveAgentFromClient(int clientAgentId)
@@ -142,10 +143,8 @@ namespace Codes.Service.Services
 
         public IEnumerable<AgentViewModel> GetAgentsOfClient(int clientId)
         {
-            // Join through many-to-many table
-
-            return _context.Agents
-                .Select(a => new AgentViewModel() { AgentId = a.AgentId, AgentFirstName = a.AgentFirstName, AgentLastName = a.AgentLastName });
+            return _context.ClientAgents.Where(ca => ca.ClientId == clientId)
+                .Select(ca => new AgentViewModel() { AgentId = ca.AgentId, AgentFirstName = ca.Agent.AgentFirstName, AgentLastName = ca.Agent.AgentLastName });
         }
 
         public IEnumerable<AccountViewModel> GetAllBrokers()
