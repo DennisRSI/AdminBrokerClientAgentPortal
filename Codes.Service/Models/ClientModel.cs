@@ -158,5 +158,6 @@ namespace Codes.Service.Models
         public AgentModel Agent { get; set; }
 
         public ICollection<CampaignModel> Campaigns { get; set; }
+        public ICollection<ClientAgentModel> ClientAgents { get; set; }
     }
 }
