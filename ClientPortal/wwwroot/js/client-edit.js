@@ -44,7 +44,7 @@ function ClientEdit() {
                 contentType: 'application/json',
                 data: JSON.stringify(data),
                 success: function (result) {
-                    if (result.isSuccess == true) {
+                    if (result.isSuccess === true) {
                         alert('Profile successfully updated.');
                     }
                     else {
@@ -56,9 +56,9 @@ function ClientEdit() {
                 }
             });
         });
-    }
+    };
 
-    this.deactivateClient = function (clientId) {
+    this.deactivateClient = function () {
         var clientId = $('#clientdeactivate').data('id');
         var reason = $('#reason').val();
         reason = encodeURIComponent(reason);
@@ -72,7 +72,7 @@ function ClientEdit() {
                 $('#deactivate-message').show();
             }
         );
-    }
+    };
 
     this.initCountry = function () {
         var value = $('select#country').val();
@@ -83,7 +83,7 @@ function ClientEdit() {
         else {
             self.initOtherCountry();
         }
-    }
+    };
 
     this.initDefaultCountry = function () {
         self.defaultCountry = true;
@@ -91,19 +91,19 @@ function ClientEdit() {
         $('.stateFreeForm').addClass('hidden');
 
         //$('input.ein').inputmask({
-            //mask: '99-9999999'
+        //mask: '99-9999999'
         //});
 
         //$('input#zip').inputmask({
-           // mask: '99999'
+        // mask: '99999'
         //});
 
         $('input[type="tel"]').removeAttr('maxlength');
 
         //$('input[type="tel"]').inputmask({
-            //mask: '(999) 999-9999'
+        //mask: '(999) 999-9999'
         //});
-    }
+    };
 
     this.initOtherCountry = function () {
         self.defaultCountry = false;
@@ -114,7 +114,7 @@ function ClientEdit() {
         $('input#zip').inputmask('remove');
         $('input[type="tel"]').inputmask('remove');
         $('input[type="tel"]').attr('maxlength', '20');
-    }
+    };
 
     this.changePassword = function (clientId) {
         var password1 = $('#password1').val();
@@ -133,7 +133,7 @@ function ClientEdit() {
             dataType: 'json',
             contentType: 'application/json',
             success: function (result) {
-                if (result.isSuccess == true) {
+                if (result.isSuccess === true) {
                     $('.modal').modal('hide');
                     alert('Password successfully changed');
                 }
@@ -150,6 +150,6 @@ function ClientEdit() {
             error: function (xhr, resp, text) {
                 console.log(xhr, resp, text);
             }
-        })
+        });
     };
 }
