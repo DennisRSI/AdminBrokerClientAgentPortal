@@ -32,7 +32,7 @@ namespace Codes.Service.Interfaces
         void DeactivateClient(int clientId, string reason);
         int GetCardQuantityByClient(int clientId, string cardType = "");
         void AddAgentToClient(int clientId, int agentId);
-        void RemoveAgentFromClient(int clientAgentId);
+        void RemoveAgentFromClient(int clientId, int agentId);
 
         AccountCommonModel GetAccountCommon(string reference);
     }

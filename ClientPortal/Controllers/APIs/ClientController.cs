@@ -41,9 +41,9 @@ namespace ClientPortal.Controllers.APIs
         }
 
         [HttpPost("removeagent/{clientId}/{agentId}")]
-        public IActionResult RemoveAgent(int clientAgentId)
+        public IActionResult RemoveAgent(int clientId, int agentId)
         {
-            _accountService.RemoveAgentFromClient(clientAgentId);
+            _accountService.RemoveAgentFromClient(clientId, agentId);
             return Ok();
         }
     }

@@ -31,9 +31,11 @@ function ClientEdit() {
             }
         });
 
-        $('button.agent').on('click', function () {
+        $('#agents').on('click', '.agent', function () {
             var clientId = $(this).data('clientid');
             var agentId = $(this).data('agentid');
+
+            self.removeAgent(clientId, agentId, $(this));
         });
 
         $("#save").on("click", function (event) {
@@ -176,9 +178,23 @@ function ClientEdit() {
         html = html.replace('#AGENTID#', agentId);
         html = html.replace('#AGENTNAME#', agentName);
 
+        var exists = $('#agents button[data-agentid=' + agentId + ']');
+
+        if (exists.length === 0) {
+            $.post(url,
+                function (data) {
+                    $('#agents').append(html);
+                }
+            );
+        }
+    };
+
+    this.removeAgent = function (clientId, agentId, button) {
+        var url = ['/api/client/removeagent', clientId, agentId].join('/');
+
         $.post(url,
             function (data) {
-                $('#agents').append(html);
+                button.remove();
             }
         );
     };

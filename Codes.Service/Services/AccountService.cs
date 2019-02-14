@@ -105,10 +105,11 @@ namespace Codes.Service.Services
             _context.SaveChanges();
         }
 
-        public void RemoveAgentFromClient(int clientAgentId)
+        public void RemoveAgentFromClient(int clientId, int agentId)
         {
-            var link = _context.ClientAgents.Single(ca => ca.ClientAgentId == clientAgentId);
+            var link = _context.ClientAgents.Single(ca => ca.ClientId == clientId && ca.AgentId == agentId);
             _context.ClientAgents.Remove(link);
+            _context.SaveChanges();
         }
 
         public ClientEditViewModel GetClientEdit(int clientId)
