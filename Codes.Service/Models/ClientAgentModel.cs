@@ -18,5 +18,7 @@ namespace Codes.Service.Models
 
         public int AgentId { get; set; }
         public AgentModel Agent { get; set; }
+
+        public decimal CommissionRate { get; set; }
     }
 }

@@ -93,12 +93,13 @@ namespace Codes.Service.Services
             return ct;
         }
 
-        public void AddAgentToClient(int clientId, int agentId)
+        public void AddAgentToClient(int clientId, int agentId, decimal commissionRate)
         {
             var link = new ClientAgentModel()
             {
                 ClientId = clientId,
-                AgentId = agentId
+                AgentId = agentId,
+                CommissionRate = commissionRate
             };
 
             _context.ClientAgents.Add(link);
@@ -109,6 +110,13 @@ namespace Codes.Service.Services
         {
             var link = _context.ClientAgents.Single(ca => ca.ClientId == clientId && ca.AgentId == agentId);
             _context.ClientAgents.Remove(link);
+            _context.SaveChanges();
+        }
+
+        public void UpdateClientCommissionRate(int clientId, int agentId, decimal commissionRate)
+        {
+            var link = _context.ClientAgents.Single(ca => ca.ClientId == clientId && ca.AgentId == agentId);
+            link.CommissionRate = commissionRate;
             _context.SaveChanges();
         }
 

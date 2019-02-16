@@ -33,15 +33,22 @@ namespace ClientPortal.Controllers.APIs
             _accountService = accountService;
         }
 
-        [HttpPost("addagent/{clientId}/{agentId}")]
-        public IActionResult AddAgent(int clientId, int agentId)
+        [HttpPost("addagent/{clientId}/{agentId}/{commissionRate}")]
+        public IActionResult AddAgent(int clientId, int agentId, decimal commissionRate)
         {
-            _accountService.AddAgentToClient(clientId, agentId);
+            _accountService.AddAgentToClient(clientId, agentId, commissionRate);
             return Ok();
         }
 
         [HttpPost("removeagent/{clientId}/{agentId}")]
         public IActionResult RemoveAgent(int clientId, int agentId)
+        {
+            _accountService.RemoveAgentFromClient(clientId, agentId);
+            return Ok();
+        }
+
+        [HttpPost("updatecommission/{clientId}/{agentId}/{commissionRate}")]
+        public IActionResult UpdateCommission(int clientId, int agentId, decimal commissionRate)
         {
             _accountService.RemoveAgentFromClient(clientId, agentId);
             return Ok();
