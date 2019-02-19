@@ -5,14 +5,6 @@ function Profile() {
 
     this.init = function (id) {
 
-        //$('.ein').inputmask({
-            //mask: '99-9999999'
-        //});
-
-        //$('.zip').inputmask({
-            //mask: '99999'
-        //});
-
         $(".toggle-accordion").on("click", function () {
 
             var accordionId = $(this).attr("accordion-id"),
@@ -20,7 +12,7 @@ function Profile() {
 
             $(this).toggleClass("active");
 
-            if (numPanelOpen == 0) {
+            if (numPanelOpen === 0) {
                 self.openAllPanels(accordionId);
             } else {
                 self.closeAllPanels(accordionId);
@@ -45,7 +37,7 @@ function Profile() {
                 dataType: 'json',
                 contentType: 'application/json',
                 success: function (result) {
-                    if (result.isSuccess == true) {
+                    if (result.isSuccess === true) {
                         $('.modal').modal('hide');
                         alert('Password successfully changed');
                     }
@@ -62,7 +54,7 @@ function Profile() {
                 error: function (xhr, resp, text) {
                     console.log(xhr, resp, text);
                 }
-            })
+            });
         });
 
         $("#profile-submit").on("click", function (event) {
@@ -84,7 +76,7 @@ function Profile() {
                 contentType: 'application/json',
                 data: JSON.stringify(data),
                 success: function (result) {
-                    if (result.isSuccess == true) {
+                    if (result.isSuccess === true) {
                         alert('Profile successfully updated.');
                     }
                     else {
@@ -100,15 +92,15 @@ function Profile() {
         $("#agentdeactivate").on("click", function (event) {
             self.deactivateAgent();
         });
-    }
+    };
 
     this.openAllPanels = function (aId) {
         $(aId + ' .panel-collapse:not(".in")').collapse('show');
-    }
+    };
 
     this.closeAllPanels = function (aId) {
         $(aId + ' .panel-collapse.in').collapse('hide');
-    }
+    };
 
     this.deactivateAgent = function () {
         var agentId = $('#agentdeactivate').data('id');
@@ -124,5 +116,5 @@ function Profile() {
                 $('#deactivate-agent-message').show();
             }
         );
-    }
+    };
 }
