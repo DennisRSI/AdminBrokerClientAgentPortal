@@ -73,7 +73,7 @@ function Commission() {
                 split.forEach(function (childData) {
                     if (childData.length > 2) {
                         var child = childData.split('|');
-                        var result = template.replace('[NAME]', child[0]).replace('[EARNED]', child[1])
+                        var result = template.replace('[NAME]', child[0]).replace('[EARNED]', child[1]);
                         total += result;
                     }
                 });

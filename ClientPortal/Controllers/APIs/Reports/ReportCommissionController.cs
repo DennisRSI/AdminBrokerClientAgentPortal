@@ -44,12 +44,21 @@ namespace ClientPortal.Controllers.APIs
 
             var model = new CommissionLoadViewModel
             {
+                UserType = type,
                 ReportType = GetReportType(type),
                 Brokers = accountQuery.GetBrokers().Select(b => new SelectListItem() { Value = b.Id.ToString(), Text = b.FullName }),
                 Clients = accountQuery.GetClients().Select(c => new SelectListItem() { Value = c.Id.ToString(), Text = c.CompanyName }),
                 Agents = accountQuery.GetAgents().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName }),
                 Campaigns = accountQuery.GetCampaigns().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName }),
             };
+
+            if (type == "Broker")
+            {
+                model.Brokers = new List<SelectListItem>()
+                                    {
+                                        new SelectListItem() { Value = user.BrokerId.ToString(), Text = "", Selected = true }
+                                    };
+            }
 
             return PartialView("Load", model);
         }
@@ -135,8 +144,7 @@ namespace ClientPortal.Controllers.APIs
                 case "broker":
                     return new List<SelectListItem>()
                     {
-                        new SelectListItem() { Text = "By Client", Value = "client" },
-                        //new SelectListItem() { Text = "By Agent", Value = "agent" },
+                        new SelectListItem() { Text = "By Broker", Value = "broker" }
                     };
 
                 case "agent":
