@@ -1293,7 +1293,8 @@ namespace Codes.Service.Services
                                          LastName = t.AgentLastName,
                                          MiddleName = t.AgentMiddleName,
                                          Extension = t.MobilePhone != null && t.MobilePhone.Length > 0 ? "" : t.OfficeExtension,
-                                         Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone.FormatPhone() : t.OfficePhone.FormatPhone()
+                                         Phone = t.MobilePhone != null && t.MobilePhone.Length > 0 ? t.MobilePhone.FormatPhone() : t.OfficePhone.FormatPhone(),
+                                         PrimaryAgent = t.ParentAgent == null ? String.Empty : $"{t.ParentAgent.AgentFirstName} {t.ParentAgent.AgentLastName}"
                                      }).Skip(startRowIndex).Take(numberOfRows).ToArrayAsync();
 
                 model.Message = "Success";

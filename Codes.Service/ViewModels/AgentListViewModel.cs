@@ -40,6 +40,7 @@ namespace Codes.Service.ViewModels
                 _commissionRate = value;
             }
         }
+
         [JsonProperty(PropertyName = "commission_rate_percentage")]
         public string CommissionRatePercentageString
         {
@@ -49,5 +50,7 @@ namespace Codes.Service.ViewModels
                 return $"{comm}%";
             }
         }
+
+        public string PrimaryAgent { get; set; }
     }
 }

@@ -136,6 +136,7 @@ function List() {
             { "data": "phone" },
             { "data": "commission_rate" },
             { "data": "number_of_clients" },
+            { "data": "primaryAgent" },
             {
                 "data": "activation_date", "render": function (data) {
                     var date = new Date(data);
