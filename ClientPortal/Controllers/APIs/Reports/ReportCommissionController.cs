@@ -56,7 +56,7 @@ namespace ClientPortal.Controllers.APIs
             {
                 model.Brokers = new List<SelectListItem>()
                                     {
-                                        new SelectListItem() { Value = user.BrokerId.ToString(), Text = "", Selected = true }
+                                        new SelectListItem() { Value = user.BrokerId.ToString(), Text = "Hidden", Selected = true }
                                     };
             }
 

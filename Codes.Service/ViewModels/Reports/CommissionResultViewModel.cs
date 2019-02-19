@@ -10,6 +10,24 @@ namespace Codes.Service.ViewModels
         public string AccountName { get; set; }
         public string QueryType { get; set; }
 
+        public bool UserIsBroker
+        {
+            get { return AccountName == "Hidden"; }
+        }
+
+        public string TypeDisplay
+        {
+            get
+            {
+                if (UserIsBroker)
+                {
+                    return "Client";
+                }
+
+                return Type;
+            }
+        }
+
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime CheckoutStartDate { get; set; }
 

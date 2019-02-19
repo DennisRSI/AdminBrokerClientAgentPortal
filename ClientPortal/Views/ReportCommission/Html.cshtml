@@ -1,14 +1,25 @@
 ﻿@model Codes.Service.ViewModels.CommissionResultViewModel
 <div class="x_panel">
     <div class="x_content">
-        <span class="h2 text-muted">Commission Report by @Model.Type</span>
+        <span class="h2 text-muted">Commission Report by @Model.TypeDisplay</span>
         <div class="pull-right no-print">
             <a href="#" target="_blank" class="hidden"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-file-pdf-o"></i>&nbsp; Download PDF</button></a>&nbsp;
             <button id="export-excel" type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Export Excel</button>
         </div>
         <div class="clearfix"></div>
         <hr class="card-hr">
-        <span class="h4">@Model.Type: @Model.AccountName</span><br />
+        @if (Model.UserIsBroker)
+        {
+            <style>
+                .report-table-title {
+                    display: none;
+                }
+            </style>
+        }
+        else
+        {
+            <span class="h4">@Model.Type: @Model.AccountName</span><br />
+        }
         <span class="h4">Date Range: @Html.DisplayFor(m => m.CheckoutStartDate) - @Html.DisplayFor(m => m.CheckoutEndDate)</span>
 
         <div class="pull-right spacer-5">Report Ran: @Model.ReportTime</div>
