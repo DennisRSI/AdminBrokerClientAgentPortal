@@ -22,9 +22,9 @@ function List() {
                 self.purchasesList(brokerId);
                 break;
         }
-    }
+    };
 
-    this.purchasesList = function(brokerId){
+    this.purchasesList = function (brokerId) {
         var url = "api/purchase/list/" + brokerId;
         var cols = [
             { "data": "purchaseDateString" },
@@ -36,7 +36,7 @@ function List() {
             { "data": "sequenceStart" },
             { "data": "sequenceEnd" },
             { "data": "totalValue" },
-            { "data": null, defaultContent: '<a href="#" class="pdf"><i class="fa fa-file-pdf-o pdf-icon-red"></i> Download</a>' },
+            { "data": null, defaultContent: '<a href="#" class="pdf"><i class="fa fa-file-pdf-o pdf-icon-red"></i> Download</a>' }
         ];
 
         var selector = '#purchase_tbl';
@@ -52,12 +52,12 @@ function List() {
                 PDF.getPurchasePdf(id);
             });
         }
-    }
+    };
 
     this.adminList = function (role) {
         var $dt;
         url = "/api/list/";
-        if (role == "Administrator")
+        if (role === "Administrator")
             url += "admin";
         else
             url += "sa";
@@ -85,7 +85,7 @@ function List() {
             var data = $dt.row(this).id();
             self.redirectToPage('/api/menu/my-account/' + data);
         });
-    }
+    };
 
     this.brokerList = function () {
         var url = "api/list/broker";
@@ -125,7 +125,7 @@ function List() {
                 self.redirectToPage('/api/menu/my-account/' + data);
             });
         }
-    }
+    };
 
     this.agentList = function (brokerId, clientId) {
         var url = "api/list/agent/" + brokerId.toString() + "/" + clientId.toString();
@@ -154,7 +154,7 @@ function List() {
             var data = $dt.row(this).id();
             self.redirectToPage('/api/menu/my-account/' + data);
         });
-    }
+    };
 
     this.clientList = function (brokerId, clientId) {
         var url = "api/list/client/" + brokerId.toString() + "/" + clientId.toString();
@@ -191,7 +191,7 @@ function List() {
             var data = $dt.row(this).id();
             self.redirectToPage('/api/menu/client-details/' + data);
         });
-    }
+    };
 
     this.generateList = function (tableName, url, columns, method, serverSide) {
 
@@ -221,11 +221,11 @@ function List() {
                     pages: 5
                 }),
                 "columnDefs":
-                [{
-                    "targets": [0],
-                    "visible": true,
-                    "searchable": true
-                }],
+                    [{
+                        "targets": [0],
+                        "visible": true,
+                        "searchable": true
+                    }],
                 "columns": columns,
                 "initComplete": function (settings, json) {
                     $('[data-toggle="tooltip"]').tooltip();
@@ -238,7 +238,7 @@ function List() {
         $('table.dataTable').css('width', '100%');
 
         return $dt;
-    }
+    };
 
     // generateList() doesn't work with ajax.reload(), this method can be used instead
     this.generateUpdatableList = function (tableSelector, url, columns, method) {
@@ -256,18 +256,18 @@ function List() {
                 method: method
             },
             "columnDefs":
-            [{
-                "targets": [0],
-                "visible": true,
-                "searchable": true
-            }],
+                [{
+                    "targets": [0],
+                    "visible": true,
+                    "searchable": true
+                }],
             "columns": columns
         });
 
         $(tableSelector).css('width', '100%');
 
         return table;
-    }
+    };
 
     this.redirectToPage = function (url) {
         $("#loader-container").show();
@@ -276,7 +276,7 @@ function List() {
             $("#loader-container").hide();
             ACCOUNT.init();
         });
-    }
+    };
 
     this.getDataTableDefaults = function (url, columns, method, identifier) {
         return {
@@ -305,5 +305,5 @@ function List() {
                 }
             }
         };
-    }
+    };
 }
