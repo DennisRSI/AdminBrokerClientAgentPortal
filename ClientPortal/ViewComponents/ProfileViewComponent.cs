@@ -5,6 +5,7 @@ using Codes.Service.Interfaces;
 using Codes.Service.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +56,14 @@ namespace ClientPortal.ViewComponents
                 model.DeactivationDate = agent.DeactivationDate;
                 model.DeactivationReason = agent.DeactivationReason;
 
+                model.Agents = _accountService.GetAgentsOfBroker(model.BrokerId).Where(a => a.Id != agent.AgentId).Select(
+                                    a => new SelectListItem()
+                                    {
+                                        Text = a.FullName,
+                                        Value = a.Id.ToString()
+                                    }
+                                );
+
                 if (String.IsNullOrWhiteSpace(agent.ParentAgentName))
                 {
                     model.ParentAgentName = "N/A";
@@ -62,6 +71,7 @@ namespace ClientPortal.ViewComponents
                 else
                 {
                     model.ParentAgentName = agent.ParentAgentName;
+                    model.ParentAgentId = agent.ParentAgentId;
                 }
             }
 

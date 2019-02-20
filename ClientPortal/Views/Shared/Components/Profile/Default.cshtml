@@ -97,7 +97,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">State</label>
                         <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
-                            <select style="width:245px" asp-for="State" class="form-control">
+                            <select style="width: 227px" asp-for="State" class="form-control">
                                 <option>Select State</option>
                                 <option value="AL">AL</option>
                                 <option value="AK">AK</option>
@@ -225,9 +225,11 @@
                     @if (Model.Role == "Agent")
                     {
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Parent Agent</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Primary Agent</label>
                             <div class="col-lg-7 col-md-9 col-sm-9 col-xs-12">
-                                <div style="padding-top: 8px">@Model.ParentAgentName</div>
+                                <select style="width:227px" class="form-control form-group" name="parentAgentId" asp-for="ParentAgentId" asp-items="@Model.Agents">
+                                    <option value="0">Select Primary Agent</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">

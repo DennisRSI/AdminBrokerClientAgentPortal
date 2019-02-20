@@ -191,6 +191,7 @@ namespace Codes.Service.Services
                         agent.PostalCode = model.PostalCode;
                         agent.State = model.State;
                         agent.ApplicationReference = model.ApplicationReference;
+                        agent.ParentAgentId = model.ParentAgentId;
 
                         await _context.SaveChangesAsync();
                         model.Message = "Success";
@@ -1026,6 +1027,7 @@ namespace Codes.Service.Services
                     if (a.ParentAgent != null)
                     {
                         agent.ParentAgentName = $"{a.ParentAgent.AgentFirstName} {a.ParentAgent.AgentLastName}";
+                        agent.ParentAgentId = a.ParentAgentId;
                     }
 
                     agent.Broker.BrokerId = a.BrokerId;

@@ -459,7 +459,7 @@ namespace ClientPortal.Controllers.APIs
         }
 
         [HttpPost("updateprofile/{id}")]
-        public async Task<IActionResult> UpdateProfile(string id, [FromBody] ApplicationUser model)
+        public async Task<IActionResult> UpdateProfile(string id, [FromBody] ProfileViewModel model)
         {
             var role = await ProcessUserModel(id, model);
 
@@ -470,6 +470,11 @@ namespace ClientPortal.Controllers.APIs
                     return Ok(adminResult);
 
                 case "Agent":
+                    if (model.ParentAgentId.Value == 0)
+                    {
+                        model.ParentAgentId = null;
+                    }
+
                     var agentResult = await UpdateAgent(model);
                     return Ok(agentResult);
 
@@ -517,7 +522,7 @@ namespace ClientPortal.Controllers.APIs
             return await _context.AdminUpdate(admin);
         }
 
-        private async Task<AgentViewModel> UpdateAgent(ApplicationUser user)
+        private async Task<AgentViewModel> UpdateAgent(ProfileViewModel user)
         {
             var agent = new AgentViewModel()
             {
@@ -537,6 +542,7 @@ namespace ClientPortal.Controllers.APIs
                 MobilePhone = user.MobilePhone,
                 OfficePhone = user.OfficePhone,
                 Fax = user.Fax,
+                ParentAgentId = user.ParentAgentId,
             };
 
             return await _context.AgentUpdate(agent);
