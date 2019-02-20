@@ -186,13 +186,7 @@
                             <option value="0">Select Agent</option>
                         </select>
                         <div id="agents" class="spacer-10">
-                            @foreach (var agent in Model.AssignedAgents)
-                            {
-                                <button type="button" class="btn btn-primary btn-sm agent" data-clientid="@Model.ClientId" data-agentid="@agent.AgentId">
-                                    <i class="fa fa-times icon-white"></i>
-                                    <span>@agent.AgentFirstName @agent.AgentLastName</span>
-                                </button>
-                            }
+                            @await Component.InvokeAsync("AssignedAgents", new { clientId = Model.ClientId })
                         </div>
                         <hr style="margin-bottom: 0" />
                     </div>
@@ -289,5 +283,5 @@
 <script src="~/js/client-edit.js" asp-append-version="true"></script>
 <script>
     MENU.init();
-    CLIENTEDIT.init('@Model.ApplicationReference', '@Model.ClientId');
+    CLIENTEDIT.init('@Model.ApplicationReference', '@Model.ClientId', '@Model.CommissionRate');
 </script>

@@ -153,7 +153,7 @@ namespace Codes.Service.Services
         public IEnumerable<AgentViewModel> GetAgentsOfClient(int clientId)
         {
             return _context.ClientAgents.Where(ca => ca.ClientId == clientId)
-                .Select(ca => new AgentViewModel() { AgentId = ca.AgentId, AgentFirstName = ca.Agent.AgentFirstName, AgentLastName = ca.Agent.AgentLastName });
+                .Select(ca => new AgentViewModel() { AgentId = ca.AgentId, AgentFirstName = ca.Agent.AgentFirstName, AgentLastName = ca.Agent.AgentLastName, CommissionRate = (float)ca.CommissionRate });
         }
 
         public IEnumerable<AccountViewModel> GetAllBrokers()

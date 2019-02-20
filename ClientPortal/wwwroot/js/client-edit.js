@@ -4,7 +4,7 @@ function ClientEdit() {
     var self = this;
     var defaultCountry = true;
 
-    this.init = function (applicationId, clientId) {
+    this.init = function (applicationId, clientId, commissionRate) {
 
         $('#deactivate-message').hide();
 
@@ -26,8 +26,7 @@ function ClientEdit() {
             var agentId = this.value;
 
             if (agentId > 0) {
-                var agentName = $(this).children('option').filter(':selected').text();
-                self.assignAgent(clientId, agentId, agentName);
+                self.assignAgent(clientId, agentId, commissionRate);
             }
         });
 
@@ -35,7 +34,15 @@ function ClientEdit() {
             var clientId = $(this).data('clientid');
             var agentId = $(this).data('agentid');
 
-            self.removeAgent(clientId, agentId, $(this));
+            self.removeAgent(clientId, agentId);
+        });
+
+        $('#agents').on('click', '.update-commission', function () {
+            var clientId = $(this).data('clientid');
+            var agentId = $(this).data('agentid');
+            var commmissionRate = $(this).prev().val();
+
+            self.updateCommission(clientId, agentId, commmissionRate);
         });
 
         $("#save").on("click", function (event) {
@@ -105,20 +112,7 @@ function ClientEdit() {
         self.defaultCountry = true;
         $('.state').removeClass('hidden');
         $('.stateFreeForm').addClass('hidden');
-
-        //$('input.ein').inputmask({
-        //mask: '99-9999999'
-        //});
-
-        //$('input#zip').inputmask({
-        // mask: '99999'
-        //});
-
         $('input[type="tel"]').removeAttr('maxlength');
-
-        //$('input[type="tel"]').inputmask({
-        //mask: '(999) 999-9999'
-        //});
     };
 
     this.initOtherCountry = function () {
@@ -169,32 +163,36 @@ function ClientEdit() {
         });
     };
 
-    this.assignAgent = function (clientId, agentId, agentName) {
-        var url = ['/api/client/addagent', clientId, agentId].join('/');
-
-        var html = '<button type="button" class="btn btn-primary btn-sm agent" data-clientid="#CLIENTID#" data-agentid="#AGENTID#">';
-        html += '<i class="fa fa-times icon-white"></i> <span>#AGENTNAME#</span></button>';
-        html = html.replace('#CLIENTID#', clientId);
-        html = html.replace('#AGENTID#', agentId);
-        html = html.replace('#AGENTNAME#', agentName);
+    this.assignAgent = function (clientId, agentId, commissionRate) {
+        var url = ['/api/client/addagent', clientId, agentId, commissionRate].join('/');
 
         var exists = $('#agents button[data-agentid=' + agentId + ']');
 
         if (exists.length === 0) {
             $.post(url,
                 function (data) {
-                    $('#agents').append(html);
+                    $('#agents').html(data);
                 }
             );
         }
     };
 
-    this.removeAgent = function (clientId, agentId, button) {
+    this.removeAgent = function (clientId, agentId) {
         var url = ['/api/client/removeagent', clientId, agentId].join('/');
 
         $.post(url,
             function (data) {
-                button.remove();
+                $('#agents').html(data);
+            }
+        );
+    };
+
+    this.updateCommission = function (clientId, agentId, commissionRate) {
+        var url = ['/api/client/updatecommission', clientId, agentId, commissionRate].join('/');
+
+        $.post(url,
+            function (data) {
+                $('#agents').html(data);
             }
         );
     };

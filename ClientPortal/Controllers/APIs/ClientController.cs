@@ -1,16 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using ClientPortal.Models;
+﻿using ClientPortal.Models;
 using ClientPortal.Services._Interfaces;
 using Codes.Service.Interfaces;
-using Codes.Service.ViewModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
-using Codes.Service.Models;
-using ClientPortal.Models._ViewModels;
+using ClientPortal.ViewComponents;
 
 namespace ClientPortal.Controllers.APIs
 {
@@ -37,21 +30,21 @@ namespace ClientPortal.Controllers.APIs
         public IActionResult AddAgent(int clientId, int agentId, decimal commissionRate)
         {
             _accountService.AddAgentToClient(clientId, agentId, commissionRate);
-            return Ok();
+            return ViewComponent(typeof(AssignedAgentsViewComponent), clientId);
         }
 
         [HttpPost("removeagent/{clientId}/{agentId}")]
         public IActionResult RemoveAgent(int clientId, int agentId)
         {
             _accountService.RemoveAgentFromClient(clientId, agentId);
-            return Ok();
+            return ViewComponent(typeof(AssignedAgentsViewComponent), clientId);
         }
 
         [HttpPost("updatecommission/{clientId}/{agentId}/{commissionRate}")]
         public IActionResult UpdateCommission(int clientId, int agentId, decimal commissionRate)
         {
-            _accountService.RemoveAgentFromClient(clientId, agentId);
-            return Ok();
+            _accountService.UpdateClientCommissionRate(clientId, agentId, commissionRate);
+            return ViewComponent(typeof(AssignedAgentsViewComponent), clientId);
         }
     }
 }
