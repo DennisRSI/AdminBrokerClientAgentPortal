@@ -26,10 +26,10 @@ namespace ClientPortal.Controllers.APIs
             _accountService = accountService;
         }
 
-        [HttpPost("addagent/{clientId}/{agentId}/{commissionRate}")]
-        public IActionResult AddAgent(int clientId, int agentId, decimal commissionRate)
+        [HttpPost("addagent/{clientId}/{agentId}")]
+        public IActionResult AddAgent(int clientId, int agentId)
         {
-            _accountService.AddAgentToClient(clientId, agentId, commissionRate);
+            _accountService.AddAgentToClient(clientId, agentId);
             return ViewComponent(typeof(AssignedAgentsViewComponent), clientId);
         }
 

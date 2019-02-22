@@ -4,7 +4,7 @@ function ClientEdit() {
     var self = this;
     var defaultCountry = true;
 
-    this.init = function (applicationId, clientId, commissionRate) {
+    this.init = function (applicationId, clientId) {
 
         $('#deactivate-message').hide();
 
@@ -26,7 +26,7 @@ function ClientEdit() {
             var agentId = this.value;
 
             if (agentId > 0) {
-                self.assignAgent(clientId, agentId, commissionRate);
+                self.assignAgent(clientId, agentId);
             }
 
             setTimeout(function () {
@@ -167,8 +167,8 @@ function ClientEdit() {
         });
     };
 
-    this.assignAgent = function (clientId, agentId, commissionRate) {
-        var url = ['/api/client/addagent', clientId, agentId, commissionRate].join('/');
+    this.assignAgent = function (clientId, agentId) {
+        var url = ['/api/client/addagent', clientId, agentId].join('/');
 
         var exists = $('#agents button[data-agentid=' + agentId + ']');
 

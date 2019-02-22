@@ -93,13 +93,15 @@ namespace Codes.Service.Services
             return ct;
         }
 
-        public void AddAgentToClient(int clientId, int agentId, decimal commissionRate)
+        public void AddAgentToClient(int clientId, int agentId)
         {
+            var agent = _context.Agents.Where(a => a.AgentId == agentId).Single();
+
             var link = new ClientAgentModel()
             {
                 ClientId = clientId,
                 AgentId = agentId,
-                CommissionRate = commissionRate
+                CommissionRate = (decimal) agent.CommissionRate
             };
 
             _context.ClientAgents.Add(link);
