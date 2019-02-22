@@ -28,6 +28,10 @@ function ClientEdit() {
             if (agentId > 0) {
                 self.assignAgent(clientId, agentId, commissionRate);
             }
+
+            setTimeout(function () {
+                $('#assignedAgent').val(0);
+            }, 500);
         });
 
         $('#agents').on('click', '.agent', function () {
