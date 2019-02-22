@@ -99,7 +99,9 @@ namespace Codes.Service.ViewModels
         [Display(Name = "Broker", Prompt = "Broker")]
         public BrokerViewModel Broker { get; set; } = new BrokerViewModel();
 
+        [Obsolete]
         public int? AgentId { get; set; }
-        public string AgentFullName { get; set; }
+
+        public string AssignedAgents { get; set; }
     }
 }

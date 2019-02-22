@@ -67,7 +67,7 @@ namespace ClientPortal.ViewComponents
                         model = new ClientInfoViewModel()
                         {
                             Address = res.Address,
-                            AgentFullName = res.AgentFullName,
+                            AssignedAgents = res.AssignedAgents,
                             CampaignCount = count,
                             City = res.City,
                             ClientId = res.ClientId,

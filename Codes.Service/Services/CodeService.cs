@@ -1705,6 +1705,8 @@ namespace Codes.Service.Services
             {
                 ClientModel c = await _context.Clients
                     .Include(x => x.Agent)
+                    .Include(x => x.ClientAgents)
+                        .ThenInclude(x => x.Agent)
                     .FirstOrDefaultAsync(x => x.ApplicationReference == referenceId);
 
                 if (c != null && c.ClientId > 0)
@@ -1712,7 +1714,6 @@ namespace Codes.Service.Services
                     model = new ClientViewModel()
                     {
                         Address = c.Address,
-                        AgentFullName = c.Agent == null ? String.Empty : c.Agent.AgentFirstName + " " + c.Agent.AgentLastName,
                         City = c.City,
                         CompanyName = c.CompanyName,
                         Country = c.Country,
@@ -1740,6 +1741,7 @@ namespace Codes.Service.Services
                     };
 
                     model.Broker.BrokerId = c.BrokerId;
+                    model.AssignedAgents = String.Join(", ", c.ClientAgents.Select(ca => $"{ca.Agent.AgentFirstName} {ca.Agent.AgentLastName}"));
                 }
                 else
                     model.Message = "Error: Client not found";

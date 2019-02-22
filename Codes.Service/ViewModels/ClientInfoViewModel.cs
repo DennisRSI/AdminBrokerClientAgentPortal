@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Codes.Service.ViewModels
 {
@@ -86,7 +84,7 @@ namespace Codes.Service.ViewModels
             }
         }
         public string Email { get; set; } = "";
-        public string AgentFullName { get; set; }
+        public string AssignedAgents { get; set; }
         public int CampaignCount { get; set; } = 0;
         public string ClientNotes { get; set; } = "";
         public string Message { get; set; } = "";
