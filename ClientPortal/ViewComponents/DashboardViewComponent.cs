@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Codes.Service.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 
 namespace ClientPortal.ViewComponents
 {
@@ -14,16 +15,19 @@ namespace ClientPortal.ViewComponents
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IDashboardService _dashboardService;
         private readonly IAccountService _accountService;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
         public DashboardViewComponent(SignInManager<ApplicationUser> signInManager,
                                         UserManager<ApplicationUser> userManager,
                                         IDashboardService dashboardService,
-                                        IAccountService accountService)
+                                        IAccountService accountService,
+                                        IHostingEnvironment hostingEnvironment)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _dashboardService = dashboardService;
             _accountService = accountService;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(string role, int id)
@@ -41,30 +45,33 @@ namespace ClientPortal.ViewComponents
                     simulating = false;
                 }
 
-                DashboardViewModel model;
+                var model = new DashboardViewModel();
 
-                switch (role.ToLower())
+                if (_hostingEnvironment.EnvironmentName != "Local")
                 {
-                    case "super administrator":
-                    case "administrator":
-                        model = _dashboardService.GetAdmin();
-                        break;
+                    switch (role.ToLower())
+                    {
+                        case "super administrator":
+                        case "administrator":
+                            model = _dashboardService.GetAdmin();
+                            break;
 
-                    case "broker":
-                        model = _dashboardService.GetBroker(id);
-                        break;
+                        case "broker":
+                            model = _dashboardService.GetBroker(id);
+                            break;
 
-                    case "agent":
-                        model = _dashboardService.GetAgent(id);
-                        break;
+                        case "agent":
+                            model = _dashboardService.GetAgent(id);
+                            break;
 
-                    case "client":
-                        model = _dashboardService.GetClient(id);
-                        break;
+                        case "client":
+                            model = _dashboardService.GetClient(id);
+                            break;
 
-                    default:
-                        model = _dashboardService.GetAdmin();
-                        break;
+                        default:
+                            model = _dashboardService.GetAdmin();
+                            break;
+                    }
                 }
 
                 model.Role = role;
