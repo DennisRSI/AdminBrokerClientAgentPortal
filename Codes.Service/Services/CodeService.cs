@@ -166,7 +166,7 @@ namespace Codes.Service.Services
 
                 if (agent != null && agent.AgentId > 0)
                 {
-                    TotalCommissionPercentagesViewModel percentages = await GetBrokerPercentage(model.BrokerId);
+                    TotalCommissionPercentagesViewModel percentages = await GetBrokerPercentage(model.Broker.BrokerId);
 
                     if (percentages.TotalBrokerCommissionPercentage - model.CommissionRate > 0)
                     {
@@ -220,7 +220,7 @@ namespace Codes.Service.Services
             {
                 ClientModel client = new ClientModel(model);
                 
-                TotalCommissionPercentagesViewModel percentages = await GetBrokerPercentage(model.BrokerId);
+                TotalCommissionPercentagesViewModel percentages = await GetBrokerPercentage(model.Broker.BrokerId);
 
                 if (percentages.TotalBrokerCommissionPercentage - model.CommissionRate > 0)
                 {
