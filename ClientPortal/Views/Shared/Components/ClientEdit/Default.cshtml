@@ -185,9 +185,10 @@
                         <select id="assignedAgent" name="assignedAgent" class="form-control" asp-items="@Model.Agents">
                             <option value="0">Select Agent</option>
                         </select>
-                        <div id="agents" class="spacer-10">
-                            @await Component.InvokeAsync("AssignedAgents", new { clientId = Model.ClientId })
-                        </div>
+                        @* Temporarily disable this until the reports are change to allow for multiple agents
+            <div id="agents" class="spacer-10">
+            @await Component.InvokeAsync("AssignedAgents", new { clientId = Model.ClientId })
+        </div>*@
                         <hr style="margin-bottom: 0" />
                     </div>
                 </div>
