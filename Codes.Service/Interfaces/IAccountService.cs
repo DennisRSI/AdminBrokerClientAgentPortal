@@ -1,5 +1,6 @@
 ﻿using Codes.Service.ViewModels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Codes.Service.Interfaces
 {
@@ -33,7 +34,7 @@ namespace Codes.Service.Interfaces
         int GetCardQuantityByClient(int clientId, string cardType = "");
         void AddAgentToClient(int clientId, int agentId);
         void RemoveAgentFromClient(int clientId, int agentId);
-        void UpdateClientCommissionRate(int clientId, int agentId, decimal commissionRate);
+        Task<bool> UpdateClientCommissionRate(int clientId, int agentId, decimal commissionRate);
 
         AccountCommonModel GetAccountCommon(string reference);
     }

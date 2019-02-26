@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Codes.Service.Services
 {
@@ -16,12 +17,14 @@ namespace Codes.Service.Services
         private readonly ILogger _logger;
         private readonly CodesDbContext _context;
         private readonly IMapper _mapper;
+        private readonly ICodeService _codeService;
 
-        public AccountService(CodesDbContext context, ILoggerFactory loggerFactory, IMapper mapper)
+        public AccountService(CodesDbContext context, ILoggerFactory loggerFactory, IMapper mapper, ICodeService codeService)
         {
             _context = context;
             _logger = loggerFactory.CreateLogger<CodeService>();
             _mapper = mapper;
+            _codeService = codeService;
         }
 
         public int GetIdFromReference(string reference)
@@ -115,11 +118,21 @@ namespace Codes.Service.Services
             _context.SaveChanges();
         }
 
-        public void UpdateClientCommissionRate(int clientId, int agentId, decimal commissionRate)
+        public async Task<bool> UpdateClientCommissionRate(int clientId, int agentId, decimal commissionRate)
         {
-            var link = _context.ClientAgents.Single(ca => ca.ClientId == clientId && ca.AgentId == agentId);
-            link.CommissionRate = commissionRate;
-            _context.SaveChanges();
+            var client = _context.Clients.Single(c => c.ClientId == clientId);
+            var percentages = await _codeService.GetBrokerPercentage(client.BrokerId);
+
+            if (percentages.TotalBrokerCommissionPercentage - (float)commissionRate > 0)
+            {
+                var link = _context.ClientAgents.Single(ca => ca.ClientId == clientId && ca.AgentId == agentId);
+                link.CommissionRate = commissionRate;
+                _context.SaveChanges();
+
+                return true;
+            }
+
+            return false;
         }
 
         public ClientEditViewModel GetClientEdit(int clientId)

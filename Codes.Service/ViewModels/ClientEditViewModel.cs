@@ -25,6 +25,7 @@ namespace Codes.Service.ViewModels
         public string CommissionRate { get; set; }
         public int AgentId { get; set; }
         public DateTime? DeactivationDate { get; set; }
+        public string ErrorMessage { get; set; }
 
         public string UserName
         {

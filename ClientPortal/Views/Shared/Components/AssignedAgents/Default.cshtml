@@ -1,4 +1,7 @@
 ﻿@model Codes.Service.ViewModels.ClientEditViewModel
+
+<div style="color: red; margin-bottom: 10px">@Model.ErrorMessage</div>
+
 @foreach (var agent in Model.AssignedAgents)
 {
     <div class="input-group">

@@ -30,9 +30,10 @@ namespace ClientPortal.ViewComponents
             _accountService = accountService;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(int clientId)
+        public async Task<IViewComponentResult> InvokeAsync(int clientId, string errorMessage)
         {
             var model = _accountService.GetClientEdit(clientId);
+            model.ErrorMessage = errorMessage;
 
             return await Task.FromResult(View(model));
         }

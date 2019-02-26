@@ -1,9 +1,11 @@
-﻿using ClientPortal.Models;
+﻿using System;
+using ClientPortal.Models;
 using ClientPortal.Services._Interfaces;
 using Codes.Service.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ClientPortal.ViewComponents;
+using System.Threading.Tasks;
 
 namespace ClientPortal.Controllers.APIs
 {
@@ -41,10 +43,17 @@ namespace ClientPortal.Controllers.APIs
         }
 
         [HttpPost("updatecommission/{clientId}/{agentId}/{commissionRate}")]
-        public IActionResult UpdateCommission(int clientId, int agentId, decimal commissionRate)
+        public async Task<IActionResult> UpdateCommission(int clientId, int agentId, decimal commissionRate)
         {
-            _accountService.UpdateClientCommissionRate(clientId, agentId, commissionRate);
-            return ViewComponent(typeof(AssignedAgentsViewComponent), clientId);
+            var errorMessage = String.Empty;
+            var result = await _accountService.UpdateClientCommissionRate(clientId, agentId, commissionRate);
+
+            if (!result)
+            {
+                errorMessage = "Error: The commission rate for this agent would be above the total commission you are getting for your company.";
+            }
+
+            return ViewComponent(typeof(AssignedAgentsViewComponent), new { clientId, errorMessage });
         }
     }
 }
