@@ -24,6 +24,7 @@ namespace ClientPortal
             CreateMap<ApplicationUser, ProfileViewModel>(MemberList.Source);
             CreateMap<ClientModel, ClientEditViewModel>();
             CreateMap<ApplicationUser, MyAccountViewModel>(MemberList.Source);
+            CreateMap<ApplicationUser, MyClientsViewModel>(MemberList.Source);
         }
     }
 }

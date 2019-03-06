@@ -1,9 +1,8 @@
-﻿using ClientPortal.Models;
+﻿using AutoMapper;
+using ClientPortal.Models;
+using ClientPortal.Models._ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ClientPortal.ViewComponents
@@ -12,11 +11,13 @@ namespace ClientPortal.ViewComponents
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMapper _mapper;
 
-        public MyClientsViewComponent(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public MyClientsViewComponent(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IMapper mapper)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
@@ -24,7 +25,18 @@ namespace ClientPortal.ViewComponents
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
                 var user = await _userManager.GetUserAsync(HttpContext.User);
-                return View(user);
+                var model = _mapper.Map<ApplicationUser, MyClientsViewModel>(user);
+
+                if (user.Role.Contains("Client") || user.Role.Contains("Agent"))
+                {
+                    model.ShowAddNewClientButton = false;
+                }
+                else
+                {
+                    model.ShowAddNewClientButton = true;
+                }
+
+                return View(model);
             }
 
             return null;
