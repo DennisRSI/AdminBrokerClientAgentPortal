@@ -32,14 +32,18 @@ namespace ClientPortal.Controllers.APIs
         public IActionResult AddAgent(int clientId, int agentId)
         {
             _accountService.AddAgentToClient(clientId, agentId);
-            return ViewComponent(typeof(AssignedAgentsViewComponent), clientId);
+
+            string errorMessage = String.Empty;
+            return ViewComponent(typeof(AssignedAgentsViewComponent), new { clientId, errorMessage });
         }
 
         [HttpPost("removeagent/{clientId}/{agentId}")]
         public IActionResult RemoveAgent(int clientId, int agentId)
         {
             _accountService.RemoveAgentFromClient(clientId, agentId);
-            return ViewComponent(typeof(AssignedAgentsViewComponent), clientId);
+
+            string errorMessage = String.Empty;
+            return ViewComponent(typeof(AssignedAgentsViewComponent), new { clientId, errorMessage });
         }
 
         [HttpPost("updatecommission/{clientId}/{agentId}/{commissionRate}")]

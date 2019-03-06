@@ -29,10 +29,9 @@ function ClientEdit() {
                 self.assignAgent(clientId, agentId);
             }
 
-            // Temporarily disable this until the reports are change to allow for multiple agents
-            //setTimeout(function () {
-            //    $('#assignedAgent').val(0);
-            //}, 500);
+            setTimeout(function () {
+                $('#assignedAgent').val(0);
+            }, 500);
         });
 
         $('#agents').on('click', '.agent', function () {
