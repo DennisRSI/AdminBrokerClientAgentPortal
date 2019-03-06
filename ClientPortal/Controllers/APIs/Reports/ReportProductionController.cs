@@ -46,6 +46,7 @@ namespace ClientPortal.Controllers.APIs
 
             var model = new ProductionLoadViewModel
             {
+                UserType = user.Role,
                 ReportType = GetReportType(type),
                 Brokers = accountQuery.GetBrokers().Select(b => new SelectListItem() { Value = b.Id.ToString(), Text = b.FullName }),
                 Clients = accountQuery.GetClients().Select(c => new SelectListItem() { Value = c.Id.ToString(), Text = c.CompanyName }),

@@ -157,6 +157,6 @@
 <script src="~/js/reports/report.js" asp-append-version="true"></script>
 <script src="~/js/reports/production.js" asp-append-version="true"></script>
 <script>
-    PRODUCTION.init();
+    PRODUCTION.init('@Model.UserType');
     REPORT.init();
 </script>

@@ -2,9 +2,10 @@
 
 function Production() {
     var self = this;
+    var _role;
 
-    this.init = function () {
-
+    this.init = function (role) {
+        self._role = role;
         self.updateControls();
 
         $('#select-report').change(function () {
@@ -14,13 +15,13 @@ function Production() {
         $('button.runreport').click(function () {
             self.getHtml();
         });
-    }
+    };
 
     this.updateControls = function () {
         $('.filter').addClass('hidden');
         var value = $('#select-report option:selected').val();
         $('#' + value).removeClass('hidden');
-    }
+    };
 
     this.getHtml = function () {
         var type = $('#select-report').val();
@@ -34,11 +35,11 @@ function Production() {
 
         var url = '/api/reportproduction/gethtmldetail';
 
-        if (id == 0) {
+        if (id === '0') {
             url = '/api/reportproduction/gethtmlsummary';
         }
 
-        var url = [url, type, id, name, paymentStatus, checkOutStart, checkOutEnd, bookingStart, bookingEnd].join('/');
+        url = [url, type, id, name, paymentStatus, checkOutStart, checkOutEnd, bookingStart, bookingEnd].join('/');
         url = encodeURI(url);
 
         $("#loader-container").show();
@@ -51,15 +52,15 @@ function Production() {
                 $('#start-report').hide();
                 $('#update-report').removeClass('hidden');
                 $("#loader-container").hide();
-                self.initDataTables();
+                self.initDataTables(id);
             },
             error: function (xhr, resp, text) {
                 console.log(xhr, resp, text);
             }
-        })
-    }
+        });
+    };
 
-    this.initDataTables = function () {
+    this.initDataTables = function (id) {
         var sortColumn = $('.jambo_table').data('sortcolumn');
         var sortOrder = $('.jambo_table').data('sortorder');
 
@@ -71,5 +72,11 @@ function Production() {
                 "order": [[sortColumn, sortOrder]]
             });
         }
-    }
+
+        if (id === '0' && self._role === 'Agent') {
+            var table = $('.jambo_table').DataTable();
+            var column = table.column(4);
+            column.visible(false);
+        }
+    };
 }

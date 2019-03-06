@@ -5,6 +5,7 @@ namespace ClientPortal.Models
 {
     public class ProductionLoadViewModel
     {
+        public string UserType { get; set; }
         public IEnumerable<SelectListItem> ReportType { get; set; }
         public IEnumerable<SelectListItem> Brokers { get; set; }
         public IEnumerable<SelectListItem> Clients { get; set; }
