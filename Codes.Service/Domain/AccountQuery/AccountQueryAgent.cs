@@ -29,14 +29,17 @@ namespace Codes.Service.Domain
 
         public IEnumerable<AccountViewModel> GetCampaigns()
         {
-            return _context.Campaigns.Where(c => c.Client.AgentId == _agentId)
+            var clientIdList = _context.ClientAgents.Where(ca => ca.AgentId == _agentId)
+                .Select(ca => ca.ClientId);
+
+            return _context.Campaigns.Where(c => clientIdList.Contains(c.ClientId.Value))
                 .Select(c => new AccountViewModel() { Id = c.CampaignId, CompanyName = c.CampaignName });
         }
 
         public IEnumerable<AccountViewModel> GetClients()
         {
-            return _context.Clients.Where(c => c.AgentId == _agentId)
-                    .Select(c => new AccountViewModel() { Id = c.ClientId, FirstName = c.ContactFirstName, LastName = c.ContactLastName, CompanyName = c.CompanyName });
+            return _context.ClientAgents.Where(ca => ca.AgentId == _agentId)
+                    .Select(ca => new AccountViewModel() { Id = ca.ClientId, FirstName = ca.Client.ContactFirstName, LastName = ca.Client.ContactLastName, CompanyName = ca.Client.CompanyName });
         }
     }
 }

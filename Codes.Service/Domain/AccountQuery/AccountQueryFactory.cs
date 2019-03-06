@@ -13,11 +13,6 @@ namespace Codes.Service.Domain
 
         public IAccountQuery GetAccountQuery(int brokerId, int agentId, int clientId)
         {
-            if (brokerId > 0)
-            {
-                return new AccountQueryBroker(_context, brokerId);
-            }
-
             if (agentId > 0)
             {
                 return new AccountQueryAgent(_context, agentId);
@@ -26,6 +21,11 @@ namespace Codes.Service.Domain
             if (clientId > 0)
             {
                 return new AccountQueryClient(_context, clientId);
+            }
+
+            if (brokerId > 0)
+            {
+                return new AccountQueryBroker(_context, brokerId);
             }
 
             return new AccountQueryAdmin(_context);
