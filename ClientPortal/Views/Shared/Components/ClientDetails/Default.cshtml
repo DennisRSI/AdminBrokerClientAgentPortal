@@ -1,621 +1,623 @@
 ﻿@model Codes.Service.ViewModels.ClientDetailsViewModel
-
-@{
-    
-}
-    <div id="confirmation-modal" class="modal fade confirm-deactivate-modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"></span>
-                    </button>
-                    <h4 class="modal-title">Deactivate Campaign</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Enter a reason for deactivation.</p>
-                    <div class="form-group">
-                        <div class="col-lg-12 col-sm-12 col-xs-12">
-                            <input id="reason" type="text" class="form-control" placeholder="Reason for deactivation">
-                        </div>
+<div id="confirmation-modal" class="modal fade confirm-deactivate-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+                <h4 class="modal-title">Deactivate Campaign</h4>
+            </div>
+            <div class="modal-body">
+                <p>Enter a reason for deactivation.</p>
+                <div class="form-group">
+                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                        <input id="reason" type="text" class="form-control" placeholder="Reason for deactivation">
                     </div>
-                    <br />
-                    <div class="clearfix"></div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button id="deactivate" type="button" class="btn btn-primary">Deactivate</button>
-                </div>
+                <br />
                 <div class="clearfix"></div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button id="deactivate" type="button" class="btn btn-primary">Deactivate</button>
+            </div>
+            <div class="clearfix"></div>
         </div>
     </div>
+</div>
 
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <br />
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Client Management</h2>
-                <div class="title-right pull-right">
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <br />
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Client Management</h2>
+            <div class="title-right pull-right">
+                @if (Model.ShowEditButton)
+                {
                     <a type="button" href="#" class="btn btn-sm btn-travnow nav-page-id" data-controller="view" data-page="clientedit" data-id="@Model.ClientId">
                         <i class="fa fa-edit icon-white purchase-button-icon"></i>Edit
                     </a>
-                </div>
-                <div class="clearfix"></div>
+                }
             </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <vc:client-info account-id="@Model.ApplicationReference"></vc:client-info>
-                    <table class="table table-responsive table-bordered table-condensed table-hover">
-                        <tablehead class="bold-table-text">
-                            <tr>
-                                <th class="bg-info"></th>
-                                <th class="bg-info">Physical</th>
-                                <th class="bg-info">Virtual</th>
-                            </tr>
-                        </tablehead>
-                        <tablebody>
-                            <tr>
-                                <td>Cards in Campaigns</td>
-                                <td>@Html.DisplayFor(m => m.PhysicalInCampaigns)</td>
-                                <td>@Html.DisplayFor(m => m.VirtualInCampaigns)</td>
-                            </tr>
-                        </tablebody>
-                    </table>
-                </div>
-                <!-- Chart Campaign Distribution -->
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 invisible">
-                    <div class="x_panel">
-                        <div class="x_content">
-                            <div class="text-center"><h4>Campaign Distribution</h4></div>
-                            <div id="nocampaigns" class="text-center"><em>No campaigns have been created</em></div>
-                            <canvas id="chart-campaign" style="height:350px;"></canvas>
-                        </div>
-                    </div>
-                </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <vc:client-info account-id="@Model.ApplicationReference"></vc:client-info>
+                <table class="table table-responsive table-bordered table-condensed table-hover">
+                    <tablehead class="bold-table-text">
+                        <tr>
+                            <th class="bg-info"></th>
+                            <th class="bg-info">Physical</th>
+                            <th class="bg-info">Virtual</th>
+                        </tr>
+                    </tablehead>
+                    <tablebody>
+                        <tr>
+                            <td>Cards in Campaigns</td>
+                            <td>@Html.DisplayFor(m => m.PhysicalInCampaigns)</td>
+                            <td>@Html.DisplayFor(m => m.VirtualInCampaigns)</td>
+                        </tr>
+                    </tablebody>
+                </table>
             </div>
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>Client Campaigns</h2>
-                    <div class="title-right pull-right">
-                        <button type="button" class="btn btn-travgreen btn-sm" data-toggle="modal" data-target=".new-campaign-modal-lg">
-                            <i class="fa fa-flag icon-white purchase-button-icon"></i>Add Campaign
-                        </button>
-                        <div class="modal fade new-campaign-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <form id="addCampaignForm">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                            <h3 class="modal-title" id="myModalLabel2"><span class="fa fa-flag left pull-right"></span>Create Campaign </h3>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                    <h4>@Model.CompanyName Campaign Creation</h4><br />
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                                                    <label for="campaignName">Create Campaign Name</label>
-                                                    <input type="text" class="form-control" id="campaignName" name="campaignName" tabindex="1" placeholder="Campaign Name" required>
-                                                    <br />
-                                                    <label for="faceValue">Face Value</label>
-                                                    <input type="number" class="form-control" id="faceValue" name="faceValue" tabindex="3" placeholder="Face value of card" required>
-                                                    <br />
-                                                    <label for="cardQuantity">Select Quantity</label>
-                                                    <input type="number" class="form-control" id="cardQuantity" name="cardQuantity" tabindex="5" placeholder="Card Qty" required>
-                                                    <br />
-                                                    <label for="cardPrefix">Pre-Alpha Character(s)</label>
-                                                    <input type="text" class="form-control" id="cardPrefix" name="cardPrefix" maxlength="3" tabindex="7" placeholder="Alpha character to be at the start of each card." required>
-                                                    <br />
-                                                    <label for="padding">Padding</label>
-                                                    <input type="text" class="form-control" id="padding" name="padding" maxlength="2" tabindex="9" value="6" placeholder="Number of placeholder digits" required>
-                                                    <br />
-                                                </div>
-                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                                                    <label for="campaignType">Select Card Type</label>
-                                                    <select class="form-control nested-dropdown" id="campaignType" name="campaignType" tabindex="2" style="margin-bottom: 0">
-                                                        <option>Virtual</option>
-                                                        <option>Physical</option>
-                                                    </select>
-                                                    <br />
-                                                    <label for="startNumber">Starting Number</label>
-                                                    <input type="number" class="form-control" id="startNumber" name="startNumber" tabindex="4" placeholder="First number of the card sequence." required>
-                                                    <br />
-                                                    <label for="activationsPerCard">Activations Per Card</label>
-                                                    <input type="number" class="form-control" id="activationsPerCard" name="activationsPerCard" tabindex="6" value="1" placeholder="Determines how many activations each individual card number can have." required>
-                                                    <br />
-                                                    <label for="cardSuffix">Post-Alpha Character(s)</label>
-                                                    <input type="text" class="form-control" id="cardSuffix" name="cardSuffix" maxlength="3" tabindex="8" placeholder="Alpha character to be at the end of each card.">
-                                                    <br />
-                                                    <label for="increment">Increment</label>
-                                                    <input type="number" class="form-control" id="increment" name="increment" maxlength="3" tabindex="10" value="3" placeholder="Increment card numbers by this amount" required>
-                                                    <br />
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <span>Select Benefits For This Campaign:</span>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" class="flat" checked="checked" disabled="disabled"> Hotel Benefit
-                                                        </label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input id="benefitCondo" value="true" name="benefitCondo" type="checkbox" class="flat"> Condo Benefit
-                                                        </label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input id="benefitShopping" value="true" name="benefitShopping" type="checkbox" class="flat"> Shopping Benefit
-                                                        </label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input id="benefitDining" value="true" name="benefitDining" type="checkbox" class="flat"> Dining Benefit
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div class="row">
-                                                <div class="col-md-3 col-sm-6 col-xs-12">
-                                                    <h5><i class="fa fa-calendar"></i> &nbsp;Campaign Start Date:</h5>
-                                                    <fieldset class="form-horizontal">
-                                                        <div class="control-group">
-                                                            <div class="controls">
-                                                                <div class=" form-group text-center">
-                                                                    <input id="startDate" name="startDate" type="date" class="form-control has-feedback-left" placeholder="Start Date" required>
-                                                                    <span class="disclaimer-text">MM/DD/YYYY</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </fieldset>
-                                                </div>
-                                                <div class="col-md-3 col-sm-6 col-xs-12">
-                                                    <h5><i class="fa fa-calendar"></i> &nbsp;Campaign End Date:</h5>
-                                                    <fieldset class="form-horizontal">
-                                                        <div class="control-group">
-                                                            <div class="controls">
-                                                                <div class=" form-group text-center">
-                                                                    <input id="endDate" name="endDate" type="date" class="form-control has-feedback-left" placeholder="End Date">
-                                                                    <span class="disclaimer-text">MM/DD/YYYY</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </fieldset>
-                                                </div>
-                                            </div><br />
-                                            <div class="row">
-                                                <div class="col-lg-12 col-md-12 form-group">
-                                                    <label for="campaignDescription">Describe This Campaign</label>
-                                                    <textarea class="form-control" id="campaignDescription" name="campaignDescription" placeholder="Please describe the campaign." rows="6" required></textarea>
-                                                    <br />
-                                                </div>
-                                            </div>
-                                            <hr class="card-hr">
-                                            <div class="row">
-                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                    <h4>Create Activation Flow Landing Page - <span style="color: #E74C3C">COMING SOON</span></h4>
-                                                    <p class="">The activation flow landing pages are where members will come to learn how to use and activate their new card. You can select from pre-made templates and educational videos or more advanced users have the option of inserting your own HTML code and upload or link to your own self-produced videos.</p><strong>You must select both a Pre-Activation and Post-Activation layout below before your campaign will be fully activated.</strong><p></p>
-                                                    <br />
-                                                </div>
-                                            </div>
-                                            <!-- start Activation Flow Tab Group -->
-                                            <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                                                <!-- Tab Headers -->
-                                                <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                                                    <li role="presentation" class="active">
-                                                        <a href="#standard-tab" id="home-tab" role="tab" data-toggle="tab">Pre-Activation Layout</a>
-                                                    </li>
-                                                    <li role="presentation" class="">
-                                                        <a href="#custom-tab" role="tab" id="profile-tab" data-toggle="tab">Post-Activation Layout</a>
-                                                    </li>
-                                                </ul>
-                                                <!-- End Tab Headers -->
-                                                <div id="myTabContent" class="tab-content">
-                                                    <!-- Tab 1 Content -->
-                                                    <div role="tabpanel" class="tab-pane fade active in" id="standard-tab">
-                                                        <!-- Accordian Start -->
-                                                        <div class="accordion" id="accordionPre" role="tablist" aria-multiselectable="true">
-                                                            <!-- Panel 1 -->
-                                                            <div class="panel">
-                                                                <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordionPre" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                                    <h4 class="panel-title">Standard Layout Options</h4>
-                                                                </a>
-                                                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                                                    <div class="panel-body">
-                                                                        <div class="row">
-                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                <label>1. Select a Pre-Activation Layout Template:</label><p></p>
-                                                                            </div>
-                                                                            <!-- Start Template Carousel -->
-                                                                            <div id="preTempCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-                                                                                <div class="carousel-inner" role="listbox">
-                                                                                    <div class="item active">
-                                                                                        <!-- Start Template Slide 1 -->
-                                                                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                                                            <div class="x_panel text-center">
-                                                                                                <image class="img-responsive form-group" src="images/landingpages/PreActivation-1.jpg">
-                                                                                                    <a href="template-pre-1.html" target="_blank"><button class="btn btn-default btn-sm" type="button">Preview</button></a>
-                                                                                                    <button class="btn btn-travgreen btn-sm" type="button">Select</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                                                            <div class="x_panel text-center">
-                                                                                                <image class="img-responsive form-group" src="images/template-placeholder.jpg">
-                                                                                                    <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                                    <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                                                            <div class="x_panel text-center">
-                                                                                                <image class="img-responsive form-group" src="images/template-placeholder.jpg">
-                                                                                                    <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                                    <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                                                            <div class="x_panel text-center">
-                                                                                                <image class="img-responsive form-group" src="images/template-placeholder.jpg">
-                                                                                                    <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                                    <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <!-- End Template Slide 1 -->
-                                                                                    </div>
-                                                                                    <div class="item">
-                                                                                        <!-- Start Template Slide 2 -->
-                                                                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                                                            <div class="x_panel text-center">
-                                                                                                <image class="img-responsive form-group" src="images/template-placeholder.jpg">
-                                                                                                    <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                                    <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                                                            <div class="x_panel text-center">
-                                                                                                <image class="img-responsive form-group" src="images/template-placeholder.jpg">
-                                                                                                    <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                                    <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                                                            <div class="x_panel text-center">
-                                                                                                <image class="img-responsive form-group" src="images/template-placeholder.jpg">
-                                                                                                    <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                                    <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                                                            <div class="x_panel text-center">
-                                                                                                <image class="img-responsive form-group" src="images/template-placeholder.jpg">
-                                                                                                    <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                                    <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <!-- End Template Slide 2 -->
-                                                                                    </div>
-                                                                                </div>
-                                                                                <!-- Carousel Controls -->
-                                                                                <a class="left custom-carousel-control" href="#preTempCarousel" role="button" data-slide="prev">
-                                                                                    <span class="fa fa-angle-left" aria-hidden="true"></span>
-                                                                                    <span class="sr-only">Previous</span>
-                                                                                </a>
-                                                                                <a class="right custom-carousel-control" href="#preTempCarousel" role="button" data-slide="next">
-                                                                                    <span class="fa fa-angle-right" aria-hidden="true"></span>
-                                                                                    <span class="sr-only">Next</span>
-                                                                                </a>
-                                                                                <!-- End Carousel Controls -->
-                                                                            </div>
-                                                                            <!-- End Template Carousel -->
-
-                                                                            <div id="preActivationVideo" class="clearfix">
-                                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                    <br />
-                                                                                    <label>2. Select a Pre-Activation Video:<br /><span class="disclaimer-text-larger"><em>Optionally, you can insert or upload your own video in the next step:</em></span></label><p></p>
-                                                                                </div>
-
-                                                                                <!-- Template for pre and post videos -->
-                                                                                <script id="template" type="text/x-jsrender">
-                                                                                    <div class="video col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                                                                        <div class="x_panel text-center">
-                                                                                            <div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 10px">
-                                                                                                <iframe src="{{:url}}" class="embed-responsive-item" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                                                                                            </div>
-                                                                                            <!-- <button class="btn btn-default btn-sm" type="button">Preview</button> -->
-                                                                                            <button class="btn btn-travgreen btn-sm video-select" type="button" data-videoid="{{:videoId}}">Select</button>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </script>
-
-                                                                                <!-- Start Video Carousel -->
-                                                                                <input type="hidden" id="preLoginVideoId" name="preLoginVideoId">
-                                                                                <div id="preVidCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-                                                                                    <div class="carousel-inner" role="listbox">
-                                                                                    </div>
-                                                                                    <!-- Carousel Controls -->
-                                                                                    <a class="left custom-carousel-control" href="#preVidCarousel" role="button" data-slide="prev">
-                                                                                        <span class="fa fa-angle-left" aria-hidden="true"></span>
-                                                                                        <span class="sr-only">Previous</span>
-                                                                                    </a>
-                                                                                    <a class="right custom-carousel-control" href="#preVidCarousel" role="button" data-slide="next">
-                                                                                        <span class="fa fa-angle-right" aria-hidden="true"></span>
-                                                                                        <span class="sr-only">Next</span>
-                                                                                    </a>
-                                                                                    <!-- End Carousel Controls -->
-                                                                                </div>
-                                                                                <!-- End Video Carousel -->
-                                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                    <br />
-                                                                                    <label>3. Enter Pre-Activation Video URL (Optional):</label>
-                                                                                </div>
-                                                                                <div class="col-lg-5 col-md-6 col-sm-9 col-xs-12 form-group">
-                                                                                    <input id="preLoginVideoUrl" name="preLoginVideoUrl" type="text" class="form-control" placeholder="example: http://youtube.com/xR5pfy2">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- Panel 2 -->
-                                                            <div class="panel">
-                                                                <a class="panel-heading" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordionPre" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                                                    <h4 class="panel-title">Custom CSS (Optional)</h4>
-                                                                </a>
-                                                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                                    <div class="panel-body">
-                                                                        <div class="row">
-                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                If you prefer, an experienced designer can provide custom CSS code to style your Pre-Activation landing page.<p></p>
-                                                                                <textarea id="customCss" name="customCss" class="form-control" placeholder="Paste optional custom CSS code" rows="25"></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                        <br />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <br />
-                                                            <a href="http://travnow.com" target="_blank"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-desktop purchase-button-icon"></i>Preview Pre-Activation Layout&nbsp;</button></a>
-                                                        </div>
-                                                        <!-- Accordian End -->
-                                                    </div>
-                                                    <!-- End Tab 1 Content -->
-                                                    <!-- Start Tab 2 Content -->
-                                                    <div role="tabpanel" class="tab-pane fade" id="custom-tab">
-                                                        <!-- Accordian Start -->
-                                                        <div class="accordion" id="accordionPost" role="tablist" aria-multiselectable="true">
-                                                            <!-- Panel 1 -->
-                                                            <div class="panel">
-                                                                <a class="panel-heading" role="tab" id="headingThree" data-toggle="collapse" data-parent="#accordionPost" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                                                                    <h4 class="panel-title">Standard Layout Options</h4>
-                                                                </a>
-                                                                <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
-                                                                    <div class="panel-body">
-                                                                        <div class="row">
-                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                <label>1. Select a Post-Activation Layout Template:</label><p></p>
-                                                                            </div>
-                                                                            <!-- Start Template Carousel -->
-                                                                            <div id="postTempCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-                                                                                <div class="carousel-inner" role="listbox">
-                                                                                    <div class="item active">
-                                                                                        <!-- Start Template Slide 1 -->
-                                                                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                                                            <div class="x_panel text-center">
-                                                                                                <image class="img-responsive form-group" src="images/landingpages/PostActivation-1.jpg">
-                                                                                                    <a href="template-post-1.html" target="_blank"><button class="btn btn-default btn-sm" type="button">Preview</button></a>
-                                                                                                    <button class="btn btn-travgreen btn-sm" type="button">Select</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                                                            <div class="x_panel text-center">
-                                                                                                <image class="img-responsive form-group" src="images/template-placeholder.jpg">
-                                                                                                    <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                                    <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                                                            <div class="x_panel text-center">
-                                                                                                <image class="img-responsive form-group" src="images/template-placeholder.jpg">
-                                                                                                    <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                                    <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                                                            <div class="x_panel text-center">
-                                                                                                <image class="img-responsive form-group" src="images/template-placeholder.jpg">
-                                                                                                    <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                                    <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <!-- End Template Slide 1 -->
-                                                                                    </div>
-                                                                                    <div class="item">
-                                                                                        <!-- Start Template Slide 2 -->
-                                                                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                                                            <div class="x_panel text-center">
-                                                                                                <image class="img-responsive form-group" src="images/template-placeholder.jpg">
-                                                                                                    <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                                    <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                                                            <div class="x_panel text-center">
-                                                                                                <image class="img-responsive form-group" src="images/template-placeholder.jpg">
-                                                                                                    <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                                    <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                                                            <div class="x_panel text-center">
-                                                                                                <image class="img-responsive form-group" src="images/template-placeholder.jpg">
-                                                                                                    <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                                    <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                                                            <div class="x_panel text-center">
-                                                                                                <image class="img-responsive form-group" src="images/template-placeholder.jpg">
-                                                                                                    <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
-                                                                                                    <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <!-- End Template Slide 2 -->
-                                                                                    </div>
-                                                                                </div>
-                                                                                <!-- Carousel Controls -->
-                                                                                <a class="left custom-carousel-control" href="#postTempCarousel" role="button" data-slide="prev">
-                                                                                    <span class="fa fa-angle-left" aria-hidden="true"></span>
-                                                                                    <span class="sr-only">Previous</span>
-                                                                                </a>
-                                                                                <a class="right custom-carousel-control" href="#postTempCarousel" role="button" data-slide="next">
-                                                                                    <span class="fa fa-angle-right" aria-hidden="true"></span>
-                                                                                    <span class="sr-only">Next</span>
-                                                                                </a>
-                                                                                <!-- End Carousel Controls -->
-                                                                            </div>
-                                                                            <!-- End Template Carousel -->
-
-                                                                            <div id="postActivationVideo" class="clearfix">
-
-                                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                    <br />
-                                                                                    <label>2. Select a Post-Activation Video:<br /><span class="disclaimer-text-larger"><em>Optionally, you can insert or upload your own video in the next step:</em></span></label><p></p>
-                                                                                </div>
-                                                                                <!-- Start Video Carousel -->
-                                                                                <input type="hidden" id="postLoginVideoId" name="postLoginVideoId">
-                                                                                <div id="postVidCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-                                                                                    <div class="carousel-inner" role="listbox">
-                                                                                    </div>
-                                                                                    <!-- Carousel Controls -->
-                                                                                    <a class="left custom-carousel-control" href="#postVidCarousel" role="button" data-slide="prev">
-                                                                                        <span class="fa fa-angle-left" aria-hidden="true"></span>
-                                                                                        <span class="sr-only">Previous</span>
-                                                                                    </a>
-                                                                                    <a class="right custom-carousel-control" href="#postVidCarousel" role="button" data-slide="next">
-                                                                                        <span class="fa fa-angle-right" aria-hidden="true"></span>
-                                                                                        <span class="sr-only">Next</span>
-                                                                                    </a>
-                                                                                    <!-- End Carousel Controls -->
-                                                                                </div>
-                                                                                <!-- End Video Carousel -->
-                                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                    <br />
-                                                                                    <label>3. Enter Post-Activation Video URL (Optional):</label>
-                                                                                </div>
-                                                                                <div class="col-lg-5 col-md-6 col-sm-9 col-xs-12 form-group">
-                                                                                    <input id="postLoginVideoUrl" name="postLoginVideoUrl" type="text" class="form-control" placeholder="example: http://youtube.com/xR5pfy2">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- Panel 2 -->
-                                                            <div class="panel">
-                                                                <a class="panel-heading" role="tab" id="headingFour" data-toggle="collapse" data-parent="#accordionPost" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                                                                    <h4 class="panel-title">Custom CSS (Optional)</h4>
-                                                                </a>
-                                                                <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-                                                                    <div class="panel-body">
-                                                                        <div class="row">
-                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                If you prefer, an experienced designer can provide custom CSS code to style your Post-Activation landing page.<p></p>
-                                                                                <textarea id="customCssPost" name="customCssPost" class="form-control" placeholder="Paste optional custom CSS code" rows="25"></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                        <br />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <br />
-                                                            <a href="http://travnow.com" target="_blank"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-desktop purchase-button-icon"></i>Preview Post-Activation Layout&nbsp;</button></a>
-                                                        </div>
-                                                        <!-- Accordian End -->
-                                                    </div>
-                                                    <!-- End Tab 2 Content -->
-                                                </div>
-                                            </div>
-                                            <!-- End Activation Flow Tab Group -->
-                                            <br />
-
-                                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <hr>
-                                                <label for="logoUpload">4. Upload Custom Logo (Optional):</label>
-                                                <input type="file" id="logoUpload">
-                                                <span class="help-block">Recommended: .PNG, 250x115</span>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <hr>
-                                                <label>5. Insert Google Analytics Tracking Code (Optional):</label>
-                                            </div>
-                                            <div class="col-lg-5 col-md-6 col-sm-9 col-xs-12 form-group">
-                                                <input id="googleAnalyticsCode" name="googleAnalyticsCode" type="text" class="form-control" placeholder="UA-XXXXXXXX-X" />
-                                                <span class="help-block">Note: You can set up a new Google Analytics tracking ID for each campaign and track them individually.</span>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                            <button id="addCampaignButton" type="button" class="btn btn-travnow">Create Campaign</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+            <!-- Chart Campaign Distribution -->
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 invisible">
+                <div class="x_panel">
+                    <div class="x_content">
+                        <div class="text-center"><h4>Campaign Distribution</h4></div>
+                        <div id="nocampaigns" class="text-center"><em>No campaigns have been created</em></div>
+                        <canvas id="chart-campaign" style="height:350px;"></canvas>
                     </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <table id="campaign_tbl" class="table table-striped table-bordered jambo_table bulk_action">
-                        <thead>
-                            <tr>
-                                <th>Campaign ID</th>
-                                <th>Campaign Name</th>
-                                <th>Start Number</th>
-                                <th>End Number</th>
-                                <th>Increment</th>
-                                <th>Denomination</th>
-                                <th>Prefix</th>
-                                <th>Suffix</th>
-                                <th>Card QTY</th>
-                                <th>Activations Per Card</th>
-                                <th>Card Type</th>
-                                <th>Benefits</th>
-                                <th>Status</th>
-                                <th>Deactivate</th>
-                            </tr>
-                        </thead>
-                    </table>
                 </div>
             </div>
         </div>
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Client Campaigns</h2>
+                <div class="title-right pull-right">
+                    @if (Model.ShowAddCampaignButton)
+                    {
+                        <button type="button" class="btn btn-travgreen btn-sm" data-toggle="modal" data-target=".new-campaign-modal-lg">
+                            <i class="fa fa-flag icon-white purchase-button-icon"></i>Add Campaign
+                        </button>
+                    }
+                    <div class="modal fade new-campaign-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <form id="addCampaignForm">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <h3 class="modal-title" id="myModalLabel2"><span class="fa fa-flag left pull-right"></span>Create Campaign </h3>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <h4>@Model.CompanyName Campaign Creation</h4><br />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                                                <label for="campaignName">Create Campaign Name</label>
+                                                <input type="text" class="form-control" id="campaignName" name="campaignName" tabindex="1" placeholder="Campaign Name" required>
+                                                <br />
+                                                <label for="faceValue">Face Value</label>
+                                                <input type="number" class="form-control" id="faceValue" name="faceValue" tabindex="3" placeholder="Face value of card" required>
+                                                <br />
+                                                <label for="cardQuantity">Select Quantity</label>
+                                                <input type="number" class="form-control" id="cardQuantity" name="cardQuantity" tabindex="5" placeholder="Card Qty" required>
+                                                <br />
+                                                <label for="cardPrefix">Pre-Alpha Character(s)</label>
+                                                <input type="text" class="form-control" id="cardPrefix" name="cardPrefix" maxlength="3" tabindex="7" placeholder="Alpha character to be at the start of each card." required>
+                                                <br />
+                                                <label for="padding">Padding</label>
+                                                <input type="text" class="form-control" id="padding" name="padding" maxlength="2" tabindex="9" value="6" placeholder="Number of placeholder digits" required>
+                                                <br />
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                                                <label for="campaignType">Select Card Type</label>
+                                                <select class="form-control nested-dropdown" id="campaignType" name="campaignType" tabindex="2" style="margin-bottom: 0">
+                                                    <option>Virtual</option>
+                                                    <option>Physical</option>
+                                                </select>
+                                                <br />
+                                                <label for="startNumber">Starting Number</label>
+                                                <input type="number" class="form-control" id="startNumber" name="startNumber" tabindex="4" placeholder="First number of the card sequence." required>
+                                                <br />
+                                                <label for="activationsPerCard">Activations Per Card</label>
+                                                <input type="number" class="form-control" id="activationsPerCard" name="activationsPerCard" tabindex="6" value="1" placeholder="Determines how many activations each individual card number can have." required>
+                                                <br />
+                                                <label for="cardSuffix">Post-Alpha Character(s)</label>
+                                                <input type="text" class="form-control" id="cardSuffix" name="cardSuffix" maxlength="3" tabindex="8" placeholder="Alpha character to be at the end of each card.">
+                                                <br />
+                                                <label for="increment">Increment</label>
+                                                <input type="number" class="form-control" id="increment" name="increment" maxlength="3" tabindex="10" value="3" placeholder="Increment card numbers by this amount" required>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <span>Select Benefits For This Campaign:</span>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" class="flat" checked="checked" disabled="disabled"> Hotel Benefit
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input id="benefitCondo" value="true" name="benefitCondo" type="checkbox" class="flat"> Condo Benefit
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input id="benefitShopping" value="true" name="benefitShopping" type="checkbox" class="flat"> Shopping Benefit
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input id="benefitDining" value="true" name="benefitDining" type="checkbox" class="flat"> Dining Benefit
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                                <h5><i class="fa fa-calendar"></i> &nbsp;Campaign Start Date:</h5>
+                                                <fieldset class="form-horizontal">
+                                                    <div class="control-group">
+                                                        <div class="controls">
+                                                            <div class=" form-group text-center">
+                                                                <input id="startDate" name="startDate" type="date" class="form-control has-feedback-left" placeholder="Start Date" required>
+                                                                <span class="disclaimer-text">MM/DD/YYYY</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                                <h5><i class="fa fa-calendar"></i> &nbsp;Campaign End Date:</h5>
+                                                <fieldset class="form-horizontal">
+                                                    <div class="control-group">
+                                                        <div class="controls">
+                                                            <div class=" form-group text-center">
+                                                                <input id="endDate" name="endDate" type="date" class="form-control has-feedback-left" placeholder="End Date">
+                                                                <span class="disclaimer-text">MM/DD/YYYY</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </div><br />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 form-group">
+                                                <label for="campaignDescription">Describe This Campaign</label>
+                                                <textarea class="form-control" id="campaignDescription" name="campaignDescription" placeholder="Please describe the campaign." rows="6" required></textarea>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <hr class="card-hr">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <h4>Create Activation Flow Landing Page - <span style="color: #E74C3C">COMING SOON</span></h4>
+                                                <p class="">The activation flow landing pages are where members will come to learn how to use and activate their new card. You can select from pre-made templates and educational videos or more advanced users have the option of inserting your own HTML code and upload or link to your own self-produced videos.</p><strong>You must select both a Pre-Activation and Post-Activation layout below before your campaign will be fully activated.</strong><p></p>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <!-- start Activation Flow Tab Group -->
+                                        <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                            <!-- Tab Headers -->
+                                            <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                                <li role="presentation" class="active">
+                                                    <a href="#standard-tab" id="home-tab" role="tab" data-toggle="tab">Pre-Activation Layout</a>
+                                                </li>
+                                                <li role="presentation" class="">
+                                                    <a href="#custom-tab" role="tab" id="profile-tab" data-toggle="tab">Post-Activation Layout</a>
+                                                </li>
+                                            </ul>
+                                            <!-- End Tab Headers -->
+                                            <div id="myTabContent" class="tab-content">
+                                                <!-- Tab 1 Content -->
+                                                <div role="tabpanel" class="tab-pane fade active in" id="standard-tab">
+                                                    <!-- Accordian Start -->
+                                                    <div class="accordion" id="accordionPre" role="tablist" aria-multiselectable="true">
+                                                        <!-- Panel 1 -->
+                                                        <div class="panel">
+                                                            <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordionPre" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                <h4 class="panel-title">Standard Layout Options</h4>
+                                                            </a>
+                                                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                                <div class="panel-body">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label>1. Select a Pre-Activation Layout Template:</label><p></p>
+                                                                        </div>
+                                                                        <!-- Start Template Carousel -->
+                                                                        <div id="preTempCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                                                                            <div class="carousel-inner" role="listbox">
+                                                                                <div class="item active">
+                                                                                    <!-- Start Template Slide 1 -->
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                                                        <div class="x_panel text-center">
+                                                                                            <image class="img-responsive form-group" src="images/landingpages/PreActivation-1.jpg">
+                                                                                                <a href="template-pre-1.html" target="_blank"><button class="btn btn-default btn-sm" type="button">Preview</button></a>
+                                                                                                <button class="btn btn-travgreen btn-sm" type="button">Select</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                                                        <div class="x_panel text-center">
+                                                                                            <image class="img-responsive form-group" src="images/template-placeholder.jpg">
+                                                                                                <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
+                                                                                                <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                                                        <div class="x_panel text-center">
+                                                                                            <image class="img-responsive form-group" src="images/template-placeholder.jpg">
+                                                                                                <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
+                                                                                                <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                                                        <div class="x_panel text-center">
+                                                                                            <image class="img-responsive form-group" src="images/template-placeholder.jpg">
+                                                                                                <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
+                                                                                                <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!-- End Template Slide 1 -->
+                                                                                </div>
+                                                                                <div class="item">
+                                                                                    <!-- Start Template Slide 2 -->
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                                                        <div class="x_panel text-center">
+                                                                                            <image class="img-responsive form-group" src="images/template-placeholder.jpg">
+                                                                                                <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
+                                                                                                <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                                                        <div class="x_panel text-center">
+                                                                                            <image class="img-responsive form-group" src="images/template-placeholder.jpg">
+                                                                                                <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
+                                                                                                <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                                                        <div class="x_panel text-center">
+                                                                                            <image class="img-responsive form-group" src="images/template-placeholder.jpg">
+                                                                                                <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
+                                                                                                <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                                                        <div class="x_panel text-center">
+                                                                                            <image class="img-responsive form-group" src="images/template-placeholder.jpg">
+                                                                                                <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
+                                                                                                <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!-- End Template Slide 2 -->
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- Carousel Controls -->
+                                                                            <a class="left custom-carousel-control" href="#preTempCarousel" role="button" data-slide="prev">
+                                                                                <span class="fa fa-angle-left" aria-hidden="true"></span>
+                                                                                <span class="sr-only">Previous</span>
+                                                                            </a>
+                                                                            <a class="right custom-carousel-control" href="#preTempCarousel" role="button" data-slide="next">
+                                                                                <span class="fa fa-angle-right" aria-hidden="true"></span>
+                                                                                <span class="sr-only">Next</span>
+                                                                            </a>
+                                                                            <!-- End Carousel Controls -->
+                                                                        </div>
+                                                                        <!-- End Template Carousel -->
+
+                                                                        <div id="preActivationVideo" class="clearfix">
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <br />
+                                                                                <label>2. Select a Pre-Activation Video:<br /><span class="disclaimer-text-larger"><em>Optionally, you can insert or upload your own video in the next step:</em></span></label><p></p>
+                                                                            </div>
+
+                                                                            <!-- Template for pre and post videos -->
+                                                                            <script id="template" type="text/x-jsrender">
+                                                                                <div class="video col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                                                                    <div class="x_panel text-center">
+                                                                                        <div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 10px">
+                                                                                            <iframe src="{{:url}}" class="embed-responsive-item" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                                                                        </div>
+                                                                                        <!-- <button class="btn btn-default btn-sm" type="button">Preview</button> -->
+                                                                                        <button class="btn btn-travgreen btn-sm video-select" type="button" data-videoid="{{:videoId}}">Select</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </script>
+
+                                                                            <!-- Start Video Carousel -->
+                                                                            <input type="hidden" id="preLoginVideoId" name="preLoginVideoId">
+                                                                            <div id="preVidCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                                                                                <div class="carousel-inner" role="listbox">
+                                                                                </div>
+                                                                                <!-- Carousel Controls -->
+                                                                                <a class="left custom-carousel-control" href="#preVidCarousel" role="button" data-slide="prev">
+                                                                                    <span class="fa fa-angle-left" aria-hidden="true"></span>
+                                                                                    <span class="sr-only">Previous</span>
+                                                                                </a>
+                                                                                <a class="right custom-carousel-control" href="#preVidCarousel" role="button" data-slide="next">
+                                                                                    <span class="fa fa-angle-right" aria-hidden="true"></span>
+                                                                                    <span class="sr-only">Next</span>
+                                                                                </a>
+                                                                                <!-- End Carousel Controls -->
+                                                                            </div>
+                                                                            <!-- End Video Carousel -->
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <br />
+                                                                                <label>3. Enter Pre-Activation Video URL (Optional):</label>
+                                                                            </div>
+                                                                            <div class="col-lg-5 col-md-6 col-sm-9 col-xs-12 form-group">
+                                                                                <input id="preLoginVideoUrl" name="preLoginVideoUrl" type="text" class="form-control" placeholder="example: http://youtube.com/xR5pfy2">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Panel 2 -->
+                                                        <div class="panel">
+                                                            <a class="panel-heading" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordionPre" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                                                <h4 class="panel-title">Custom CSS (Optional)</h4>
+                                                            </a>
+                                                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                                <div class="panel-body">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            If you prefer, an experienced designer can provide custom CSS code to style your Pre-Activation landing page.<p></p>
+                                                                            <textarea id="customCss" name="customCss" class="form-control" placeholder="Paste optional custom CSS code" rows="25"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <a href="http://travnow.com" target="_blank"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-desktop purchase-button-icon"></i>Preview Pre-Activation Layout&nbsp;</button></a>
+                                                    </div>
+                                                    <!-- Accordian End -->
+                                                </div>
+                                                <!-- End Tab 1 Content -->
+                                                <!-- Start Tab 2 Content -->
+                                                <div role="tabpanel" class="tab-pane fade" id="custom-tab">
+                                                    <!-- Accordian Start -->
+                                                    <div class="accordion" id="accordionPost" role="tablist" aria-multiselectable="true">
+                                                        <!-- Panel 1 -->
+                                                        <div class="panel">
+                                                            <a class="panel-heading" role="tab" id="headingThree" data-toggle="collapse" data-parent="#accordionPost" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                                                <h4 class="panel-title">Standard Layout Options</h4>
+                                                            </a>
+                                                            <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                                                                <div class="panel-body">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label>1. Select a Post-Activation Layout Template:</label><p></p>
+                                                                        </div>
+                                                                        <!-- Start Template Carousel -->
+                                                                        <div id="postTempCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                                                                            <div class="carousel-inner" role="listbox">
+                                                                                <div class="item active">
+                                                                                    <!-- Start Template Slide 1 -->
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                                                        <div class="x_panel text-center">
+                                                                                            <image class="img-responsive form-group" src="images/landingpages/PostActivation-1.jpg">
+                                                                                                <a href="template-post-1.html" target="_blank"><button class="btn btn-default btn-sm" type="button">Preview</button></a>
+                                                                                                <button class="btn btn-travgreen btn-sm" type="button">Select</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                                                        <div class="x_panel text-center">
+                                                                                            <image class="img-responsive form-group" src="images/template-placeholder.jpg">
+                                                                                                <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
+                                                                                                <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                                                        <div class="x_panel text-center">
+                                                                                            <image class="img-responsive form-group" src="images/template-placeholder.jpg">
+                                                                                                <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
+                                                                                                <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                                                        <div class="x_panel text-center">
+                                                                                            <image class="img-responsive form-group" src="images/template-placeholder.jpg">
+                                                                                                <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
+                                                                                                <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!-- End Template Slide 1 -->
+                                                                                </div>
+                                                                                <div class="item">
+                                                                                    <!-- Start Template Slide 2 -->
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                                                        <div class="x_panel text-center">
+                                                                                            <image class="img-responsive form-group" src="images/template-placeholder.jpg">
+                                                                                                <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
+                                                                                                <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                                                        <div class="x_panel text-center">
+                                                                                            <image class="img-responsive form-group" src="images/template-placeholder.jpg">
+                                                                                                <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
+                                                                                                <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                                                        <div class="x_panel text-center">
+                                                                                            <image class="img-responsive form-group" src="images/template-placeholder.jpg">
+                                                                                                <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
+                                                                                                <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                                                        <div class="x_panel text-center">
+                                                                                            <image class="img-responsive form-group" src="images/template-placeholder.jpg">
+                                                                                                <button class="btn btn-default btn-sm" type="button" disabled>Preview</button>
+                                                                                                <button class="btn btn-travgreen btn-sm" type="button" disabled>Select</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!-- End Template Slide 2 -->
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- Carousel Controls -->
+                                                                            <a class="left custom-carousel-control" href="#postTempCarousel" role="button" data-slide="prev">
+                                                                                <span class="fa fa-angle-left" aria-hidden="true"></span>
+                                                                                <span class="sr-only">Previous</span>
+                                                                            </a>
+                                                                            <a class="right custom-carousel-control" href="#postTempCarousel" role="button" data-slide="next">
+                                                                                <span class="fa fa-angle-right" aria-hidden="true"></span>
+                                                                                <span class="sr-only">Next</span>
+                                                                            </a>
+                                                                            <!-- End Carousel Controls -->
+                                                                        </div>
+                                                                        <!-- End Template Carousel -->
+
+                                                                        <div id="postActivationVideo" class="clearfix">
+
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <br />
+                                                                                <label>2. Select a Post-Activation Video:<br /><span class="disclaimer-text-larger"><em>Optionally, you can insert or upload your own video in the next step:</em></span></label><p></p>
+                                                                            </div>
+                                                                            <!-- Start Video Carousel -->
+                                                                            <input type="hidden" id="postLoginVideoId" name="postLoginVideoId">
+                                                                            <div id="postVidCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                                                                                <div class="carousel-inner" role="listbox">
+                                                                                </div>
+                                                                                <!-- Carousel Controls -->
+                                                                                <a class="left custom-carousel-control" href="#postVidCarousel" role="button" data-slide="prev">
+                                                                                    <span class="fa fa-angle-left" aria-hidden="true"></span>
+                                                                                    <span class="sr-only">Previous</span>
+                                                                                </a>
+                                                                                <a class="right custom-carousel-control" href="#postVidCarousel" role="button" data-slide="next">
+                                                                                    <span class="fa fa-angle-right" aria-hidden="true"></span>
+                                                                                    <span class="sr-only">Next</span>
+                                                                                </a>
+                                                                                <!-- End Carousel Controls -->
+                                                                            </div>
+                                                                            <!-- End Video Carousel -->
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <br />
+                                                                                <label>3. Enter Post-Activation Video URL (Optional):</label>
+                                                                            </div>
+                                                                            <div class="col-lg-5 col-md-6 col-sm-9 col-xs-12 form-group">
+                                                                                <input id="postLoginVideoUrl" name="postLoginVideoUrl" type="text" class="form-control" placeholder="example: http://youtube.com/xR5pfy2">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Panel 2 -->
+                                                        <div class="panel">
+                                                            <a class="panel-heading" role="tab" id="headingFour" data-toggle="collapse" data-parent="#accordionPost" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                                                                <h4 class="panel-title">Custom CSS (Optional)</h4>
+                                                            </a>
+                                                            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                                                                <div class="panel-body">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            If you prefer, an experienced designer can provide custom CSS code to style your Post-Activation landing page.<p></p>
+                                                                            <textarea id="customCssPost" name="customCssPost" class="form-control" placeholder="Paste optional custom CSS code" rows="25"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <a href="http://travnow.com" target="_blank"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-desktop purchase-button-icon"></i>Preview Post-Activation Layout&nbsp;</button></a>
+                                                    </div>
+                                                    <!-- Accordian End -->
+                                                </div>
+                                                <!-- End Tab 2 Content -->
+                                            </div>
+                                        </div>
+                                        <!-- End Activation Flow Tab Group -->
+                                        <br />
+
+                                        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <hr>
+                                            <label for="logoUpload">4. Upload Custom Logo (Optional):</label>
+                                            <input type="file" id="logoUpload">
+                                            <span class="help-block">Recommended: .PNG, 250x115</span>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <hr>
+                                            <label>5. Insert Google Analytics Tracking Code (Optional):</label>
+                                        </div>
+                                        <div class="col-lg-5 col-md-6 col-sm-9 col-xs-12 form-group">
+                                            <input id="googleAnalyticsCode" name="googleAnalyticsCode" type="text" class="form-control" placeholder="UA-XXXXXXXX-X" />
+                                            <span class="help-block">Note: You can set up a new Google Analytics tracking ID for each campaign and track them individually.</span>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <button id="addCampaignButton" type="button" class="btn btn-travnow">Create Campaign</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <table id="campaign_tbl" class="table table-striped table-bordered jambo_table bulk_action">
+                    <thead>
+                        <tr>
+                            <th>Campaign ID</th>
+                            <th>Campaign Name</th>
+                            <th>Start Number</th>
+                            <th>End Number</th>
+                            <th>Increment</th>
+                            <th>Denomination</th>
+                            <th>Prefix</th>
+                            <th>Suffix</th>
+                            <th>Card QTY</th>
+                            <th>Activations Per Card</th>
+                            <th>Card Type</th>
+                            <th>Benefits</th>
+                            <th>Status</th>
+                            <th>Deactivate</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
-    <script src="~/js/menu.js" asp-append-version="true"></script>
-    <script src="~/js/client-details.js" asp-append-version="true"></script>
-    <script type="text/javascript">
-    MENU.init();
+</div>
+<script src="~/js/menu.js" asp-append-version="true"></script>
+<script src="~/js/client-details.js" asp-append-version="true"></script>
+<script type="text/javascript">
+MENU.init();
 
-    var clientId = $('#id-store').data('clientid');
-    CAMPAIGN.init(clientId);
+var clientId = $('#id-store').data('clientid');
+CAMPAIGN.init(clientId);
 
-    var labels = [];
-    var data = [];
+var labels = [];
+var data = [];
 
-    @foreach (var c in Model.Campaigns)
-    {
-        @:labels.push("@c.CampaignName");
-        @:data.push(@c.CardQuantity);
-    }
+@foreach (var c in Model.Campaigns)
+{
+    @:labels.push("@c.CampaignName");
+    @:data.push(@c.CardQuantity);
+}
 
-    if (labels.length > 0) {
-        $('#nocampaigns').hide();
-        CLIENTDETAILS.init(@Model.ClientId);
-        CLIENTDETAILS.loadChart(labels, data);
-    }
-    </script>
+if (labels.length > 0) {
+    $('#nocampaigns').hide();
+    CLIENTDETAILS.init(@Model.ClientId);
+    CLIENTDETAILS.loadChart(labels, data);
+}
+</script>

@@ -24,8 +24,12 @@ namespace ClientPortal.ViewComponents
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
+                var user = await _userManager.GetUserAsync(HttpContext.User);
                 var client = await _userManager.FindByIdAsync(applicationReference);
                 var model = _viewDataService.GetClientDetails(client.ClientId);
+
+                model.ShowAddCampaignButton = !user.Role.Contains("Agent");
+                model.ShowEditButton = !user.Role.Contains("Agent");
 
                 return await Task.FromResult(View(model));
             }

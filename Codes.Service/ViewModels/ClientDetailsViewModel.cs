@@ -9,6 +9,9 @@ namespace Codes.Service.ViewModels
         public int ClientId { get; set; }
         public string CompanyName { get; set; }
 
+        public bool ShowEditButton { get; set; }
+        public bool ShowAddCampaignButton { get; set; }
+
         [DisplayFormat(DataFormatString = "{0:n0}")]
         public int PhysicalInCampaigns { get; set; }
 
