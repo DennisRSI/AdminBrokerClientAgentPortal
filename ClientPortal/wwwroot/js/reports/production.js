@@ -77,6 +77,8 @@ function Production() {
             var table = $('.jambo_table').DataTable();
             var column = table.column(4);
             column.visible(false);
+
+            $('table th.commissionEarned').hide();
         }
     };
 }
