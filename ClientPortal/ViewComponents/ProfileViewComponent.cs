@@ -52,9 +52,11 @@ namespace ClientPortal.ViewComponents
 
             if (user.Role == "Agent")
             {
+                var loggedInUser = await _userManager.GetUserAsync(HttpContext.User);
                 var agent = await _context.GetAgentByAccountId(profileId);
                 model.DeactivationDate = agent.DeactivationDate;
                 model.DeactivationReason = agent.DeactivationReason;
+                model.ShowAgentControls = loggedInUser.Role != "Agent";
 
                 model.Agents = _accountService.GetAgentsOfBroker(model.BrokerId).Where(a => a.Id != agent.AgentId).Select(
                                     a => new SelectListItem()

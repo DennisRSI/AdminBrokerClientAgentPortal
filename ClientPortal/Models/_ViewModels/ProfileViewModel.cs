@@ -5,6 +5,7 @@ namespace ClientPortal.Models._ViewModels
 {
     public class ProfileViewModel : ApplicationUser
     {
+        public bool ShowAgentControls { get; set; }
         public int? DocumentW9Id { get; set; }
         public decimal CommissionRate { get; set; }
         public bool IsDisabled { get; set; } = true;
