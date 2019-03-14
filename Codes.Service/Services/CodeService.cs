@@ -214,26 +214,16 @@ namespace Codes.Service.Services
 
             return model;
         }
+
         public async Task<ClientViewModel> ClientAdd(ClientViewModel model)
         {
             try
             {
                 ClientModel client = new ClientModel(model);
-                
-                TotalCommissionPercentagesViewModel percentages = await GetBrokerPercentage(model.Broker.BrokerId);
-
-                if (percentages.TotalBrokerCommissionPercentage - model.CommissionRate > 0)
-                {
-                    await _context.Clients.AddAsync(client);
-                    await _context.SaveChangesAsync();
-                    model.ClientId = client.ClientId;
-                    model.Message = "Success";
-                }
-                else
-                {
-                    model.ClientId = 0;
-                    model.Message = "Error: The commission rate for this client would be above the total commission you are getting for your company.";
-                }
+                await _context.Clients.AddAsync(client);
+                await _context.SaveChangesAsync();
+                model.ClientId = client.ClientId;
+                model.Message = "Success";
             }
             catch (Exception ex)
             {
@@ -242,8 +232,10 @@ namespace Codes.Service.Services
 
                 model.Message = $"Error: {ex.Message}";
             }
+
             return model;
         }
+
         public async Task<ClientViewModel> ClientUpdate(ClientViewModel model)
         {
             try
