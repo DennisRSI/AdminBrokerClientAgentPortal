@@ -52,9 +52,9 @@ namespace Codes.Service.Domain
                 HotelCommissionsPaid = (decimal)row["HotelCommissionsPaid"],
                 HotelCommissionsOwed = (decimal)row["HotelCommissionsOwed"],
 
-                CondoSavings = (decimal)row["CondoSavings"],
-                CondoCommissionsPaid = (decimal)row["CondoCommissionsPaid"],
-                CondoCommissionsOwed = (decimal)row["CondoCommissionsOwed"],
+                CondoSavings = 0, // (decimal)row["CondoSavings"],
+                CondoCommissionsPaid = 0, //(decimal)row["CondoCommissionsPaid"],
+                CondoCommissionsOwed = 0, //(decimal)row["CondoCommissionsOwed"],
             };
 
             return model;
