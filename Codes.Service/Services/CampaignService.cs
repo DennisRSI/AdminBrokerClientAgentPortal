@@ -66,7 +66,8 @@ namespace Codes.Service.Services
                     PostLoginVideoId = viewModel.PostLoginVideoId,
                     PreLoginVideoId = viewModel.PreLoginVideoId,
                     CardQuantity = viewModel.CardQuantity,
-                    PackageId = viewModel.PackageId
+                    PackageId = viewModel.PackageId,
+                    Points = Convert.ToSingle(viewModel.FaceValue),
                 };
 
                 _context.Campaigns.Add(model);
