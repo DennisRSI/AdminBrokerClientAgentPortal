@@ -44,7 +44,7 @@ namespace Codes.Service.Models
             BrokerId = model.Broker != null && model.Broker.BrokerId > 0 ? model.Broker.BrokerId : 0;
             ApplicationReference = model.ApplicationReference;
             AgentMiddleName = model.AgentMiddleName;
-            CommissionRate = model.CommissionRate;
+            CommissionRate = (float)model.CommissionRate;
 
             if (model.ParentAgentId > 0)
             {

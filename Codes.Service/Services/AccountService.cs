@@ -98,9 +98,28 @@ namespace Codes.Service.Services
 
         public void AddAgentToClient(int clientId, int agentId)
         {
-            var agent = _context.Agents.Where(a => a.AgentId == agentId).Single();
+            AgentModel agent = _context.Agents.Where(a => a.AgentId == agentId).Single();
+            AgentModel parent = null;
 
-            var link = new ClientAgentModel()
+            if(agent.ParentAgentId != null && agent.ParentAgentId > 0)
+            {
+                parent = _context.Agents.FirstOrDefault(x => x.AgentId == agent.ParentAgentId);
+
+                if(_context.ClientAgents.Count(w => w.AgentId == parent.AgentId) < 1)
+                {
+                    ClientAgentModel link1 = new ClientAgentModel()
+                    {
+                        ClientId = clientId,
+                        AgentId = parent.AgentId,
+                        CommissionRate = (decimal)parent.CommissionRate
+                    };
+
+                    _context.ClientAgents.Add(link1);
+                    _context.SaveChanges();
+                }
+            }
+
+            ClientAgentModel link = new ClientAgentModel()
             {
                 ClientId = clientId,
                 AgentId = agentId,

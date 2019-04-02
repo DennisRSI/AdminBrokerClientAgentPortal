@@ -60,9 +60,12 @@ function ClientEdit() {
 
             var data = UTILITY.serializeFormJSON(form);
 
+
             if (!self.defaultCountry) {
                 data.state = data.state_freeform;
             }
+
+            console.log(data);
 
             $.ajax({
                 url: '/api/user/clientupdateprofile/' + applicationId,

@@ -112,8 +112,10 @@ namespace Codes.Service.Services
             try
             {
                 model.TotalCommissionPercentage = (await _context.Brokers.FirstOrDefaultAsync(b => b.BrokerId == brokerId && b.IsActive)).BrokerCommissionPercentage;
-                model.TotalClientCommissionPercentage = await _context.Clients.Where(w => w.BrokerId == brokerId && w.IsActive).SumAsync(s => s.CommissionRate);
-                model.TotalAgentCommissionPercentage = await _context.Agents.Where(w => w.BrokerId == brokerId && w.ParentAgentId == null && w.IsActive).SumAsync(s => s.CommissionRate);
+                model.TotalAgentCommissionPercentage = 0;
+                model.TotalClientCommissionPercentage = 0;
+                //model.TotalClientCommissionPercentage = await _context.Clients.Where(w => w.BrokerId == brokerId && w.IsActive ).SumAsync(s => s.CommissionRate);
+                //model.TotalAgentCommissionPercentage = await _context.Agents.Where(w => w.BrokerId == brokerId && w.ParentAgentId == null && w.IsActive && ).SumAsync(s => s.CommissionRate);
             }
             catch (Exception ex)
             {
@@ -166,7 +168,7 @@ namespace Codes.Service.Services
 
                 if (agent != null && agent.AgentId > 0)
                 {
-                    TotalCommissionPercentagesViewModel percentages = await GetBrokerPercentage(model.Broker.BrokerId);
+                    TotalCommissionPercentagesViewModel percentages = await GetBrokerPercentage(model.BrokerId);
 
                     if (percentages.TotalBrokerCommissionPercentage - model.CommissionRate > 0)
                     {
@@ -192,6 +194,7 @@ namespace Codes.Service.Services
                         agent.State = model.State;
                         agent.ApplicationReference = model.ApplicationReference;
                         agent.ParentAgentId = model.ParentAgentId;
+                        agent.CommissionRate = model.CommissionRate;
 
                         await _context.SaveChangesAsync();
                         model.Message = "Success";
@@ -246,7 +249,7 @@ namespace Codes.Service.Services
                 {
                     client.Address = model.Address;
                     client.City = model.City;
-                    // client.CommissionRate = model.CommissionRate;  // Commission Rate is disabled in UI so not passed here
+                    client.CommissionRate = model.CommissionRate;  // Commission Rate is disabled in UI so not passed here
                     client.CompanyName = model.CompanyName;
                     client.ContactFirstName = model.ContactFirstName;
                     client.ContactLastName = model.ContactLastName;
@@ -264,6 +267,7 @@ namespace Codes.Service.Services
                     client.PostalCode = model.PostalCode;
                     client.State = model.State;
                     client.AgentId = model.AgentId;
+                    client.CommissionRate = model.CommissionRate;
 
                     await _context.SaveChangesAsync();
                     model.Message = "Success";                  

@@ -325,6 +325,7 @@ namespace ClientPortal.Services
 
                 if (user != null && user.Id != null && user.Id.Length > 0)
                 {
+                    model.BrokerId = user.BrokerId;
                     model.ApplicationReference = user.Id;
 
                     user.Address = model.Address;
@@ -632,6 +633,8 @@ namespace ClientPortal.Services
                     user.PostalCode = model.PostalCode;
                     user.State = model.State;
                     user.UserName = model.Email;
+                
+                    
 
                     await _userManager.UpdateAsync(user);
                     await _context.SaveChangesAsync();

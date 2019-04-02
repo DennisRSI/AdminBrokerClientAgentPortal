@@ -12,7 +12,7 @@ function MyAgents() {
         var cols = [
             { "data": "name" },
             { "data": "email" },
-            { "data": "phoneNumber" },
+            { "data": "phoneNumber" }
         ];
 
         var selector = '#myagents_tbl';
@@ -27,5 +27,5 @@ function MyAgents() {
                 MENU.loadPage('menu', 'my-account', id);
             });
         }
-    }
+    };
 }

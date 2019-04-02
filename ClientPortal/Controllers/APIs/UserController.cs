@@ -543,6 +543,7 @@ namespace ClientPortal.Controllers.APIs
                 OfficePhone = user.OfficePhone,
                 Fax = user.Fax,
                 ParentAgentId = user.ParentAgentId,
+                CommissionRate = (float)user.CommissionRate
             };
 
             return await _context.AgentUpdate(agent);
@@ -591,7 +592,8 @@ namespace ClientPortal.Controllers.APIs
                 MobilePhone = user.MobilePhone,
                 OfficePhone = user.OfficePhone,
                 Fax = user.Fax,
-                AgentId = user.AssignedAgent == 0 ? (int?)null : user.AssignedAgent
+                AgentId = user.AssignedAgent == 0 ? (int?)null : user.AssignedAgent,
+                CommissionRate = user.CommissionRate
             };
 
             return await _context.ClientUpdate(client);
