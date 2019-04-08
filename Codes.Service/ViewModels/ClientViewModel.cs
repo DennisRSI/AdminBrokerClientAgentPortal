@@ -103,5 +103,8 @@ namespace Codes.Service.ViewModels
         public int? AgentId { get; set; }
 
         public string AssignedAgents { get; set; }
+
+        [StringLength(100), Display(Name = "Client Username", Prompt = "Client Username")]
+        public string Username { get; set; }
     }
 }

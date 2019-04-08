@@ -110,10 +110,12 @@ namespace Codes.Service.ViewModels
                 }
             }
         }
-        [StringLength(100), EmailAddress, Display(Name = "Broker Email", Prompt = "Broker Email")]
+        [StringLength(100), EmailAddress, Display(Name = "Admin Email", Prompt = "Admin Email")]
         public string Email { get; set; }
         public string DeactivationReason { get; set; } = "";
         [StringLength(100)]
         public string EIN { get; set; }
+        [StringLength(100), Display(Name = "Admin Username", Prompt = "Admin Username")]
+        public string Username { get; set; } 
     }
 }

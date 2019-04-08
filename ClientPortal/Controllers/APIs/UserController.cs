@@ -38,7 +38,7 @@ namespace ClientPortal.Controllers.APIs
         {
             dynamic returnObj = new JObject();
             string companyName = "", ein = "", firstName = "", lastName = "", address = "", city = "", state = "", postalCode = "", country = "";
-            string mobilePhone = "", workPhone = "", fax = "", email = "";
+            string mobilePhone = "", workPhone = "", fax = "", email = "", username = "";
 
             try
             {
@@ -104,6 +104,10 @@ namespace ClientPortal.Controllers.APIs
                 if (emailTmp != null)
                     email = emailTmp.ToString();
 
+                var usernameTmp = obj.username;
+                if (usernameTmp != null)
+                    username = usernameTmp.ToString();
+
                 switch (userType)
                 {
                     case "Administrator":
@@ -132,7 +136,8 @@ namespace ClientPortal.Controllers.APIs
                             OfficeExtension = "",
                             OfficePhone = workPhone,
                             PostalCode = postalCode,
-                            State = state
+                            State = state,
+                            Username = username
                         };
 
                         AdminViewModel adminReturn = new AdminViewModel();
@@ -237,7 +242,8 @@ namespace ClientPortal.Controllers.APIs
                             PhysicalCardsPercentOfFaceValue50000 = cards50000,
                             TimeframeBetweenCapInHours = timeframe,
                             VirtualCardCap = virtualCap,
-                            ParentBrokerId = 0
+                            ParentBrokerId = 0,
+                            Username = username
                         };
 
                         BrokerViewModel brokerReturn = await _context.BrokerAdd(brokerModel, "Chang3M3#");
@@ -300,7 +306,8 @@ namespace ClientPortal.Controllers.APIs
                                     PostalCode = postalCode,
                                     State = state,
                                     CommissionRate = commissionRate,
-                                    ClientId = 0
+                                    ClientId = 0,
+                                    Username = username
                                 };
 
                                 clientModel.Broker.BrokerId = brokerId;
@@ -354,7 +361,8 @@ namespace ClientPortal.Controllers.APIs
                                     State = state,
                                     CommissionRate = commissionRate,
                                     AgentId = 0,
-                                    ParentAgentId = parentAgentId
+                                    ParentAgentId = parentAgentId,
+                                    Username = username
                                 };
 
                                 agentModel.Broker.BrokerId = brokerId;
@@ -504,7 +512,7 @@ namespace ClientPortal.Controllers.APIs
         {
             var admin = new AdminViewModel()
             {
-                Email = user.UserName,
+                Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 CompanyName = user.CompanyName,
@@ -517,6 +525,7 @@ namespace ClientPortal.Controllers.APIs
                 MobilePhone = user.MobilePhone,
                 OfficePhone = user.OfficePhone,
                 Fax = user.Fax,
+                Username = user.UserName
             };
 
             return await _context.AdminUpdate(admin);
@@ -529,7 +538,7 @@ namespace ClientPortal.Controllers.APIs
                 AgentId = user.AgentId,
                 BrokerId = user.BrokerId,
                 ApplicationReference = user.Id,
-                Email = user.UserName,
+                Email = user.Email,
                 AgentFirstName = user.FirstName,
                 AgentLastName = user.LastName,
                 CompanyName = user.CompanyName,
@@ -543,19 +552,20 @@ namespace ClientPortal.Controllers.APIs
                 OfficePhone = user.OfficePhone,
                 Fax = user.Fax,
                 ParentAgentId = user.ParentAgentId,
-                CommissionRate = (float)user.CommissionRate
+                CommissionRate = (float)user.CommissionRate,
+                Username = user.UserName
             };
 
             return await _context.AgentUpdate(agent);
         }
 
-        private async Task<BrokerViewModel> UpdateBroker(ApplicationUser user)
+        private async Task<BrokerViewModel> UpdateBroker(ProfileViewModel user)
         {
             var broker = new BrokerViewModel()
             {
                 ApplicationReference = user.Id,
                 BrokerId = user.BrokerId,
-                Email = user.UserName,
+                Email = user.Email,
                 BrokerFirstName = user.FirstName,
                 BrokerLastName = user.LastName,
                 CompanyName = user.CompanyName,
@@ -568,6 +578,8 @@ namespace ClientPortal.Controllers.APIs
                 MobilePhone = user.MobilePhone,
                 OfficePhone = user.OfficePhone,
                 Fax = user.Fax,
+                Username = user.UserName,
+                BrokerCommissionPercentage = (float)user.CommissionRate
             };
 
             return await _context.BrokerUpdate(broker);
@@ -579,7 +591,7 @@ namespace ClientPortal.Controllers.APIs
             {
                 ApplicationReference = user.Id,
                 ClientId = user.ClientId,
-                Email = user.UserName,
+                Email = user.Email,
                 ContactFirstName = user.FirstName,
                 ContactLastName = user.LastName,
                 CompanyName = user.CompanyName,
@@ -593,7 +605,8 @@ namespace ClientPortal.Controllers.APIs
                 OfficePhone = user.OfficePhone,
                 Fax = user.Fax,
                 AgentId = user.AssignedAgent == 0 ? (int?)null : user.AssignedAgent,
-                CommissionRate = user.CommissionRate
+                CommissionRate = user.CommissionRate,
+                Username = user.UserName
             };
 
             return await _context.ClientUpdate(client);

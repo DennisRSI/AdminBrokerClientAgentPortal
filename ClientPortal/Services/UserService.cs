@@ -30,7 +30,10 @@ namespace ClientPortal.Services
         {
             try
             {
-                ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
+                ApplicationUser user = null;
+
+                if(model.ApplicationReference != null && model.ApplicationReference.Length > 0)
+                    user = await _userManager.FindByIdAsync(model.ApplicationReference);
 
                 if (user == null || user.Id == null || user.Id.Length < 1)
                 {
@@ -57,8 +60,8 @@ namespace ClientPortal.Services
                         OfficePhone = model.OfficePhone,
                         NormalizedEmail = model.Email.ToUpper(),
                         EmailConfirmed = true,
-                        UserName = model.Email,
-                        NormalizedUserName = model.Email.ToUpper(),
+                        UserName = model.Username,
+                        NormalizedUserName = model.Username.ToUpper(),
                         PostalCode = model.PostalCode,
                         PhoneNumberConfirmed = true,
                         SecurityStamp = Guid.NewGuid().ToString("D"),
@@ -68,6 +71,7 @@ namespace ClientPortal.Services
                     var result = await _userManager.CreateAsync(user, password);
                     if (result.Succeeded)
                     {
+                        model.ApplicationReference = user.Id;
                         var result1 = await _userManager.AddToRolesAsync(user, new string[] { "Super Administrator" });
 
                         model.Message = "Success";
@@ -107,7 +111,10 @@ namespace ClientPortal.Services
         {
             try
             {
-                ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
+                ApplicationUser user = null;
+
+                if (model.ApplicationReference != null && model.ApplicationReference.Length > 0)
+                    user = await _userManager.FindByIdAsync(model.ApplicationReference);
 
                 if (user == null || user.Id == null || user.Id.Length < 1)
                 {
@@ -134,8 +141,8 @@ namespace ClientPortal.Services
                         OfficePhone = model.OfficePhone,
                         NormalizedEmail = model.Email.ToUpper(),
                         EmailConfirmed = true,
-                        UserName = model.Email,
-                        NormalizedUserName = model.Email.ToUpper(),
+                        UserName = model.Username,
+                        NormalizedUserName = model.Username.ToUpper(),
                         PostalCode = model.PostalCode,
                         PhoneNumberConfirmed = true,
                         SecurityStamp = Guid.NewGuid().ToString("D"),
@@ -145,6 +152,7 @@ namespace ClientPortal.Services
                     var result = await _userManager.CreateAsync(user, password);
                     if (result.Succeeded)
                     {
+                        model.ApplicationReference = user.Id;
                         var result1 = await _userManager.AddToRolesAsync(user, new string[] { "Administrator" });
                         model.Message = "Success";
                     }
@@ -183,7 +191,7 @@ namespace ClientPortal.Services
         {
             try
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
+                var user = await _userManager.FindByIdAsync(model.ApplicationReference);
 
                 if (user != null && user.Id != null && user.Id.Length > 0)
                 {
@@ -205,13 +213,13 @@ namespace ClientPortal.Services
                     user.LastName = model.LastName;
                     user.MobilePhone = model.MobilePhone;
                     user.NormalizedEmail = model.Email.ToUpper();
-                    user.NormalizedUserName = model.Email.ToUpper();
+                    user.NormalizedUserName = model.Username.ToUpper();
                     user.OfficeExtension = model.OfficeExtension;
                     user.OfficePhone = model.OfficePhone;
                     user.PhoneNumberConfirmed = true;
                     user.PostalCode = model.PostalCode;
                     user.State = model.State;
-                    user.UserName = model.Email;
+                    user.UserName = model.Username;
 
                     await _userManager.UpdateAsync(user);
                     await _context.SaveChangesAsync();
@@ -236,7 +244,10 @@ namespace ClientPortal.Services
         {
             try
             {
-                ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
+                ApplicationUser user = null;
+
+                if (model.ApplicationReference != null && model.ApplicationReference.Length > 0)
+                    user = await _userManager.FindByIdAsync(model.ApplicationReference);
 
                 if (user == null || user.Id == null || user.Id.Length < 1)
                 {
@@ -266,8 +277,8 @@ namespace ClientPortal.Services
                             OfficePhone = model.OfficePhone,
                             NormalizedEmail = model.Email.ToUpper(),
                             EmailConfirmed = true,
-                            UserName = model.Email,
-                            NormalizedUserName = model.Email.ToUpper(),
+                            UserName = model.Username,
+                            NormalizedUserName = model.Username.ToUpper(),
                             PostalCode = model.PostalCode,
                             PhoneNumberConfirmed = true,
                             SecurityStamp = Guid.NewGuid().ToString("D"),
@@ -280,6 +291,7 @@ namespace ClientPortal.Services
                         var result = await _userManager.CreateAsync(user, password);
                         if (result.Succeeded)
                         {
+                            model.ApplicationReference = user.Id;
                             var result1 = await _userManager.AddToRolesAsync(user, new string[] { "Agent" });
                             model.Message = "Success";
                         }
@@ -344,13 +356,13 @@ namespace ClientPortal.Services
                     user.LastName = model.AgentLastName;
                     user.MobilePhone = model.MobilePhone;
                     user.NormalizedEmail = model.Email.ToUpper();
-                    user.NormalizedUserName = model.Email.ToUpper();
+                    user.NormalizedUserName = model.Username.ToUpper();
                     user.OfficeExtension = model.OfficeExtension;
                     user.OfficePhone = model.OfficePhone;
                     user.PhoneNumberConfirmed = true;
                     user.PostalCode = model.PostalCode;
                     user.State = model.State;
-                    user.UserName = model.Email;
+                    user.UserName = model.Username;
 
                     await _userManager.UpdateAsync(user);
                     await _context.SaveChangesAsync();
@@ -377,7 +389,10 @@ namespace ClientPortal.Services
         {
             try
             {
-                ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
+                ApplicationUser user = null;
+
+                if (model.ApplicationReference != null && model.ApplicationReference.Length > 0)
+                    user = await _userManager.FindByIdAsync(model.ApplicationReference);
 
                 if (user == null || user.Id == null || user.Id.Length < 1)
                 {
@@ -407,8 +422,8 @@ namespace ClientPortal.Services
                             OfficePhone = model.OfficePhone,
                             NormalizedEmail = model.Email.ToUpper(),
                             EmailConfirmed = true,
-                            UserName = model.Email,
-                            NormalizedUserName = model.Email.ToUpper(),
+                            UserName = model.Username,
+                            NormalizedUserName = model.Username.ToUpper(),
                             PostalCode = model.PostalCode,
                             PhoneNumberConfirmed = true,
                             SecurityStamp = Guid.NewGuid().ToString("D"),
@@ -419,9 +434,14 @@ namespace ClientPortal.Services
                         };
 
                         var result = await _userManager.CreateAsync(user, password);
+                        
+
                         if (result.Succeeded)
                         {
+                            model.ApplicationReference = user.Id;
+
                             var result1 = await _userManager.AddToRolesAsync(user, new string[] { "Broker" });
+                           
                             model.Message = "Success";
                         }
                         else
@@ -484,13 +504,13 @@ namespace ClientPortal.Services
                     user.LastName = model.BrokerLastName;
                     user.MobilePhone = model.MobilePhone;
                     user.NormalizedEmail = model.Email.ToUpper();
-                    user.NormalizedUserName = model.Email.ToUpper();
+                    user.NormalizedUserName = model.Username.ToUpper();
                     user.OfficeExtension = model.OfficeExtension;
                     user.OfficePhone = model.OfficePhone;
                     user.PhoneNumberConfirmed = true;
                     user.PostalCode = model.PostalCode;
                     user.State = model.State;
-                    user.UserName = model.Email;
+                    user.UserName = model.Username;
 
                     await _userManager.UpdateAsync(user);
                     await _context.SaveChangesAsync();
@@ -517,8 +537,11 @@ namespace ClientPortal.Services
         {
             try
             {
-                ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
-                
+                ApplicationUser user = null;
+
+                if (model.ApplicationReference != null && model.ApplicationReference.Length > 0)
+                    user = await _userManager.FindByIdAsync(model.ApplicationReference);
+
                 if (user == null || user.Id == null || user.Id.Length < 1)
                 {
                     model = await _codeService.ClientAdd(model);
@@ -548,8 +571,8 @@ namespace ClientPortal.Services
                             OfficePhone = model.OfficePhone,
                             NormalizedEmail = model.Email.ToUpper(),
                             EmailConfirmed = true,
-                            UserName = model.Email,
-                            NormalizedUserName = model.Email.ToUpper(),
+                            UserName = model.Username,
+                            NormalizedUserName = model.Username.ToUpper(),
                             PostalCode = model.PostalCode,
                             PhoneNumberConfirmed = true,
                             SecurityStamp = Guid.NewGuid().ToString("D"),
@@ -626,13 +649,13 @@ namespace ClientPortal.Services
                     user.LastName = model.ContactLastName;
                     user.MobilePhone = model.MobilePhone;
                     user.NormalizedEmail = model.Email.ToUpper();
-                    user.NormalizedUserName = model.Email.ToUpper();
+                    user.NormalizedUserName = model.Username.ToUpper();
                     user.OfficeExtension = model.OfficeExtension;
                     user.OfficePhone = model.OfficePhone;
                     user.PhoneNumberConfirmed = true;
                     user.PostalCode = model.PostalCode;
                     user.State = model.State;
-                    user.UserName = model.Email;
+                    user.UserName = model.Username;
                 
                     
 

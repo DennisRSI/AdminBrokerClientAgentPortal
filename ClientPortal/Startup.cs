@@ -38,6 +38,7 @@ namespace ClientPortal
             services.AddIdentity<ApplicationUser, IdentityRole>(config =>
                 {
                     config.SignIn.RequireConfirmedEmail = true;
+                    config.User.RequireUniqueEmail = false;
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();

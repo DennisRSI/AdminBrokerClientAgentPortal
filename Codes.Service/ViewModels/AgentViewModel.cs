@@ -138,5 +138,8 @@ namespace Codes.Service.ViewModels
 
         public int? ParentAgentId { get; set; }
         public string ParentAgentName { get; set; }
+        [StringLength(100), Display(Name = "Agent Username", Prompt = "Agent Username")]
+        public string Username { get; set; }
+
     }
 }

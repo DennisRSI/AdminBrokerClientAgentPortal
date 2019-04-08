@@ -148,5 +148,7 @@ namespace Codes.Service.ViewModels
         public ICollection<AgentViewModel> Agents { get; set; } = new List<AgentViewModel>();
 
         public int? DocumentW9Id { get; set; }
+        [StringLength(100), Display(Name = "Broker Username", Prompt = "Broker Username")]
+        public string Username { get; set; }
     }
 }
