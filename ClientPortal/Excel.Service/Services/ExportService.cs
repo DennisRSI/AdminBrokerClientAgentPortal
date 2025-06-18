@@ -1,7 +1,8 @@
-﻿using Excel.Service.Models._ViewModel;
+﻿using Booking.Service.Services._Interfaces;
 using Excel.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
@@ -11,25 +12,31 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using VendorImport.Service.Interfaces;
+using VendorImport.Service.Models;
+using VendorImport.Service.Models.ViewModels;
 
 namespace Excel.Service.Services
 {
-    public class ExportService : IExportService
+    public class ExportService :IExportService
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
-        private List<AdjustmentViewModel> _adjustments = new List<AdjustmentViewModel>();
-        private List<InventoryReservationViewModel> _inventoryReservations = new List<InventoryReservationViewModel>();
-        private List<MerchantInventoryReservationViewModel> _merchantInventoryReservations = new List<MerchantInventoryReservationViewModel>();
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        private List<AdjustmentModel> _adjustments = new List<AdjustmentModel>();
+        private List<InventoryReservationModel> _inventoryReservations = new List<InventoryReservationModel>();
+        private List<MerchantInventoryReservationModel> _merchantInventoryReservations = new List<MerchantInventoryReservationModel>();
+        private readonly IVendorImportService _vendorImportSvc;
+        private readonly IBookingService _bookingSvc;
 
-        public ExportService(IHostingEnvironment hostingEnvironment)
+        public ExportService(IWebHostEnvironment hostingEnvironment, IVendorImportService vendorImportSvc, IBookingService bookingSvc)
         {
             _hostingEnvironment = hostingEnvironment;
+            _vendorImportSvc = vendorImportSvc;
+            _bookingSvc = bookingSvc;
         }
 
         private async Task<bool> ParseInventoryRow(IRow row, int cellCount)
         {
-            InventoryReservationViewModel model = new InventoryReservationViewModel();
+            InventoryReservationModel model = new InventoryReservationModel();
 
             for (int j = row.FirstCellNum; j < cellCount; j++)
             {
@@ -38,10 +45,10 @@ namespace Excel.Service.Services
                     switch (j)
                     {
                         case 0:
-                            model.Affiliate = row.GetCell(j).ToString();
+                            model.AffiliateString = row.GetCell(j).ToString();
                             break;
                         case 1:
-                            model.Site = row.GetCell(j).ToString();
+                            model.SiteString = row.GetCell(j).ToString();
                             break;
                         case 2:
                             model.Confirmation = row.GetCell(j).ToString();
@@ -50,76 +57,76 @@ namespace Excel.Service.Services
                             model.Property = row.GetCell(j).ToString();
                             break;
                         case 4:
-                            model.Guest = row.GetCell(j).ToString();
+                            model.GuestString = row.GetCell(j).ToString();
                             break;
                         case 5:
                             DateTime dt = new DateTime();
-                            DateTime.TryParse(row.GetCell(j).ToString(), out dt);
-                            model.CheckOut = dt;
+                            if (DateTime.TryParse(row.GetCell(j).ToString(), out dt))
+                                model.CheckoutDate = dt;
                             break;
                         case 6:
                             DateTime dt1 = new DateTime();
-                            DateTime.TryParse(row.GetCell(j).ToString(), out dt1);
-                            model.Booked = dt1;
+                            if (DateTime.TryParse(row.GetCell(j).ToString(), out dt1))
+                                model.BookedDate = dt1;
                             break;
                         case 7:
                             model.ReservationStatus = row.GetCell(j).ToString();
                             break;
                         case 8:
                             int roomNights = 0;
-                            int.TryParse(row.GetCell(j).ToString(), out roomNights);
-                            model.RooomNights = roomNights;
+                            if (int.TryParse(row.GetCell(j).ToString(), out roomNights))
+                                model.RoomNights = roomNights;
                             break;
                         case 9:
                             decimal flatAmt = 0;
-                            decimal.TryParse(row.GetCell(j).ToString(), out flatAmt);
-                            model.FlatAmount = flatAmt;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out flatAmt))
+                                model.FlatAmount = flatAmt;
                             break;
                         case 10:
                             decimal revenu = 0;
-                            decimal.TryParse(row.GetCell(j).ToString(), out revenu);
-                            model.RoomRevenue = revenu;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out revenu))
+                                model.RoomRevenue = revenu;
                             break;
                         case 11:
                             decimal commmissionRecieved = 0;
-                            decimal.TryParse(row.GetCell(j).ToString(), out commmissionRecieved);
-                            model.CommissionReceived = commmissionRecieved;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out commmissionRecieved))
+                                model.CommissionReceived = commmissionRecieved;
                             break;
                         case 12:
                             decimal commissionProcessingFee = 0;
-                            decimal.TryParse(row.GetCell(j).ToString(), out commissionProcessingFee);
-                            model.CommissionProcessingFee = commissionProcessingFee;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out commissionProcessingFee))
+                                model.ComissionProcessingFee = commissionProcessingFee;
                             break;
                         case 13:
                             decimal collectionExpense = 0;
-                            decimal.TryParse(row.GetCell(j).ToString(), out collectionExpense);
-                            model.CollectionExpense = collectionExpense;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out collectionExpense))
+                                model.CollectionExpense = collectionExpense;
                             break;
                         case 14:
                             decimal callCenterFee = 0;
-                            decimal.TryParse(row.GetCell(j).ToString(), out callCenterFee);
-                            model.ARNCallCenterFee = callCenterFee;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out callCenterFee))
+                                model.ARNCallCenterFee = callCenterFee;
                             break;
                         case 15:
                             decimal netCommission = 0;
-                            decimal.TryParse(row.GetCell(j).ToString(), out netCommission);
-                            model.NetCommission = netCommission;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out netCommission))
+                                model.NetCommission = netCommission;
                             break;
                         case 16:
                             decimal subAffiliateCommission;
-                            decimal.TryParse(row.GetCell(j).ToString(), out subAffiliateCommission);
-                            model.SubAffiliateCommission = subAffiliateCommission;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out subAffiliateCommission))
+                                model.SubAffiliateCommission = subAffiliateCommission;
                             break;
                         case 17:
                             decimal netCommissionAfterSubAffiliate;
-                            decimal.TryParse(row.GetCell(j).ToString(), out netCommissionAfterSubAffiliate);
-                            model.NetCommissionAfterSubAffiliate = netCommissionAfterSubAffiliate;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out netCommissionAfterSubAffiliate))
+                                model.NetCommissionAfterSubAffiliate = netCommissionAfterSubAffiliate;
                             break;
                         case 18:
                             model.CID = row.GetCell(j).ToString();
                             break;
                         case 19:
-                            model.ReservationId = row.GetCell(j).ToString();
+                                model.ReservationId = row.GetCell(j).ToString();
                             break;
                         case 20:
                             model.RegistrationId = row.GetCell(j).ToString();
@@ -133,12 +140,14 @@ namespace Excel.Service.Services
 
             _inventoryReservations.Add(model);
 
+
+
             return await Task.FromResult<bool>(true);
         }
 
         private async Task<bool> ParseMerchantInventoryRow(IRow row, int cellCount)
         {
-            MerchantInventoryReservationViewModel model = new MerchantInventoryReservationViewModel();
+            MerchantInventoryReservationModel model = new MerchantInventoryReservationModel();
 
             for (int j = row.FirstCellNum; j < cellCount; j++)
             {
@@ -147,10 +156,10 @@ namespace Excel.Service.Services
                     switch (j)
                     {
                         case 0:
-                            model.Affiliate = row.GetCell(j).ToString();
+                            model.AffiliateString = row.GetCell(j).ToString();
                             break;
                         case 1:
-                            model.Site = row.GetCell(j).ToString();
+                            model.SiteString = row.GetCell(j).ToString();
                             break;
                         case 2:
                             model.Confirmation = row.GetCell(j).ToString();
@@ -159,91 +168,91 @@ namespace Excel.Service.Services
                             model.Property = row.GetCell(j).ToString();
                             break;
                         case 4:
-                            model.Guest = row.GetCell(j).ToString();
+                            model.GuestString = row.GetCell(j).ToString();
                             break;
                         case 5:
                             DateTime dt = new DateTime();
-                            DateTime.TryParse(row.GetCell(j).ToString(), out dt);
-                            model.CheckOut = dt;
+                            if (DateTime.TryParse(row.GetCell(j).ToString(), out dt))
+                                model.CheckoutDate = dt;
                             break;
                         case 6:
                             DateTime dt1 = new DateTime();
-                            DateTime.TryParse(row.GetCell(j).ToString(), out dt1);
-                            model.Booked = dt1;
+                            if (DateTime.TryParse(row.GetCell(j).ToString(), out dt1))
+                                model.BookedDate = dt1;
                             break;
                         case 7:
                             model.ReservationStatus = row.GetCell(j).ToString();
                             break;
                         case 8:
                             int roomNights = 0;
-                            int.TryParse(row.GetCell(j).ToString(), out roomNights);
-                            model.RooomNights = roomNights;
+                            if (int.TryParse(row.GetCell(j).ToString(), out roomNights))
+                                model.RoomNights = roomNights;
                             break;
                         case 9:
                             decimal flatAmt = 0;
-                            decimal.TryParse(row.GetCell(j).ToString(), out flatAmt);
-                            model.FlatAmount = flatAmt;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out flatAmt))
+                                model.FlatAmount = flatAmt;
                             break;
                         case 10:
                             decimal revenu = 0;
-                            decimal.TryParse(row.GetCell(j).ToString(), out revenu);
-                            model.RoomRevenue = revenu;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out revenu))
+                                model.RoomRevenue = revenu;
                             break;
                         case 11:
                             decimal grossSalesTax = 0;
-                            decimal.TryParse(row.GetCell(j).ToString(), out grossSalesTax);
-                            model.GrossSaleWithTax = grossSalesTax;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out grossSalesTax))
+                                model.GrossSaleWithTax = grossSalesTax;
                             break;
                         case 12:
                             decimal costOfHotelWithTax = 0;
-                            decimal.TryParse(row.GetCell(j).ToString(), out costOfHotelWithTax);
-                            model.CostOfHotelWithTax = costOfHotelWithTax;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out costOfHotelWithTax))
+                                model.CostOfHotelWithTax = costOfHotelWithTax;
                             break;
                         case 13:
                             decimal cardProcessingFee = 0;
-                            decimal.TryParse(row.GetCell(j).ToString(), out cardProcessingFee);
-                            model.CreditCardProcessingFee = cardProcessingFee;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out cardProcessingFee))
+                                model.CardProcessingFees = cardProcessingFee;
                             break;
                         case 14:
                             decimal netProfit = 0;
-                            decimal.TryParse(row.GetCell(j).ToString(), out netProfit);
-                            model.NetProfit = netProfit;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out netProfit))
+                                model.NetProfit = netProfit;
                             break;
                         case 15:
-                            float affiliteCommissionPercentage = 0;
-                            float.TryParse(row.GetCell(j).ToString(), out affiliteCommissionPercentage);
-                            model.AffiliateCommissionPercentage = affiliteCommissionPercentage;
+                            decimal affiliteCommissionPercentage = 0;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out affiliteCommissionPercentage))
+                                model.AffiliteCommissionPercentage = affiliteCommissionPercentage;
                             break;
                         case 16:
                             decimal arnTransferFee;
-                            decimal.TryParse(row.GetCell(j).ToString(), out arnTransferFee);
-                            model.ARNTransferFee = arnTransferFee;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out arnTransferFee))
+                                model.ARNTransactionFee = arnTransferFee;
                             break;
                         case 17:
                             decimal arnCallCenterFee;
-                            decimal.TryParse(row.GetCell(j).ToString(), out arnCallCenterFee);
-                            model.ARNCallCenterFee = arnCallCenterFee;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out arnCallCenterFee))
+                                model.ARNCallCenterFee = arnCallCenterFee;
                             break;
                         case 18:
                             decimal netCommission = 0;
-                            decimal.TryParse(row.GetCell(j).ToString(), out netCommission);
-                            model.NetCommission = netCommission;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out netCommission))
+                                model.NetCommission = netCommission;
                             break;
                         case 19:
                             decimal subAffiliateCommission = 0;
-                            decimal.TryParse(row.GetCell(j).ToString(), out subAffiliateCommission);
-                            model.SubAffiliateCommission = subAffiliateCommission;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out subAffiliateCommission))
+                                model.SubAffiliateCommission = subAffiliateCommission;
                             break;
                         case 20:
                             decimal netCommissionAfterSubAffiliate = 0;
-                            decimal.TryParse(row.GetCell(j).ToString(), out netCommissionAfterSubAffiliate);
-                            model.NetCommissionAfterSubAffiliate = netCommissionAfterSubAffiliate;
+                            if (decimal.TryParse(row.GetCell(j).ToString(), out netCommissionAfterSubAffiliate))
+                                model.NetCommissionAfterSubAffiliate = netCommissionAfterSubAffiliate;
                             break;
                         case 21:
                             model.CID = row.GetCell(j).ToString();
                             break;
                         case 22:
-                            model.ReservationId = row.GetCell(j).ToString();
+                                model.ReservationId = row.GetCell(j).ToString();
                             break;
                         case 23:
                             model.RegistrationId = row.GetCell(j).ToString();
@@ -262,7 +271,7 @@ namespace Excel.Service.Services
 
         private async Task<bool> ParseAdjustmentRow(IRow row, int cellCount)
         {
-            AdjustmentViewModel model = new AdjustmentViewModel();
+            AdjustmentModel model = new AdjustmentModel();
             for (int j = row.FirstCellNum; j < cellCount; j++)
             {
                 if (row.GetCell(j) != null)
@@ -277,12 +286,12 @@ namespace Excel.Service.Services
                             model.Property = row.GetCell(j).ToString();
                             break;
                         case 2:
-                            model.Guest = row.GetCell(j).ToString();
+                            model.GuestString = row.GetCell(j).ToString();
                             break;
                         case 3:
                             decimal commissionAdjustment = 0;
-                            decimal.TryParse(row.GetCell(j).ToString(), out commissionAdjustment);
-                            model.CommissionAdjustment = commissionAdjustment;
+                            if(decimal.TryParse(row.GetCell(j).ToString(), out commissionAdjustment))
+                                model.CommissionAdjustment = commissionAdjustment;
                             break;
                         case 4:
                             model.Notes = row.GetCell(j).ToString();
@@ -296,10 +305,13 @@ namespace Excel.Service.Services
             return await Task.FromResult<bool>(true);
         }
 
-        private async Task<bool> ParseInventoryTable()
-        {
-            throw new NotImplementedException();
-        }
+        public VendorResults<InventoryReservationModel> VendorInventory { get; set; } = new VendorResults<InventoryReservationModel>();
+        public VendorResults<InventoryReservationModel> BookingInventory { get; set; } = new VendorResults<InventoryReservationModel>();
+        public VendorResults<MerchantInventoryReservationModel> VendorMerchant { get; set; } = new VendorResults<MerchantInventoryReservationModel>();
+        public VendorResults<MerchantInventoryReservationModel> BookingMerchant { get; set; } = new VendorResults<MerchantInventoryReservationModel>();
+        public VendorResults<AdjustmentModel> VendorAdjustment { get; set; } = new VendorResults<AdjustmentModel>();
+        public VendorResults<AdjustmentModel> BookingAdjustment { get; set; } = new VendorResults<AdjustmentModel>();
+
 
         public async Task<(bool isSuccess, string message)> ImportFile(IFormFile file)
         {
@@ -345,6 +357,8 @@ namespace Excel.Service.Services
                                 if (row.Cells.All(d => d.CellType == CellType.Blank)) continue;
                                 bool e = k == 0 ? await ParseInventoryRow(row, cellCount) : k == 1 ? await ParseMerchantInventoryRow(row, cellCount) : k == 2 ? await ParseAdjustmentRow(row, cellCount) : false;
                                 //sb.AppendLine("</tr>");
+
+                                
                             }
                         }
 
@@ -385,6 +399,37 @@ namespace Excel.Service.Services
                         model.message += $"<div class=\"row\"><div class=\"col-md-4\">Adjustments Processed:</div><div class=\"col-md-8\">{_adjustments.Count}</div></div>";
                     }
                 }
+                //VendorResults<InventoryReservationModel> vendorInventoryModel = null;
+                //VendorResults<InventoryReservationModel> bookingInventoryModel = null;
+
+                //VendorResults<MerchantInventoryReservationModel> vendorMerchantModel = null;
+                //VendorResults<MerchantInventoryReservationModel> bookingMerchantModel = null;
+
+                //VendorResults<AdjustmentModel> vendorAdjustmentModel = null;
+                //VendorResults<AdjustmentModel> bookingAdjustmentModel = null;
+
+
+                if (_inventoryReservations.Count > 0)
+                {
+                    VendorInventory = await _vendorImportSvc.AddInventoryReservationsAsync(_inventoryReservations);
+                    BookingInventory = await _bookingSvc.AddInventoriesPaidData(_inventoryReservations);
+                }
+
+                if (_merchantInventoryReservations.Count > 0)
+                {
+                    VendorMerchant = await _vendorImportSvc.AddMerchantInventoryReservationsAsync(_merchantInventoryReservations);
+                    BookingMerchant = await _bookingSvc.AddMerchantsPaidData(_merchantInventoryReservations);
+                }
+
+                if (_adjustments.Count > 0)
+                {
+                    VendorAdjustment = await _vendorImportSvc.AddAdjustmentsAsync(_adjustments);
+                    BookingAdjustment = await _bookingSvc.VerifyAdjustments(_adjustments);
+                }
+
+                //(bool isSuccess, string message) returnMsg = await ExportFile(vendorInventoryModel, vendorMerchantModel, vendorAdjustmentModel, bookingInventoryModel, bookingMerchantModel, bookingAdjustmentModel);
+
+                model.message += $"<div class=\"row\"><div class=\"col-md-4\">Status:</div><div class=\"col-md-8\">Complete <a href='[[URL]]' target=\"_blank\">Download Excel Import Report</a></div></div>";
             }
             catch (Exception ex)
             {
@@ -394,5 +439,31 @@ namespace Excel.Service.Services
 
             return model;
         }
+
+        /*public async Task<(IActionResult)> ExportFile(
+            VendorResults<InventoryReservationModel> vendorInventory = null, 
+            VendorResults<MerchantInventoryReservationModel> vendorMerchant = null, 
+            VendorResults<AdjustmentModel> vendorAdjustment = null, 
+            VendorResults<InventoryReservationModel> bookingInventory = null, 
+            VendorResults<MerchantInventoryReservationModel> bookingMerchant = null, 
+            VendorResults<AdjustmentModel> bookingAdjustment = null)
+        {
+
+            (bool isSuccess, string message) model = (false, "Not implemented");
+
+            try
+            {
+                
+
+
+            }
+            catch (Exception ex)
+            {
+                model = (false, ex.Message);
+                
+            }
+
+            return model;
+        }*/
     }
 }

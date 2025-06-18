@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
-namespace Codes.Service.ViewModels
+namespace Codes1.Service.ViewModels
 {
     public class AdminViewModel : _BaseViewModel
     {

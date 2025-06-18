@@ -14,7 +14,9 @@ namespace ClientPortal
     {
         public static void Main(string[] args)
         {
-            var hostBuilder = CreateWebHostBuilder(args);
+            BuildWebHost(args).Run();
+
+            /*var hostBuilder = CreateWebHostBuilder(args);
             var host = hostBuilder.Build();
 
             using (var scope = host.Services.CreateScope())
@@ -22,7 +24,7 @@ namespace ClientPortal
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<ApplicationDbContext>();
+                    var context = services.GetRequiredService<Application1DbContext>();
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
@@ -36,16 +38,23 @@ namespace ClientPortal
                 }
             }
 
-            host.Run();
+            host.Run();*/
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                //.UseKestrel()
+                .UseStartup<Startup>()
+                
+                .Build();
+
+        /*public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseKestrel(options => {
                     options.Limits.MaxRequestLineSize = 100_000_000;
                     options.Limits.MaxRequestBufferSize = 100_000_000;
                     options.Limits.MaxRequestHeadersTotalSize = 100_000_000;
-                });
+                });*/
     }
 }

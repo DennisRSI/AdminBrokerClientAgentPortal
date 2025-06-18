@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
       <generateassemblyconfigurationattribute>false</generateassemblyconfigurationattribute>
       <generateassemblydescriptionattribute>false</generateassemblydescriptionattribute>
       <generateassemblyproductattribute>false</generateassemblyproductattribute>
@@ -10,15 +10,29 @@
       <generateassemblyfileversionattribute>false</generateassemblyfileversionattribute>
       <generateassemblyinformationalversionattribute>false</generateassemblyinformationalversionattribute>
       <generateassemblyversionattribute>false</generateassemblyversionattribute>
+      <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
+    
+  <ItemGroup>
+    <Compile Remove="Models\_ViewModel\AdjustmentViewModel.cs" />
+    <Compile Remove="Models\_ViewModel\InventoryReservationViewModel.cs" />
+    <Compile Remove="Models\_ViewModel\MerchantInventoryReservationViewModel.cs" />
+    <Compile Remove="Models\_ViewModel\_BaseReservationViewModel.cs" />
+  </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DotNetCore.NPOI" Version="1.2.1" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.0" />
+    <PackageReference Include="DotNetCore.NPOI" Version="1.2.3" />
+      <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="Models\_ViewModel\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\RSI.WebApi\Booking.Service\Booking.Service.csproj" />
+    <ProjectReference Include="..\..\VendorImportService\VendorImport.Service.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
-namespace Codes.Service.Data.Migrations
+namespace Codes1.Service.Data.Migrations
 {
     public partial class CreateVideo : Migration
     {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Codes.Service.ViewModels
+namespace Codes1.Service.ViewModels
 {
     public class CodeListViewModel
     {

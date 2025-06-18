@@ -1,7 +1,7 @@
 ﻿using ClientPortal.Models;
-using Codes.Service.Domain;
-using Codes.Service.Interfaces;
-using Codes.Service.Services;
+using Codes1.Service.Domain;
+using Codes1.Service.Interfaces;
+using Codes1.Service.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,15 +19,15 @@ namespace ClientPortal.Controllers.APIs
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IReportService _reportService;
-        private readonly IAccountService _accountService;
-        private readonly ICodeService _context;
+        private readonly IReport1Service _reportService;
+        private readonly IAccount1Service _accountService;
+        private readonly ICode1Service _context;
         private readonly IAccountQueryFactory _accountQueryFactory;
-        private readonly IReportProductionService _reportProductionService;
+        private readonly IReportProduction1Service _reportProductionService;
 
         public ReportProductionController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager,
-                                            IReportService reportService, IAccountService accountService, ICodeService context,
-                                            IReportProductionService reportProductionService, IAccountQueryFactory accountQueryFactory)
+                                            IReport1Service reportService, IAccount1Service accountService, ICode1Service context,
+                                            IReportProduction1Service reportProductionService, IAccountQueryFactory accountQueryFactory)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -48,10 +48,10 @@ namespace ClientPortal.Controllers.APIs
             {
                 UserType = user.Role,
                 ReportType = GetReportType(type),
-                Brokers = accountQuery.GetBrokers().Select(b => new SelectListItem() { Value = b.Id.ToString(), Text = b.FullName }),
-                Clients = accountQuery.GetClients().Select(c => new SelectListItem() { Value = c.Id.ToString(), Text = c.CompanyName }),
-                Agents = accountQuery.GetAgents().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName }),
-                Campaigns = accountQuery.GetCampaigns().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName }),
+                Brokers = accountQuery.GetBrokers().Select(b => new SelectListItem() { Value = b.Id.ToString(), Text = b.FullName }).OrderBy(o => o.Text),
+                Clients = accountQuery.GetClients().Select(c => new SelectListItem() { Value = c.Id.ToString(), Text = c.CompanyName }).OrderBy(o => o.Text),
+                Agents = accountQuery.GetAgents().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName }).OrderBy(o => o.Text),
+                Campaigns = accountQuery.GetCampaigns().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName }).OrderBy(o => o.Text)
             };
 
             return PartialView("Load", model);
@@ -78,11 +78,11 @@ namespace ClientPortal.Controllers.APIs
                     break;
 
                 case "client":
-                    accounts = accountQuery.GetClients().Select(c => c.Id);
+                    //accounts = accountQuery.GetClients().Select(c => c.Id);
                     break;
 
                 case "campaign":
-                    accounts = accountQuery.GetCampaigns().Select(c => c.Id);
+                    //accounts = accountQuery.GetCampaigns().Select(c => c.Id);
                     break;
 
                 case "source":
@@ -98,14 +98,38 @@ namespace ClientPortal.Controllers.APIs
                 CheckOutStartDate = DateTime.ParseExact(checkOutStart, "yyyy-MM-dd", null),
                 CheckOutEndDate = DateTime.ParseExact(checkOutEnd, "yyyy-MM-dd", null),
                 QueryType = type,
-                AccountIds = accounts
+                AccountIds = accounts,
+                AgentId = user.AgentId,
+                ClientId = user.ClientId,
+                BrokerId = user.BrokerId,
+                Role = user.Role
             };
 
             ProductionResultSummaryViewModel model = null;
 
             if (type == "campaign")
             {
-                model = await _reportProductionService.GetProductionResultCampaignAsync(query);
+                //model = await _reportProductionService.GetProductionResultCampaignAsync(query);
+                //model = await _reportProductionService.V2_GetProductionResultCampaignAsync(0, 90000000, null, user.BrokerId, user.ClientId, user.AgentId,
+                //    DateTime.ParseExact(bookingStart, "yyyy-MM-dd", null),
+                //    DateTime.ParseExact(bookingEnd, "yyyy-MM-dd", null),
+                //    DateTime.ParseExact(checkOutStart, "yyyy-MM-dd", null),
+                //    DateTime.ParseExact(checkOutEnd, "yyyy-MM-dd", null),  null);
+
+                model = await _reportProductionService.V2_GetProductionResultCampaignAsync(0, 90000000, null, user.BrokerId, user.ClientId, user.AgentId,
+                        null,
+                        null,
+                        null,
+                        null);
+            }
+            else if(type == "client")
+            {
+                model = await _reportProductionService.V2_getProductionResultClientAsync(0, 90000000, null, user.BrokerId, user.ClientId, user.AgentId,
+                        null,
+                        null,
+                        DateTime.ParseExact(checkOutStart, "yyyy-MM-dd", null),
+                        DateTime.ParseExact(checkOutEnd, "yyyy-MM-dd", null),
+                        null);
             }
             else
             {
@@ -178,14 +202,14 @@ namespace ClientPortal.Controllers.APIs
                         new SelectListItem() { Text = "By Source", Value = "source" },
                         new SelectListItem() { Text = "By Broker", Value = "broker" },
                         new SelectListItem() { Text = "By Client", Value = "client" },
-                        //new SelectListItem() { Text = "By Agent", Value = "agent" }
+                        new SelectListItem() { Text = "By Agent", Value = "agent" }
                     };
 
                 case "broker":
                     return new List<SelectListItem>()
                     {
                         new SelectListItem() { Text = "By Client", Value = "client" },
-                        //new SelectListItem() { Text = "By Agent", Value = "agent" },
+                        new SelectListItem() { Text = "By Agent", Value = "agent" },
                         new SelectListItem() { Text = "By Campaign", Value = "campaign" }
                     };
 

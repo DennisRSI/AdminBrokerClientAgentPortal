@@ -1,8 +1,9 @@
-﻿using Codes.Service.Interfaces;
-using Codes.Service.ViewModels;
+﻿using Codes1.Service.Interfaces;
+using Codes1.Service.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace ClientPortal.Controllers.APIs
 {
@@ -10,9 +11,9 @@ namespace ClientPortal.Controllers.APIs
     [Route("api/[controller]")]
     public class CampaignController : Controller
     {
-        private readonly ICampaignService _campaignService;
+        private readonly ICampaign1Service _campaignService;
 
-        public CampaignController(ICampaignService campaignService)
+        public CampaignController(ICampaign1Service campaignService)
         {
             _campaignService = campaignService;
         }
@@ -41,10 +42,13 @@ namespace ClientPortal.Controllers.APIs
         }
 
         [HttpPost("create/{id}")]
-        public IActionResult Create(int id, [FromBody] CampaignViewModel model)
+        public async Task<IActionResult> Create(int id, [FromBody] CampaignViewModel model)
         {
-            _campaignService.Create(id, model);
-            return Ok("Campaign Created Successfully");
+            string message = await _campaignService.Create(id, model);
+            if(message == "Success")
+                return Ok("Campaign Created Successfully");
+            else
+                return Ok(message);
         }
 
         [HttpPost("deactivate/{campaignId}/{reason}")]

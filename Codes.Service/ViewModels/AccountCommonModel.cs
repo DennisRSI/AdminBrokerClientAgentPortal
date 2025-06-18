@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Codes.Service.ViewModels
+namespace Codes1.Service.ViewModels
 {
     public class AccountCommonModel
     {

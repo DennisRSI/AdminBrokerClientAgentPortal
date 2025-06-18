@@ -113,7 +113,7 @@ function AddUser(){
                 contentType: 'application/json',
                 data: JSON.stringify(data),
                 success: function (result) {
-                    if (result.is_success == true) {
+                    if (result.is_success === true) {
                         var fileInput1 = form.find('.documentW9')[0];
                         var fileInput2; // form.find('.documentOther')[0];
 
@@ -129,9 +129,12 @@ function AddUser(){
                         }
 
                         $('.modal').removeClass('fade').modal('hide');
-
+                        //alert(role);
                         if (role.toLowerCase() === 'client') {
-                            window.clientTable.ajax.reload();
+                            //window.clientTable.ajax.reload();
+                            //$('#userHolder').html(result);
+                            //self.refreshList(role, result.broker_id, 0);
+                            MYCLIENTS.refresh();
                         }
                         else {
                             $('#sidebar-menu .last-clicked').click();
@@ -146,6 +149,25 @@ function AddUser(){
                 }
             })
         });
+    }
+
+    this.refreshList = function (userType, brokerId, clientId) {
+        var url = '/api/user/' + userType + '/' + brokerId + '/' + clientId;
+        //alert(url);
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: 'html',
+            //contentType: 'application/json',
+            //data: JSON.stringify(data),
+            success: function (result) {
+                //alert(result);
+                $('#userHolder').html(result);
+            },
+            error: function (xhr, resp, text) {
+                console.log(xhr, resp, text);
+            }
+        })
     }
 
     this.initDefaultCountry = function () {

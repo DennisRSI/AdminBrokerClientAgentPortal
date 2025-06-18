@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Codes.Service.Models
+namespace Codes1.Service.Models
 {
     [Table("BulkCodeAudits")]
     public class BulkCodeAuditModel : _BaseModel

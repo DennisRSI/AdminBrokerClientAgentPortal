@@ -1,4 +1,4 @@
-namespace Codes.Service.ViewModels
+namespace Codes1.Service.ViewModels
 {
     public class CardDistributionViewModel : _BaseViewModel
     {
@@ -14,6 +14,7 @@ namespace Codes.Service.ViewModels
         {
             get
             {
+                //return GetRate(PhysicalAvailableActivations, PhysicalActivated);
                 return GetRate(PhysicalAvailableActivations, PhysicalActivated);
             }
         }
@@ -22,6 +23,7 @@ namespace Codes.Service.ViewModels
         {
             get
             {
+                //return GetRate(VirtualAvailableActivations, VirtualActivated);
                 return GetRate(VirtualAvailableActivations, VirtualActivated);
             }
         }
@@ -30,8 +32,10 @@ namespace Codes.Service.ViewModels
         {
             if (total == 0)
             {
-                return "0%";
+                return "Unlimited";
             }
+
+
 
             var percentage = (decimal)activated / (decimal)total;
             percentage *= 100;

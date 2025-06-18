@@ -1,7 +1,7 @@
 ﻿using System;
 using ClientPortal.Models;
 using ClientPortal.Services._Interfaces;
-using Codes.Service.Interfaces;
+using Codes1.Service.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ClientPortal.ViewComponents;
@@ -13,13 +13,13 @@ namespace ClientPortal.Controllers.APIs
     public class ClientController : Controller
     {
         private readonly IUserService _context;
-        private readonly ICodeService _codeService;
-        private readonly IDocumentService _documentService;
+        private readonly ICode1Service _codeService;
+        private readonly IDocument1Service _documentService;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IAccountService _accountService;
+        private readonly IAccount1Service _accountService;
 
-        public ClientController(IUserService context, ICodeService codeService, IDocumentService documentService, UserManager<ApplicationUser> userManager,
-            IAccountService accountService)
+        public ClientController(IUserService context, ICode1Service codeService, IDocument1Service documentService, UserManager<ApplicationUser> userManager,
+            IAccount1Service accountService)
         {
             _context = context;
             _codeService = codeService;

@@ -1,4 +1,15 @@
-﻿@model Codes.Service.ViewModels.ClientEditViewModel
+﻿@model Codes1.Service.ViewModels.ClientEditViewModel
+
+@{ 
+    bool AllowEdit = true;
+
+    if (User.IsInRole("Client"))
+    {
+        AllowEdit = false;
+
+    }
+
+}
 
 <div style="color: red; margin-bottom: 10px">@Model.ErrorMessage</div>
 
@@ -6,13 +17,13 @@
 {
     <div class="input-group">
         <span class="input-group-btn" style="width: 200px">
-            <button type="button" class="btn btn-primary btn-sm agent inl-bl" data-clientid="@Model.ClientId" data-agentid="@agent.AgentId">
+            <button type="button" class="btn btn-primary btn-sm agent inl-bl" data-clientid="@Model.ClientId" data-agentid="@agent.AgentId" @if (AllowEdit == false) { <text>disabled</text> }>
                 <i class="fa fa-times icon-white"></i>
                 <span>@agent.AgentFirstName @agent.AgentLastName</span>
             </button>
         </span>
         <span class="input-group-addon">Commission Rate:</span>
         <input type="number" class="form-control inl-bl" asp-for="@agent.CommissionRate" style="width: 80px">
-        <button type="button" class="btn btn-link btn-sm update-commission inl-bl" data-clientid="@Model.ClientId" data-agentid="@agent.AgentId">Set Rate</button>
+        <button type="button" class="btn btn-link btn-sm update-commission inl-bl" data-clientid="@Model.ClientId" data-agentid="@agent.AgentId" @if (AllowEdit == false) { <text>style="display:none"</text> }>Set Rate</button>
     </div>
 }

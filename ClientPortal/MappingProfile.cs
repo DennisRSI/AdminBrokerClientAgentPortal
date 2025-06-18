@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using ClientPortal.Models;
 using ClientPortal.Models._ViewModels;
-using Codes.Service.Models;
-using Codes.Service.ViewModels;
+using Codes1.Service.Models;
+using Codes1.Service.ViewModels;
 
 namespace ClientPortal
 {

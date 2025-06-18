@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Codes.Service.Data.Migrations
+namespace Codes1.Service.Data.Migrations
 {
     public partial class AddCommissionRateToAgent : Migration
     {

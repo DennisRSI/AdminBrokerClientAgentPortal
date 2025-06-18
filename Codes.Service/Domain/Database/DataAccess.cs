@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Codes.Service.Domain
+namespace Codes1.Service.Domain
 {
     public class DataAccess
     {
@@ -33,44 +34,57 @@ namespace Codes.Service.Domain
         {
             var table = new DataTable();
 
-            using (var connection = new SqlConnection(_connectionString))
+            using var connection = new SqlConnection(_connectionString);
+            using var cmd = new SqlCommand(procedureName, connection);
             {
-                using (var cmd = new SqlCommand(procedureName, connection))
+                cmd.CommandTimeout = 60;
+                using (var adapter = new SqlDataAdapter(cmd))
                 {
-                    using (var adapter = new SqlDataAdapter(cmd))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddRange(parameters.ToArray());
-                        adapter.Fill(table);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddRange(parameters.ToArray());
+                    adapter.Fill(table);
 
-                        return table;
-                    }
+                    return table;
                 }
             }
         }
 
         public async Task<DataTable> ExecuteDataTableAsync(string procedureName, IEnumerable<SqlParameter> parameters)
         {
-            var table = new DataTable();
+            DataTable table = new DataTable();
 
-            using (var connection = new SqlConnection(_connectionString))
+            try
             {
-                connection.Open();
-
-                using (var cmd = new SqlCommand(procedureName, connection))
+                using (var connection = new SqlConnection(_connectionString))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddRange(parameters.ToArray());
+                    connection.Open();
 
-                    var time = System.DateTime.Now.ToString();
-                    Debug.WriteLine($"Calling: {procedureName} {time}");
+                    using (var cmd = new SqlCommand(procedureName, connection))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddRange(parameters.ToArray());
 
-                    var reader = await cmd.ExecuteReaderAsync();
-                    table.Load(reader);
+                        var time = System.DateTime.Now.ToString();
+                        Debug.WriteLine($"Calling: {procedureName} {time}");
 
-                    return table;
+                        var reader = await cmd.ExecuteReaderAsync();
+
+                        if(reader.HasRows)
+                            table.Load(reader);
+
+                        
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
+            return table;
         }
+
+       
+        
     }
 }

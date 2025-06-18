@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Codes.Service.ViewModels
+namespace Codes1.Service.ViewModels
 {
     public class DashboardViewModel
     {
@@ -45,6 +45,9 @@ namespace Codes.Service.ViewModels
         public decimal CondoCommissionsOwed { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
+        public decimal TotalCommissionOwed { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal ShoppingVolume { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:c}")]
@@ -58,5 +61,7 @@ namespace Codes.Service.ViewModels
         public int Id { get; set; }
         public bool IsSimulating { get; set; }
         public string AccountName { get; set; }
+        public decimal CondoCompanyCommissionsOwed { get; set; } = 0;
+        public decimal HotelCompanyCommissionsOwed { get; set; } = 0;
     }
 }

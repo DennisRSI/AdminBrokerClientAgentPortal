@@ -2,6 +2,8 @@
 
 function List() {
     var self = this;
+    var rows_selected = [];
+    var $dt = null;
     
     this.init = function (role, brokerId, clientId) {
         switch (role) {
@@ -22,6 +24,16 @@ function List() {
                 self.purchasesList(brokerId);
                 break;
         }
+    };
+
+    this.bulk_update = function () {
+        var txt = $('#update_text');
+        var $table = $dt.table().node();
+        var $chkbox_checked = $('tbody input[type="checkbox"]:checked', $table);
+        //var data = $dt.rows({ selected: true }).data();
+        //onsole.log($chkbox_checked);
+        console.log(rows_selected);
+        console.log(txt.val());
     };
 
     this.purchasesList = function (brokerId) {
@@ -55,7 +67,7 @@ function List() {
     };
 
     this.adminList = function (role) {
-        var $dt;
+        
         url = "/api/list/";
         if (role === "Administrator")
             url += "admin";
@@ -128,8 +140,11 @@ function List() {
     };
 
     this.agentList = function (brokerId, clientId) {
+        //alert(brokerId + ' ' + clientId);
+
         var url = "api/list/agent/" + brokerId.toString() + "/" + clientId.toString();
         var cols = [
+            { "data": null, defaultContent: '<input type="checkbox" class="agent-check">' },
             { "data": "full_name" },
             { "data": "company" },
             { "data": "email" },
@@ -146,15 +161,13 @@ function List() {
             },
             {
                 "data": "deactivation_date"
-            }
+            },
+            { "data": null, defaultContent: '<button type="button" class="agent-details btn btn-primary">Details</button>' },
         ];
 
         $dt = self.generateList("agent_tbl", url, cols);
 
-        $dt.on('click', 'tr', function () {
-            var data = $dt.row(this).id();
-            self.redirectToPage('/api/menu/my-account/' + data);
-        });
+        self.saveCheckBoxChecked("agent_tbl", 'check-all', 'agent-check', '/api/menu/my-account/');
     };
 
     this.clientList = function (brokerId, clientId) {
@@ -205,7 +218,7 @@ function List() {
         }
 
         var tblParsed = '#' + tableName;
-        var $dt;
+        
         if (!$.fn.DataTable.isDataTable(tblParsed)) {
             $dt = $(tblParsed).DataTable({
                 "processing": true, // for show progress bar  
@@ -216,6 +229,7 @@ function List() {
                 "serverSide": serverSide, // for process server side  
                 "filter": true, // this is for disable filter (search box)  
                 "orderMulti": false, // for disable multiple column at once  
+                "sDom": '<"dataTables_header"lfr>t<"dataTables_footer"ip>',
                 "ajax": $.fn.dataTable.pipeline({
                     url: url,
                     method: method,
@@ -223,13 +237,32 @@ function List() {
                 }),
                 "columnDefs":
                     [{
-                        "targets": [0],
-                        "visible": true,
-                        "searchable": true
+                        'targets': 0,
+                        'orderable': false,
+                        'selectable': false//,
+                        //'selector': 'td:first-child'
                     }],
                 "columns": columns,
+                
                 "initComplete": function (settings, json) {
                     $('[data-toggle="tooltip"]').tooltip();
+                },
+                'select': {
+                    'style': 'multi',
+                    'selector': 'td:first-child'
+                },
+                'order': [[1, 'asc']],
+                'rowCallback': function (row, data, dataIndex) {
+                    // Get row ID
+                    var rowId = row.id;
+
+                    // If row ID is in the list of selected row IDs
+                    if ($.inArray(rowId, rows_selected) !== -1) {
+                        $(row).find('input[type="checkbox"]').prop('checked', true);
+                        $(row).addClass('selected');
+                    }
+
+                    //alert(rowId);
                 }
             });
         } else {
@@ -258,11 +291,17 @@ function List() {
             },
             "columnDefs":
                 [{
-                    "targets": [0],
-                    "visible": true,
-                    "searchable": true
+                    'targets': 0,
+                    'orderable': false,
+                    'selectable': false//,
+                    //'selector': 'td:first-child'
                 }],
-            "columns": columns
+            "columns": columns,
+            'select': {
+                'style': 'multi',
+                'selector': 'td:first-child'
+            },
+            'order': [[1, 'asc']]
         });
 
         $(tableSelector).css('width', '100%');
@@ -295,16 +334,137 @@ function List() {
             },
             "columnDefs":
                 [{
-                    "targets": [0],
-                    "visible": true,
-                    "searchable": true
+                    'targets': 0,
+                    'orderable': false,
+                    'selectable': false
+
+                    //,
+                    //'selector': 'td:first-child'//,
+                    /*'checkboxes': {
+                        'selectRow': true
+                    }*/
                 }],
             "columns": columns,
+            
+            "deferRender": true,
             "createdRow": function (row, data, index) {
                 if (data.hasOwnProperty(identifier)) {
                     row.id = data[identifier];
                 }
+            },
+            'select': {
+                style: 'multi',
+                selector: 'td:first-child'
+            },
+            'order': [[1, 'asc']],
+            'rowCallback': function (row, data, dataIndex) {
+                // Get row ID
+                var rowId = data[0];
+
+                // If row ID is in the list of selected row IDs
+                if ($.inArray(rowId, rows_selected) !== -1) {
+                    $(row).find('input[type="checkbox"]').prop('checked', true);
+                    $(row).addClass('selected');
+                }
             }
+
         };
+    };
+    this.updateDataTableSelections = function (table) {
+        //console.log(table);
+        var $table = table.table().node();
+        var $chkbox_all = $('tbody input[type="checkbox"]', $table);
+        var $chkbox_checked = $('tbody input[type="checkbox"]:checked', $table);
+        var chkbox_select_all = $('thead input[id="check-all"]', $table).get(0);
+        //console.log();
+        // If none of the checkboxes are checked
+        if ($chkbox_checked.length === 0) {
+            chkbox_select_all.checked = false;
+            if ('indeterminate' in chkbox_select_all) {
+                chkbox_select_all.indeterminate = false;
+            }
+            //alert('fired');
+            $('#update_text').remove();
+            $('#update_text_btn').remove();
+
+            // If all of the checkboxes are checked
+        } else if ($chkbox_checked.length === $chkbox_all.length) {
+            chkbox_select_all.checked = true;
+            if ('indeterminate' in chkbox_select_all) {
+                chkbox_select_all.indeterminate = false;
+            }
+            if (!$('#update_text').length) {
+                $(".dataTables_length").append(self.toolBarAdd());
+            }
+            // If some of the checkboxes are checked
+        } else {
+            chkbox_select_all.checked = true;
+            if ('indeterminate' in chkbox_select_all) {
+                chkbox_select_all.indeterminate = true;
+            }
+            if (!$('#update_text').length) {
+                $(".dataTables_length").append(self.toolBarAdd());
+            }
+        }
+    };
+    this.saveCheckBoxChecked = function (table, all_button, list_button, url) {
+        table = '#' + table;
+
+        $dt.on('click', 'button', function () {
+            var data = $(this).closest("tr").attr('id');//$dt.row(this).id();
+            self.redirectToPage('/api/menu/my-account/' + data);
+        });
+
+        $('thead input[id="' + all_button + '"]', $dt.table().container()).on('click', function (e) {
+            if (this.checked) {
+                $(table + ' tbody input[type="checkbox"]:not(:checked)').trigger('click');
+                //$("div.toolbar").html(this.toolBarAdd());
+            } else {
+                $(table + ' tbody input[type="checkbox"]:checked').trigger('click');
+                //$("div.toolbar").html('');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $(table).on('click', 'tbody td, thead th:first-child', function (e) {
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
+        $dt.on('click', 'input:checkbox.' + list_button, function (e) {
+            var $row = $(this).closest('tr');
+            var data = $dt.row($row).data();
+
+            var rowId = $(this).closest("tr").attr('id');
+            var index = $.inArray(rowId, rows_selected);
+
+            if (this.checked && index === -1) {
+                rows_selected.push(rowId);
+            } else if (!this.checked && index !== -1) {
+                rows_selected.splice(index, 1);
+            }
+
+            if (this.checked) {
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            self.updateDataTableSelections($dt);
+
+            e.stopPropagation();
+
+        });
+
+        // Handle table draw event
+        $dt.on('draw', function () {
+            // Update state of "Select all" control
+            self.updateDataTableSelections($dt);
+        });
+    };
+    this.toolBarAdd = function () {
+        //console.log(table);
+        return '<input placeholder="Update Commission" class="form-control" type="text" id="update_text" value="" />&nbsp;<button onclick="LIST.bulk_update()" class="btn btn-primary" type="button" id="update_text_btn">Update All</button>';
     };
 }

@@ -30,14 +30,17 @@ function ImportExcel()
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("XSRF-TOKEN",
                         $('input:hidden[name="__RequestVerificationToken"]').val());
+                    $("#loader-container").show();
                 },
                 data: fdata,
                 contentType: false,
                 processData: false,
                 success: function (response) {
+                    $("#loader-container").hide();
                     if (response.length === 0)
                         alert('Some error occured while uploading');
                     else {
+                        //return response;
                         var message = response.item1 === false ? "Error: " : "";
                         message += response.item2;
                         $('#dvData').html(message);
@@ -46,6 +49,7 @@ function ImportExcel()
                     //console.log(response);
                 },
                 error: function (e) {
+                    $("#loader-container").hide();
                     $('#dvData').html(e.responseText);
                     //console.log(response.item2);
                 }

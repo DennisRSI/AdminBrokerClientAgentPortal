@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Codes.Service.ViewModels
+namespace Codes1.Service.ViewModels
 {
     public class ProductionResultDetailViewModel
     {
@@ -47,6 +47,9 @@ namespace Codes.Service.ViewModels
         {
             get { return DateTime.Now.ToString(); }
         }
+
+        public string Message { get; set; } = "Success";
+        public bool IsSuccess { get; set; } = true;
     }
 
     public class ProductionDetailItemViewModel

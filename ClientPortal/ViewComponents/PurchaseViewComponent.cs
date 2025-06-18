@@ -1,6 +1,6 @@
 ﻿using ClientPortal.Models;
-using Codes.Service.Interfaces;
-using Codes.Service.ViewModels;
+using Codes1.Service.Interfaces;
+using Codes1.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -10,9 +10,9 @@ namespace ClientPortal.ViewComponents
     public class PurchaseViewComponent : ViewComponent
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IPurchaseService _purchaseService;
+        private readonly IPurchase1Service _purchaseService;
 
-        public PurchaseViewComponent(SignInManager<ApplicationUser> signInManager, IPurchaseService purchaseService)
+        public PurchaseViewComponent(SignInManager<ApplicationUser> signInManager, IPurchase1Service purchaseService)
         {
             _signInManager = signInManager;
             _purchaseService = purchaseService;

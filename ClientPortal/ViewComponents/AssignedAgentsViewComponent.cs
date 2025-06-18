@@ -1,8 +1,8 @@
 ﻿using ClientPortal.Models;
 using ClientPortal.Models._ViewModels;
-using Codes.Service.Domain;
-using Codes.Service.Interfaces;
-using Codes.Service.ViewModels;
+using Codes1.Service.Domain;
+using Codes1.Service.Interfaces;
+using Codes1.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,14 +15,14 @@ namespace ClientPortal.ViewComponents
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ICodeService _codeService;
-        private readonly IAccountService _accountService;
+        private readonly ICode1Service _codeService;
+        private readonly IAccount1Service _accountService;
 
         public AssignedAgentsViewComponent(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
-            ICodeService codeService,
-            IAccountService accountService)
+            ICode1Service codeService,
+            IAccount1Service accountService)
         {
             _signInManager = signInManager;
             _userManager = userManager;

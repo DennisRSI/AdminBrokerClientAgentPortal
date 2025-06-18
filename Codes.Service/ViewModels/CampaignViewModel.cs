@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
-namespace Codes.Service.ViewModels
+namespace Codes1.Service.ViewModels
 {
     public class CampaignViewModel : _BaseViewModel
     {
@@ -33,6 +33,8 @@ namespace Codes.Service.ViewModels
         public bool BenefitCondo { get; set; }
         public bool BenefitShopping { get; set; }
         public bool BenefitDining { get; set; }
+        public bool BenefitNewHotels { get; set; }
+        public bool BenefitNewCondos { get; set; }
 
         public string BenefitText { get; set; }
 

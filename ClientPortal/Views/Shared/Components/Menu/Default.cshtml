@@ -12,7 +12,11 @@
                     <li><a class="nav-page-id" href="#" data-controller="dashboard" data-page="select" data-id="agent">Agent Dashboards</a></li>
                     <li><a class="nav-page-id" href="#" data-controller="dashboard" data-page="select" data-id="client">Client Dashboards</a></li>
                     <li><a class="nav-page-id" href="#" data-page="importexcel">Import Excel From ARN</a></li>
+                    <li><a class="nav-page-id" href="#" data-controller="commission" data-page="broker">Broker Commission Admin</a></li>
                 </ul>
+            </li>
+            <li asp-authorize asp-roles="Administrator,Super Administrator">
+                <a class="nav-page-id" href="#" data-controller="vendorimport" data-page="default"><i class="fa fa-credit-card nav-icons-blue"></i> Vendor Excel Import </a>
             </li>
             <li asp-authorize asp-roles="Broker,Agent,Client">
                 <a class="nav-page-id" href="#" data-controller="dashboard" data-page="default"><i class="fa fa-credit-card nav-icons-blue"></i> @Model.RoleName Dashboard </a>
@@ -31,7 +35,7 @@
                 <a class="nav-item" href="#" data-page="my-account" data-id="@Model.AccountId"><i class="fa fa-users nav-icons-blue"></i> Agents </a>
             </li>
             <li asp-authorize asp-roles="Client">
-                <a class="nav-item" href="#" data-page="campaign-list"><i class="fa fa-users nav-icons-blue"></i> Campaigns </a>
+                <a class="nav-item" href="#" data-id="@Model.AccountId" data-page="campaign-list"><i class="fa fa-users nav-icons-blue"></i> Campaigns </a>
             </li>
             <li asp-authorize asp-roles="Administrator,Super Administrator,Broker,Client,Agent">
                 <a><i class="fa fa-bar-chart nav-icons-blue"></i> Reports <span class="fa fa-chevron-down"></span></a>

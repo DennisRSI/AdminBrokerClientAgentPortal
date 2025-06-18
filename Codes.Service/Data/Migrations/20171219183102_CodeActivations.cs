@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Codes.Service.Data.Migrations
+namespace Codes1.Service.Data.Migrations
 {
     public partial class CodeActivations : Migration
     {

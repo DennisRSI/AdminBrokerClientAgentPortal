@@ -1,7 +1,7 @@
-﻿using Codes.Service.ViewModels;
+﻿using Codes1.Service.ViewModels;
 using System.Collections.Generic;
 
-namespace Codes.Service.Domain
+namespace Codes1.Service.Domain
 {
     public interface IAccountQuery
     {

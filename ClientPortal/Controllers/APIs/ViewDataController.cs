@@ -1,8 +1,8 @@
 ﻿using ClientPortal.Models;
 using ClientPortal.Models._ViewModels;
-using Codes.Service.Interfaces;
-using Codes.Service.Models;
-using Codes.Service.ViewModels;
+using Codes1.Service.Interfaces;
+using Codes1.Service.Models;
+using Codes1.Service.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,9 +17,9 @@ namespace ClientPortal.Controllers.APIs
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IAccountService _accountService;
+        private readonly IAccount1Service _accountService;
 
-        public ViewDataController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IAccountService accountService)
+        public ViewDataController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IAccount1Service accountService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -30,7 +30,10 @@ namespace ClientPortal.Controllers.APIs
         public async Task<IEnumerable<MyClientViewModel>> GetClients()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            return _accountService.GetClientsByBroker(user.BrokerId);
+            if(user.Role.Contains("Agent"))
+                return _accountService.GetClientsByAgent(user.AgentId);
+            else
+                return _accountService.GetClientsByBroker(user.BrokerId);
         }
 
         [HttpGet("agents")]

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ClientPortal.Data;
 using ClientPortal.Models;
-using Codes.Service.Data;
+using Codes1.Service.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -16,12 +16,12 @@ namespace ClientPortal.Controllers
     [Route("[controller]/[action]")]
     public class LinkIdentityController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly CodesDbContext _codesContext;
+        private readonly Application1DbContext _context;
+        private readonly Codes1DbContext _codesContext;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public LinkIdentityController(ApplicationDbContext context, CodesDbContext codesContext, UserManager<ApplicationUser> userManager
+        public LinkIdentityController(Application1DbContext context, Codes1DbContext codesContext, UserManager<ApplicationUser> userManager
             , RoleManager<IdentityRole> roleManager, ILogger<LinkIdentityController> logger)
         {
             _context = context;

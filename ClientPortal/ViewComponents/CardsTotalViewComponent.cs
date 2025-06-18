@@ -1,6 +1,6 @@
 ﻿using ClientPortal.Models;
-using Codes.Service.Interfaces;
-using Codes.Service.ViewModels;
+using Codes1.Service.Interfaces;
+using Codes1.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,9 +14,9 @@ namespace ClientPortal.ViewComponents
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ICodeService _context;
+        private readonly ICode1Service _context;
 
-        public CardsTotalViewComponent(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ICodeService context)
+        public CardsTotalViewComponent(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ICode1Service context)
         {
             _signInManager = signInManager;
             _userManager = userManager;

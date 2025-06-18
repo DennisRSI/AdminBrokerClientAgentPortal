@@ -10,7 +10,7 @@ using System;
 
 namespace ClientPortal.Data.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(Application1DbContext))]
     [Migration("20171228143806_FixError")]
     partial class FixError
     {

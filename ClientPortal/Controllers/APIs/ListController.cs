@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ClientPortal.Models;
-using Codes.Service.ViewModels;
+using Codes1.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Codes.Service.Interfaces;
+using Codes1.Service.Interfaces;
 
 namespace ClientPortal.Controllers.APIs
 {
@@ -13,8 +13,8 @@ namespace ClientPortal.Controllers.APIs
     public class ListController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ICodeService _context;
-        public ListController(ICodeService context, UserManager<ApplicationUser> userManager)
+        private readonly ICode1Service _context;
+        public ListController(ICode1Service context, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
             _context = context;
@@ -77,7 +77,7 @@ namespace ClientPortal.Controllers.APIs
         }
 
         [HttpPost("client/{brokerId}/{campaignId}")]
-        public async Task<DataTableViewModel<ClientListViewModel>> Client(int brokerId, int campaignId)
+        public async Task<DataTableViewModel<ClientListViewModel>> Client(int brokerId, int? campaignId)
         {
             DataTableViewModel<ClientListViewModel> model = new DataTableViewModel<ClientListViewModel>();
 

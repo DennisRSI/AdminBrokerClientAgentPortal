@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Codes.Service.Domain
+namespace Codes1.Service.Domain
 {
     public class CodeGeneratorOptions
     {

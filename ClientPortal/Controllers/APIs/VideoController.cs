@@ -1,5 +1,5 @@
-﻿using Codes.Service.Interfaces;
-using Codes.Service.Models;
+﻿using Codes1.Service.Interfaces;
+using Codes1.Service.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -10,9 +10,9 @@ namespace ClientPortal.Controllers.APIs
     [Route("api/[controller]")]
     public class VideoController : Controller
     {
-        private readonly IVideoService _videoService;
+        private readonly IVideo1Service _videoService;
 
-        public VideoController(IVideoService videoService)
+        public VideoController(IVideo1Service videoService)
         {
             _videoService = videoService;
         }

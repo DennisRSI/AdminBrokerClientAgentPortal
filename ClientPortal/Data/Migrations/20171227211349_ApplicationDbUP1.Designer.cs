@@ -10,7 +10,7 @@ using System;
 
 namespace ClientPortal.Data.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(Application1DbContext))]
     [Migration("20171227211349_ApplicationDbUP1")]
     partial class ApplicationDbUP1
     {

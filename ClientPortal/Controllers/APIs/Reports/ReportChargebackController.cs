@@ -1,6 +1,6 @@
 ﻿using ClientPortal.Models;
-using Codes.Service.Interfaces;
-using Codes.Service.ViewModels;
+using Codes1.Service.Interfaces;
+using Codes1.Service.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +17,12 @@ namespace ClientPortal.Controllers.APIs
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IReportService _reportService;
-        private readonly IAccountService _accountService;
-        private readonly ICodeService _context;
+        private readonly IReport1Service _reportService;
+        private readonly IAccount1Service _accountService;
+        private readonly ICode1Service _context;
 
         public ReportChargebackController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager,
-                                            IReportService reportService, IAccountService accountService, ICodeService context)
+                                            IReport1Service reportService, IAccount1Service accountService, ICode1Service context)
         {
             _signInManager = signInManager;
             _userManager = userManager;

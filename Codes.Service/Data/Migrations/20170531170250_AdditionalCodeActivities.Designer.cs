@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Codes.Service.Data;
+using Codes1.Service.Data;
 
-namespace Codes.Service.Data.Migrations
+namespace Codes1.Service.Data.Migrations
 {
-    [DbContext(typeof(CodesDbContext))]
+    [DbContext(typeof(Codes1DbContext))]
     [Migration("20170531170250_AdditionalCodeActivities")]
     partial class AdditionalCodeActivities
     {
@@ -17,7 +17,7 @@ namespace Codes.Service.Data.Migrations
                 .HasAnnotation("ProductVersion", "1.1.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Codes.Service.Models.AdditionalCodeActivityModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.AdditionalCodeActivityModel", b =>
                 {
                     b.Property<int>("AdditionalCodeActivityId")
                         .ValueGeneratedOnAdd();
@@ -49,7 +49,7 @@ namespace Codes.Service.Data.Migrations
                     b.ToTable("AdditionalCodeActivities");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.BrokerModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.BrokerModel", b =>
                 {
                     b.Property<int>("BrokerId")
                         .ValueGeneratedOnAdd();
@@ -81,7 +81,7 @@ namespace Codes.Service.Data.Migrations
                     b.ToTable("Brokers");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.BulkCodeAuditModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.BulkCodeAuditModel", b =>
                 {
                     b.Property<int>("BulkCodeAuditId")
                         .ValueGeneratedOnAdd();
@@ -123,7 +123,7 @@ namespace Codes.Service.Data.Migrations
                     b.ToTable("BulkCodeAudits");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.CodeActivityModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.CodeActivityModel", b =>
                 {
                     b.Property<int>("CodeActivityId")
                         .ValueGeneratedOnAdd();
@@ -212,7 +212,7 @@ namespace Codes.Service.Data.Migrations
                     b.ToTable("CodeActivities");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.CodeModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.CodeModel", b =>
                 {
                     b.Property<int>("CodeId")
                         .ValueGeneratedOnAdd();
@@ -265,9 +265,9 @@ namespace Codes.Service.Data.Migrations
                     b.ToTable("Codes");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.CodeActivityModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.CodeActivityModel", b =>
                 {
-                    b.HasOne("Codes.Service.Models.CodeModel", "Code")
+                    b.HasOne("Codes1.Service.Models.CodeModel", "Code")
                         .WithMany("CodeActivities")
                         .HasForeignKey("CodeId")
                         .OnDelete(DeleteBehavior.Cascade);

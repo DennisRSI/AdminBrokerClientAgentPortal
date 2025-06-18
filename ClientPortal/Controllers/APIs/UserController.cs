@@ -3,14 +3,15 @@ using System.IO;
 using System.Threading.Tasks;
 using ClientPortal.Models;
 using ClientPortal.Services._Interfaces;
-using Codes.Service.Interfaces;
-using Codes.Service.ViewModels;
+using Codes1.Service.Interfaces;
+using Codes1.Service.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
-using Codes.Service.Models;
+using Codes1.Service.Models;
 using ClientPortal.Models._ViewModels;
+using ClientPortal.ViewComponents;
 
 namespace ClientPortal.Controllers.APIs
 {
@@ -18,19 +19,25 @@ namespace ClientPortal.Controllers.APIs
     public class UserController : Controller
     {
         private readonly IUserService _context;
-        private readonly ICodeService _codeService;
-        private readonly IDocumentService _documentService;
+        private readonly ICode1Service _codeService;
+        private readonly IDocument1Service _documentService;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IAccountService _accountService;
+        private readonly IAccount1Service _accountService;
 
-        public UserController(IUserService context, ICodeService codeService, IDocumentService documentService, UserManager<ApplicationUser> userManager,
-            IAccountService accountService)
+        public UserController(IUserService context, ICode1Service codeService, IDocument1Service documentService, UserManager<ApplicationUser> userManager,
+            IAccount1Service accountService)
         {
             _context = context;
             _codeService = codeService;
             _userManager = userManager;
             _documentService = documentService;
             _accountService = accountService;
+        }
+
+        [HttpGet("{UserType}/{BrokerId}/{ClientId?}")]
+        public IActionResult Get(string userType, int brokerId, int clientId = 0)
+        {
+            return ViewComponent(typeof(ListViewComponent), new { userType = userType, brokerId = brokerId, clientId = clientId });
         }
 
         [HttpPost("{userType}")]
@@ -312,7 +319,7 @@ namespace ClientPortal.Controllers.APIs
 
                                 clientModel.Broker.BrokerId = brokerId;
 
-                                ClientViewModel clientReturn = await _context.ClientAdd(clientModel, "Chang3M3#");
+                                ClientViewModel clientReturn = await _context.ClientAdd(clientModel, "Travel@2019");
                                 returnObj.client_id = clientReturn.ClientId;
                                 returnObj.account_id = clientReturn.ApplicationReference;
                                 returnObj.broker_id = clientReturn.Broker.BrokerId;
@@ -533,30 +540,54 @@ namespace ClientPortal.Controllers.APIs
 
         private async Task<AgentViewModel> UpdateAgent(ProfileViewModel user)
         {
-            var agent = new AgentViewModel()
-            {
-                AgentId = user.AgentId,
-                BrokerId = user.BrokerId,
-                ApplicationReference = user.Id,
-                Email = user.Email,
-                AgentFirstName = user.FirstName,
-                AgentLastName = user.LastName,
-                CompanyName = user.CompanyName,
-                EIN = user.EIN,
-                Address = user.Address,
-                City = user.City,
-                State = user.State,
-                PostalCode = user.PostalCode,
-                Country = user.Country,
-                MobilePhone = user.MobilePhone,
-                OfficePhone = user.OfficePhone,
-                Fax = user.Fax,
-                ParentAgentId = user.ParentAgentId,
-                CommissionRate = (float)user.CommissionRate,
-                Username = user.UserName
-            };
 
-            return await _context.AgentUpdate(agent);
+            AgentViewModel agent = new AgentViewModel();
+
+            try
+            {
+                AgentViewModel usr = await _codeService.GetAgentByAccountId(user.Id);
+
+                if (usr != null)
+                {
+                    agent = new AgentViewModel()
+                    {
+                        AgentId = user.AgentId,
+                        BrokerId = usr.BrokerId,
+                        ApplicationReference = user.Id,
+                        Email = user.Email,
+                        AgentFirstName = user.FirstName,
+                        AgentLastName = user.LastName,
+                        CompanyName = user.CompanyName,
+                        EIN = user.EIN,
+                        Address = user.Address,
+                        City = user.City,
+                        State = user.State,
+                        PostalCode = user.PostalCode,
+                        Country = user.Country,
+                        MobilePhone = user.MobilePhone,
+                        OfficePhone = user.OfficePhone,
+                        Fax = user.Fax,
+                        ParentAgentId = user.ParentAgentId,
+                        CommissionRate = (float)user.CommissionRate,
+                        Username = user.UserName
+                    };
+
+                    return await _context.AgentUpdate(agent);
+                }
+                else
+                {
+                    agent.Message = "Error: Agent not found";
+                }
+            }
+            catch (Exception ex)
+            {
+                if (agent == null)
+                    agent = new AgentViewModel();
+
+                agent.Message = $"Error: {ex.Message}";
+            }
+
+            return agent;
         }
 
         private async Task<BrokerViewModel> UpdateBroker(ProfileViewModel user)
@@ -611,5 +642,6 @@ namespace ClientPortal.Controllers.APIs
 
             return await _context.ClientUpdate(client);
         }
+        
     }
 }

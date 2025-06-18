@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Codes.Service.Models
+namespace Codes1.Service.Models
 {
     [Table("UnusedCodes")]
     public class UnusedCodeModel : _BaseModel

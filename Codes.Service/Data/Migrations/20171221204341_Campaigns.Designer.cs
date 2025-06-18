@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Codes.Service.Data;
+using Codes1.Service.Data;
 
-namespace Codes.Service.Data.Migrations
+namespace Codes1.Service.Data.Migrations
 {
-    [DbContext(typeof(CodesDbContext))]
+    [DbContext(typeof(Codes1DbContext))]
     [Migration("20171221204341_Campaigns")]
     partial class Campaigns
     {
@@ -17,7 +17,7 @@ namespace Codes.Service.Data.Migrations
                 .HasAnnotation("ProductVersion", "1.1.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Codes.Service.Models.AdditionalCodeActivityModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.AdditionalCodeActivityModel", b =>
                 {
                     b.Property<int>("AdditionalCodeActivityId")
                         .ValueGeneratedOnAdd();
@@ -49,7 +49,7 @@ namespace Codes.Service.Data.Migrations
                     b.ToTable("AdditionalCodeActivities");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.AgentModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.AgentModel", b =>
                 {
                     b.Property<int>("AgentId")
                         .ValueGeneratedOnAdd();
@@ -121,7 +121,7 @@ namespace Codes.Service.Data.Migrations
                     b.ToTable("Agents");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.BrokerModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.BrokerModel", b =>
                 {
                     b.Property<int>("BrokerId")
                         .ValueGeneratedOnAdd();
@@ -188,7 +188,7 @@ namespace Codes.Service.Data.Migrations
                     b.ToTable("Brokers");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.BulkCodeAuditModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.BulkCodeAuditModel", b =>
                 {
                     b.Property<int>("BulkCodeAuditId")
                         .ValueGeneratedOnAdd();
@@ -230,7 +230,7 @@ namespace Codes.Service.Data.Migrations
                     b.ToTable("BulkCodeAudits");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.CampaignAgentModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.CampaignAgentModel", b =>
                 {
                     b.Property<int>("CampaignId");
 
@@ -243,7 +243,7 @@ namespace Codes.Service.Data.Migrations
                     b.ToTable("CampaignAgents");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.CampaignModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.CampaignModel", b =>
                 {
                     b.Property<int>("CampaignId")
                         .ValueGeneratedOnAdd();
@@ -299,7 +299,7 @@ namespace Codes.Service.Data.Migrations
                     b.ToTable("Campaigns");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.ClientModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.ClientModel", b =>
                 {
                     b.Property<int>("ClientId")
                         .ValueGeneratedOnAdd();
@@ -369,7 +369,7 @@ namespace Codes.Service.Data.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.CodeActivationModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.CodeActivationModel", b =>
                 {
                     b.Property<int>("CodeActivationId")
                         .ValueGeneratedOnAdd();
@@ -455,7 +455,7 @@ namespace Codes.Service.Data.Migrations
                     b.ToTable("CodeActivations");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.CodeActivityModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.CodeActivityModel", b =>
                 {
                     b.Property<int>("CodeActivityId")
                         .ValueGeneratedOnAdd();
@@ -544,7 +544,7 @@ namespace Codes.Service.Data.Migrations
                     b.ToTable("CodeActivities");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.CodeModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.CodeModel", b =>
                 {
                     b.Property<int>("CodeId")
                         .ValueGeneratedOnAdd();
@@ -597,7 +597,7 @@ namespace Codes.Service.Data.Migrations
                     b.ToTable("Codes");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.CodeRangeModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.CodeRangeModel", b =>
                 {
                     b.Property<int>("CodeRangeId")
                         .ValueGeneratedOnAdd();
@@ -663,66 +663,66 @@ namespace Codes.Service.Data.Migrations
                     b.ToTable("CodeRanges");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.AgentModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.AgentModel", b =>
                 {
-                    b.HasOne("Codes.Service.Models.BrokerModel", "Broker")
+                    b.HasOne("Codes1.Service.Models.BrokerModel", "Broker")
                         .WithMany("Agents")
                         .HasForeignKey("BrokerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.CampaignAgentModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.CampaignAgentModel", b =>
                 {
-                    b.HasOne("Codes.Service.Models.AgentModel", "Agent")
+                    b.HasOne("Codes1.Service.Models.AgentModel", "Agent")
                         .WithMany("CampaignAgents")
                         .HasForeignKey("AgentId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Codes.Service.Models.CampaignModel", "Campaign")
+                    b.HasOne("Codes1.Service.Models.CampaignModel", "Campaign")
                         .WithMany("CampaignAgents")
                         .HasForeignKey("CampaignId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.CampaignModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.CampaignModel", b =>
                 {
-                    b.HasOne("Codes.Service.Models.BrokerModel", "Broker")
+                    b.HasOne("Codes1.Service.Models.BrokerModel", "Broker")
                         .WithMany("Campaigns")
                         .HasForeignKey("BrokerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Codes.Service.Models.ClientModel", "Client")
+                    b.HasOne("Codes1.Service.Models.ClientModel", "Client")
                         .WithMany("Campaigns")
                         .HasForeignKey("ClientId");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.ClientModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.ClientModel", b =>
                 {
-                    b.HasOne("Codes.Service.Models.BrokerModel", "Broker")
+                    b.HasOne("Codes1.Service.Models.BrokerModel", "Broker")
                         .WithMany("Clients")
                         .HasForeignKey("BrokerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.CodeActivationModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.CodeActivationModel", b =>
                 {
-                    b.HasOne("Codes.Service.Models.CodeRangeModel", "CodeRange")
+                    b.HasOne("Codes1.Service.Models.CodeRangeModel", "CodeRange")
                         .WithMany("CodeActivations")
                         .HasForeignKey("CodeRangeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.CodeActivityModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.CodeActivityModel", b =>
                 {
-                    b.HasOne("Codes.Service.Models.CodeModel", "Code")
+                    b.HasOne("Codes1.Service.Models.CodeModel", "Code")
                         .WithMany("CodeActivities")
                         .HasForeignKey("CodeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.CodeRangeModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.CodeRangeModel", b =>
                 {
-                    b.HasOne("Codes.Service.Models.BrokerModel", "Broker")
+                    b.HasOne("Codes1.Service.Models.BrokerModel", "Broker")
                         .WithMany()
                         .HasForeignKey("BrokerId")
                         .OnDelete(DeleteBehavior.Cascade);

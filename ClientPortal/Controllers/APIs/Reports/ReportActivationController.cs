@@ -1,7 +1,7 @@
 ﻿using ClientPortal.Models;
-using Codes.Service.Domain;
-using Codes.Service.Interfaces;
-using Codes.Service.ViewModels;
+using Codes1.Service.Domain;
+using Codes1.Service.Interfaces;
+using Codes1.Service.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,13 +19,13 @@ namespace ClientPortal.Controllers.APIs
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IReportService _reportService;
-        private readonly IAccountService _accountService;
-        private readonly ICodeService _context;
+        private readonly IReport1Service _reportService;
+        private readonly IAccount1Service _accountService;
+        private readonly ICode1Service _context;
         private readonly IAccountQueryFactory _accountQueryFactory;
 
         public ReportActivationController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager,
-                                            IReportService reportService, IAccountService accountService, ICodeService context, IAccountQueryFactory accountQueryFactory)
+                                            IReport1Service reportService, IAccount1Service accountService, ICode1Service context, IAccountQueryFactory accountQueryFactory)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -74,9 +74,9 @@ namespace ClientPortal.Controllers.APIs
                     new SelectListItem() { Text = "By Client", Value = "client" },
                     new SelectListItem() { Text = "By Agent", Value = "agent" }
                 },
-                Brokers = _accountService.GetAllBrokers().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName }),
-                Agents = _accountService.GetAllAgents().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName }),
-                Clients = _accountService.GetAllClients().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName })
+                Brokers = _accountService.GetAllBrokers().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName }).OrderBy(o => o.Text),
+                Agents = _accountService.GetAllAgents().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName }).OrderBy(o => o.Text),
+                Clients = _accountService.GetAllClients().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName }).OrderBy(o => o.Text)
             };
 
             return model;
@@ -91,8 +91,8 @@ namespace ClientPortal.Controllers.APIs
                     new SelectListItem() { Text = "By Client", Value = "client" },
                     new SelectListItem() { Text = "By Agent", Value = "agent" }
                 },
-                Agents = _accountService.GetAgentsOfBroker(brokerId).Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName }),
-                Clients = _accountService.GetClientsOfBroker(brokerId).Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName })
+                Agents = _accountService.GetAgentsOfBroker(brokerId).OrderBy(o=> o.CompanyName).Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName }),
+                Clients = _accountService.GetClientsOfBroker(brokerId).OrderBy(o => o.CompanyName).Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName })
             };
 
             return model;
@@ -109,7 +109,7 @@ namespace ClientPortal.Controllers.APIs
                 {
                     new SelectListItem() { Text = "By Campaign", Value = "campaign" }
                 },
-                Campaigns = accountQuery.GetCampaigns().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName }),
+                Campaigns = accountQuery.GetCampaigns().OrderBy(o => o.CompanyName).Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName }),
             };
 
             return model;
@@ -126,7 +126,7 @@ namespace ClientPortal.Controllers.APIs
                 {
                     new SelectListItem() { Text = "By Client", Value = "client" },
                 },
-                Clients = accountQuery.GetClients().Select(c => new SelectListItem() { Value = c.Id.ToString(), Text = c.CompanyName }),
+                Clients = accountQuery.GetClients().OrderBy(o => o.CompanyName).Select(c => new SelectListItem() { Value = c.Id.ToString(), Text = c.CompanyName }),
             };
 
             return model;
@@ -135,53 +135,61 @@ namespace ClientPortal.Controllers.APIs
         [HttpGet("gethtml/{type}/{id}/{name}/{start}/{end}")]
         public async Task<IActionResult> GetHtml(string type, int id, string name, string start, string end)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var accountQuery = _accountQueryFactory.GetAccountQuery(user.BrokerId, user.AgentId, user.ClientId);
-
-            var startSplit = start.Split('-');
-            var endSplit = end.Split('-');
-
-            var model = new ActivationResultViewModel()
+            try
             {
-                Type = type.First().ToString().ToUpper() + type.Substring(1),
-                AccountName = name,
-                StartDate = $"{startSplit[1]}/{startSplit[2]}/{startSplit[0]}",
-                EndDate = $"{endSplit[1]}/{endSplit[2]}/{endSplit[0]}",
-            };
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+                var accountQuery = _accountQueryFactory.GetAccountQuery(user.BrokerId, user.AgentId, user.ClientId);
 
-            switch (type)
+                var startSplit = start.Split('-');
+                var endSplit = end.Split('-');
+
+                var model = new ActivationResultViewModel()
+                {
+                    Type = type.First().ToString().ToUpper() + type.Substring(1),
+                    AccountName = name,
+                    StartDate = $"{startSplit[1]}/{startSplit[2]}/{startSplit[0]}",
+                    EndDate = $"{endSplit[1]}/{endSplit[2]}/{endSplit[0]}",
+                };
+
+                switch (type)
+                {
+                    case "broker":
+                        var brokers = accountQuery.GetBrokers()
+                            .Where(c => c.Id == id || id == 0)
+                            .Select(c => new ActivationTableViewModel() { Id = c.Id, Type = type, CompanyName = c.FullName });
+
+                        model.Tables.AddRange(brokers);
+                        break;
+
+                    case "client":
+                        var clients = accountQuery.GetClients().Where(c => c.Id == id || id == 0)
+                            .Select(c => new ActivationTableViewModel() { Id = c.Id, Type = type, CompanyName = c.CompanyName });
+
+                        model.Tables.AddRange(clients);
+                        break;
+
+                    case "agent":
+                        var agents = accountQuery.GetAgents().Where(a => a.Id == id || id == 0)
+                            .Select(a => new ActivationTableViewModel() { Id = a.Id, Type = type, CompanyName = a.CompanyName });
+
+                        model.Tables.AddRange(agents);
+                        break;
+
+                    case "campaign":
+                        var campaigns = accountQuery.GetCampaigns().Where(c => c.Id == id || id == 0)
+                            .Select(c => new ActivationTableViewModel() { Id = c.Id, Type = type, CompanyName = c.CompanyName });
+
+                        model.Tables.AddRange(campaigns);
+                        break;
+                }
+                return PartialView("Html", model);
+            }
+            catch(Exception ex)
             {
-                case "broker":
-                    var brokers = accountQuery.GetBrokers()
-                        .Where(c => c.Id == id || id == 0)
-                        .Select(c => new ActivationTableViewModel() { Id = c.Id, Type = type, CompanyName = c.FullName });
-
-                    model.Tables.AddRange(brokers);
-                    break;
-
-                case "client":
-                    var clients = accountQuery.GetClients().Where(c => c.Id == id || id == 0)
-                        .Select(c => new ActivationTableViewModel() { Id = c.Id, Type = type, CompanyName = c.CompanyName });
-
-                    model.Tables.AddRange(clients);
-                    break;
-
-                case "agent":
-                    var agents = accountQuery.GetAgents().Where(a => a.Id == id || id == 0)
-                        .Select(a => new ActivationTableViewModel() { Id = a.Id, Type = type, CompanyName = a.CompanyName });
-
-                    model.Tables.AddRange(agents);
-                    break;
-
-                case "campaign":
-                    var campaigns = accountQuery.GetCampaigns().Where(c => c.Id == id || id == 0)
-                        .Select(c => new ActivationTableViewModel() { Id = c.Id, Type = type, CompanyName = c.CompanyName });
-
-                    model.Tables.AddRange(campaigns);
-                    break;
+                return null;
             }
 
-            return PartialView("Html", model);
+            
         }
 
         [HttpGet("getjson/{type}/{id}/{status}/{used}/{start}/{end}")]

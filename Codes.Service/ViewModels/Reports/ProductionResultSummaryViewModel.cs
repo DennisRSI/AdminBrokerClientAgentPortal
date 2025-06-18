@@ -30,7 +30,7 @@ namespace ClientPortal.Models
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalCommissionEarned { get; set; }
 
-        public List<ProductionSummaryTableViewModel> Tables { get; set; }
+        public List<ProductionSummaryTableViewModel> Tables { get; set; } = new List<ProductionSummaryTableViewModel>();
 
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalMemberSavings
@@ -42,6 +42,9 @@ namespace ClientPortal.Models
         {
             get { return DateTime.Now.ToString(); }
         }
+
+        public string Message { get; set; } = "Success";
+        public bool IsSuccess { get; set; } = true;
     }
 
     public class ProductionSummaryTableViewModel

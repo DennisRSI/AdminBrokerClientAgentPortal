@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Codes.Service.Domain
+namespace Codes1.Service.Domain
 {
     public static class StringExtensions
     {

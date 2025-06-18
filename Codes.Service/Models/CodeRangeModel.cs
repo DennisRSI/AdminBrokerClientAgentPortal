@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Codes.Service.Models
+namespace Codes1.Service.Models
 {
     [Table("CodeRanges")]
     public class CodeRangeModel : _BaseModel

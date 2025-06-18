@@ -1,15 +1,15 @@
-﻿using Codes.Service.Data;
-using Codes.Service.ViewModels;
+﻿using Codes1.Service.Data;
+using Codes1.Service.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Codes.Service.Domain
+namespace Codes1.Service.Domain
 {
     public class AccountQueryAdmin : IAccountQuery
     {
-        private readonly CodesDbContext _context;
+        private readonly Codes1DbContext _context;
 
-        public AccountQueryAdmin(CodesDbContext context)
+        public AccountQueryAdmin(Codes1DbContext context)
         {
             _context = context;
         }

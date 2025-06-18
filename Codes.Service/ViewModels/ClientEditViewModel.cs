@@ -1,9 +1,9 @@
-﻿using Codes.Service.Domain;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Codes1.Service.Domain;
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Codes.Service.ViewModels
+namespace Codes1.Service.ViewModels
 {
     public class ClientEditViewModel
     {

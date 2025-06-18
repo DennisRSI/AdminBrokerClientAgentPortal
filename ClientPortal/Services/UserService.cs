@@ -1,9 +1,9 @@
 ﻿using ClientPortal.Data;
 using ClientPortal.Models;
 using ClientPortal.Services._Interfaces;
-using Codes.Service.Interfaces;
-using Codes.Service.Models;
-using Codes.Service.ViewModels;
+using Codes1.Service.Interfaces;
+using Codes1.Service.Models;
+using Codes1.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
@@ -15,11 +15,11 @@ namespace ClientPortal.Services
 {
     public class UserService : IUserService
     {
-        private readonly ICodeService _codeService;
-        private readonly ApplicationDbContext _context;
+        private readonly ICode1Service _codeService;
+        private readonly Application1DbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserService(ApplicationDbContext context, UserManager<ApplicationUser> userManager, ICodeService codeService)
+        public UserService(Application1DbContext context, UserManager<ApplicationUser> userManager, ICode1Service codeService)
         {
             _codeService = codeService;
             _context = context;
@@ -337,7 +337,7 @@ namespace ClientPortal.Services
 
                 if (user != null && user.Id != null && user.Id.Length > 0)
                 {
-                    model.BrokerId = user.BrokerId;
+                    //model.BrokerId = user.BrokerId;
                     model.ApplicationReference = user.Id;
 
                     user.Address = model.Address;

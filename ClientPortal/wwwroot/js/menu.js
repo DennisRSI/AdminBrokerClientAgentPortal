@@ -28,6 +28,14 @@ function Menu() {
                 var src = $(this).data('src');
                 self.loadPage('menu', page, id, src);
             }
+
+            if (page === "campaign-list") {
+               // alert('Campaign List');
+                id = $(this).data('id');
+                MENU.loadPage('view', 'clientdetails/' + id);
+            }
+
+            
         });
 
         $('body').off('click').on('click', '.nav-page-id', function () {

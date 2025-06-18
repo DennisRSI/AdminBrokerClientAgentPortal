@@ -1,6 +1,6 @@
 ﻿using ClientPortal.Models;
-using Codes.Service.Interfaces;
-using Codes.Service.ViewModels;
+using Codes1.Service.Interfaces;
+using Codes1.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -10,9 +10,9 @@ namespace ClientPortal.ViewComponents
     public class ClientEditViewComponent : ViewComponent
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IAccountService _accountService;
+        private readonly IAccount1Service _accountService;
 
-        public ClientEditViewComponent(SignInManager<ApplicationUser> signInManager, IAccountService accountService)
+        public ClientEditViewComponent(SignInManager<ApplicationUser> signInManager, IAccount1Service accountService)
         {
             _signInManager = signInManager;
             _accountService = accountService;

@@ -1,4 +1,4 @@
-namespace Codes.Service.ViewModels
+namespace Codes1.Service.ViewModels
 {
     //
     // A generic model that works for all account types

@@ -1,10 +1,10 @@
 ﻿using ClientPortal.Models;
 using ClientPortal.Extensions;
-using Codes.Service.Interfaces;
+using Codes1.Service.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Codes.Service.ViewModels;
+using Codes1.Service.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 
 namespace ClientPortal.ViewComponents
@@ -13,21 +13,24 @@ namespace ClientPortal.ViewComponents
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IDashboardService _dashboardService;
-        private readonly IAccountService _accountService;
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IDashboard1Service _dashboardService;
+        private readonly IAccount1Service _accountService;
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        private Codes1.Service.Interfaces.V2.ICodeServices _codeService;
 
         public DashboardViewComponent(SignInManager<ApplicationUser> signInManager,
                                         UserManager<ApplicationUser> userManager,
-                                        IDashboardService dashboardService,
-                                        IAccountService accountService,
-                                        IHostingEnvironment hostingEnvironment)
+                                        IDashboard1Service dashboardService,
+                                        IAccount1Service accountService,
+                                        IWebHostEnvironment hostingEnvironment,
+                                        Codes1.Service.Interfaces.V2.ICodeServices codeService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _dashboardService = dashboardService;
             _accountService = accountService;
             _hostingEnvironment = hostingEnvironment;
+            _codeService = codeService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(string role, int id)
@@ -45,6 +48,8 @@ namespace ClientPortal.ViewComponents
                     simulating = false;
                 }
 
+                //var model = new Codes.Service.ViewModels.V2.DashboardViewModel();
+
                 var model = new DashboardViewModel();
 
                 if (_hostingEnvironment.EnvironmentName != "Local")
@@ -53,23 +58,27 @@ namespace ClientPortal.ViewComponents
                     {
                         case "super administrator":
                         case "administrator":
-                            model = _dashboardService.GetAdmin();
+                            model = _dashboardService.GetAdmin(); //await _codeService.GetDashboardAsync(0, 0, 0);
                             break;
 
                         case "broker":
                             model = _dashboardService.GetBroker(id);
+                            //model = await _codeService.GetDashboardAsync(id, 0 , 0); //_dashboardService.GetBroker(id);
                             break;
 
                         case "agent":
                             model = _dashboardService.GetAgent(id);
+                            //model = await _codeService.GetDashboardAsync(0, 0, id); //_dashboardService.GetAgent(id);
                             break;
 
                         case "client":
                             model = _dashboardService.GetClient(id);
+                            //model = await _codeService.GetDashboardAsync(0, id, 0); //_dashboardService.GetClient(id);
                             break;
 
                         default:
                             model = _dashboardService.GetAdmin();
+                            //model = await _codeService.GetDashboardAsync(0, 0, 0); //_dashboardService.GetAdmin();
                             break;
                     }
                 }

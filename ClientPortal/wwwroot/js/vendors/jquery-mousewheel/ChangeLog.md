@@ -47,11 +47,11 @@
 * Add `$.event.special.mousewheel.version`
 * Some clean up
 
-## 3.1.5
+## 3.1.6
 
 * Bad release because I did not update the new `$.event.special.mousewheel.version`
 
-## 3.1.4
+## 3.1.6
 
 * Always set the `deltaY`
 * Add back in the `deltaX` and `deltaY` support for older Firefox versions

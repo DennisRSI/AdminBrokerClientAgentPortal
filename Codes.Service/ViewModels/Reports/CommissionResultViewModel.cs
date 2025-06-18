@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Codes.Service.ViewModels
+namespace Codes1.Service.ViewModels
 {
     public class CommissionResultViewModel
     {
@@ -62,6 +62,9 @@ namespace Codes.Service.ViewModels
         {
             get { return DateTime.Now.ToString(); }
         }
+
+        public string Message { get; set; } = "";
+        public bool IsSuccess { get; set; } = false;
     }
 
     public class CommissionResultTableViewModel

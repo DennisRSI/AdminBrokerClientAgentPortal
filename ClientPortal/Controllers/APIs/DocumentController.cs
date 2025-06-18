@@ -1,5 +1,5 @@
 ﻿using ClientPortal.Models;
-using Codes.Service.Interfaces;
+using Codes1.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +13,9 @@ namespace ClientPortal.Controllers.APIs
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IDocumentService _documentService;
+        private readonly IDocument1Service _documentService;
 
-        public DocumentController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IDocumentService documentService)
+        public DocumentController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IDocument1Service documentService)
         {
             _signInManager = signInManager;
             _userManager = userManager;

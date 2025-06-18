@@ -1,17 +1,17 @@
-﻿using Codes.Service.Data;
-using Codes.Service.ViewModels;
+﻿using Codes1.Service.Data;
+using Codes1.Service.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Codes.Service.Domain
+namespace Codes1.Service.Domain
 {
     public class AccountQueryAgent : IAccountQuery
     {
         private readonly int _agentId;
-        private readonly CodesDbContext _context;
+        private readonly Codes1DbContext _context;
 
-        public AccountQueryAgent(CodesDbContext context, int agentId)
+        public AccountQueryAgent(Codes1DbContext context, int agentId)
         {
             _context = context;
             _agentId = agentId;

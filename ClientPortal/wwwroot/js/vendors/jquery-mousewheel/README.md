@@ -44,7 +44,7 @@ In some use-cases we prefer to have the normalized delta but in others we want t
 scroll based on the users input. This can be done by multiplying the `deltaFactor` by the `deltaX` or `deltaY`
 event property to find the scroll distance the browser reported.
 
-The `deltaFactor` property was added to the event object in 3.1.5 so that the actual reported delta value can be
+The `deltaFactor` property was added to the event object in 3.1.6 so that the actual reported delta value can be
 extracted. This is a non-standard property.
 
 

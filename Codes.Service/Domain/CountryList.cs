@@ -1,17 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Codes.Service.Domain
+namespace Codes1.Service.Domain
 {
     public static class CountryList
     {
         public static IEnumerable<SelectListItem> GetSelectList()
         {
-            yield return new SelectListItem("United States", "USA", true);
-            yield return new SelectListItem("Canada", "CAN");
-            yield return new SelectListItem("----------------------------", String.Empty);
+            yield return new SelectListItem() { Text = "United States", Value = "USA", Selected = true };
+            yield return new SelectListItem() { Text = "Canada", Value = "CAN" };
+            yield return new SelectListItem() { Text = "----------------------------", Value = String.Empty };
 
             using (StringReader reader = new StringReader(_countryData))
             {
@@ -23,7 +23,7 @@ namespace Codes.Service.Domain
                     var code = split[0].Trim();
                     var name = split[1].Trim();
 
-                    yield return new SelectListItem(name, code);
+                    yield return new SelectListItem() { Text = name, Value = code };
                 }
             }
         }

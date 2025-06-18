@@ -1,7 +1,8 @@
-﻿using Codes.Service.ViewModels;
+﻿using Codes1.Service.ViewModels;
+using System.Data;
 using System.Data.SqlClient;
 
-namespace Codes.Service.Domain
+namespace Codes1.Service.Domain
 {
     public class DashboardReports
     {
@@ -15,7 +16,7 @@ namespace Codes.Service.Domain
         public DashboardViewModel GetAdmin()
         {
             // Broker and Admin share the same proc
-            var model = CallDashboardBroker(null);
+            var model = CallDashboardBroker(null, null, null);
             model.DistributionDetailType = "Broker";
 
             return model;
@@ -23,17 +24,34 @@ namespace Codes.Service.Domain
 
         public DashboardViewModel GetBroker(int brokerId)
         {
-            return CallDashboardBroker(brokerId);
+            return CallDashboardBroker(brokerId, null, null);
         }
 
-        private DashboardViewModel CallDashboardBroker(int? brokerId)
+        public DashboardViewModel GetAgent(int agentId)
+        {
+            return CallDashboardBroker(null, null, agentId);
+        }
+
+        public DashboardViewModel GetClient(int clientId)
+        {
+            return CallDashboardBroker(null, clientId, null);
+        }
+
+        private DashboardViewModel CallDashboardBroker(int? brokerId = null, int? clientId = null, int? agentId = null)
         {
             var parameters = new[]
             {
                 new SqlParameter("@BrokerId", brokerId),
+                new SqlParameter("@ClientId", clientId),
+                new SqlParameter("@AgentId", agentId),
             };
 
-            var table = _dataAccess.ExecuteDataTable("DashboardBroker", parameters);
+            DataTable table = null;
+            if(brokerId == null && clientId == null && agentId == null)
+                table = _dataAccess.ExecuteDataTable("DashboardBroker", parameters);
+            else
+                table = _dataAccess.ExecuteDataTable("V2_DashboardBroker", parameters);
+
             var row = table.Rows[0];
 
             var model = new DashboardViewModel()
@@ -51,10 +69,13 @@ namespace Codes.Service.Domain
                 HotelSavings = (decimal)row["HotelSavings"],
                 HotelCommissionsPaid = (decimal)row["HotelCommissionsPaid"],
                 HotelCommissionsOwed = (decimal)row["HotelCommissionsOwed"],
+                TotalCommissionOwed = (decimal)row["HotelOrigionalCommissionsOwed"] + (decimal)row["CondoOrigionalCommissionsOwed"],
+                CondoCompanyCommissionsOwed = (decimal)row["CondoOrigionalCommissionsOwed"],
+                HotelCompanyCommissionsOwed = (decimal)row["HotelOrigionalCommissionsOwed"],
 
-                CondoSavings = 0, // (decimal)row["CondoSavings"],
-                CondoCommissionsPaid = 0, //(decimal)row["CondoCommissionsPaid"],
-                CondoCommissionsOwed = 0, //(decimal)row["CondoCommissionsOwed"],
+                CondoSavings =  (decimal)row["CondoSavings"],
+                CondoCommissionsPaid = (decimal)row["CondoCommissionsPaid"],
+                CondoCommissionsOwed = (decimal)row["CondoCommissionsOwed"],
             };
 
             return model;

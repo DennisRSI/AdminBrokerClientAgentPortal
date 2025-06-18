@@ -1,4 +1,4 @@
-﻿namespace Codes.Service.Domain
+﻿namespace Codes1.Service.Domain
 {
     /// <summary>
     /// This class uses this package information:
@@ -13,46 +13,58 @@
     /// </summary>
     public static class PackageCode
     {
-        public static int GetCode(bool condo, bool shopping, bool dining)
+        public static int GetCode(bool condo, bool shopping, bool dining, bool newHotelOnlly, bool newCondoOnly)
         {
             // There is probably a better way to do this, but this will work for now
 
-            if (!condo && !shopping && !dining)
+            if (newHotelOnlly)
             {
                 return 1026;
             }
-
-            if (condo && !shopping && !dining)
+            else if (newCondoOnly)
             {
-                return 1080;
+                return 1027;
             }
-
-            if (!condo && shopping && !dining)
+            else
             {
-                return 1081;
-            }
 
-            if (!condo && !shopping && dining)
-            {
-                return 1082;
-            }
+                if (!condo && !shopping && !dining)
+                {
+                    return 1026;
+                }
 
-            if (condo && shopping && !dining)
-            {
-                return 1033;
-            }
+                if (condo && !shopping && !dining)
+                {
+                    return 1080;
+                }
 
-            if (condo && !shopping && dining)
-            {
-                return 1083;
-            }
+                if (!condo && shopping && !dining)
+                {
+                    return 1081;
+                }
 
-            if (!condo && shopping && dining)
-            {
-                return 1084;
-            }
+                if (!condo && !shopping && dining)
+                {
+                    return 1082;
+                }
 
-            return 1085;
+                if (condo && shopping && !dining)
+                {
+                    return 1033;
+                }
+
+                if (condo && !shopping && dining)
+                {
+                    return 1083;
+                }
+
+                if (!condo && shopping && dining)
+                {
+                    return 1084;
+                }
+
+                return 1085;
+            }
         }
 
         public static string GetText(int packageId)

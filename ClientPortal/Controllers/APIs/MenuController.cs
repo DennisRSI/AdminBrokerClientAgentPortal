@@ -1,5 +1,5 @@
 ﻿using ClientPortal.Models;
-using Codes.Service.Interfaces;
+using Codes1.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +12,9 @@ namespace ClientPortal.Controllers.APIs
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ISearchService _searchService;
+        private readonly ISearch1Service _searchService;
 
-        public MenuController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ISearchService searchService)
+        public MenuController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ISearch1Service searchService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -68,5 +68,8 @@ namespace ClientPortal.Controllers.APIs
         {
             return ViewComponent("ImportExcel");
         }
+
+        
+
     }
 }

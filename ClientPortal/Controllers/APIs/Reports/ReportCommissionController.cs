@@ -1,8 +1,8 @@
 ﻿using ClientPortal.Models;
-using Codes.Service.Domain;
-using Codes.Service.Interfaces;
-using Codes.Service.Services;
-using Codes.Service.ViewModels;
+using Codes1.Service.Domain;
+using Codes1.Service.Interfaces;
+using Codes1.Service.Services;
+using Codes1.Service.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,13 +20,13 @@ namespace ClientPortal.Controllers.APIs
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IReportCommissionService _reportCommissionService;
-        private readonly IAccountService _accountService;
-        private readonly ICodeService _context;
+        private readonly IReportCommission1Service _reportCommissionService;
+        private readonly IAccount1Service _accountService;
+        private readonly ICode1Service _context;
         private readonly IAccountQueryFactory _accountQueryFactory;
 
         public ReportCommissionController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager,
-                                            IReportCommissionService reportCommissionService, IAccountService accountService, ICodeService context, IAccountQueryFactory accountQueryFactory)
+                                            IReportCommission1Service reportCommissionService, IAccount1Service accountService, ICode1Service context, IAccountQueryFactory accountQueryFactory)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -46,10 +46,10 @@ namespace ClientPortal.Controllers.APIs
             {
                 UserType = type,
                 ReportType = GetReportType(type),
-                Brokers = accountQuery.GetBrokers().Select(b => new SelectListItem() { Value = b.Id.ToString(), Text = b.FullName }),
-                Clients = accountQuery.GetClients().Select(c => new SelectListItem() { Value = c.Id.ToString(), Text = c.CompanyName }),
-                Agents = accountQuery.GetAgents().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName }),
-                Campaigns = accountQuery.GetCampaigns().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName }),
+                Brokers = accountQuery.GetBrokers().Select(b => new SelectListItem() { Value = b.Id.ToString(), Text = b.FullName }).OrderBy(o => o.Text),
+                Clients = accountQuery.GetClients().Select(c => new SelectListItem() { Value = c.Id.ToString(), Text = c.CompanyName }).OrderBy(o => o.Text),
+                Agents = accountQuery.GetAgents().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.FullName }).OrderBy(o => o.Text),
+                Campaigns = accountQuery.GetCampaigns().Select(a => new SelectListItem() { Value = a.Id.ToString(), Text = a.CompanyName }).OrderBy(o => o.Text)
             };
 
             if (type == "Broker")
@@ -75,9 +75,9 @@ namespace ClientPortal.Controllers.APIs
 
                 switch (type)
                 {
-                    case "broker":
-                        accounts = accountQuery.GetBrokers().Select(b => b.Id);
-                        break;
+                    //case "broker":
+                        //accounts = accountQuery.GetBrokers().Select(b => b.Id);
+                       // break;
 
                     case "agent":
                         accounts = accountQuery.GetAgents().Select(a => a.Id);
@@ -111,7 +111,8 @@ namespace ClientPortal.Controllers.APIs
             switch (type)
             {
                 case "broker":
-                    model = await _reportCommissionService.GetCommissionResultBrokerAsync(query);
+                    model = await _reportCommissionService.GetCommissionResultsBrokerNewAsync(DateTime.ParseExact(checkOutStart, "yyyy-MM-dd", null), DateTime.ParseExact(checkOutEnd, "yyyy-MM-dd", null), id);
+                    //model = await _reportCommissionService.GetCommissionResultBrokerAsync(query);
                     break;
 
                 case "client":

@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Codes.Service.Data;
+using Codes1.Service.Data;
 
-namespace Codes.Service.Data.Migrations
+namespace Codes1.Service.Data.Migrations
 {
-    [DbContext(typeof(CodesDbContext))]
+    [DbContext(typeof(Codes1DbContext))]
     [Migration("20160808140015_TestMigration")]
     partial class TestMigration
     {
@@ -17,7 +17,7 @@ namespace Codes.Service.Data.Migrations
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Codes.Service.Models.BulkCodeAuditModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.BulkCodeAuditModel", b =>
                 {
                     b.Property<int>("BulkCodeAuditId")
                         .ValueGeneratedOnAdd();
@@ -51,7 +51,7 @@ namespace Codes.Service.Data.Migrations
                     b.ToTable("BulkCodeAudits");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.CodeActivityModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.CodeActivityModel", b =>
                 {
                     b.Property<int>("CodeActivityId")
                         .ValueGeneratedOnAdd();
@@ -79,7 +79,7 @@ namespace Codes.Service.Data.Migrations
                     b.ToTable("CodeActivities");
                 });
 
-            modelBuilder.Entity("Codes.Service.Models.CodeModel", b =>
+            modelBuilder.Entity("Codes1.Service.Models.CodeModel", b =>
                 {
                     b.Property<string>("Code");
 

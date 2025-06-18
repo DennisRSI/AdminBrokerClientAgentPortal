@@ -1,16 +1,16 @@
-﻿using Codes.Service.Data;
-using Codes.Service.ViewModels;
+﻿using Codes1.Service.Data;
+using Codes1.Service.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Codes.Service.Domain
+namespace Codes1.Service.Domain
 {
     public class AccountQueryBroker : IAccountQuery
     {
         private readonly int _brokerId;
-        private readonly CodesDbContext _context;
+        private readonly Codes1DbContext _context;
 
-        public AccountQueryBroker(CodesDbContext context, int brokerId)
+        public AccountQueryBroker(Codes1DbContext context, int brokerId)
         {
             _context = context;
             _brokerId = brokerId;

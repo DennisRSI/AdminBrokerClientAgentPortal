@@ -1,6 +1,6 @@
 ﻿using ClientPortal.Extensions;
 using ClientPortal.Models;
-using Codes.Service.Interfaces;
+using Codes1.Service.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -11,11 +11,11 @@ namespace ClientPortal.ViewComponents
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ISearchService _searchService;
+        private readonly ISearch1Service _searchService;
 
         public SearchViewComponent(SignInManager<ApplicationUser> signInManager,
                                     UserManager<ApplicationUser> userManager,
-                                    ISearchService searchService)
+                                    ISearch1Service searchService)
         {
             _signInManager = signInManager;
             _userManager = userManager;

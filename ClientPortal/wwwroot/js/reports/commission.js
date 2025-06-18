@@ -82,5 +82,34 @@ function Commission() {
                 tr.addClass('shown');
             }
         });
+
+        $('.jambo_table').on('draw.dt', function () {
+            $('.jambo_table tr').on('click', function () {
+                var tr = $(this);
+                var childrenData = tr.data('children');
+                var row = tr.parents('table').DataTable().row(tr);
+
+                if (row.child.isShown()) {
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    var template = '<tr><td colspan="4"></td><td colspan="2"><strong>[NAME]</strong></td><td>[EARNED]</td><td></td></tr>';
+                    var split = childrenData.split(';');
+                    var total = '';
+
+                    split.forEach(function (childData) {
+                        if (childData.length > 2) {
+                            var child = childData.split('|');
+                            var result = template.replace('[NAME]', child[0]).replace('[EARNED]', child[1]);
+                            total += result;
+                        }
+                    });
+
+                    row.child($(total)).show();
+                    tr.addClass('shown');
+                }
+            });
+        });
     };
 }

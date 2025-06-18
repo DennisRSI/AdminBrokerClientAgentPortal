@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+      
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20170602165627_BrokerToCode.cs" />
+    <Compile Remove="Data\Migrations\20171218201335_CampaignInitial.cs" />
+    <Compile Remove="Data\Migrations\20171218201916_CampaignInitial.cs" />
+    <Compile Remove="Data\Migrations\20171218202631_CampaignInitial.cs" />
+    <Compile Remove="Data\Migrations\20171218202809_CampaignInitial.cs" />
+    <Compile Remove="Data\Migrations\20171218203109_CampaignInitial.cs" />
+    <Compile Remove="Data\Migrations\20171219182859_CodeActivations.cs" />
+    <Compile Remove="Data\Migrations\20171221205357_StartEndNullable.cs" />
+    <Compile Remove="Data\Migrations\20190208221714_AgentClientManyToMany.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="13.0.1" />
+      
+      <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
+    <PackageReference Include="Mandrill.net" Version="7.3.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\WorkProjects\RSI.WebApi\Booking.Service\Booking.Service.csproj" />
+  </ItemGroup>
+
+</Project>

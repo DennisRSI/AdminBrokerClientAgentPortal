@@ -1,6 +1,6 @@
 ﻿using ClientPortal.Models;
-using Codes.Service.ViewModels;
-using Codes.Service.Interfaces;
+using Codes1.Service.ViewModels;
+using Codes1.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +13,9 @@ namespace ClientPortal.Controllers.APIs
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IPurchaseService _purchaseService;
+        private readonly IPurchase1Service _purchaseService;
 
-        public PurchaseController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IPurchaseService purchaseService)
+        public PurchaseController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IPurchase1Service purchaseService)
         {
             _signInManager = signInManager;
             _userManager = userManager;

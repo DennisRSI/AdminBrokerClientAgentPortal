@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Codes.Service.Data.Migrations
+namespace Codes1.Service.Data.Migrations
 {
-    [DbContext(typeof(CodesDbContext))]
+    [DbContext(typeof(Codes1DbContext))]
     [Migration("20160805181137_UpdateIndex")]
     partial class UpdateIndex
     {

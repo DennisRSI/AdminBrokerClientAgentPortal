@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
-namespace Codes.Service.Models
+namespace Codes1.Service.Models
 {
     [Table("PendingCodes")]
     public class PendingCodeModel : _BaseModel

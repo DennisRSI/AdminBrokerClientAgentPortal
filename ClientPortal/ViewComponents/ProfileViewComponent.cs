@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using ClientPortal.Models;
 using ClientPortal.Models._ViewModels;
-using Codes.Service.Interfaces;
-using Codes.Service.Services;
+using Codes1.Service.Interfaces;
+using Codes1.Service.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -17,15 +17,15 @@ namespace ClientPortal.ViewComponents
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ICodeService _context;
+        private readonly ICode1Service _context;
         private readonly IMapper _mapper;
-        private readonly IAccountService _accountService;
+        private readonly IAccount1Service _accountService;
 
-        public ProfileViewComponent(ICodeService context, 
+        public ProfileViewComponent(ICode1Service context, 
             SignInManager<ApplicationUser> signInManager, 
             UserManager<ApplicationUser> userManager,
             IMapper mapper,
-            IAccountService accountService)
+            IAccount1Service accountService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -45,7 +45,7 @@ namespace ClientPortal.ViewComponents
                 model.DocumentW9Id = broker.DocumentW9Id;
             }
 
-            if (User.IsInRole("Administrator") || User.IsInRole("Super Administrator"))
+            if (User.IsInRole("Administrator") || User.IsInRole("Super Administrator") || User.IsInRole("Broker"))
             {
                 model.IsDisabled = false;
             }

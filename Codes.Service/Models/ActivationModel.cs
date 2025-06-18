@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Codes.Service.Models
+namespace Codes1.Service.Models
 {
     public class ActivationModel : _BaseModel
     {

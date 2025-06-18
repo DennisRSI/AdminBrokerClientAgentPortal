@@ -1,12 +1,12 @@
-﻿using Codes.Service.Data;
+﻿using Codes1.Service.Data;
 
-namespace Codes.Service.Domain
+namespace Codes1.Service.Domain
 {
     public class AccountQueryFactory : IAccountQueryFactory
     {
-        private readonly CodesDbContext _context;
+        private readonly Codes1DbContext _context;
 
-        public AccountQueryFactory(CodesDbContext context)
+        public AccountQueryFactory(Codes1DbContext context)
         {
             _context = context;
         }

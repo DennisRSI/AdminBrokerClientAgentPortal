@@ -1,11 +1,11 @@
-﻿@model Codes.Service.ViewModels.DashboardViewModel
+﻿@model Codes1.Service.ViewModels.DashboardViewModel
 <div class="col-md-12 col-sm-12 col-xs-12">
     <br />
     <span class="h2">
         @ViewData["Role"] Dashboard
         @if (Model.IsSimulating)
         {
-            <span class="red dashboard_title">Simulating: @Model.AccountName</span>
+            <span class="red dashboard_title">Simulating: @Model.Role</span>
         }
     </span>
     @if (ViewData["Role"].ToString().Contains("Broker"))
@@ -104,11 +104,11 @@
     <p></p>
     <div class="x_row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <p class="h3"><i class="fa fa-money"></i> Brokers Overview</p>
+            <p class="h3"><i class="fa fa-money"></i> @ViewData["Role"]s Overview</p>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                 <div class="x_panel text-center">
                     <h4>
-                        <span asp-authorize asp-roles="Administrator,Super Administrator">All Brokers<br /></span>
+                        <span asp-authorize asp-roles="Administrator,Super Administrator">All @ViewData["Role"]<br /></span>
                         Hotel/Condo Savings
                     </h4>
                     <hr class="card-hr">
@@ -118,7 +118,7 @@
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                 <div class="x_panel text-center">
                     <h4>
-                        <span asp-authorize asp-roles="Administrator,Super Administrator">All Brokers<br /></span>
+                        <span asp-authorize asp-roles="Administrator,Super Administrator">All @ViewData["Role"]<br /></span>
                         Commissions Paid
                     </h4>
                     <hr class="card-hr">
@@ -128,11 +128,12 @@
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                 <div class="x_panel text-center">
                     <h4>
-                        <span asp-authorize asp-roles="Administrator,Super Administrator">All Brokers<br /></span>
-                        Commissions Owed
+                        <span asp-authorize asp-roles="Administrator,Super Administrator">All @ViewData["Role"]<br /></span>
+                        Commissions Owed To@{if (ViewData["Role"].ToString().Contains("Broker")) {<text>:</text>} }  You @if (ViewData["Role"].ToString().Contains("Broker"))
+                        {<text> / Your Company</text>} 
                     </h4>
                     <hr class="card-hr">
-                    <h3>@Html.DisplayFor(m => m.OverviewCommisionsOwed)</h3>
+                    <h3>@Html.DisplayFor(m => m.OverviewCommisionsOwed) @if(ViewData["Role"].ToString().Contains("Broker")){  <text> / </text> @Html.DisplayFor(m => m.TotalCommissionOwed);}</h3>
                 </div>
             </div>
         </div>
@@ -151,10 +152,12 @@
                         <h4>@Html.DisplayFor(m => m.HotelSavings)</h4>
                         <hr>
                         <h5>Hotel Commissions Paid</h5>
-                        <h4>@Html.DisplayFor(m => m.HotelCommissionsPaid)</h4>
+                        <h4>@Html.DisplayFor(m => m.HotelCommissionsOwed)</h4>
                         <hr>
                         <h5>Hotel Commissions Owed</h5>
-                        <h4>@Html.DisplayFor(m => m.HotelCommissionsOwed)</h4>
+                        <h4>
+                            @if (ViewData["Role"].ToString().Contains("Broker")) { <text>@Html.DisplayFor(m => m.HotelCommissionsOwed)</text> }else{ <text>@Html.DisplayFor(m => m.HotelCommissionsOwed)</text> }
+                        </h4>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -164,23 +167,23 @@
                         <h4>@Html.DisplayFor(m => m.CondoSavings)</h4>
                         <hr>
                         <h5>Condo Commissions Paid</h5>
-                        <h4>@Html.DisplayFor(m => m.CondoCommissionsPaid)</h4>
+                        <h4>@Html.DisplayFor(m => m.CondoCommissionsOwed)</h4>
                         <hr>
                         <h5>Condo Commissions Owed</h5>
-                        <h4>@Html.DisplayFor(m => m.CondoCommissionsOwed)</h4>
+                        <h4>@if (ViewData["Role"].ToString().Contains("Broker")) { <text>@Html.DisplayFor(m => m.CondoCommissionsOwed)</text> }else{ <text>@Html.DisplayFor(m => m.CondoCommissionsOwed)</text> }</h4>
                     </div>
                 </div>
                 <div class="hidden col-lg-4 col-md-4 col-sm-4 col-xs-6">
                     <div class="x_panel text-center">
                         <i class="fa fa-shopping-cart dashboard-icons"></i><br /><br />
                         <h5>Shopping Volume</h5>
-                        <h4>@Html.DisplayFor(m => m.ShoppingVolume)</h4>
+                        <h4></h4>
                         <hr>
                         <h5>Cashback To Members</h5>
-                        <h4>@Html.DisplayFor(m => m.ShoppingCashback)</h4>
+                        <h4></h4>
                         <hr>
                         <h5>Pending Cashback</h5>
-                        <h4>@Html.DisplayFor(m => m.ShoppingPendingCashback)</h4>
+                        <h4></h4>
                     </div>
                 </div>
             </div>
@@ -191,11 +194,11 @@
     <div class="x_panel">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 table-responsive">
-                <p class="h4">Card Distribution By @Model.DistributionDetailType</p>
+                <p class="h4">Card Distribution By @Model.Role</p><!--DistributionDetailType-->
                 <table id="card-distribution" class="table table-bordered table-striped jambo_table" data-role="@Model.Role" data-id="@Model.Id">
                     <thead>
                         <tr class="headings">
-                            <th class="column-title">@Model.DistributionDetailType</th>
+                            <th class="column-title">@Model.Role</th> <!--DistributionDetailType-->
                             <th class="column-title">Physical Cards Qty</th>
                             <th class="column-title">Avail. Activations</th>
                             <th class="column-title">Activated</th>
@@ -206,8 +209,7 @@
                             <th class="column-title">% Rate</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>

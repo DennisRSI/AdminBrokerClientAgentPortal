@@ -8,28 +8,35 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+    <TargetFramework>net6.0</TargetFramework>
     <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
     <UserSecretsId>aspnet-ClientPortal-BEEDD4DC-5415-4394-B190-EBD7EAC297EF</UserSecretsId>
   </PropertyGroup>
+    
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="8.0.0" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
-    <PackageReference Include="DotNetCore.NPOI" Version="1.2.1" />
+      
+      <PackageReference Include="AutoMapper" Version="11.0.1" />
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="DotNetCore.NPOI" Version="1.2.3" />
+    <PackageReference Include="LinqToExcel" Version="1.11.0" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.0" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" PrivateAssets="All" />
+      <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="6.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.0" />
   </ItemGroup>
+ 
   <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
-  </ItemGroup>
-  <ItemGroup>
+      
     <Folder Include="wwwroot\js\vendors\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Codes.Service\Codes.Service.csproj" />
+    <ProjectReference Include="..\..\..\WorkProjects\RSI.WebApi\Booking.Service\Booking.Service.csproj" />
+    <ProjectReference Include="..\..\..\WorkProjects\RSI.WebApi\Codes.Service\Codes.Service.csproj" />
+    <ProjectReference Include="..\..\..\WorkProjects\RSI.WebApi\KeepLivingLife.Service\KeepLivingLife.Service.csproj" />
+    <ProjectReference Include="..\..\..\WorkProjects\RSI.WebApi\Legacy.Service\Legacy.Service.csproj" />
+    <ProjectReference Include="..\..\..\WorkProjects\RSI.WebApi\RSIData.Service\RSIData.Service.csproj" />
+    <ProjectReference Include="..\Codes.Service\Codes1.Service.csproj" />
+    <ProjectReference Include="..\VendorImportService\VendorImport.Service.csproj" />
     <ProjectReference Include="Excel.Service\Excel.Service.csproj" />
   </ItemGroup>
 </Project>

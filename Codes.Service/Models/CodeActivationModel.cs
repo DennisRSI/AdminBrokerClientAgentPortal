@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Codes.Service.Models
+namespace Codes1.Service.Models
 {
     [Table("CodeActivations")]
     public class CodeActivationModel : _BaseModel

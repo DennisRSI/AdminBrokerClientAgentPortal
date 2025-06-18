@@ -14,7 +14,7 @@ namespace ClientPortal.Helpers
     public class DbInitializer
     {
         
-        public static async Task Initialize(ApplicationDbContext context, UserManager<ApplicationUser> userManager,
+        public static async Task Initialize(Application1DbContext context, UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole> roleManager, ILogger<DbInitializer> logger)
         {
             context.Database.Migrate();
@@ -23,7 +23,7 @@ namespace ClientPortal.Helpers
             await CreateDefaultUsers(context, userManager, roleManager, logger);
         }
 
-        private static async Task CreateRoles(ApplicationDbContext context)
+        private static async Task CreateRoles(Application1DbContext context)
         {
             string[] roles = new string[] { "Super Administrator", "Administrator", "Broker", "Agent", "Client" };
 
@@ -44,7 +44,7 @@ namespace ClientPortal.Helpers
             }
         }
 
-        private static async Task CreateDefaultUsers(ApplicationDbContext context, UserManager<ApplicationUser> userManager,
+        private static async Task CreateDefaultUsers(Application1DbContext context, UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole> roleManager, ILogger<DbInitializer> logger)
         {
             List<(string password, string role, ApplicationUser user)> users = new List<(string password, string role, ApplicationUser user)>()

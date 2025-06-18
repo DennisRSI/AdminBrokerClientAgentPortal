@@ -1,4 +1,5 @@
 ﻿var MYCLIENTS = new MyClients();
+var table; //add an global variable
 
 function MyClients() {
     var self = this;
@@ -15,7 +16,7 @@ function MyClients() {
             { "data": "email" },
             { "data": "phoneNumber" },
             { "data": "cardQuantity" },
-            { "data": "salesAgent" },
+            { "data": "salesAgent" }
         ];
 
         var selector = '#myclients_tbl';
@@ -23,12 +24,16 @@ function MyClients() {
         tableSettings.ajax.dataSrc = '';
 
         if (!$.fn.DataTable.isDataTable(selector)) {
-            var table = $(selector).DataTable(tableSettings);
+            table = $(selector).DataTable(tableSettings);
 
             table.on('click', 'tr', function () {
                 var id = $(this).attr('id');
                 MENU.loadPage('view', 'clientdetails', id);
             });
         }
+    }
+
+    this.refresh = function () {
+        table.ajax.reload();
     }
 }

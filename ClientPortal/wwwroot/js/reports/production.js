@@ -76,9 +76,9 @@ function Production() {
         if (id === '0' && self._role === 'Agent') {
             var table = $('.jambo_table').DataTable();
             var column = table.column(4);
-            column.visible(false);
+            //column.visible(false);
 
-            $('table th.commissionEarned').hide();
+            //$('table th.commissionEarned').hide();
         }
     };
 }
